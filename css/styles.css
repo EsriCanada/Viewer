@@ -1942,7 +1942,7 @@ input[type=checkbox].checkbox {
 
 .loadingOverlay {
     position: absolute;
-    z-index: 1001;
+    z-index: 1000;
     border-style: solid;
     display: inline-block;
     /*overflow-y: scroll;*/

@@ -40,7 +40,7 @@ define([
         _splashButtonDivIdentifier: 'splashButtonDiv',
         _spashButtonIdentifier: 'splashButton',
         _splashCheckBoxIdentifier: 'splashCheckBoxIdentifier',
-        _loadingMessageClasses: 'loadingOverlay pageOverlay',
+        _loadingMessageClasses: 'loadingOverlay',
 
         /*The cookie information is used to save preferences about showing or not the splash screen.*/
         _cookie: null, //Cookie value must be boolean or null. It is used to populate default value of a checkbox.
@@ -71,10 +71,11 @@ define([
             var ratioHeight = this.splashScreenHeightRatio || 75;
             var verticalMargin = (100-ratioHeight) / 2 + "%";
             var horizontalMargin = (100-ratioWidth) / 2 + "%";
-            loadingOverlay.style.top = verticalMargin;
-            loadingOverlay.style.left = horizontalMargin;
-            loadingOverlay.style.width = ratioWidth + "%";
-            loadingOverlay.style.height = ratioHeight + "%";
+            loadingOverlay.style.top = "46px";//verticalMargin;
+            loadingOverlay.style.left = "0";//horizontalMargin;
+            loadingOverlay.style.width = "100%";//ratioWidth + "%";
+            loadingOverlay.style.height = "calc( 100% - 46px )";//ratioHeight + "%";
+            loadingOverlay.style.border = "none";
 
 
             //Attach the text to the overlay
