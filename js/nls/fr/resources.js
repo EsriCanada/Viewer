@@ -80,7 +80,7 @@ define(
         pressAlt : "Appuyer sur ALT + 0 à 7 pour naviguer rapidement",
         instructions:"instructions.french",
         wcagViewer : "Visualiseur Accessible",
-        close : "Fermer",
+        close : "Continuer",
         doNotDisplaySplashNextTime: "Je ne souhaite pas voir cette page d'accueil à mes prochaines connections."
     })
 );
