@@ -67,15 +67,11 @@ define([
 
 
             //Compute the position of the splash screen on the screen
-            var ratioWidth = this.screenWidthRatio || 75;
-            var ratioHeight = this.splashScreenHeightRatio || 75;
-            var verticalMargin = (100-ratioHeight) / 2 + "%";
-            var horizontalMargin = (100-ratioWidth) / 2 + "%";
-            loadingOverlay.style.top = "46px";//verticalMargin;
-            loadingOverlay.style.left = "0";//horizontalMargin;
-            loadingOverlay.style.width = "100%";//ratioWidth + "%";
-            loadingOverlay.style.height = "calc( 100% - 46px )";//ratioHeight + "%";
-            loadingOverlay.style.border = "none";
+            // var ratioWidth = this.screenWidthRatio || 75;
+            // var ratioHeight = this.splashScreenHeightRatio || 75;
+            // var verticalMargin = (100-ratioHeight) / 2 + "%";
+            // var horizontalMargin = (100-ratioWidth) / 2 + "%";
+            // loadingOverlay.style.border = "none";
 
 
             //Attach the text to the overlay

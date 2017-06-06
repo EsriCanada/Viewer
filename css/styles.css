@@ -626,6 +626,7 @@ img {
 #panelText:focus {
   white-space: inherit;
   /*font-size: 14px;*/
+  overflow-y: auto;
 }
 
 #panelTitle h1 {
@@ -1943,9 +1944,14 @@ input[type=checkbox].checkbox {
 .loadingOverlay {
     position: absolute;
     z-index: 1000;
-    border-style: solid;
+    /*border-style: solid;*/
     display: inline-block;
     /*overflow-y: scroll;*/
+    top : 46px;
+    left: 0;
+    width: 100%;
+    height: calc( 100% - 46px );
+    border: none;
 }
 
 .pageOverlay {

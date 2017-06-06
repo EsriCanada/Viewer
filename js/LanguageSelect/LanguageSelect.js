@@ -142,16 +142,17 @@ define([
             }
 
             if(this.defaults.showLabel) {
-                domConstruct.create("label", {
-                    for: 'languageButton',
+                var langLab = domConstruct.create("label", {
+                    // for: 'languageButton',
                     innerHTML: i18n.widgets.languageSelect.language,
                     title: i18n.widgets.languageSelect.changeHere,
                     'aria-label': i18n.widgets.languageSelect.changeHere,
-                    tabindex: -1
+                    tabindex: 0
                 }, this.domNode);
+                langLab.appendChild(this.button.domNode);
             }
-
-            this.domNode.appendChild(this.button.domNode);
+            else
+                this.domNode.appendChild(this.button.domNode);
 
             query('.dijitMenuTable').forEach(function(table){
                 dojo.attr(table, "role", "presentation");
