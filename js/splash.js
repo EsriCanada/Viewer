@@ -71,6 +71,10 @@ define([
             // var ratioHeight = this.splashScreenHeightRatio || 75;
             // var verticalMargin = (100-ratioHeight) / 2 + "%";
             // var horizontalMargin = (100-ratioWidth) / 2 + "%";
+            // loadingOverlay.style.top = verticalMargin;
+            // loadingOverlay.style.left = horizontalMargin;
+            // loadingOverlay.style.width = ratioWidth + "%";
+            // loadingOverlay.style.height = ratioHeight + "%";
             // loadingOverlay.style.border = "none";
 
 
