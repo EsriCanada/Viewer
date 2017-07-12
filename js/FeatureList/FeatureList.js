@@ -144,7 +144,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 return t.layer.visible && t.layer.visibleAtMapScale;
             }).forEach(lang.hitch(this.map, function(t) {
                 t.query.geometry = ext.extent;
-                var exp=t.layer.getDefinitionExpression();
+                try{
+                    var exp=t.layer.getDefinitionExpression();
+                    t.query.where = exp;
+                    t.result = t.task.execute(t.query);
+               }
+               catch(err){
+                   console.warn('Layer does not support getDefinitionExpression');
+               }
                 t.query.where = exp;
                 t.result = t.task.execute(t.query);
             }));
