@@ -172,7 +172,7 @@ define(["dojo/ready",
             query(".esriSimpleSlider").style("backgroundColor", this.theme.toString());
             // remove loading class from body
 
-            domClass.remove(document.body, "app-loading");
+            // domClass.remove(document.body, "app-loading");
             on(window, "orientationchange", lang.hitch(this, this._adjustPopupSize));
             this._adjustPopupSize();
 
@@ -392,6 +392,9 @@ define(["dojo/ready",
                     }));
 
                     domStyle.set("panelPages", "visibility", "visible");
+
+                    domClass.remove(document.body, "app-loading");
+            
                 }));
             }));
 
