@@ -10,6 +10,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/i18n!application/nls/PopupInfo",
     "esri/domUtils",
     "esri/dijit/Popup",
+    // "application/ImageToggleButton/ImageToggleButton", 
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
     
     ], function (
@@ -24,7 +25,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         string,
         i18n,
         domUtils,
-        Popup
+        Popup// , ImageToggleButton
     ) {
 
     // ready(function(){
@@ -59,6 +60,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.headerNode = dom.byId(defaults.header);
             this.popupInfo = defaults.popupInfo;
             this.emptyMessage = defaults.emptyMessage;
+
         },
 
         startup: function () {
@@ -79,6 +81,22 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         total:0,
 
+        toggleGeoCoding:function(e) {
+            if(e.type === 'keyup' && !(e.key === ' ' || e.key === 'Spacebar') && e.key !== 'Enter') return; 
+            var cb = dom.byId('popupGeoCoding_cb');
+            this.GeoCodingEnabled = cb.checked=!cb.checked;
+            var img1 = dom.byId('geoCodingDisableBtn');
+            var img2 = dom.byId('geoCodingEnableBtn');
+            if(this.GeoCodingEnabled) 
+            {
+               dojo.removeClass(img2, 'geoCodingUnselected');
+               dojo.addClass(img1, 'geoCodingUnselected');
+            } else {
+               dojo.removeClass(img1, 'geoCodingUnselected');
+               dojo.addClass(img2, 'geoCodingUnselected');
+            }
+        },
+
         _init: function () {
 
             this.loaded = true;
@@ -90,6 +108,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             on(query('#'+this.popupHeaderId+' .popupInfoButton.zoom')[0], 'click', lang.hitch(this, this.zoomTo));
             on(query('#'+this.popupHeaderId+' .popupInfoButton.map')[0], 'click', lang.hitch(this, this.toMap));
             on(query('#'+this.popupHeaderId+' .popupInfoButton.clear')[0], 'click', lang.hitch(this, this.clearFeatures));
+
+            this.GeoCodingEnabled = has("geoCoding") && dom.byId('popupGeoCoding_cb').checked;
+            if(has("geoCoding")) {
+                on(dom.byId('popupGeoCoding_lbl'), 'click', lang.hitch(this, this.toggleGeoCoding));
+                on(dom.byId('popupGeoCoding_lbl'), 'keyup', lang.hitch(this, this.toggleGeoCoding));
+            } else {
+                dojo.setStyle(dom.byId("popupGeoCoding"),'display', 'none');
+            }
 
             var buttons = query(".popupInfoButton");
             buttons.forEach(lang.hitch(this, function (btn) {

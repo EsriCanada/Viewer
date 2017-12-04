@@ -23,16 +23,16 @@
 }
 
 .popupInfoHeader img {
-    height: 12px;
-    width: 12px;
+    height: 12px !important;
+    width: 12px !important;
     display: inline;
     vertical-align: text-bottom;
 }
 
 @media only screen and (min-width: 720px) {
   .popupInfoHeader img {
-    height: 18px;
-    width: 18px;
+    height: 18px !important;
+    width: 18px !important;
   }
 }
 
@@ -82,3 +82,17 @@ h4.popupHeader {
     bottom: 10px;
 }
 
+.geoCoding {
+    padding: 0;
+    margin: 0 !important;
+}
+
+.geoCoding img {
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+}
+
+.geoCodingUnselected {
+    display:none !important;
+}

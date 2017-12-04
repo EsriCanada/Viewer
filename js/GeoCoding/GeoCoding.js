@@ -56,7 +56,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             superNavigator : null,
             searchMarker: './images/SearchPin1.png',
             geolocatorLabelColor: "#0000ff", // 'green'
-            emptyMessage: i18n.widgets.geoCoding.noAddress,
+            // emptyMessage: i18n.widgets.geoCoding.noAddress,
         },
 
         locator : null,

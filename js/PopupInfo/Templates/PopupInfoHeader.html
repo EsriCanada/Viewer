@@ -1,4 +1,12 @@
 <div class="popupInfoHeader" id="${popupHeaderId}">
+	<!-- <div id="popupGeoCoding"></div> -->
+	<div id="popupGeoCoding" class="geoCodingBtn" role="button">
+		<input for="popupGeoCoding_lbl" type="checkbox" id="popupGeoCoding_cb" style="display:none;">
+		<label id="popupGeoCoding_lbl" tabindex="-1">
+			<img id="geoCodingDisableBtn" src="images/icons_black/geoCoding.png" alt="Reverse Geocoding Disabled" title="Reverse Geocoding Disabled" class="geoCodingSelected" tabindex="0"/>
+			<img id="geoCodingEnableBtn" src="images/icons_white/geoCoding.png" alt="Reverse Geocoding Enabled" title="Reverse Geocoding Enabled" class="geoCodingUnselected" tabindex="0"/>
+		</label>
+	</div>
 	<div id="popupMessage" tabindex=0>${emptyMessage}</div>
 	<div id="popupControls" style="display:none">
 		<div id="popupPager">
