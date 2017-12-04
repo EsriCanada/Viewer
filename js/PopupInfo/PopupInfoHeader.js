@@ -91,9 +91,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             {
                dojo.removeClass(img2, 'geoCodingUnselected');
                dojo.addClass(img1, 'geoCodingUnselected');
+               img2.focus();
             } else {
                dojo.removeClass(img1, 'geoCodingUnselected');
                dojo.addClass(img2, 'geoCodingUnselected');
+               img1.focus();
             }
         },
 
