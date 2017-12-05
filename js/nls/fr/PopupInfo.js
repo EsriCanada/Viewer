@@ -6,7 +6,7 @@ define({
             "clickToSelect":"Cliquez sur la carte pour sélectionner des caractéristiques",
             "current":"Caractéristique actuelle",
             "total": "Le total du caractéristiques sélectionnées",
-            "zoomTo": "Zoom sur caractéristique",
+            "zoomTo": "Zoomer sur caractéristique",
             "map": "Aller à la carte",
             "clear": "Effacer la sélection",
             "noFeatures": "Pas des caractéristiques",
@@ -25,11 +25,17 @@ define({
             "followTheMap": "Mode Suivez la carte"
         }),
         geoCoding : {
-            "zoomTo": "Zoom sur caractéristique",
+            "zoomTo": "Zoomer sur l'emplacement",
             "clear": "Effacer la sélection",
             "noAddress": "Pas d'adresse au point",
             "instructions" : 
-                "Cliquez sur la carte pour obtenir l'adresse du lieu.",
+                "Cliquez sur la carte pour obtenir l'adresse du lieu, <br/>ou <br/>"+
+                "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Aller à la carte</a> et:"+
+                "<ul>"+
+                "<li>déplacer la carte avec <myKey>flèches</myKey>, ou</li>"+
+                "<li>déplacer le curseur de carte avec <myKey>MAJ</myKey> + <myKey>flèches</myKey>, puis</li>"+
+                "<li>appuyez sur <myKey>Entrée</myKey> pour sélectionner au curseur.</li>"+
+                "</ul>",
             "Location": "Emplacement",
             "Address": "Adresse&nbsp;:",
             "Block": "Bloc&nbsp;:",

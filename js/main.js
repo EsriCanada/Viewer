@@ -402,7 +402,7 @@ define(["dojo/ready",
                     switch (this.config.tools[i].name) {
                         case "mapKeyboardNavigation":
                             if(has("mapKeyboardNavigation"))
-                                this._addMapKeyboardNavigation();
+                                this._addMapKeyboardNavigation(toolbar);
                             break;
                         case "details":
                             toolList.push(this._addDetails(this.config.tools[i], toolbar, deferredDetails));
@@ -811,9 +811,10 @@ define(["dojo/ready",
             return deferred.promise;
         },
 
-        _addMapKeyboardNavigation : function() {
+        _addMapKeyboardNavigation : function(toolbar) {
             this.superNav = new SuperNavigator({
                 map: this.map,
+                toolBar: toolbar,
                 cursorColor: "black",
                 selectionColor: this.config.mapSelectionColor,
                 cursorFocusColor: this.config.focusColor,

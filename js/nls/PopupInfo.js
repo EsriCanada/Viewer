@@ -26,11 +26,17 @@ define({
             "followTheMap": "Follow The Map Mode"
             },
             "geoCoding" : {
-                "zoomTo": "Zoom to Feature",
+                "zoomTo": "Zoom to Location",
                 "noAddress": "No Point Address",
                 "clear": "Clear Selection",
                 "instructions" : 
-                    "Click the map to get location address.",
+                    "Click the map to get location address <br/>or <br/>"+
+                        "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Skip to Map</a> and:<br/>"+
+                    "<ul>"+
+                    "<li>move map with <myKey>arrows</myKey>, or</li>"+
+                    "<li>move map cursor with <myKey>SHIFT</myKey> + <myKey>arrows</myKey>, then</li>"+
+                    "<li>press <myKey>ENTER</myKey> to select at cursor.</li>"+
+                    "</ul>",
                 "Location": "Location",
                 "Address": "Address:",
                 "Block": "Block:",

@@ -114,6 +114,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 this.search.on('search-results', lang.hitch(this, function(e) {
                     // console.log('search-results', e);
+
                     var features = [];
                     if(e.results) {
                         for(var i = 0; i< this.search.sources.length; i++) {
@@ -283,7 +284,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.popupInfoHeader.startup();
 
             this.displayPopupContent = lang.hitch(this, function (feature) {
-                if(this.toolbar.IsToolSelected('geoCoding')) return;
+                // if(this.toolbar.IsToolSelected('geoCoding')) return;
 
                 this.toolbar.OpenTool('infoPanel');
                 if (feature) {
@@ -339,9 +340,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             // on(popup, "SetFeatures", lang.hitch(this, function() {
             //     console.log("SetFeatures", popup.features);
+            //     if(this.toolbar.IsToolSelected('geoCoding')) {
+            //     }
             // }));
 
             on(popup, "ClearFeatures", lang.hitch(this, function() {
+                if(this.toolbar.IsToolSelected('geoCoding')) return;
+
                 this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
                 // if(this.superNavigator) {
                 //     this.superNavigator.clearZone();
@@ -352,6 +357,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }));
 
             on(popup, "SelectionChange", lang.hitch(this, function() {
+                if(this.toolbar.IsToolSelected('geoCoding')) return;
+
                 var selectedFeature = popup.getSelectedFeature();
                 if(selectedFeature && selectedFeature !== undefined) {
                     this.displayPopupContent(selectedFeature);

@@ -107,10 +107,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         postCreate : function() {
             if(this.locator) {
 
+                if(this.superNavigator) {
+                    on(this.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
+                        // console.log('mapClick', evt);
+                        if(!this.toolbar.IsToolSelected('geoCoding')) return;
+                        this.clearSearchGraphics();
+                        this.locator.locationToAddress(
+                            webMercatorUtils.webMercatorToGeographic(evt.mapPoint), 100
+                        );
+                    }));
+                }
+
                 this.locator.on('location-to-address-complete', lang.hitch(this, function(evt) {
-                    console.log('locator', evt);
+                    // console.log('locator', evt);
                     if (evt.address.address) {
-                        console.log('address', evt.address);
+                        // console.log('address', evt.address);
                         var address = evt.address.address;
                         var infoTemplate = new InfoTemplate(
                             i18n.widgets.geoCoding.Location, 
@@ -134,7 +145,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }));
 
                 this.map.on("click", lang.hitch(this, function(evt) {
-                    // this.map.graphics.clear();
+                    if(!this.toolbar.IsToolSelected('geoCoding')) return;
+
                     this.clearSearchGraphics();
                     this.locator.locationToAddress(
                         webMercatorUtils.webMercatorToGeographic(evt.mapPoint), 100
@@ -264,6 +276,29 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 self: this,
             }, domConstruct.create('Div', {}, this.headerNode));
             this.geoCodingHeader.startup();
+
+            on(dojo.byId('pageBody_geoCoding'), 'keydown', lang.hitch(this, function(ev) {
+                switch(ev.keyCode) {
+                    case 90: // Z
+                        this.geoCodingHeader.ToZoom();
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        break;
+                    case 77: // M
+                    case 80: // P
+                        this.geoCodingHeader.ToMap();
+                        ev.stopPropagation();
+                        ev.preventDefault();
+
+                        break;
+                    case 88: // X
+                    case 67: // C
+                    case 69: // E
+                        this.geoCodingHeader.ToClear();
+                        ev.stopPropagation();
+                        ev.preventDefault();
+                        break;
+                }}));
         },
 
         clearSearchGraphics: function(){

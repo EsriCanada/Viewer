@@ -170,32 +170,40 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
        },
 
         zoomTo : function(ev) {
-            this.panZoom(false);
+            this.panZoom();
             this.clearSuperNavigator();
         },
 
-        panZoom: function(panOnly) {
-            // // var popup = this.map.infoWindow;
-            // // if(popup.selectedIndex<0) return;
-            // var geometry = popup.features[popup.selectedIndex].geometry;
-            // if(panOnly) {
-            //     if (geometry.type !== "point") {
-            //         geometry = geometry.getExtent().getCenter();
-            //     }
-            //     this.map.centerAt(geometry);
-            // } else {
-            //     if(geometry.type === "point") {
-            //         this.map.centerAndZoom(geometry, 13);
-            //     } else {
-            //         var extent = geometry.getExtent().expand(1.5);
-            //         this.map.setExtent(extent);
-            //     }
-            // }
+        panZoom: function() {
+            var marker = this.self.geoCodingMarkerGraphic;
+            if(marker) {
+                var addrType = marker.attributes.Addr_type;
+                var zoomLevel = 13;
+                switch (addrType) {
+                    case 'PointAddress' :
+                        zoomLevel = 18;
+                        break;
+                    case 'StreetAddress' :
+                    case 'StreetName' :
+                        zoomLevel = 16;
+                        break;
+                    case 'Park' :
+                        zoomLevel = 15;
+                        break;
+                    case 'Locality' :
+                        zoomLevel = 10;
+                        break;
+                    case 'Postal' :
+                        zoomLevel = 8;
+                        break;
+                }
+                this.map.centerAndZoom(this.self.geoCodingMarkerGraphic.geometry, zoomLevel);
+            }
         },
 
         clearSuperNavigator: function() {
-            // if(this.superNavigator) 
-            //     this.superNavigator.clearZone();
+            if(this.superNavigator) 
+                this.superNavigator.clearZone();
         },
 
 

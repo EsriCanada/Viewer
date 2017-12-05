@@ -222,6 +222,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         setTotal : function(count) {
+            if(this.toolbar.IsToolSelected('geoCoding')) return;
+
             this.total = count;
 
             var msgNode = dojo.byId("popupMessage");
