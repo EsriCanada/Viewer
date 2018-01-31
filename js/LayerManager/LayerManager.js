@@ -135,6 +135,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         _drag: function(evt) {
             this._dropTarget = 
             this._startTarget = evt.target.closest('.toc-layer');
+            if(!this._startTarget) {
+                evt.cancelBubble = true;
+                evt.preventDefault();
+                return;
+            }
             if(isChrome() && evt.target.type && evt.target.type==="range") {
                 evt.cancelBubble = true;
                 evt.preventDefault();
