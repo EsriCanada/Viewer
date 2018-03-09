@@ -545,7 +545,12 @@ img {
 #pageBody_details {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-around;
+
+    @supports(spaceevenly)
+    {
+      justify-content: space-evenly;
+    }
 }
 
 #panelTop {
@@ -1230,7 +1235,7 @@ html, body {
 
 @media only screen and (min-width: 720px) {
     #instructionsDiv {
-        padding: 0 10px;
+        padding: 10px;
         width: calc(100% - 20px);
     }
 }
@@ -1385,7 +1390,7 @@ html, body {
     overflow-y: auto;
     color: black;
     width: calc(100% - 20px);
-    padding: 10px 10px 0 10px;
+    padding: 10px;
 }
 
 .detailFull {
