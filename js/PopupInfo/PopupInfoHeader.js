@@ -2,7 +2,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
     "dojo/on", 
     "dojo/Deferred", "dojo/query", 
-    "dojo/text!application/PopupInfo/templates/PopupInfoHeader.html", 
+    "dojo/text!application/PopupInfo/Templates/PopupInfoHeader.html", 
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
     "dojo/parser", "dojo/ready",
     "dijit/layout/ContentPane",    
