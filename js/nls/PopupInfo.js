@@ -2,32 +2,37 @@ define({
     root: ({
         widgets: ({
             "popupInfo" : {
-            "Next":"Next Feature",
-            "Prev":"Previous Feature",
-            "clickToSelect":"Click on map to select features",
-            "current":"Current Feature",
-            "total": "Total Features",
-            "zoomTo": "Zoom to Feature",
-            "map": "Skip to Map",
-            "clear": "Clear Selection",
-            "noFeatures": "No features",
-            "instructions" : 
-                "Click the map to select features <br/>or <br/>"+
-                "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Skip to Map</a> and:<br/>"+
-                "<ul>"+
-                "<li>move map with <myKey>arrows</myKey>, or</li>"+
-                "<li>move map cursor with <myKey>SHIFT</myKey> + <myKey>arrows</myKey>, then</li>"+
-                "<li>press <myKey>ENTER</myKey> to select at cursor, or</li>"+
-                "<li>press <myKey>SHIFT</myKey> + <myKey>ENTER</myKey> to select around cursor (x 10),</li>"+
-                "<li>press <myKey aria-label='Control'>CTRL</myKey> + <myKey>ENTER</myKey> to select all map extent,</li>"+
-                "<li>press <myKey aria-label='Control'>CTRL</myKey> + <myKey>SHIFT</myKey> + <myKey>ENTER</myKey> to select inside or around the selected feature.</li>"+
-                "</ul>"+
-                "Selecting the extent, starts the Follow-the-Map mode.",
-            "followTheMap": "Follow The Map Mode"
+                "Next":"Next Feature",
+                "Prev":"Previous Feature",
+                "clickToSelect":"Click on map to select features",
+                "current":"Current Feature",
+                "total": "Total Features",
+                "zoomTo": "Zoom to Feature",
+                "map": "Skip to Map",
+                "clear": "Clear Selection",
+                "noFeatures": "No features",
+                "instructions" : 
+                    "Click the map to select features <br/>or <br/>"+
+                    "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Skip to Map</a> and:<br/>"+
+                    "<ul>"+
+                    "<li>move map with <myKey>arrows</myKey>, or</li>"+
+                    "<li>move map cursor with <myKey>SHIFT</myKey> + <myKey>arrows</myKey>, then</li>"+
+                    "<li>press <myKey>ENTER</myKey> to select at cursor, or</li>"+
+                    "<li>press <myKey>SHIFT</myKey> + <myKey>ENTER</myKey> to select around cursor (x 10),</li>"+
+                    "<li>press <myKey aria-label='Control'>CTRL</myKey> + <myKey>ENTER</myKey> to select all map extent,</li>"+
+                    "<li>press <myKey aria-label='Control'>CTRL</myKey> + <myKey>SHIFT</myKey> + <myKey>ENTER</myKey> to select inside or around the selected feature.</li>"+
+                    "</ul>"+
+                    "Selecting the extent, starts the Follow-the-Map mode.",
+                "addressToLocation": "Address To Location",
+                "followTheMap": "Follow The Map Mode"
             },
             "geoCoding" : {
+                "tooltips" : "ToolTips",
+                "hideTooltips" : "No ToolTips",
+                "showTooltips" : "Show ToolTips",
                 "zoomTo": "Zoom to Location",
                 "noAddress": "No Point Address",
+                "noAddressFound": "No Address Found at Point",
                 "clear": "Clear Selection",
                 "instructions" : 
                     "Click the map to get location address <br/>or <br/>"+
@@ -37,9 +42,19 @@ define({
                     "<li>move map cursor with <myKey>SHIFT</myKey> + <myKey>arrows</myKey>, then</li>"+
                     "<li>press <myKey>ENTER</myKey> to select at cursor.</li>"+
                     "</ul>",
+                "locationToAddress": "Location To Address",
                 "Location": "Location",
+                Copy: "Copy",
+                CopyToClipboard: "Copy to Clipboard",
                 "Address": "Address:",
                 "Block": "Block:",
+                "BldgName": "Building Name:",
+                "LevelName": "Level Name:",
+                "Phone": "Phone:",
+                "Side": "Side:",
+                "StDir": "St. Dir/Type:",
+                "Status": "Status:",
+                "UnitName": "Unit:",
                 "City": "City:",
                 "CountryCode": "Country Code:",
                 "District": "District:",

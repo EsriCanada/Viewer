@@ -1,10 +1,87 @@
-.addressInfo th {
+.address-tooltip--shadow {
+    -webkit-filter: drop-shadow( 1px 1px 1px #000  );
+    filter: drop-shadow( 1px 1px 1px #000 );
+}
+
+.address-tooltip__address-info th {
 	vertical-align: top;
 	text-align: left;
 	font-weight: normal;
 }
 
-.addressInfo td {
+.address-tooltip__address-info td {
 	vertical-align: top;
 	font-weight: bold;
 }
+
+.address-tooltip {
+  /*pointer-events: none; */
+  opacity:0.85;
+  border: black 1px solid;
+  border-radius: 5px;
+  padding:5px;
+  font-size: small;
+  font-family: 'Roboto Condensed', sans-serif;
+  position: absolute;
+  width: auto;
+  max-width:400px;
+  z-index: 100;
+  display: none;
+}
+
+#address-tooltip__title {
+  padding: 5px;
+  margin:-5px;
+  border-radius: 5px 5px 0 0;
+}
+
+#address-tooltip__content {
+  padding: 5px;
+  margin:-5px;
+  margin-top:5px;
+  border-radius: 0 0 5px 5px;
+  font-weight: bold;
+  background:white;
+  color:black;
+}
+
+.address-tooltip__spike {
+	position: absolute;
+	pointer-events:none;
+	display: none;
+}
+
+.address-tooltip__spike svg {
+	touch-action: none;
+}
+
+.address-tooltip__spike--NW {
+	top:-12px !important; 
+	left:12px !important; 
+}
+.address-tooltip__spike--NE {
+	top:-12px !important;
+	right: 4px !important;
+}
+.address-tooltip__spike--SW {
+	bottom: -23px !important;
+	left:12px !important;
+}
+.address-tooltip__spike--SE {
+	bottom: -23px !important;
+	right: 4px !important;
+}
+
+/*
+https://www.w3schools.com/howto/howto_css_tooltip.asp
+
+.address-tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}*/

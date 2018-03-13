@@ -74,7 +74,7 @@ if (!('trim' in String.prototype)) {
 
 if (!('isNonEmpty' in String.prototype)) {
     String.prototype.isNonEmpty= function() {
-        return this !== null && this.trim() !== '';
+        return this !== null && this.trim() !== '' && this !== undefined;
     };
 }
 
@@ -151,7 +151,8 @@ if (!('lastIndexOf' in Array.prototype)) {
 }
 if (!('forEach' in Array.prototype)) {
     Array.prototype.forEach= function(action, that /*opt*/) {
-        for (var i= 0, n= this.length; i<n; i++)
+        var n=this.length;
+        for (var i= 0; i<n; i++)
             if (i in this)
                 action.call(that, this[i], i, this);
     };
@@ -190,3 +191,39 @@ if (!('some' in Array.prototype)) {
         return false;
     };
 }
+
+if (!('copyToClipboard' in String.prototype)) {
+    String.prototype.copyToClipboard= function() {
+        // https://stackoverflow.com/questions/400212/how-do-i-copy-to-the-clipboard-in-javascript
+        var textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.top = 0;
+        textArea.style.left = 0;
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.padding = 0;
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+
+        textArea.value = this;
+
+        document.body.appendChild(textArea);
+
+        textArea.select();
+
+        try {
+            // var successful = 
+            document.execCommand('copy');
+            // var msg = successful ? 'successful' : 'unsuccessful';
+            // console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Error: unable to copy to clipboard.');
+        }
+
+        document.body.removeChild(textArea);
+
+    };
+}
+

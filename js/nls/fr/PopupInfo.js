@@ -22,12 +22,17 @@ define({
                 "<li>appuyez <myKey aria-label='Contrôle'>CTRL</myKey> + <myKey>MAJ</myKey> + <myKey>Entrée</myKey> pour sélectionner l'intérieur de la caractéristique sélectionnée.</li>"+
                 "</ul>"+
                 "En sélectionnant l'étendue, commence le mode 'Suivre la Carte'.",
+            "addressToLocation": "Adresse à l'emplacement",
             "followTheMap": "Mode Suivez la carte"
         }),
         geoCoding : {
+            "tooltips" : "Infobulles",
+            "hideTooltips" : "Pas infobulles",
+            "showTooltips" : "Afficher les infobulles",
             "zoomTo": "Zoomer sur l'emplacement",
             "clear": "Effacer la sélection",
-            "noAddress": "Pas d'adresse au point",
+            "noAddress": "Pas d'adresse",
+            "noAddressFound": "Aucune adresse trouvée au point",
             "instructions" : 
                 "Cliquez sur la carte pour obtenir l'adresse du lieu, <br/>ou <br/>"+
                 "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Aller à la carte</a> et:"+
@@ -36,9 +41,19 @@ define({
                 "<li>déplacer le curseur de carte avec <myKey>MAJ</myKey> + <myKey>flèches</myKey>, puis</li>"+
                 "<li>appuyez sur <myKey>Entrée</myKey> pour sélectionner au curseur.</li>"+
                 "</ul>",
+            "locationToAddress": "Lieu à adresse",
             "Location": "Emplacement",
+            Copy: "Copier",
+            CopyToClipboard: "Copier dans le presse-papier",
             "Address": "Adresse&nbsp;:",
             "Block": "Bloc&nbsp;:",
+                "BldgName": "Nom&nbsp;du&nbsp;bâtiment&nbsp;:",
+                "LevelName": "Nom&nbsp;du&nbsp;niveau&nbsp;:",
+                "Phone": "Téléphone :",
+                "Side": "Côté :",
+                "StDir": "Rue&nbsp;Direction&nbsp;/&nbsp;Type&nbsp;:",
+                "Status": "Statut :",
+                "UnitName": "Unité :",
             "City": "Ville&nbsp;:",
             "CountryCode": "Code&nbsp;pays&nbsp;:",
             "District": "District&nbsp;:",

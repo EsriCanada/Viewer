@@ -55,7 +55,7 @@ define([
                 link.href = cssFile;
                 link.type = "text/css";
                 link.rel = "stylesheet";
-                query('html')[0].appendChild(link);
+                query('head')[0].appendChild(link);
             }
         },
 

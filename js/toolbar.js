@@ -117,14 +117,17 @@ on, mouse, query, Deferred) {
             var pTool = domConstruct.create("input", {
                 type: "image",
                 src: "images/icons_" + this.config.icons + "/" + name + ".png",
-                title: tip,
+                // title: tip,
                 alt: tip
             }, panelTool);
 
-            if (!has("touch")) 
-            {
-                domAttr.set(pTool, "title", tip);
-            }
+            on(pTool, "focus", lang.hitch(this, this._toolFocus));
+            on(pTool, "blur", lang.hitch(this, this._toolBlur));
+
+            // if (!has("touch")) 
+            // {
+            //     domAttr.set(pTool, "title", tip);
+            // }
 
 
             if(badgeEvName && badgeEvName !== '') {
@@ -215,6 +218,21 @@ on, mouse, query, Deferred) {
             if(!page) return false;
             var hidden = page.classList.contains("hideAttr");
             return !hidden;
+        },
+
+        _toolFocus: function(ev) {
+            var alt = ev.target.alt;
+            if(!alt || alt.replace(/\s/g, '').length < 1) 
+                return;
+            domConstruct.create("span", {
+                id: "focusTooltip",
+                class: "tooltip__focus tool--focus",
+                innerHTML: alt
+            }, ev.target, 'before');
+        },
+
+        _toolBlur: function(ev) {
+            domConstruct.destroy("focusTooltip");
         },
 
         _toolClick: function (name) {

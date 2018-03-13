@@ -54,6 +54,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             toolbar: null, 
             header: 'pageHeader_geoCoding',
             superNavigator : null,
+            iconColor: 'white',
             searchMarker: './images/SearchPin1.png',
             geolocatorLabelColor: "#0000ff", // 'green'
             // emptyMessage: i18n.widgets.geoCoding.noAddress,
@@ -65,7 +66,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var defaults = lang.mixin({}, this.options, options);
             this.domNode = srcRefNode;
             this.widgetsInTemplate = true;
-
+            this.iconColor = defaults.iconColor;
+            this.themeColor = defaults.themeColor,
             this.map = defaults.map;
             this.searchMarker = defaults.searchMarker;
             this.geolocatorLabelColor = defaults.geolocatorLabelColor;
@@ -111,7 +113,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     on(this.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
                         // console.log('mapClick', evt);
                         if(!this.toolbar.IsToolSelected('geoCoding')) return;
-                        this.clearSearchGraphics();
+                        // this.clearSearchGraphics();
                         this.locator.locationToAddress(
                             webMercatorUtils.webMercatorToGeographic(evt.mapPoint), 100
                         );
@@ -120,8 +122,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 this.locator.on('location-to-address-complete', lang.hitch(this, function(evt) {
                     // console.log('locator', evt);
+                    this.clearSearchGraphics();
                     if (evt.address.address) {
-                        // console.log('address', evt.address);
                         var address = evt.address.address;
                         var infoTemplate = new InfoTemplate(
                             i18n.widgets.geoCoding.Location, 
@@ -144,10 +146,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
                 }));
 
+                this.locator.on('error', lang.hitch(this, function(evt) {
+                    console.log('locator error', evt);
+                    this.clearSearchGraphics();
+                    this.contentPanel.set("content", 
+                        "<div class='esriViewPopup'>"+
+                            "<div tabindex=0 class='header'>"+
+                                i18n.widgets.geoCoding.noAddressFound+
+                            "</div>"+
+                        "<div class='hzLine'></div>"+
+                        "</div>");
+                }));
+
                 this.map.on("click", lang.hitch(this, function(evt) {
                     if(!this.toolbar.IsToolSelected('geoCoding')) return;
 
-                    this.clearSearchGraphics();
                     this.locator.locationToAddress(
                         webMercatorUtils.webMercatorToGeographic(evt.mapPoint), 100
                     );
@@ -207,6 +220,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${CountryCode}</td></tr>";
 
             if(result !=='') {
+                var title="Location to Address";
                 result = 
                 "<div class='esriViewPopup'>"+
                     "<div tabindex=0 class='header'>"+
@@ -217,8 +231,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 (address.Type.isNonEmpty() ? '${TypeLoc}':'')
                             ) 
                             : '')+"</div>"+
+                        "<div id='thumb' class='thumbFeature' tabindex=0 title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"'/></div>"+
                         "<div class='hzLine'></div>"+
-                        "<table class='addressInfo'>"+result+"</table>"+
+                        "<table class='address-tooltip__address-info'>"+result+"</table>"+
+                        "<a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
                     "</div>";
             }
             return result;
@@ -227,24 +243,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         _init: function () {
 
             this.loaded = true;
-
-            // var textProbe = dojo.byId('searchTextProbe');
-            // var cs = domStyle.getComputedStyle(textProbe);
-            // var fontSize = cs.fontSize.slice(0,-2);
-            // this.searchLabel = new TextSymbol({
-            //     yoffset : -fontSize,//-14,
-            //     haloColor: [255,255,255,255],
-            //     haloSize: 2,
-            //     font : 
-            //     {
-            //         family : cs.fontFamily, //"Roboto Condensed",
-            //         size : fontSize, //18,
-            //         weight : cs.fontWeight, //'bold'
-            //     }
-            // });
-            // this.searchLabel.color = this.geolocatorLabelColor; //"red";
-
-            // domConstruct.destroy(textProbe);
 
             this.searchMarker = new esri.symbol.PictureMarkerSymbol({
                 "angle": 0,
@@ -273,6 +271,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 superNavigator : this.superNavigator,
                 template: GeoCodingHeaderTemplate,
                 contentPanel: this.contentPanel,
+                iconColor: this.iconColor,
+                themeColor: this.themeColor,
                 self: this,
             }, domConstruct.create('Div', {}, this.headerNode));
             this.geoCodingHeader.startup();

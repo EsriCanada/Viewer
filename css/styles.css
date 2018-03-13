@@ -112,9 +112,10 @@ blockquote {
 #mapDiv {
     width: 100% !important;
     height: 100% !important;
-    width: calc(100% - 0px) !important;
-    height: calc(100% - 0px) !important;
+    /* width: calc(100% - 0px) !important; */
+    /* height: calc(100% - 0px) !important; */
     background-color: white;
+    /* overflow:  hidden; */
 }
 
 .loading-indicator {
@@ -396,7 +397,7 @@ blockquote {
 
 .scalebar_bottom-left {
   left: 25px;
-  bottom: 40px; 
+  bottom: 40px;
 }
 
 img {
@@ -544,7 +545,7 @@ img {
 #pageBody_details {
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
 #panelTop {
@@ -1089,9 +1090,9 @@ h3 {
 }
 
 html, body {
-    width: 100%; 
-    height: 100%; 
-    margin: 0; 
+    width: 100%;
+    height: 100%;
+    margin: 0;
     overflow:hidden;
     padding: 0;
     font-family: Arial, Helvetica, sans-serif;
@@ -1104,17 +1105,7 @@ html, body {
     height: 100%;
 }
 
-.claro .dijitSplitterV {
-background: white;
-    border-color: white;
-    border-width: 1.5px;
-    border-style: solid;
-    border-top-style: none;
-    border-bottom-style: none;
-    width: 10px;
-    margin: 0;
-    -webkit-tap-highlight-color: transparent;
-}
+.claro .dijitSplitterV {background: white;border-color: white;border-width: 1.5px;border-style: solid;border-top-style: none;border-bottom-style: none;width: 10px;margin: 0;-webkit-tap-highlight-color: transparent;}
 
 .claro .dijitSplitterH, 
 .claro .dijitGutterH {
@@ -1157,7 +1148,7 @@ background: white;
 }
 
 .dijitSplitterThumb {
-    opacity:0.25;
+    opacity: 0.5;
 }
 
 .dijitSplitterThumb:hover {
@@ -1784,7 +1775,7 @@ input[type=checkbox].checkbox {
 }
 
 #panelLogo img {
-    max-height: 24px; 
+    max-height: 24px;
     padding: 2px;
 }
 
@@ -1794,8 +1785,8 @@ input[type=checkbox].checkbox {
 
 @media only screen and (min-width: 720px) {
     #panelLogo img {
-        max-height: 32px; 
-        padding: 3px;
+        max-height: 32px;
+        padding: 6px 3px;
     }
 
     #panelTitle {
@@ -1880,7 +1871,7 @@ myKey {
 }
 
 #dijit_layout_ContentPane_2 {
-  padding: 0.5px !important;
+  overflow:  hidden;
 }
 
 #vSplitterTools {
@@ -1970,8 +1961,27 @@ myKey {
     color:white;
 }
 
-.esriBookmarks {
+.esriBookmarks { 
     border:none;
+}
+
+.thumbFeature {
+    position:absolute;
+    top:5px;
+    right:8px;
+}
+
+.thumbFeature * {
+    max-width: 24px;
+    max-height:24px;
+}
+
+.esriViewPopup .header {
+    margin-right: 26px;
+}
+
+.esriViewPopup .esriDateValue {
+    white-space: nowrap;
 }
 
 .more_help {

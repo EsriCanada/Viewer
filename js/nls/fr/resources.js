@@ -19,6 +19,7 @@ define(
         "map": {
             "error": "Impossible de créer la carte",
             "overviewTip": "Faites glisser pour modifier l'étendue de la carte, \nou mise au point et utiliser les touches fléchées.",
+            "symbol": "symbole"
         },
         "EsriWorldGeocoder": "Géocodeur Mondial Esri",
         "tools":{
@@ -89,6 +90,7 @@ define(
         searchEnterCriteria : "Terme recherché pour",
         pressAlt : "Appuyer sur ALT + 0 à 9 pour naviguer rapidement",
         instructions:"instructions.french",
+        moreHelp : "Plus d'aide",
         wcagViewer : "Visualiseur Accessible",
         leftCollapse: "Réduire le panneau gauche",
         leftExpand: "Révéler le panneau gauche",

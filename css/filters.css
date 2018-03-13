@@ -94,9 +94,9 @@
 }
 
 .dijitTooltipContainer {
-  background-color: #b60000 !important;
-  color:white !important;
-  margin-left: 10px;
+  /* background-color: #b60000 !important; */
+  /* color:white !important; */
+  /* margin-left: 10px; */
 }
 
 .showErrors {

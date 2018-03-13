@@ -90,3 +90,55 @@ http://reference.sitepoint.com/css/outline-color
   z-index:1;
   pointer-events: none;
 }
+
+.activeBg {
+  padding-top: 1px;
+  margin-top:-1px;
+  border-radius: 15%;
+}
+
+
+#addrHintTitle {
+  padding: 5px;
+  margin:-5px;
+  border-radius: 5px 5px 0 0;
+  /*background:navy; 
+  color:white;*/
+}
+
+#addrHintContent {
+  padding: 5px;
+  margin:-5px;
+  margin-top:5px;
+  border-radius: 0 0 5px 5px;
+  font-weight: bold;
+  background:white;
+  color:black;
+}
+
+.tooltip__focus {  
+    font-size: 14px;
+    font-family: 'Raleway', sans-serif;
+    padding:5px;
+    margin-top: 1.5em;
+    position: absolute;
+    max-width: 200px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    border-style: solid;
+    border-width: 2px;
+    z-index:1000;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+    -moz-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+    box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+}
+
+.tool--focus {
+    background-color: black;
+    color: white;
+    border-color: black;
+}

@@ -37,7 +37,7 @@ define([
             link.href = "js/LanguageSelect/Templates/LanguageSelect.css";
             link.type = "text/css";
             link.rel = "stylesheet";
-            query('html')[0].appendChild(link);
+            query('head')[0].appendChild(link);
         },
 
         Click: function(e) { 

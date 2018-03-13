@@ -4,6 +4,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "application/ShowBasemapGallery/ShowBasemapGallery",
     "application/ImageToggleButton/ImageToggleButton", 
     "dojo/i18n!application/nls/LayerManager",
+    "dojo/i18n!application/nls/resources",
     "dojo/text!application/LayerManager/Templates/LayerManager.html", 
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
     "dojo/_base/array",
@@ -12,7 +13,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, on, Deferred,
         Legend, ShowFeatureTable, ShowBasemapGallery, ImageToggleButton,
-        i18n, dijitTemplate, 
+        i18n, i18n_app, dijitTemplate, 
         domClass, domAttr, domStyle, domConstruct, event, 
         array,
         LabelLayer
@@ -384,7 +385,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             map: this.map,
                             layerInfos: [{
                                 defaultSymbol:true,
-                                layer: layer.layerObject
+                                layer: layer.layerObject,
+                                title: layer.title,
                             }],
                         }, domConstruct.create("div", {
                             role:'application', 
@@ -901,9 +903,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     });
                 });
 
-                var LegendLayerImages = legend.querySelectorAll(".esriLegendLayer image");
+                var LegendLayerImages = legend.querySelectorAll(".esriLegendLayer image, .esriLegendLayer img");
                 array.forEach(LegendLayerImages, function(image) {
-                    domAttr.set(image,'alt','');
+                    domAttr.set(image,'alt', i18n_app.map.symbol);
                 });
 
                 var messages = legend.querySelectorAll(".esriLegendMsg");

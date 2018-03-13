@@ -19,6 +19,7 @@ define({
         "map": {
             "error": "Unable to create map",
             "overviewTip": "Drag to change the Map Extent,\nor focus and use Arrow keys.",
+            "symbol": "symbol"
         },
         "EsriWorldGeocoder": "Esri World Geocoder",
         "tools":{
@@ -89,6 +90,7 @@ define({
         searchEnterCriteria : "Enter search term for",
         pressAlt : "Press ALT + 0 to 9 keys for fast navigation",
         instructions:"instructions",
+        moreHelp : "More Help",
         wcagViewer : "Accessible Viewer",
         leftCollapse: "Collapse Left Panel",
         leftExpand: "Expand Left Panel",

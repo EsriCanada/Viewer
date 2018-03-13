@@ -1,30 +1,27 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
     "dojo/on", 
-    "dojo/Deferred", "dojo/query", 
-    "dojo/text!application/GeoCoding/Templates/GeoCodingHeader.html", 
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
+    "esri/tasks/locator", "esri/geometry/webMercatorUtils",
+    "dojo/query", 
+    "dojo/text!application/GeoCoding/templates/GeoCodingHeader.html", 
+    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", 
     "dojo/parser", "dojo/ready",
-    "dijit/layout/ContentPane",    
-    "dojo/string", 
     "dojo/i18n!application/nls/PopupInfo",
-    "esri/domUtils",
-    "esri/dijit/Popup",
-    "dojo/NodeList-dom", "dojo/NodeList-traverse"
+    "application/GeoCoding/GeoAddressTooltip",
+    "dojox/gfx"
     
     ], function (
         Evented, declare, lang, has, esriNS,
-        _WidgetBase, _TemplatedMixin, registry,
+        _WidgetBase, _TemplatedMixin, 
         on, 
-        Deferred, query,
+        Locator, webMercatorUtils,
+        query,
         GeoCodingHeaderTemplate, 
-        dom, domClass, domAttr, domStyle, domConstruct, event, 
+        dom, domClass, domAttr, domStyle, domConstruct, 
         parser, ready,
-        ContentPane,
-        string,
         i18n,
-        domUtils,
-        Popup
+        GeoAddressTooltip,
+        gfx
     ) {
 
     // ready(function(){
@@ -42,6 +39,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             id: 'geoCodingHeadrId',
             popupInfo: null,
             superNavigator: null,
+            iconColor: 'white',
             template: GeoCodingHeaderTemplate,
             self: null,
         },
@@ -61,6 +59,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.emptyMessage = defaults.emptyMessage;
             this.contentPanel = defaults.contentPanel;
             this.self = defaults.self;
+            this.iconColor=defaults.iconColor;
+            this.themeColor = defaults.themeColor,
+
+            this.locator = new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
         },
 
         startup: function () {
@@ -85,8 +87,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.loaded = true;
 
-            // var popup = this.map.infoWindow;
-
+            this.addressTooltipButton = query('#'+this.popupHeaderId+' .popupInfoButton.tooltips')[0];
+            
+            if(this.addressTooltipButton) {
+                on(this.addressTooltipButton, 'click', lang.hitch(this, this.switchTooltips));
+            }
             on(query('#'+this.popupHeaderId+' .popupInfoButton.zoom')[0], 'click', lang.hitch(this, this.zoomTo));
             on(query('#'+this.popupHeaderId+' .popupInfoButton.map')[0], 'click', lang.hitch(this, this.toMap));
             on(query('#'+this.popupHeaderId+' .popupInfoButton.clear')[0], 'click', lang.hitch(this, this.clearAddress));
@@ -127,21 +132,24 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }));
             }));
 
-            // on(popup, "SelectionChange", lang.hitch(this, function() {
-            //     if(popup.selectedIndex>=0) {
-            //         dom.byId('featureIndex').innerHTML = popup.selectedIndex + 1;
-            //     }
-            // }));
 
-            // on(popup, "SetFeatures", lang.hitch(this, function() {
-            //     if(popup.features && popup.features.length > 0) {
-            //         // this.setTotal(popup.features.length);
-            //     }
-            //     else {
-            //         this.clearFeatures();
-            //     }
-            // }));
 
+            if(this.addressTooltipButton) {
+                this.addressTooltipButton.activate = function(active) {};
+                this.addressTooltipButton.isActive = lang.hitch(this, function() { return dojo.hasClass(this.addressTooltipButton, 'activeBg'); });
+
+                this.geoAddressTooltip = new GeoAddressTooltip({
+                    map: this.map,
+                    toolbar: this.toolbar, 
+                    addressTooltipButton: this.addressTooltipButton,
+                    iconColor: this.iconColor,
+                    themeColor: this.themeColor,
+                    locator: this.locator,
+                }, domConstruct.create('Div', {}, this.headerNode));
+                this.geoAddressTooltip.startup();
+
+                domConstruct.place(this.geoAddressTooltip.domNode, "mapDiv");
+            }
         },
 
         ToZoom: function() {
@@ -167,7 +175,18 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         toMap : function(ev) {
             this.map.container.focus();
             this.clearSuperNavigator();
-       },
+        },
+
+        switchTooltips : function(ev) {
+            if(dojo.hasClass(ev.target, 'activeBg')) {
+                domClass.remove(ev.target, 'activeBg');
+                ev.target.activate(false);
+            }
+            else {
+                domClass.add(ev.target, 'activeBg');
+                ev.target.activate(true);
+            }
+        },
 
         zoomTo : function(ev) {
             this.panZoom();

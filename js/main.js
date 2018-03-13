@@ -185,7 +185,8 @@ define([
                         : this.setColor(this.config.activeColor, 0.9);
                 this.theme = this.setColor(this.config.theme);
 
-                if (config.useGoogleAnalytics && false) {
+                if(config.useGoogleAnalytics)
+                {
                     var gaqUserAccount = config.googleAnalyticsUserAccount;
                     if (!gaqUserAccount || gaqUserAccount.trim() === "") {
                         gaqUserAccount = "UA-109917224-4";
@@ -1930,18 +1931,12 @@ define([
                             }
                         }
 
-                        var legendLayerImages = node.querySelectorAll(
-                            ".esriLegendLayer image"
-                        );
-                        if (legendLayerImages) {
+
+                        var legendLayerImages = node.querySelectorAll(".esriLegendLayer image, .esriLegendLayer img");
+                        if(legendLayerImages) {
                             // legendLayerImages.forEach(function(image) {
-                            for (
-                                var iii = 0;
-                                iii < legendLayerImages.length;
-                                iii++
-                            )
-                                domAttr.set(legendLayerImages[iii], "alt", "");
-                            // });
+                            for(var iii=0; iii<legendLayerImages.length; iii++)
+                                domAttr.set(legendLayerImages[iii],'alt',i18n.map.symbol);
                         }
 
                         var messages = node.querySelectorAll(".esriLegendMsg");
@@ -1979,14 +1974,13 @@ define([
                         });
                     });
 
-                    this.legendNodeObserver.observe(
-                        dojo.byId("esri_dijit_Legend_0"),
-                        {
-                            attributes: true,
-                            childList: true,
-                            characterData: false
-                        }
-                    );
+
+                    this.legendNodeObserver.observe(dojo.byId('esri_dijit_Legend_0'), { 
+                        attributes: true, 
+                        childList: true, 
+                        characterData: false,
+                        subtree: true 
+                    });
 
                     deferred.resolve(true);
                 } else {
@@ -2036,17 +2030,17 @@ define([
                 var geoCodingDiv = toolbar.createTool(tool, "");
 
                 geoCoding = new GeoCoding(
-                    {
-                        map: this.map,
-                        toolbar: toolbar,
-                        superNavigator: this.superNav,
-                        search: this.search,
-                        maxSearchResults: this.config.maxSearchResults,
-                        searchMarker: this.config.geoCodingMarker,
-                        geolocatorLabelColor: this.config.geolocatorLabelColor
-                    },
-                    geoCodingDiv
-                );
+                {
+                    map: this.map,
+                    toolbar: toolbar,
+                    superNavigator: this.superNav,
+                    themeColor: this.config.theme,
+                    iconColor: this.config.icons,
+                    search: this.search,
+                    maxSearchResults: this.config.maxSearchResults,
+                    searchMarker: this.config.geoCodingMarker,
+                    geolocatorLabelColor: this.config.geolocatorLabelColor
+                }, geoCodingDiv);
                 geoCoding.startup();
 
                 deferred.resolve(true);
@@ -3160,16 +3154,17 @@ define([
 
             var styleSheetList = document.styleSheets;
             var styleCss = null;
-            for (i = 0; i < styleSheetList.length; i++) {
-                css = styleSheetList[i];
+
+            for(var i=0; i<styleSheetList.length; i++) {
+                var css = styleSheetList[i];
                 if (css.href.indexOf("styles1.css") > 0) {
                     styleCss = css;
                     break;
                 }
             }
 
-            if (styleCss) {
-                for (i = 0; i < styleCss.cssRules.length; i++) {
+            if(styleCss) {
+                for(var i=0; i<styleCss.cssRules.length; i++) {
                     var rule = styleCss.cssRules[i];
                     if (
                         typeof rule.selectorText != "undefined" &&
@@ -3192,6 +3187,21 @@ define([
                                 this.hoverColor
                             );
                         }
+                        //active
+                        if(rule.selectorText.indexOf('.activeBg') >= 0) {
+                            rule.style.backgroundColor = rgbaColor(this.activeColor);
+                        }
+
+                        if(rule.selectorText.indexOf('#addrHintTitle') >= 0) {
+                            rule.style.backgroundColor = rgbaColor(this.theme);
+                            rule.style.color = rgbaColor(this.color);
+                        }
+                        if(rule.selectorText.indexOf('.tool--focus') >= 0) {
+                            rule.style.backgroundColor = rgbaColor(this.color);
+                            rule.style.borderColor = 
+                            rule.style.color = rgbaColor(this.theme);
+                        }
+                        
                         //focus
                         if (rule.selectorText.indexOf(":focus") >= 0) {
                             if (rule.selectorText.indexOf("#mapDiv") >= 0) {
