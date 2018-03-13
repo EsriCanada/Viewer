@@ -1909,9 +1909,12 @@ define([
                             ".esriLegendLayer"
                         );
                         for (var j = 0; j < legendLayers.length; j++) {
-                            var legendServiceList = legendLayers[
-                                j
-                            ].querySelector("tbody");
+                            domAttr.set(
+                                legendLayers[j],
+                                "role",
+                                "presentation"
+                            );
+                            var legendServiceList = legendLayers[j].querySelector("tbody");
 
                             domAttr.set(legendServiceList, "role", "list");
                             //domAttr.set(legendServiceList, "aria-label", legendServiceLabel.innerHTML);
