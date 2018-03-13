@@ -92,6 +92,7 @@ define({
         wcagViewer : "Accessible Viewer",
         leftCollapse: "Collapse Left Panel",
         leftExpand: "Expand Left Panel",
+        moreHelp : "More Help",
     }),
 "ar": 1,
 "cs": 1,

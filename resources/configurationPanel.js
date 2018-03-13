@@ -36,6 +36,13 @@
                "tooltip": "Defaults to web map title"
             },
             {
+               "label": "<strong>More Help URL:</strong>",
+               "placeHolder": "Add more help to Instructions",
+               "fieldName": "moreHelpURL",
+               "type": "string",
+               "tooltip": "Opens in a separate page if defined"
+            },
+            {
                "label": "<strong>Logo Image:</strong>",
                "fieldName": "logo",
                "type": "string",
