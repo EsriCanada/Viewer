@@ -291,7 +291,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     this.contentPanel.set("content", feature.getContent()).then(lang.hitch(this, function() {
                         var mainSection = query('.esriViewPopup .mainSection', dojo.byId('popupInfoContent'));
                         if(mainSection && mainSection.length > 0) {
-                            var header = query('.header', mainSection[0]);
+                            // var header = query('.header', mainSection[0]);
                             // if(header && header.length > 0) {
                             //     domAttr.set(header[0], 'tabindex', 0);
                             // }
@@ -309,6 +309,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             //     if(description && description.length > 0) {
                             //         domAttr.set(description[0], 'tabindex', 0);
                             //     }
+                            // }
+
+                            // var popupTitle =  query('[dojoattachpoint=_title]', mainSection[0]);
+                            // if(popupTitle) {
+                                
                             // }
 
                             var editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
