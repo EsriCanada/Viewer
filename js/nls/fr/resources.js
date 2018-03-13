@@ -92,5 +92,6 @@ define(
         wcagViewer : "Visualiseur Accessible",
         leftCollapse: "Réduire le panneau gauche",
         leftExpand: "Révéler le panneau gauche",
+        moreHelp : "Plus d'aide",
     })
 );
