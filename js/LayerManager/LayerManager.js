@@ -96,7 +96,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // this._fixLegends();
             
             if(this.defaults.toolbar) {
-                on(this.defaults.toolbar, 'updateTool_layers', lang.hitch(this, function(name) {
+                on(this.defaults.toolbar, 'updateTool_layerManager', lang.hitch(this, function(name) {
                     this._fixLegends();
                 }));
             }
@@ -842,7 +842,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         _fixLegends : function() {
-            this._delay(200).then(lang.hitch(this, function() {
+            this._delay(400).then(lang.hitch(this, function() {
             var legends = dojo.query('div.legend');
             array.forEach(legends, lang.hitch(this, function(legend) {
                 var tables = legend.querySelectorAll("table");
