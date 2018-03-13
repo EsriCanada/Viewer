@@ -103,6 +103,7 @@ define({
     "scalebar": false,
     //Specify a title for the application. If not provided the web map title is used.
     "title": "",
+    "moreHelpURL" : "",
     "level": null,
     "center": null,
     //Replace these with your own bitly key
