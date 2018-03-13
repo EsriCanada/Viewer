@@ -292,24 +292,24 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         var mainSection = query('.esriViewPopup .mainSection', dojo.byId('popupInfoContent'));
                         if(mainSection && mainSection.length > 0) {
                             var header = query('.header', mainSection[0]);
-                            if(header && header.length > 0) {
-                                domAttr.set(header[0], 'tabindex', 0);
-                            }
+                            // if(header && header.length > 0) {
+                            //     domAttr.set(header[0], 'tabindex', 0);
+                            // }
 
                             var attrTable = query('.attrTable', mainSection[0]);
                             if(attrTable && attrTable.length > 0) {
                                 domAttr.set(attrTable[0], 'role', 'presentation');
                                 var rows = query('tr', attrTable[0]);
-                                if(rows) {
-                                    rows.forEach(function(row) {domAttr.set(row, 'tabindex', 0);});
-                                }
+                                // if(rows) {
+                                //     rows.forEach(function(row) {domAttr.set(row, 'tabindex', 0);});
+                                // }
                             } 
-                            else {
-                                var description = query('[dojoattachpoint=_description]', mainSection[0]);
-                                if(description && description.length > 0) {
-                                    domAttr.set(description[0], 'tabindex', 0);
-                                }
-                            }
+                            // else {
+                            //     var description = query('[dojoattachpoint=_description]', mainSection[0]);
+                            //     if(description && description.length > 0) {
+                            //         domAttr.set(description[0], 'tabindex', 0);
+                            //     }
+                            // }
 
                             var editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
                             if(editSummarySection) {
