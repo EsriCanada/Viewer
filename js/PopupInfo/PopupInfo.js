@@ -299,7 +299,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             var attrTable = query('.attrTable', mainSection[0]);
                             if(attrTable && attrTable.length > 0) {
                                 domAttr.set(attrTable[0], 'role', 'presentation');
-                                var rows = query('tr', attrTable[0]);
+                                // var rows = query('tr', attrTable[0]);
                                 // if(rows) {
                                 //     rows.forEach(function(row) {domAttr.set(row, 'tabindex', 0);});
                                 // }
