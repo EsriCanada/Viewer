@@ -1,0 +1,10 @@
+.addressInfo th {
+	vertical-align: top;
+	text-align: left;
+	font-weight: normal;
+}
+
+.addressInfo td {
+	vertical-align: top;
+	font-weight: bold;
+}

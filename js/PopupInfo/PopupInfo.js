@@ -13,7 +13,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/string", 
     "dojo/i18n!application/nls/PopupInfo",
     "esri/domUtils",
-    "esri/dijit/Popup", "application/PopupInfo/PopupInfoHeader","application/SuperNavigator/SuperNavigator",
+    "esri/dijit/Popup", 
+    "application/PopupInfo/PopupInfoHeader",
+    "application/SuperNavigator/SuperNavigator",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
     
     ], function (
@@ -51,7 +53,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             superNavigator : null,
             maxSearchResults: 10,
             searchMarker: './images/SearchPin.png',
-            geolocatorLabelColor: "#ff0000" // 'red'
+            geolocatorLabelColor: "#ff0000", // 'red'
+            emptyMessage: i18n.widgets.popupInfo.noFeatures
         },
 
         constructor: function (options, srcRefNode) {
@@ -68,6 +71,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this._i18n = i18n;
             this.headerNode = dom.byId(defaults.header);
             this.superNavigator = defaults.superNavigator;
+            this.emptyMessage = defaults.emptyMessage;
 
             dojo.create("link", {
                 href : "js/PopupInfo/Templates/PopupInfo.css",
@@ -110,6 +114,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 this.search.on('search-results', lang.hitch(this, function(e) {
                     // console.log('search-results', e);
+
                     var features = [];
                     if(e.results) {
                         for(var i = 0; i< this.search.sources.length; i++) {
@@ -117,24 +122,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 var dataFeatures = e.results[i].map(function(r){ return r.feature;});
                                 var infoTemplate = null;
                                 var layer = null;
-                                if(this.search.sources[i].hasOwnProperty('featureLayer')) {
+                                var isFeatureLayer = this.search.sources[i].hasOwnProperty('featureLayer');
+                                if(isFeatureLayer) {
                                     infoTemplate = this.search.sources[i].featureLayer.infoTemplate;
                                     layer = this.search.sources[i].featureLayer;
                                 }
-                                else {
-                                    infoTemplate = new InfoTemplate(
-                                        "Locator", 
-                                        "<div class='esriViewPopup'>"+
-                                        "<div Tabindex=0 class='header'>${Addr_type} ${Loc_name} ${Subregion}</div>"+
-                                        "<div class='hzLine'></div>"+
-                                        "<span Tabindex=0>${LongLabel}</span>"+
-                                        "<br/><span tabindex=0 class='locatorScore'>Score: ${Score}</span>"+
-                                        "</div>"
-                                        );   
-                                }
                                 for(var j = 0; j< dataFeatures.length; j++) {
-                                    dataFeatures[j].infoTemplate = infoTemplate;
-                                    dataFeatures[j]._layer = layer;
+                                    if(isFeatureLayer) {
+                                        dataFeatures[j].infoTemplate = infoTemplate;
+                                        dataFeatures[j]._layer = layer;
+                                    } else {
+                                        dataFeatures[j].infoTemplate = new InfoTemplate(
+                                            i18n.widgets.geoCoding.Location,
+                                            this.makeAddressTemplate(e.results[i][j].feature.attributes)
+                                        );
+                                    }
                                 }
                                 features = features.concat(dataFeatures);
                             }
@@ -155,6 +157,75 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         popupInfoHeader : null,
         contentPanel : null,
 
+        makeAddressTemplate: function(address) {
+            console.log('Info Address:', address);
+            
+            if(address.Addr_type.isNonEmpty()) {
+                var prop = address.Addr_type.replace(' ', '');
+                address.AddrTypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop)) ?
+                i18n.widgets.addrType[prop] : address.Addr_type;
+            }
+            // address.Type.isNonEmpty()
+            if(address.Loc_name.isNonEmpty()) {
+                var prop1 = address.Loc_name.replace(' ', '');
+                address.TypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop1)) ?
+                i18n.widgets.addrType[prop1] : address.Loc_name;
+            }
+
+            var result = "";
+
+            if(address.StAddr.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Address+"</th><td>${StAddr}</td></tr>";
+            if(address.Block.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Block+"</th><td>${Block}</td></tr>";
+            if(address.Sector.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Sector+"</th><td>${Sector}</td></tr>";
+            if(address.Nbrhd.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Neighborhood+"</th><td>${Nbrhd}</td></tr>";
+            if(address.PlaceName.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.PlaceName+"</th><td>${PlaceName}</td></tr>";
+            if(address.MetroArea.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.MetroArea+"</th><td>${MetroArea}</td></tr>";
+            if(address.District.isNonEmpty() && address.District !== address.City) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.District+"</th><td>${District}</td></tr>";
+            if(address.City.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.City+"</th><td>${City}</td></tr>";
+            if(address.Postal.isNonEmpty()) {
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.PostalCode+"</th><td>${Postal}";
+                if(address.PostalExt.isNonEmpty()) result += " ${PostalExt}";
+                result += "</td></tr>";
+            }
+            if(address.Region.isNonEmpty()) {
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Region+"</th><td>${Region}";
+                if(address.Subregion.isNonEmpty() && address.Region !== address.Subregion) {
+                    result += " - ${Subregion}";
+                }
+                result += "</td></tr>";
+            }
+            if(address.Territory.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Territory+"</th><td>${Territory}</td></tr>";
+            if(address.Country.isNonEmpty()) 
+                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${Country}</td></tr>";
+
+            if(result !=='') {
+                result = 
+                "<div class='esriViewPopup'>"+
+                    "<div tabindex=0 class='header'>"+
+                        (address.Addr_type.isNonEmpty() || address.Loc_name.isNonEmpty() ? 
+                            (
+                                (address.Addr_type.isNonEmpty() ? '${AddrTypeLoc}':'')+
+                                (address.Addr_type.isNonEmpty() && address.Loc_name.isNonEmpty() ? ' - ': '')+
+                                (address.Loc_name.isNonEmpty() ? '${TypeLoc}':'')
+                            ) 
+                            : '')+"</div>"+
+                    "<div class='hzLine'></div>"+
+                    "<table class='addressInfo'>"+result+"</table>"+
+                    "<span tabindex=0 class='locatorScore'>Score: ${Score}</span>"+
+                    "</div>";
+            }
+            return result;
+        },
+
         _init: function () {
 
             this.loaded = true;
@@ -166,8 +237,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var fontSize = cs.fontSize.slice(0,-2);
             this.searchLabel = new TextSymbol({
                 yoffset : -fontSize,//-14,
-                haloColor: [255,255,255,255],
-                haloSize: 2,
+                haloColor: [25,25,25,155],
+                haloSize: 4,
                 font : 
                 {
                     family : cs.fontFamily, //"Roboto Condensed",
@@ -194,26 +265,31 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             //https://developers.arcgis.com/javascript/3/sandbox/sandbox.html?sample=popup_sidepanel
 
-            contentPanel = new ContentPane({
+            this.contentPanel = new ContentPane({
                 region: "center",
-                id: "leftPane",
+                id: "popupInfoContent",
                 tabindex: 0,
             }, dom.byId("feature_content"));
-            contentPanel.startup();
-            contentPanel.set("content", i18n.widgets.popupInfo.instructions);
+            this.contentPanel.startup();
+            this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
             
             this.popupInfoHeader = new PopupInfoHeader({
                 map: this.map,
                 toolbar: this.toolbar, 
+                header: 'pageHeader_infoPanel',
+                id: 'infoPanel_headerId', 
                 superNavigator : this.superNavigator,
+                emptyMessage: this.emptyMessage,
             }, domConstruct.create('Div', {}, this.headerNode));
             this.popupInfoHeader.startup();
 
             this.displayPopupContent = lang.hitch(this, function (feature) {
-                this.toolbar._toolOpen('infoPanel');
+                // if(this.toolbar.IsToolSelected('geoCoding')) return;
+
+                this.toolbar.OpenTool('infoPanel');
                 if (feature) {
-                    contentPanel.set("content", feature.getContent()).then(lang.hitch(this, function() {
-                        var mainSection = query('.esriViewPopup .mainSection', dojo.byId('leftPane'));
+                    this.contentPanel.set("content", feature.getContent()).then(lang.hitch(this, function() {
+                        var mainSection = query('.esriViewPopup .mainSection', dojo.byId('popupInfoContent'));
                         if(mainSection && mainSection.length > 0) {
                             var header = query('.header', mainSection[0]);
                             if(header && header.length > 0) {
@@ -235,14 +311,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 }
                             }
 
-                            var editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('leftPane'));
+                            var editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
                             if(editSummarySection) {
                                 var editSummary =  query('.editSummary', editSummarySection[0]);
                                 if(editSummary) {
                                     editSummary.forEach(function(edit) { domAttr.set(edit, 'tabindex', 0);});
                                 }
                             }
-                            var images = query('.esriViewPopup img', dojo.byId('leftPane'));
+                            var images = query('.esriViewPopup img', dojo.byId('popupInfoContent'));
                             if(images) {
                                 images.forEach(function(img) {
                                     var alt = domAttr.get(img, 'alt');
@@ -264,10 +340,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             // on(popup, "SetFeatures", lang.hitch(this, function() {
             //     console.log("SetFeatures", popup.features);
+            //     if(this.toolbar.IsToolSelected('geoCoding')) {
+            //     }
             // }));
 
             on(popup, "ClearFeatures", lang.hitch(this, function() {
-                contentPanel.set("content", i18n.widgets.popupInfo.instructions);
+                if(this.toolbar.IsToolSelected('geoCoding')) return;
+
+                this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
                 // if(this.superNavigator) {
                 //     this.superNavigator.clearZone();
                 // }
@@ -277,6 +357,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }));
 
             on(popup, "SelectionChange", lang.hitch(this, function() {
+                if(this.toolbar.IsToolSelected('geoCoding')) return;
+
                 var selectedFeature = popup.getSelectedFeature();
                 if(selectedFeature && selectedFeature !== undefined) {
                     this.displayPopupContent(selectedFeature);

@@ -41,8 +41,8 @@ define([
         },
 
         Click: function(e) { 
-            //console.log(e.srcElement.parentElement);
-            var menuItemDataSet = query(e.srcElement).closest('.dijitMenuItem')[0].dataset;
+            //console.log(e.target.parentElement);
+            var menuItemDataSet = query(e.target).closest('.dijitMenuItem')[0].dataset;
             var docLocale = query('html')[0].lang;
             var locale = menuItemDataSet.code;
             if(!locale || locale==='' || locale === "undefined" || locale === undefined)

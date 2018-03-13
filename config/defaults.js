@@ -69,6 +69,7 @@ define({
         {"name": "layers", "enabled": true},
         {"name": "mapKeyboardNavigation", "enabled": false},
         {"name": "infoPanel", "enabled": false},
+        {"name": "geoCoding", "enabled": false},
         {"name": "basemap", "enabled": true},
         {"name": "features", "enabled": true},
         {"name": "filter", "enabled": true},

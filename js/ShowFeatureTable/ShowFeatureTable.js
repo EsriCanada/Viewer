@@ -71,6 +71,7 @@ define([
                     this.borderContainer.resize();
                     break;
             }
+            if(_gaq) _gaq.push(['_trackEvent', "Feature Table", !visible ? 'Visible' : 'Hidden']);
         },
 
         constructor: function (options, srcRefNode) {
@@ -231,7 +232,22 @@ define([
         loadTable: function(myFeatureLayer){
             var outFields = [];
             var fieldInfos = [];
-            var fieldsMap = myFeatureLayer.layerObject.infoTemplate._fieldsMap;
+            var fieldsMap = [];
+            if(myFeatureLayer.layerObject.infoTemplate)
+                fieldsMap = myFeatureLayer.layerObject.infoTemplate._fieldsMap;
+            else {
+                var fields = myFeatureLayer.layerObject.fields;
+                for(var field in fields) {
+                    fieldsMap.push(
+                        {
+                            fieldName: fields[field].name,
+                            label: fields[field].alias,
+                            isEditable: fields[field].editable,
+                            tooltip: "",
+                            visible: true
+                        });
+                }
+            }
             for(var p in fieldsMap) {
                 if(fieldsMap.hasOwnProperty(p) && fieldsMap[p].visible)
                 {

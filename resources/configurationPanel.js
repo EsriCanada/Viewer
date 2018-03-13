@@ -214,6 +214,11 @@
                "fieldName": "tool_infoPanel"
             },
             {
+               "label": "Reverse Geocode",
+               "type": "boolean",
+               "fieldName": "tool_GeoCoding"
+            },
+            {
                "label": "Map Keyboard Navigation",
                "type": "boolean",
                "fieldName": "tool_mapKeyboardNavigation"
@@ -319,6 +324,12 @@
             {
                "label": "<strong>Geocoder Image Marker:</strong>",
                "fieldName": "searchMarker",
+               "type": "string",
+               "tooltip": "Defaults to './images/SearchPin.png'"
+            },
+            {
+               "label": "<strong>Reverse Geocoder Image Marker:</strong>",
+               "fieldName": "geoCodingMarker",
                "type": "string",
                "tooltip": "Defaults to './images/SearchPin.png'"
             },
@@ -509,6 +520,27 @@
                "tooltip": "Application ID for language 3."
             }
          ]
+      },
+      {
+         "category": "Debug",
+         "fields": [
+            {
+               "type": "paragraph",
+               "value": "Allow Google Analytics to receive information about how the application works. <br/>Your users private information won't be exposed."
+            },
+            {
+               "label": "Use Google Analytics",
+               "type": "boolean",
+               "fieldName": "useGoogleAnalytics", 
+               "tooltip": "Check to get information in your Google Analytics account."
+            },
+            {
+               "label": "Google Analytics User Account:",
+               "fieldName": "googleAnalyticsUserAccount",
+               "type": "string",
+               "tooltip": "Enter here your Google Analytics User Account in the format:<br/>'UA-#########-#'."
+            }
+         ]
       }
    ],
    "values": {
@@ -517,6 +549,7 @@
       "animated_marker": true,
       "marker": "images/ripple-dot1.gif",
       "searchMarker": "./images/SearchPin.png",
+      "geoCodingMarker": "./images/SearchPin.png",
       "marker_size": "35",
       "alt_keys": true,
       "logo": "images/logo.png",
@@ -545,6 +578,7 @@
       "tool_features": true,
       "tool_featureTable": true,
       "tool_infoPanel": false,
+      "tool_GeoCoding": false,
       "tool_mapKeyboardNavigation": false,
       "tool_home": true,
       "tool_locate": true,
@@ -559,6 +593,8 @@
       "countryCodeSearch": "",
       "searchExtent": false,
       "languageLabel": true,
+      "googleAnalyticsUserAccount": "",
+      "useGoogleAnalytics": true,
       "lang1shortName": "EN",
       "lang1name": "English",
       "lang1code": "EN-US",

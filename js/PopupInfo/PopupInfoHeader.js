@@ -2,7 +2,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
     "dojo/on", 
     "dojo/Deferred", "dojo/query", 
-    "dojo/text!application/PopupInfo/templates/PopupInfoHeader.html", 
+    "dojo/text!application/PopupInfo/Templates/PopupInfoHeader.html", 
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
     "dojo/parser", "dojo/ready",
     "dijit/layout/ContentPane",    
@@ -10,6 +10,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/i18n!application/nls/PopupInfo",
     "esri/domUtils",
     "esri/dijit/Popup",
+    // "application/ImageToggleButton/ImageToggleButton", 
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
     
     ], function (
@@ -24,7 +25,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         string,
         i18n,
         domUtils,
-        Popup
+        Popup// , ImageToggleButton
     ) {
 
     // ready(function(){
@@ -33,14 +34,17 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     // });
 
     var Widget = declare("esri.dijit.PopupInfoHeader", [_WidgetBase, _TemplatedMixin, Evented], {
-        templateString: PopupInfoHeaderTemplate,
+        // templateString: PopupInfoHeaderTemplate,
 
         options: {
             map: null,
             toolbar: null, 
             header: 'pageHeader_infoPanel',
+            id: 'popupInfoHeadrId',
             popupInfo: null,
             superNavigator: null,
+            template: PopupInfoHeaderTemplate,
+            emptyMessage: '***'
         },
 
         constructor: function (options, srcRefNode) {
@@ -50,9 +54,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.map = defaults.map;
             this.toolbar = defaults.toolbar;
+            this.templateString = defaults.template;
+            this.popupHeaderId = defaults.id;
             this._i18n = i18n;
             this.headerNode = dom.byId(defaults.header);
             this.popupInfo = defaults.popupInfo;
+            this.emptyMessage = defaults.emptyMessage;
+
         },
 
         startup: function () {
@@ -73,17 +81,43 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         total:0,
 
+        toggleGeoCoding:function(e) {
+            if(e.type === 'keyup' && !(e.key === ' ' || e.key === 'Spacebar') && e.key !== 'Enter') return; 
+            var cb = dom.byId('popupGeoCoding_cb');
+            this.GeoCodingEnabled = cb.checked=!cb.checked;
+            var img1 = dom.byId('geoCodingDisableBtn');
+            var img2 = dom.byId('geoCodingEnableBtn');
+            if(this.GeoCodingEnabled) 
+            {
+               dojo.removeClass(img2, 'geoCodingUnselected');
+               dojo.addClass(img1, 'geoCodingUnselected');
+               img2.focus();
+            } else {
+               dojo.removeClass(img1, 'geoCodingUnselected');
+               dojo.addClass(img2, 'geoCodingUnselected');
+               img1.focus();
+            }
+        },
+
         _init: function () {
 
             this.loaded = true;
 
             var popup = this.map.infoWindow;
 
-            on(query('.popupInfoButton.prev')[0], 'click', lang.hitch(this, this.selectPrevious));
-            on(query('.popupInfoButton.next')[0], 'click', lang.hitch(this, this.selectNext));
-            on(query('.popupInfoButton.zoom')[0], 'click', lang.hitch(this, this.zoomTo));
-            on(query('.popupInfoButton.map')[0], 'click', lang.hitch(this, this.toMap));
-            on(query('.popupInfoButton.clear')[0], 'click', lang.hitch(this, this.clearFeatures));
+            on(query('#'+this.popupHeaderId+' .popupInfoButton.prev')[0], 'click', lang.hitch(this, this.selectPrevious));
+            on(query('#'+this.popupHeaderId+' .popupInfoButton.next')[0], 'click', lang.hitch(this, this.selectNext));
+            on(query('#'+this.popupHeaderId+' .popupInfoButton.zoom')[0], 'click', lang.hitch(this, this.zoomTo));
+            on(query('#'+this.popupHeaderId+' .popupInfoButton.map')[0], 'click', lang.hitch(this, this.toMap));
+            on(query('#'+this.popupHeaderId+' .popupInfoButton.clear')[0], 'click', lang.hitch(this, this.clearFeatures));
+
+            this.GeoCodingEnabled = has("geoCoding") && dom.byId('popupGeoCoding_cb').checked;
+            if(has("geoCoding")) {
+                on(dom.byId('popupGeoCoding_lbl'), 'click', lang.hitch(this, this.toggleGeoCoding));
+                on(dom.byId('popupGeoCoding_lbl'), 'keyup', lang.hitch(this, this.toggleGeoCoding));
+            } else {
+                dojo.setStyle(dom.byId("popupGeoCoding"),'display', 'none');
+            }
 
             var buttons = query(".popupInfoButton");
             buttons.forEach(lang.hitch(this, function (btn) {
@@ -111,7 +145,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             ev.preventDefault();
                             break;
                         case 40: // down
-                            dojo.byId("leftPane").focus();
+                            dojo.byId("popupInfoContent").focus();
                             ev.stopPropagation();
                             ev.preventDefault();
                             break;
@@ -188,6 +222,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         setTotal : function(count) {
+            if(this.toolbar.IsToolSelected('geoCoding')) return;
+
             this.total = count;
 
             var msgNode = dojo.byId("popupMessage");

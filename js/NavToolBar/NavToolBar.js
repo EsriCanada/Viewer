@@ -151,6 +151,8 @@ define([
                 on(dom.byId("extenderNavCheckbox"), "change", lang.hitch(this, function(e) {
                     var ck = e.target.checked;
 
+                    if(_gaq) _gaq.push(['_trackEvent', "Extended Navigator Bar", e.target.checked ? 'Expand' : 'Collapse']);
+
                     dojo.setStyle(dom.byId("extendedTools"), "display", ck?"":"none");
                     this.nav.deactivate();
                     this.map.setMapCursor("default");

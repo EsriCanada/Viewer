@@ -56,6 +56,7 @@ define({
             "features" : "Feature List",
             "filter" : "Filters",
             "infoPanel" : "Info Panel",
+            "geoCoding" : "Reverse Geocode",
             "instructions": "Instructions",
             "legend": "Legend",
         	"bookmarks": "Bookmarks",

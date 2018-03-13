@@ -34,6 +34,7 @@ define([
         
         options: {
             map: null,
+            toolBar:null,
             navToolBar:null,
             cursorColor:"black",
             cursorFocusColor:"red",
@@ -67,6 +68,7 @@ define([
             // this._i18n = i18n;
             // this.domNode = srcRefNode;
             this.set("map", defaults.map);
+            this.set("toolBar", defaults.toolBar);
             this.set("navToolBar", defaults.navToolBar);
             this.set("zoomColor", defaults.zoomColor);
             this.set("cursorColor", defaults.cursorColor);            
@@ -141,6 +143,7 @@ define([
                 switch(evn.keyCode)  {
                     case 13: //Enter
                         // https://gis.stackexchange.com/questions/78976/how-to-open-infotemplate-programmatically
+                        this.emit("mapClick", {mapPoint:this.map.toMap(this.cursorPos)});
                         this.showPopup(evn, this.operationalLayers);
                         evn.preventDefault();
                         evn.stopPropagation();
@@ -331,6 +334,9 @@ define([
                 return l.hasOwnProperty("url") &&  l.layerObject && l.layerObject.visible && l.layerObject.visibleAtMapScale;
             });
 
+            if(this.toolBar && this.toolBar.IsToolSelected('geoCoding')) 
+                mode = 'point';
+            
             if(!mode) {
                 if(!evn.shiftKey && !evn.ctrlKey) {
                     mode = 'point';
@@ -348,6 +354,7 @@ define([
                     mode = 'selection';
                 }
             }
+
             this.followTheMapMode(mode === 'extent');
 
             this.map.infoWindow.show();

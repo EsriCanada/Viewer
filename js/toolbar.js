@@ -202,12 +202,19 @@ on, mouse, query, Deferred) {
             return pageBody;
         },
 
-        _toolOpen: function(name) {
+        OpenTool: function(name) {
             var page = dom.byId("page_"+name);
             var hidden = page.classList.contains("hideAttr");
             if(!hidden) return;
             var btn = dom.byId('toolButton_'+name);
             this._toolClick(name);
+        },
+
+        IsToolSelected: function(name) {
+            var page = dom.byId("page_"+name);
+            if(!page) return false;
+            var hidden = page.classList.contains("hideAttr");
+            return !hidden;
         },
 
         _toolClick: function (name) {
@@ -228,6 +235,8 @@ on, mouse, query, Deferred) {
                     active = true;
                 }
             });
+
+            if(_gaq) _gaq.push(['_trackEvent', "Tool: '"+name+"'", 'selected']);
 
             pages.forEach(lang.hitch(this, function(p){
                 if(hidden && p === page) {

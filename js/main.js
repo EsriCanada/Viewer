@@ -14,6 +14,18 @@
  | limitations under the License.
  */
 
+var _gaq = _gaq || [];
+
+(function() {
+    var ga = document.createElement('script');
+    ga.type = 'text/javascript';
+    ga.async = true;
+    ga.src = 'https://ssl.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(ga, s);
+})();
+
+
 define(["dojo/ready", 
     "dojo/aspect", "dijit/registry",
     "dojo/json", "dojo/_base/array", "dojo/_base/Color", "dojo/_base/declare", 
@@ -34,7 +46,9 @@ define(["dojo/ready",
 
     "application/LayerManager/LayerManager",
     "application/NavToolBar/NavToolBar", 
-    "application/SuperNavigator/SuperNavigator", "application/PopupInfo/PopupInfo", 
+    "application/SuperNavigator/SuperNavigator", 
+    "application/PopupInfo/PopupInfo", 
+    "application/GeoCoding/GeoCoding", 
     "application/ImageToggleButton/ImageToggleButton", 
     "application/FeatureList/FeatureList", 
     "application/Filters/Filters", 
@@ -64,7 +78,7 @@ define(["dojo/ready",
 
     LayerManager, 
     NavToolBar,
-    SuperNavigator, PopupInfo,
+    SuperNavigator, PopupInfo, GeoCoding,
     ImageToggleButton,
     FeatureList, Filters, TableOfContents, 
 
@@ -95,6 +109,21 @@ define(["dojo/ready",
                 this.focusColor = typeof(this.config.focusColor)=='undefined' ? this.setColor('#1f1f1f', 0.4) : this.setColor(this.config.focusColor, 0.9);
                 this.activeColor = typeof(this.config.activeColor)=='undefined' ? this.focusColor : this.setColor(this.config.activeColor, 0.9);
                 this.theme = this.setColor(this.config.theme);
+
+                if(config.useGoogleAnalytics && false)
+                {
+                    var gaqUserAccount = config.googleAnalyticsUserAccount;
+                    if(!gaqUserAccount || gaqUserAccount.trim() === "")
+                    {
+                        gaqUserAccount = 'UA-109917224-4';
+                    }
+                    _gaq.push(['_setAccount', gaqUserAccount]);
+                    _gaq.push(['_trackPageview']);
+                } else {
+                    _gaq = null;
+                }
+
+
                 // document ready
                 ready(lang.hitch(this, function () {
                     var description = this.config.description;
@@ -373,7 +402,7 @@ define(["dojo/ready",
                     switch (this.config.tools[i].name) {
                         case "mapKeyboardNavigation":
                             if(has("mapKeyboardNavigation"))
-                                this._addMapKeyboardNavigation();
+                                this._addMapKeyboardNavigation(toolbar);
                             break;
                         case "details":
                             toolList.push(this._addDetails(this.config.tools[i], toolbar, deferredDetails));
@@ -383,6 +412,9 @@ define(["dojo/ready",
                             break;
                         case "infoPanel":
                             toolList.push(this._addInfoPanel(this.config.tools[i], toolbar));
+                            break;
+                        case "geoCoding":
+                            toolList.push(this._addGeoCoding(this.config.tools[i], toolbar));
                             break;
                         case "features":
                             toolList.push(this._addFeatures(this.config.tools[i], toolbar));
@@ -779,9 +811,10 @@ define(["dojo/ready",
             return deferred.promise;
         },
 
-        _addMapKeyboardNavigation : function() {
+        _addMapKeyboardNavigation : function(toolbar) {
             this.superNav = new SuperNavigator({
                 map: this.map,
+                toolBar: toolbar,
                 cursorColor: "black",
                 selectionColor: this.config.mapSelectionColor,
                 cursorFocusColor: this.config.focusColor,
@@ -1359,6 +1392,32 @@ define(["dojo/ready",
             return deferred.promise;
         },
 
+        _addGeoCoding: function (tool, toolbar) {
+            //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
+            var deferred = new Deferred();
+            if (has("geoCoding")) {
+                var geoCodingDiv = toolbar.createTool(tool, "");
+
+                geoCoding = new GeoCoding(
+                {
+                    map: this.map,
+                    toolbar: toolbar,
+                    superNavigator: this.superNav,
+                    search: this.search,
+                    maxSearchResults: this.config.maxSearchResults,
+                    searchMarker: this.config.geoCodingMarker,
+                    geolocatorLabelColor: this.config.geolocatorLabelColor
+                }, geoCodingDiv);
+                geoCoding.startup();
+                
+                deferred.resolve(true);
+
+            } else {
+                deferred.resolve(false);
+            }
+            return deferred.promise;
+        },
+
         _fixFocusOnNativeInfoWindows: function() {
             on(this.map.infoWindow, 'show', lang.hitch(this, function(ev) {
                 query('.esriPopup .titleButton').forEach(function(btn){
@@ -1366,7 +1425,7 @@ define(["dojo/ready",
                     on(btn,'keypress', lang.hitch(this, function(ev) {
                         // console.log(ev);
                         if(ev.keyCode == 13) {
-                            ev.srcElement.click();
+                            ev.target.click();
                         }
                     }));
                 });

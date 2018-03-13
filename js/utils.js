@@ -72,6 +72,12 @@ if (!('trim' in String.prototype)) {
     };
 }
 
+if (!('isNonEmpty' in String.prototype)) {
+    String.prototype.isNonEmpty= function() {
+        return this !== null && this.trim() !== '';
+    };
+}
+
 // if (!Array.prototype.remove) {
 // 	Array.prototype.remove = function() {
 // 	    var what, a = arguments, L = a.length, ax;

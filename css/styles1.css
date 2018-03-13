@@ -1,5 +1,5 @@
 li[role='menuitem']:hover, 
-div[role='button']:not(.searchBtn):not(.searchClear):not(.home):not(.zoomLocateButton):hover,
+div[role='button']:not(.searchBtn):not(.geoCodingBtn):not(.searchClear):not(.home):not(.zoomLocateButton):hover,
 .no-touch .esriMeasurement .esriButton .dijitButtonNode:hover,
 #dijit_form_ComboButton_0_arrow:hover,
 button:hover, .navBtn:hover,

@@ -24,6 +24,54 @@ define({
                 "</ul>"+
                 "Selecting the extent, starts the Follow-the-Map mode.",
             "followTheMap": "Follow The Map Mode"
+            },
+            "geoCoding" : {
+                "zoomTo": "Zoom to Location",
+                "noAddress": "No Point Address",
+                "clear": "Clear Selection",
+                "instructions" : 
+                    "Click the map to get location address <br/>or <br/>"+
+                        "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Skip to Map</a> and:<br/>"+
+                    "<ul>"+
+                    "<li>move map with <myKey>arrows</myKey>, or</li>"+
+                    "<li>move map cursor with <myKey>SHIFT</myKey> + <myKey>arrows</myKey>, then</li>"+
+                    "<li>press <myKey>ENTER</myKey> to select at cursor.</li>"+
+                    "</ul>",
+                "Location": "Location",
+                "Address": "Address:",
+                "Block": "Block:",
+                "City": "City:",
+                "CountryCode": "Country Code:",
+                "District": "District:",
+                "MetroArea": "Metro Area:",
+                "Neighborhood": "Neighborhood:",
+                "PlaceName": "Place Name:",
+                "PostalCode": "Postal Code:",
+                "Region": "Region:",
+                "Sector": "Sector:",
+                "Territory": "Territory:",
+                "Type": "Type:",
+                "Addr_type": "Addr Type:"
+            },
+            "addrType" : {
+                PointAddress : "Address",
+                StreetName : "Street Name",
+                StreetAddress : "Street Address",
+                POI: "Point Of Interest",
+                Locality: "Locality",
+                Neighborhood: "Neighborhood",
+                City: "City",
+                Zone: "Zone",
+                Bank: "Bank",
+                Park: "Park",
+                Postal: "Postal Code",
+                College: "College",
+                School: "School",
+                ShoppingCenter: "Shopping Center",
+                BusinessFacility: "Business Facility",
+                County: "County",
+                GolfCourse: "Golf Course",
+                Parking: "Parking"
             }
         })
     }),

@@ -112,6 +112,14 @@ define(["dojo/has"], function (has) {
         }
         return infoPanel;
     });
+    has.add("geoCoding", function (g) {
+        var geoCoding = getTool("geoCoding", g.config);
+        //overwrite the default with app settings
+        if (g.config.hasOwnProperty("tool_GeoCoding")) {
+            geoCoding = g.config.tool_GeoCoding;
+        }
+        return geoCoding;
+    });
     has.add("mapKeyboardNavigation", function (g) {
         var mapKeyboardNavigation = g.config.tool_mapKeyboardNavigation || false;
         //overwrite the default with app settings
