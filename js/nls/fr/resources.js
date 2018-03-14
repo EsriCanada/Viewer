@@ -88,7 +88,7 @@ define(
         search : "Recherche : ",
         searchPlaceholder: "Trouver une adresse ou un lieu",
         searchEnterCriteria : "Terme recherché pour",
-        pressAlt : "Appuyer sur ALT + 0 à 9 pour naviguer rapidement",
+        pressAlt : "Appuyer sur ALT + chiffre pour naviguer rapidement",
         instructions:"instructions.french",
         moreHelp : "Plus d'aide",
         wcagViewer : "Visualiseur Accessible",

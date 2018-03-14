@@ -143,6 +143,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         this.map.graphics.add(this.geoCodingMarkerGraphic);
 
                         this.contentPanel.setContent(this.geoCodingMarkerGraphic.getContent());
+
+                        dojo.byId("pageBody_geoCoding").focus();
                     }
                 }));
 
@@ -234,7 +236,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"'/></div>"+
                         "<div class='hzLine'></div>"+
                         "<table class='address-tooltip__address-info'>"+result+"</table>"+
-                        "<a class='locatorCopy' onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
+                        "<a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
                     "</div>";
             }
             return result;

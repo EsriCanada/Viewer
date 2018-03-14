@@ -88,7 +88,7 @@ define({
         search : "Search: ",
         searchPlaceholder: "Find address or place",
         searchEnterCriteria : "Enter search term for",
-        pressAlt : "Press ALT + 0 to 9 keys for fast navigation",
+        pressAlt : "Press ALT + digit keys for fast navigation",
         instructions:"instructions",
         moreHelp : "More Help",
         wcagViewer : "Accessible Viewer",
