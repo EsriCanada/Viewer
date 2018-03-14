@@ -1,6 +1,5 @@
 {
-	"disable":true,
-    "env": {
+	"env": {
         "browser": true,
         "commonjs": true
     },
