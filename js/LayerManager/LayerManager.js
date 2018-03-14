@@ -94,13 +94,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }));
             }
 
-            // this._fixLegends();
-            
-            if(this.defaults.toolbar) {
-                on(this.defaults.toolbar, 'updateTool_layerManager', lang.hitch(this, function(name) {
-                    this._fixLegends();
-                }));
-            }
         },
 
         // connections/subscriptions will be cleaned up during the destroy() lifecycle phase
@@ -396,6 +389,33 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             'aria-label': legendTitle,
                         }, layerExpandArea));
                         legend.startup();
+
+
+                        var legendObserver = new MutationObserver(lang.hitch(this, function(mutations) {
+                            // console.log(mutations);
+                            mutations.forEach(lang.hitch(this, function(mutation) {
+                                // console.log(mutation);
+                                var target = mutation.target.childNodes[0];
+                                // console.log('mutation', mutation);
+                                var tables = dojo.query('.esriLegendService table', mutation.target);
+                                // console.log('tables', tables);
+                                if(tables && tables.length>0) {
+                                    tables.forEach(function(table) {
+                                        // console.log('table', table.outerHTML);
+                                        domAttr.set(table, "role", "presentation");
+                                    });
+                                }
+                                
+                            }));    
+                        }));
+                        legendObserver.observe(legend.domNode, { 
+                            attributes: false, 
+                            childList: true, 
+                            characterData: false 
+                        });
+
+
+
 
                         on(titleCheckbox, 'click', lang.hitch(this, this._showHidelayerExpandAreaBtn));
                     }
@@ -799,8 +819,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 on(ft, "destroied", lang.hitch(this, function(evt) {
                     this.showBadge(false);
                 }));
-
-                on(this.map, "extent-change", lang.hitch(this, this._fixLegends));
             }
 
             this.set("loaded", true);
@@ -841,79 +859,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var deferred = new Deferred();
             setTimeout(function() {deferred.resolve(true);}, ms);
             return deferred.promise;
-        },
-
-        _fixLegends : function() {
-            this._delay(400).then(lang.hitch(this, function() {
-            var legends = dojo.query('div.legend');
-            array.forEach(legends, lang.hitch(this, function(legend) {
-                var tables = legend.querySelectorAll("table");
-                array.forEach(tables, function(table) {
-                    domAttr.set(table, 'role', "presentation");
-                });
-
-                var svgs = legend.querySelectorAll("svg");
-                // array.forEach(svgs, function(svg) {
-                for(var i=0; i<svgs.length; i++) {
-                    var svg = svgs[i];
-                    var tr = svg.closest('tr');
-                    if(tr) {
-                        var description = tr.children[1].children[0].children[0].children[0].children[0].innerHTML;
-                        var symbol = i18n.widgets.layerManager.symbol;
-                        var alt = (description==='') ? symbol : '';
-                        domAttr.set(svg, 'alt', alt);
-                        domAttr.set(svg, 'title', symbol);
-                        if(description !== '')
-                            domAttr.set(svg, 'aria-hidden', "true");
-                        else 
-                            domAttr.set(svg, 'aria-label', alt);
-                    } else {
-                        domAttr.set(svg, 'aria-hidden', "true");
-                    }
-                }
-                // });
-
-                var LegendServiceLabels = legend.querySelectorAll(".esriLegendServiceLabel");
-                array.forEach(LegendServiceLabels, function(LegendServiceLabel) {
-                    if (window.getComputedStyle(LegendServiceLabel).display !== 'none')
-                    {
-                        if(LegendServiceLabel.parentNode && LegendServiceLabel.nodeName !== 'H2') {
-                            var h2 = domConstruct.create("h2",{
-                                className: LegendServiceLabel.className,
-                                innerHTML: LegendServiceLabel.innerHTML,
-                                parentNode: LegendServiceLabel.parentNode,
-                            });
-                            LegendServiceLabel.parentNode.replaceChild(h2, LegendServiceLabel);
-                        }
-
-                        domAttr.set(LegendServiceLabel, 'tabindex', 0);
-                    }
-                });
-
-                var LegendLayers = legend.querySelectorAll(".esriLegendLayer");
-                array.forEach(LegendLayers, function(LegendLayer) {
-                    //var LegendServiceLists = legend.querySelectorAll(".esriLegendLayer tbody");
-                    var LegendServiceList = LegendLayer.querySelector("tbody");
-
-                    domAttr.set(LegendServiceList, "role", "list");
-
-                    array.forEach(LegendServiceList.childNodes, function(item) {
-                        domAttr.set(item, "role", "listitem");
-                        domAttr.set(item, "tabindex", "0");
-                    });
-                });
-
-                var LegendLayerImages = legend.querySelectorAll(".esriLegendLayer image, .esriLegendLayer img");
-                array.forEach(LegendLayerImages, function(image) {
-                    domAttr.set(image,'alt', i18n_app.map.symbol);
-                });
-
-                var messages = legend.querySelectorAll(".esriLegendMsg");
-                array.forEach(messages, function(message) {
-                    domAttr.set(message,'tabindex',0);
-                });
-            }));
-        }));
         },
 
         _updateThemeWatch: function () {
