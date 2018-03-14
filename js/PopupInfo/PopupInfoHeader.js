@@ -145,7 +145,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             ev.preventDefault();
                             break;
                         case 40: // down
-                            dojo.byId("popupInfoContent").focus();
+                            dojo.byId("pageBody_infoPanel").focus();
                             ev.stopPropagation();
                             ev.preventDefault();
                             break;
