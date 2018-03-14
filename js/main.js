@@ -1507,10 +1507,10 @@ define([
                 if (description) {
                     var detailDiv = toolbar.createTool(tool);
                     domConstruct.create("div", {
-                        tabindex: 0
+                        // tabindex: 0
                     });
                     detailDiv.innerHTML =
-                        "<div tabindex=0 id='detailDiv'>" +
+                        "<div id='detailDiv'>" +
                         description +
                         "</div>";
                     detailDiv = dojo.query("#detailDiv")[0];
@@ -3447,7 +3447,7 @@ define([
                                 "div",
                                 {
                                     id: "panelLogo",
-                                    TabIndex: 0,
+                                    // TabIndex: 0,
                                     innerHTML:
                                         "<img id='logo' src=" +
                                         this.config.logo +
