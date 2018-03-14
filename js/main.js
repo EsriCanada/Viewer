@@ -3176,7 +3176,7 @@ define([
 
             if (styleCss) {
                 for (var ii = 0; ii < styleCss.cssRules.length; ii++) {
-                     var rule = styleCss.cssRules[ii];
+                    var rule = styleCss.cssRules[ii];
                     if (
                         typeof rule.selectorText != "undefined" &&
                         rule.selectorText !== null
