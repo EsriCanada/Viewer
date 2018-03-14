@@ -187,43 +187,43 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var result = "";
 
             if(address.Address.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Address+"</th><td>${Address}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Address+"</th><td>${Address}</td></tr>";
             if(address.Block.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Block+"</th><td>${Block}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Block+"</th><td>${Block}</td></tr>";
             if(address.Sector.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Sector+"</th><td>${Sector}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Sector+"</th><td>${Sector}</td></tr>";
             if(address.Neighborhood.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Neighborhood+"</th><td>${Neighborhood}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Neighborhood+"</th><td>${Neighborhood}</td></tr>";
             if(address.PlaceName.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.PlaceName+"</th><td>${PlaceName}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.PlaceName+"</th><td>${PlaceName}</td></tr>";
             if(address.MetroArea.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.MetroArea+"</th><td>${MetroArea}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.MetroArea+"</th><td>${MetroArea}</td></tr>";
             if(address.District.isNonEmpty() && address.District !== address.City) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.District+"</th><td>${District}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.District+"</th><td>${District}</td></tr>";
             if(address.City.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.City+"</th><td>${City}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.City+"</th><td>${City}</td></tr>";
             if(address.Postal.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.PostalCode+"</th><td>${Postal}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.PostalCode+"</th><td>${Postal}";
                 if(address.PostalExt.isNonEmpty()) result += " ${PostalExt}";
                 result += "</td></tr>";
             }
             if(address.Region.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Region+"</th><td>${Region}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Region+"</th><td>${Region}";
                 if(address.Subregion.isNonEmpty() && address.Region !== address.Subregion) {
                     result += " - ${Subregion}";
                 }
                 result += "</td></tr>";
             }
             if(address.Territory.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Territory+"</th><td>${Territory}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Territory+"</th><td>${Territory}</td></tr>";
             if(address.CountryCode.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${CountryCode}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${CountryCode}</td></tr>";
 
             if(result !=='') {
                 var title="Location to Address";
                 result = 
                 "<div class='esriViewPopup'>"+
-                    "<div tabindex=0 class='header'>"+
+                    "<div class='header'>"+
                         (address.Addr_type.isNonEmpty() || address.Type.isNonEmpty() ? 
                             (
                                 (address.Addr_type.isNonEmpty() ? '${AddrTypeLoc}':'')+
@@ -231,10 +231,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 (address.Type.isNonEmpty() ? '${TypeLoc}':'')
                             ) 
                             : '')+"</div>"+
-                        "<div id='thumb' class='thumbFeature' tabindex=0 title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"'/></div>"+
+                        "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"'/></div>"+
                         "<div class='hzLine'></div>"+
                         "<table class='address-tooltip__address-info'>"+result+"</table>"+
-                        "<a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
+                        "<a class='locatorCopy' onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
                     "</div>";
             }
             return result;
@@ -258,7 +258,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.contentPanel = new ContentPane({
                 region: "center",
                 id: "geoCodingContent",
-                tabindex: 0,
+                // tabindex: 0,
             }, dom.byId("geoCoding_content"));
             this.contentPanel.startup();
             this.contentPanel.set("content", i18n.widgets.geoCoding.instructions);

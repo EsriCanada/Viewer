@@ -175,18 +175,18 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var result = "";
 
             if(address.StAddr.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Address+"</th><td>${StAddr}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Address+"</th><td>${StAddr}";
                 if(address.SubAddr.isNonEmpty()) {
                     result += "<br/>${SubAddr}";
                 }
                 result += "</td></tr>";
             }
             if(address.Status.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Status+"</th><td>${Status}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Status+"</th><td>${Status}</td></tr>";
             if(address.Side.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Side+"</th><td>${Side}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Side+"</th><td>${Side}</td></tr>";
             if(address.StDir.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.StDir+"</th><td>${StDir}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.StDir+"</th><td>${StDir}";
                 if(address.StType.isNonEmpty()) {
                     result += "/${StType}";
                 }
@@ -196,65 +196,65 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 result += "</td></tr>";
             }
             if(address.BldgName.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.BldgName+"</th><td>${BldgName}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.BldgName+"</th><td>${BldgName}";
                 if(address.BldgType.isNonEmpty()) {
                     result += " - ${BldgType}";
                 }
                 result += "</td></tr>";
             }
             if(address.LevelName.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.LevelName+"</th><td>${LevelName}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.LevelName+"</th><td>${LevelName}";
                 if(address.LevelType.isNonEmpty()) {
                     result += " - ${LevelType}";
                 }
                 result += "</td></tr>";
             }
             if(address.Block.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Block+"</th><td>${Block}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Block+"</th><td>${Block}</td></tr>";
             if(address.UnitName.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.UnitName+"</th><td>${UnitName}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.UnitName+"</th><td>${UnitName}";
                 if(address.UnitType.isNonEmpty()) {
                     result += " (${UnitType})";
                 }
                 result += "</td></tr>";
             }
             if(address.Sector.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Sector+"</th><td>${Sector}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Sector+"</th><td>${Sector}</td></tr>";
             if(address.Nbrhd.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Neighborhood+"</th><td>${Nbrhd}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Neighborhood+"</th><td>${Nbrhd}</td></tr>";
             if(address.PlaceName.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.PlaceName+"</th><td>${PlaceName}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.PlaceName+"</th><td>${PlaceName}</td></tr>";
             if(address.MetroArea.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.MetroArea+"</th><td>${MetroArea}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.MetroArea+"</th><td>${MetroArea}</td></tr>";
             if(address.District.isNonEmpty() && address.District !== address.City) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.District+"</th><td>${District}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.District+"</th><td>${District}</td></tr>";
             if(address.City.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.City+"</th><td>${City}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.City+"</th><td>${City}</td></tr>";
             if(address.Postal.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.PostalCode+"</th><td>${Postal}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.PostalCode+"</th><td>${Postal}";
                 if(address.PostalExt.isNonEmpty()) result += " ${PostalExt}";
                 result += "</td></tr>";
             }
             if(address.Region.isNonEmpty()) {
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Region+"</th><td>${Region}";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Region+"</th><td>${Region}";
                 if(address.Subregion.isNonEmpty() && address.Region !== address.Subregion) {
                     result += " - ${Subregion}";
                 }
                 result += "</td></tr>";
             }
             if(address.Territory.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Territory+"</th><td>${Territory}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Territory+"</th><td>${Territory}</td></tr>";
             if(address.Country.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${Country}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${Country}</td></tr>";
 
             if(address.Phone.isNonEmpty()) 
-                result += "<tr tabindex=0><th>"+i18n.widgets.geoCoding.Phone+"</th><td>${Phone}</td></tr>";
+                result += "<tr><th>"+i18n.widgets.geoCoding.Phone+"</th><td>${Phone}</td></tr>";
 
             if(result !=='') {
                 var title="Address to Location"; 
                 result = 
                 "<div class='esriViewPopup'>"+
-                    "<div tabindex=0 class='header'>"+
+                    "<div class='header'>"+
                         (address.Addr_type.isNonEmpty() || address.Loc_name.isNonEmpty() ? 
                             (
                                 (address.Addr_type.isNonEmpty() ? '${AddrTypeLoc}':'')+
@@ -262,11 +262,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 (address.Loc_name.isNonEmpty() ? '${TypeLoc}':'')
                             ) 
                             : '')+"</div>"+
-                        "<div id='thumb' class='thumbFeature' tabindex=0 title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"''/></div>"+
+                        "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"''/></div>"+
                     "<div class='hzLine'></div>"+
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
-                    "<span tabindex=0 class='locatorScore'>Score: ${Score}</span>"+
-                    "<a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
+                    "<span class='locatorScore'>Score: ${Score}</span>"+
+                    "<a class='locatorCopy' onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
                     "</div>";
             }
             return result;
@@ -314,7 +314,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.contentPanel = new ContentPane({
                 region: "center",
                 id: "popupInfoContent",
-                tabindex: 0,
+                // tabindex: 0,
             }, dom.byId("feature_content"));
             this.contentPanel.startup();
             this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
@@ -441,7 +441,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             class: 'thumbFeature',
                             'title':title,
                             'aria-label':title,
-                            tabindex:0
+                            // tabindex:0
                        }, mainSectionHeader);
                         var source = selectedFeature._shape.rawNode.attributes['xlink:href'];
                         if(source && source.value) {
@@ -452,7 +452,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                     alt:title,
                                     'title':title,
                                     'aria-label':title,
-                                    tabindex:0
+                                    // tabindex:0
                                 }, thumb);
                         }
                     }
