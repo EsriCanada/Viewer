@@ -185,8 +185,7 @@ define([
                         : this.setColor(this.config.activeColor, 0.9);
                 this.theme = this.setColor(this.config.theme);
 
-                if(config.useGoogleAnalytics)
-                {
+                if (config.useGoogleAnalytics) {
                     var gaqUserAccount = config.googleAnalyticsUserAccount;
                     if (!gaqUserAccount || gaqUserAccount.trim() === "") {
                         gaqUserAccount = "UA-109917224-4";
@@ -927,12 +926,11 @@ define([
             var skipHSplitter = query(".skip #skip-Hsplitter")[0];
             var skipTableHeader = query(".skip #skip-tableHeader")[0];
             var skipTable = query(".skip #skip-table")[0];
-            if(!has("featureTable")) {
+            if (!has("featureTable")) {
                 domStyle.set(skipHSplitter, "display", "none");
                 domStyle.set(skipTableHeader, "display", "none");
                 domStyle.set(skipTable, "display", "none");
             }
-                
 
             dojo.html.set(skipTools, "1. " + this.config.i18n.skip.tools);
             dojo.html.set(skipSearch, "2. " + this.config.i18n.skip.search);
@@ -944,7 +942,7 @@ define([
             dojo.html.set(skipMap, "5. " + this.config.i18n.skip.map);
             dojo.html.set(skipInstructions, "6. " + this.config.i18n.skip.help);
             // dojo.html.set(skipFeature, "7. "+this.config.i18n.skip.featureDetaills);
-            
+
             dojo.html.set(
                 skipHSplitter,
                 "7. " + this.config.i18n.skip.hsplitter
@@ -1510,9 +1508,7 @@ define([
                         // tabindex: 0
                     });
                     detailDiv.innerHTML =
-                        "<div id='detailDiv'>" +
-                        description +
-                        "</div>";
+                        "<div id='detailDiv'>" + description + "</div>";
                     detailDiv = dojo.query("#detailDiv")[0];
                     if (!has("instructions"))
                         domClass.add(detailDiv, "detailFull");
@@ -1915,7 +1911,9 @@ define([
                                 "role",
                                 "presentation"
                             );
-                            var legendServiceList = legendLayers[j].querySelector("tbody");
+                            var legendServiceList = legendLayers[
+                                j
+                            ].querySelector("tbody");
 
                             domAttr.set(legendServiceList, "role", "list");
                             //domAttr.set(legendServiceList, "aria-label", legendServiceLabel.innerHTML);
@@ -1931,12 +1929,21 @@ define([
                             }
                         }
 
-
-                        var legendLayerImages = node.querySelectorAll(".esriLegendLayer image, .esriLegendLayer img");
-                        if(legendLayerImages) {
+                        var legendLayerImages = node.querySelectorAll(
+                            ".esriLegendLayer image, .esriLegendLayer img"
+                        );
+                        if (legendLayerImages) {
                             // legendLayerImages.forEach(function(image) {
-                            for(var iii=0; iii<legendLayerImages.length; iii++)
-                                domAttr.set(legendLayerImages[iii],'alt',i18n.map.symbol);
+                            for (
+                                var iii = 0;
+                                iii < legendLayerImages.length;
+                                iii++
+                            )
+                                domAttr.set(
+                                    legendLayerImages[iii],
+                                    "alt",
+                                    i18n.map.symbol
+                                );
                         }
 
                         var messages = node.querySelectorAll(".esriLegendMsg");
@@ -1974,13 +1981,15 @@ define([
                         });
                     });
 
-
-                    this.legendNodeObserver.observe(dojo.byId('esri_dijit_Legend_0'), { 
-                        attributes: true, 
-                        childList: true, 
-                        characterData: false,
-                        subtree: true 
-                    });
+                    this.legendNodeObserver.observe(
+                        dojo.byId("esri_dijit_Legend_0"),
+                        {
+                            attributes: true,
+                            childList: true,
+                            characterData: false,
+                            subtree: true
+                        }
+                    );
 
                     deferred.resolve(true);
                 } else {
@@ -2030,17 +2039,19 @@ define([
                 var geoCodingDiv = toolbar.createTool(tool, "");
 
                 geoCoding = new GeoCoding(
-                {
-                    map: this.map,
-                    toolbar: toolbar,
-                    superNavigator: this.superNav,
-                    themeColor: this.config.theme,
-                    iconColor: this.config.icons,
-                    search: this.search,
-                    maxSearchResults: this.config.maxSearchResults,
-                    searchMarker: this.config.geoCodingMarker,
-                    geolocatorLabelColor: this.config.geolocatorLabelColor
-                }, geoCodingDiv);
+                    {
+                        map: this.map,
+                        toolbar: toolbar,
+                        superNavigator: this.superNav,
+                        themeColor: this.config.theme,
+                        iconColor: this.config.icons,
+                        search: this.search,
+                        maxSearchResults: this.config.maxSearchResults,
+                        searchMarker: this.config.geoCodingMarker,
+                        geolocatorLabelColor: this.config.geolocatorLabelColor
+                    },
+                    geoCodingDiv
+                );
                 geoCoding.startup();
 
                 deferred.resolve(true);
@@ -3155,7 +3166,7 @@ define([
             var styleSheetList = document.styleSheets;
             var styleCss = null;
 
-            for(var i=0; i<styleSheetList.length; i++) {
+            for (var i = 0; i < styleSheetList.length; i++) {
                 var css = styleSheetList[i];
                 if (css.href.indexOf("styles1.css") > 0) {
                     styleCss = css;
@@ -3163,9 +3174,9 @@ define([
                 }
             }
 
-            if(styleCss) {
-                for(var i=0; i<styleCss.cssRules.length; i++) {
-                    var rule = styleCss.cssRules[i];
+            if (styleCss) {
+                for (var ii = 0; ii < styleCss.cssRules.length; ii++) {
+                     var rule = styleCss.cssRules[ii];
                     if (
                         typeof rule.selectorText != "undefined" &&
                         rule.selectorText !== null
@@ -3188,20 +3199,23 @@ define([
                             );
                         }
                         //active
-                        if(rule.selectorText.indexOf('.activeBg') >= 0) {
-                            rule.style.backgroundColor = rgbaColor(this.activeColor);
+                        if (rule.selectorText.indexOf(".activeBg") >= 0) {
+                            rule.style.backgroundColor = rgbaColor(
+                                this.activeColor
+                            );
                         }
 
-                        if(rule.selectorText.indexOf('#addrHintTitle') >= 0) {
+                        if (rule.selectorText.indexOf("#addrHintTitle") >= 0) {
                             rule.style.backgroundColor = rgbaColor(this.theme);
                             rule.style.color = rgbaColor(this.color);
                         }
-                        if(rule.selectorText.indexOf('.tool--focus') >= 0) {
+                        if (rule.selectorText.indexOf(".tool--focus") >= 0) {
                             rule.style.backgroundColor = rgbaColor(this.color);
-                            rule.style.borderColor = 
-                            rule.style.color = rgbaColor(this.theme);
+                            rule.style.borderColor = rule.style.color = rgbaColor(
+                                this.theme
+                            );
                         }
-                        
+
                         //focus
                         if (rule.selectorText.indexOf(":focus") >= 0) {
                             if (rule.selectorText.indexOf("#mapDiv") >= 0) {

@@ -19,7 +19,7 @@ blockquote {
     margin-inline-end: 0;
     margin-left:0;
     margin-right:0;
-    font-style: italic; 
+    font-style: italic;
 }
 
 .claro .dijitArrowButtonInner {
@@ -51,11 +51,11 @@ blockquote {
 }
 
 .esriRTL label.checkbox {
-  float: right; 
+  float: right;
 }
 
 .esriRTL .checkbox {
-  float: right; 
+  float: right;
 }
 
 .toc-settings img{
@@ -68,7 +68,7 @@ blockquote {
 }
 
 .toc-settings:active {
-  color: #97cbec; 
+  color: #97cbec;
 }
 
 .esriRTL .toc-settings {
@@ -86,7 +86,7 @@ blockquote {
   margin-right: 4px; }
 
 .clear {
-    clear: both; 
+    clear: both;
 }
 
 .modal-scrollbar {
@@ -98,7 +98,7 @@ blockquote {
   src: url('../fonts/helveticaneue.eot');
   src: url('../fonts/helveticaneue.eot?#iefix') format('embedded-opentype'), url('../fonts/helveticaneue.woff') format('woff'), url('../fonts/helveticaneue.ttf') format('truetype'), url('../fonts/helveticaneue.svg#HelveticaNeue') format('svg');
   font-style: normal;
-  font-weight: normal; 
+  font-weight: normal;
 }
 
 @font-face {
@@ -106,7 +106,7 @@ blockquote {
   src: url('../fonts/helveticaneueultralight.eot');
   src: url('../fonts/helveticaneueultralight.eot?#iefix') format('embedded-opentype'), url('../fonts/helveticaneueultralight.woff') format('woff'), url('../fonts/helveticaneueultralight.ttf') format('truetype'), url('../fonts/helveticaneueultralight.svg#HelveticaNeueUltraLight') format('svg');
   font-style: normal;
-  font-weight: normal; 
+  font-weight: normal;
 }
 
 #mapDiv {
@@ -127,7 +127,7 @@ blockquote {
   top: 0;
   left: 0;
   overflow: hidden;
-  background: #fff; 
+  background: #fff;
 }
 
 #splashScreen {
@@ -139,7 +139,7 @@ blockquote {
   top: 0;
   left: 0;
   overflow: hidden;
-  background: #fff; 
+  background: #fff;
   opacity:0.9;
 }
 
@@ -157,7 +157,7 @@ blockquote {
 }
 
 .app-loading .loading-indicator, .app-error .loading-indicator {
-  display: block; 
+  display: block;
 }
 
 .app-error .loading-message {
@@ -170,19 +170,19 @@ blockquote {
   z-index: 2;
   top: 75%;
   left: 0;
-  text-align: center; 
+  text-align: center;
 }
 
 .layer-menu {
-  width: 100%; 
+  width: 100%;
 }
 
 .layer-menu .dijitMenuItem:hover {
-  background: #d3d3d3; 
+  background: #d3d3d3;
 }
 
 .layer-menu .dijitMenuItemSelected {
-  background: #d3d3d3; 
+  background: #d3d3d3;
 }
 
 .esriEditor {
@@ -197,19 +197,19 @@ blockquote {
 }
 
 .esriPopup .pointer.bottom, .esriPopup .pointer.bottomLeft, .esriPopup .pointer.bottomRight {
-  background: #f7f7f7 !important; 
+  background: #f7f7f7 !important;
 }
 
 .esriPopupMaximized {
-  top: 100px !important; 
+  top: 100px !important;
 }
 
 .esriPopup.light .actionsPane .action.zoomTo {
-  background-position: 0 -224px; 
+  background-position: 0 -224px;
 }
 
 .esriPopup .actionsPane .action {
-  margin-right: 10px; 
+  margin-right: 10px;
 }
 
 .esriPopup.light .actionsPane .action {
@@ -218,67 +218,67 @@ blockquote {
   background-image: url("http://js.arcgis.com/3.12/esri/css/calcite/images/popup-sprite.png");
   width: 12px;
   height: 12px;
-  text-indent: -9999px; 
+  text-indent: -9999px;
 }
 
 .esriPrintout a {
-  color: #5daddd; 
+  color: #5daddd;
 }
 
 .esriMeasurement .esriMeasurementButtonPane {
-  padding-left: 6px; 
+  padding-left: 6px;
 }
 
 .esriMeasurement .esriMeasurementResultLabel {
-  padding-left: 4px; 
+  padding-left: 4px;
 }
 
 .esriMeasurement .areaIcon {
   background-image: url(../images/area_measure.png);
   width: 28px;
-  height: 28px; 
+  height: 28px;
 }
 
 .esriMeasurement .distanceIcon {
   background-image: url(../images/dist_measure.png);
   width: 28px;
-  height: 28px; 
+  height: 28px;
 }
 
 .esriMeasurement .locationIcon {
   background-image: url(../images/dist_point.png);
   width: 28px;
-  height: 28px; 
+  height: 28px;
 }
 
 .esriMeasurement .esriButtonHover .dijitButtonNode {
-  background: #a9a9a9; 
+  background: #a9a9a9;
 }
 
 .esriMeasurement .esriButtonChecked .dijitButtonNode {
-  background: #a9a9a9; 
+  background: #a9a9a9;
 }
 
 .no-touch .esriMeasurement .esriButton .dijitButtonNode:hover {
-  background: #a9a9a9; 
+  background: #a9a9a9;
 }
 
 .locationIcon {
   width: 32px;
-  height: 32px; 
+  height: 32px;
 }
 
 /*@media only screen and (min-width: 760px) {*/
   .esriSimpleSlider {
     display: block;
-  } 
+  }
 /*}*/
 
 .notools div {
   width: 30px;
   height: 30px;
   line-height: 25px;
-  font-size: 24px; 
+  font-size: 24px;
 }
 
 .simpleGeocoder .esriGeocoder {
@@ -293,11 +293,11 @@ blockquote {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 
 .simpleGeocoder .esriGeocoderMenu {
-  color: #333; 
+  color: #333;
 }
 
 .simpleGeocoder .esriGeocoderResults {
@@ -305,21 +305,21 @@ blockquote {
   background-color: transparent;
   background-color: rgba(0, 0, 0, 0.6);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#99000000,endColorstr=#99000000);
-  zoom: 1; 
+  zoom: 1;
 }
 
 .simpleGeocoder .esriGeocoder input {
-  color: #FFF !important; 
+  color: #FFF !important;
 }
 
 .simpleGeocoder .esriGeocoderResult:hover, .simpleGeocoder .esriGeocoderResultEven:focus, .simpleGeocoder .esriGeocoderResultOdd:focus {
   --background-color: rgba(0, 0, 0, 0.3);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4D000000,endColorstr=#4D000000);
-  zoom: 1; 
+  zoom: 1;
 }
 
 .simpleGeocoder .esriGeocoder .esriGeocoderMenuArrow {
-  background: none; 
+  background: none;
 }
 
 .simpleGeocoder .esriGeocoder .esriGeocoderMenuArrow:before {
@@ -328,36 +328,36 @@ blockquote {
   height: 16px;
   font-size: 16px;
   color: #a8a8a8;
-  font-family: "tool-icons"; 
+  font-family: "tool-icons";
 }
 
 .esriMeasurement .esriMeasurementResultLabel {
   text-align: left;
-  font-weight: 500; 
+  font-weight: 500;
 }
 
 .esriControlsBR {
   position: absolute;
   left: 0px;
-  bottom: 0px; 
+  bottom: 0px;
 }
 
 .logo-med {
   position: absolute;
   left: 0px;
-  bottom: 0px; 
+  bottom: 0px;
 }
 
 .logo-sm {
   position: absolute;
   left: 0px;
-  bottom: 0px; 
+  bottom: 0px;
 }
 
 .esriAttribution {
   position: absolute;
   left: 65px;
-  bottom: 5px; 
+  bottom: 5px;
 }
 
 .esriBookmarks {
@@ -392,7 +392,7 @@ blockquote {
 
 .scalebar_bottom-left {
   left: 25px;
-  bottom: 40px; 
+  bottom: 40px;
 }
 
 .scalebar_bottom-left {
@@ -425,7 +425,7 @@ img {
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
-  border-radius: 5px; 
+  border-radius: 5px;
 }
 
 .roundedTop {
@@ -437,7 +437,7 @@ img {
 .shadow {
     -webkit-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3); 
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
 }
 
 #panelContent {
@@ -514,7 +514,7 @@ img {
     -webkit-border-radius: 35px;
     -moz-border-radius: 35px;
     -ms-border-radius: 35px;
-    border-radius: 35px; 
+    border-radius: 35px;
 }
 
 .pageIcon {
@@ -522,7 +522,7 @@ img {
     left: 11px;
     top: 11px;
     width: 40px;
-    height: 40px; 
+    height: 40px;
 }
 
 .pageBody {
@@ -550,23 +550,23 @@ img {
 
 #panelTop {
     width: 100%;
-} 
+}
 
 .no-search #panelText {
-  display: block; 
+  display: block;
 }
 
 #panelText {
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-size: 14px; 
+  font-size: 14px;
   overflow: hidden;
   display: block;
 }
 
 @media only screen and (min-width: 720px) {
   #panelText {
-    font-size: 28px; 
+    font-size: 28px;
   }
 }
 
@@ -580,14 +580,14 @@ img {
   font-family: 'Roboto Condensed', sans-serif;
   padding: 6px;
   margin: 0;
-  -webkit-margin-before: 0; 
-  -webkit-margin-after: 0; 
-  -webkit-margin-start: 0px; 
-  -webkit-margin-end: 0px; 
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
 }
 
 #panelText.nosearch {
-  display: block; 
+  display: block;
 }
 
 #panelTools {
@@ -610,7 +610,7 @@ img {
   font-size: 24px;
   cursor: pointer;
   color: #fff;
-  display: none; 
+  display: none;
 }
 
 .panelTool {
@@ -654,12 +654,12 @@ img {
 
 /*Calcite updates keep list and submit issues*/
 .esriPopup .title {
-  font-weight: bold; 
+  font-weight: bold;
 }
 
 .dijitMenuItemIconChar.dijitCheckedMenuItemIconChar {
   display: inline-block;
-  visibility: hidden; 
+  visibility: hidden;
 }
 
 .dijitChecked .dijitMenuItemIconChar.dijitCheckedMenuItemIconChar {
@@ -712,7 +712,7 @@ img {
   -moz-transition: all 0.5s linear;
   -ms-transition: all 0.5s linear;
   -o-transition: all 0.5s linear;
-  transition: all 0.5s linear; 
+  transition: all 0.5s linear;
 }
 
 .esriPrintButton {
@@ -757,28 +757,28 @@ img {
 /* .calcite */
 .icon-container {
   margin: 10px 0 10px;
-  display: none; 
+  display: none;
 }
 
 /*@media only screen and (min-width: 720px) {*/
   /* .calcite */
   .icon-container {
-    display: block; 
-  } 
+    display: block;
+  }
 /*}*/
 
 /* .calcite */
 .map-size-label {
   float: left;
   font-size: 15px;
-  margin: 0 5px 0 0; 
+  margin: 0 5px 0 0;
 }
 
-.esriRTL 
+.esriRTL
 /* .calcite */
 .map-size-label {
   float: right;
-  margin: 0 0 0 5px; 
+  margin: 0 0 0 5px;
 }
 
 /* .calcite */
@@ -796,7 +796,7 @@ img {
 }
 
 /* .calcite */
-.share-dialog-icon:hover, 
+.share-dialog-icon:hover,
 /* .calcite */
 .share-dialog-icon:focus {
   opacity: 1;
@@ -806,7 +806,7 @@ img {
 .share-dialog-icon:visited {
   color: rgba(0, 0, 0, 0.5); }
 
-.esriRTL 
+.esriRTL
 /* .calcite */
 .share-dialog-icon {
   float: right;
@@ -814,7 +814,7 @@ img {
 
 /* .calcite */
 .share-dialog-icon:hover {
-  color: rgba(0, 0, 0, 0.8); 
+  color: rgba(0, 0, 0, 0.8);
 }
 
 /* .calcite */
@@ -853,10 +853,10 @@ img {
 
 /*@media only screen and (min-width: 720px) {*/
   /* .calcite */ .share-dialog-subheader {
-    display: block; } 
+    display: block; }
 /*}*/
 
-/* .calcite */ 
+/* .calcite */
 .share-dialog-textarea {
   max-width: calc(100% - 0px) !important;
   margin: 0 !important;
@@ -871,11 +871,11 @@ img {
 .share-dialog-checkbox {
   display: inline-block;
   cursor: pointer;
-  padding: 8px; 
+  padding: 8px;
 }
 
 input[type=checkbox].share-dialog-checkbox {
-  display: none; 
+  display: none;
 }
 
 .share-dialog-checkbox:before {
@@ -908,7 +908,7 @@ input[type=checkbox]:checked.share-dialog-checkbox + .share-dialog-checkbox:befo
 .share-dialog-icon
 {
   border-radius: 5px;
-  -webkit-border-radius: 5px;  
+  -webkit-border-radius: 5px;
 }
 
 .esriSimpleSliderDisabledButton
@@ -949,7 +949,7 @@ input[type=checkbox]:checked.share-dialog-checkbox + .share-dialog-checkbox:befo
 }
 
 .esriMeasurement .esriButtonChecked .dijitButtonNode,
-.esriBasemapGallerySelectedNode 
+.esriBasemapGallerySelectedNode
 {
   background: transparent;
   border-radius: 5px;
@@ -979,7 +979,7 @@ input[type=checkbox]:checked.share-dialog-checkbox + .share-dialog-checkbox:befo
   opacity: 0.75;
   background-color: rgba(0, 0, 0, 0.3);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4D000000,endColorstr=#4D000000);
-  color: #a8a8a8; 
+  color: #a8a8a8;
 }
 
 .arcgisSearch .searchBtn:focus, .arcgisSearch .searchClear:focus,
@@ -1009,8 +1009,8 @@ input[type='checkbox']:focus {
   top:0px;
 }
 
-#esri_dijit_editing_TemplatePicker_1, 
-.templatePicker 
+#esri_dijit_editing_TemplatePicker_1,
+.templatePicker
 {
   /* padding: 2px; */
   position: relative;
@@ -1107,15 +1107,15 @@ html, body {
 
 .claro .dijitSplitterV {background: white;border-color: white;border-width: 1.5px;border-style: solid;border-top-style: none;border-bottom-style: none;width: 10px;margin: 0;-webkit-tap-highlight-color: transparent;}
 
-.claro .dijitSplitterH, 
+.claro .dijitSplitterH,
 .claro .dijitGutterH {
     background: white;
     border-color: white;
     border-width: 1.5px;
     border-style: solid;
     border-left-style: none;
-    border-right-style: none;    
-    height: 10px; 
+    border-right-style: none;
+    height: 10px;
     margin: 0;
 }
 
@@ -1127,7 +1127,7 @@ html, body {
 .claro .dijitSplitterV .dijitSplitterThumb {
     background: gray none;
     height: 20%;
-    left: 0.5px; 
+    left: 0.5px;
     width: calc(100% - 1.5px);
     margin: 0;
     overflow: hidden;
@@ -1293,14 +1293,14 @@ html, body {
   z-index: 2;
   top: 45%;
   left: 0;
-  text-align: center; 
+  text-align: center;
   display: none;
 }
 
 .skip a {
     color: black;
     background-color: white;
-    
+
     position: absolute;
     top: 2px;
     left: 2px;
@@ -1402,7 +1402,7 @@ html, body {
 }
 
 .hideLoading {
-    display:none !important; 
+    display:none !important;
 }
 
 .setIndicator {
@@ -1416,8 +1416,8 @@ html, body {
 
 
 .navToolBar {
-    height: auto !important; 
-    border-radius: 5px; 
+    height: auto !important;
+    border-radius: 5px;
 }
 
 .navToolBar div {
@@ -1540,7 +1540,7 @@ html, body {
 /*@media only screen and (min-width: 800px) {*/
     .arcgisSearch .searchGroup .searchInput {
       display: block;
-    } 
+    }
 /*}*/
 
 .arcgisSearch .searchClose, .arcgisSearch .searchSpinner {
@@ -1723,7 +1723,7 @@ input[type=checkbox].checkbox {
 
 #extenderNavLabel img {
     width: 18px;
-    height: 8px; 
+    height: 8px;
 }
 
 .HomeButton .home, .LocateButton .zoomLocateButton {
@@ -1763,7 +1763,7 @@ input[type=checkbox].checkbox {
 
     #extenderNavLabel img {
         width: 24px;
-        height: 12px; 
+        height: 12px;
     }
 }
 
@@ -1801,8 +1801,8 @@ myKey {
     border-radius: 3px;
     padding: 0 4px;
     background: #dbdbdb;
-    color: black; 
-    font-weight: bold; 
+    color: black;
+    font-weight: bold;
     font-size: 12px;
     font-family: arial;
     margin: 0 1px;
@@ -1835,7 +1835,7 @@ myKey {
 
 .PrintDialog .dijitArrowButtonInner img {
     width: 16px;
-    height: 16px; 
+    height: 16px;
 }
 
 .dgrid-hider-toggle {
@@ -1865,8 +1865,8 @@ myKey {
 }
 
 .mapFocus {
-    width:100%; 
-    height:100%; 
+    width:100%;
+    height:100%;
     position:absolute;
 }
 
@@ -1944,7 +1944,7 @@ myKey {
 .esriBookmarks .dojoDndItem {
     padding: 0px;
     /*border-top: none; */
-    border-bottom: none; 
+    border-bottom: none;
     background-color: silver;
 }
 
@@ -1961,7 +1961,7 @@ myKey {
     color:white;
 }
 
-.esriBookmarks { 
+.esriBookmarks {
     border:none;
 }
 
@@ -1985,6 +1985,6 @@ myKey {
 }
 
 .more_help {
-  display:block; 
+  display:block;
   float:right;
 }
