@@ -112,7 +112,7 @@ on, mouse, query, Deferred) {
                 tabindex: -1,
                 id: "toolButton_" + name,
                 autofocus: true,
-                tabindex:0,
+                tabindex: 0,
                 // "aria-label": tip,
                 'data-tip': tip,
             }, refNode);
