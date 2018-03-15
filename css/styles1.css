@@ -132,7 +132,6 @@ div[data-tip]:after {
     -webkit-box-shadow: 2 2 6 0 rgba(0, 0, 0, 1);
     -moz-box-shadow: 2 2 6 0 rgba(0, 0, 0, 1);
     box-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
-    z-index: 4;
     display: none;
 }
 
@@ -140,6 +139,7 @@ div[data-tip]:focus:after {
     border: solid white 2px;
     background:black;
     color:white;
+    z-index: 4;
     display: inline-block;
 }
 
@@ -147,8 +147,27 @@ div[data-tip]:hover:after {
     border: solid white 2px;
     background:black;
     color:white;
+    z-index: 5;
     display: inline-block;
 }
+
+div[data-tip]::before {
+  position: absolute;
+  border-style : solid;
+  border-width : 8px;
+  border-color: transparent transparent red transparent;
+  top : 85%;
+  margin-left : 4px;
+  z-index: 3;
+  content : "";
+  display: none;
+  background: transparent !important;
+}
+
+div[data-tip]:hover::before, div[data-tip]:focus::before{
+  display: inline-block;
+}
+
 
 /* .tooltip__focus {
     font-size: 14px;

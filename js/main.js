@@ -3209,10 +3209,9 @@ define([
                             rule.style.backgroundColor = rgbaColor(this.theme);
                             rule.style.color = rgbaColor(this.color);
                         }
-                        if (rule.selectorText.indexOf(".tool--focus") >= 0) {
-                            rule.style.backgroundColor = rgbaColor(this.color);
-                            rule.style.borderColor = rule.style.color = rgbaColor(
-                                this.theme
+                        if (rule.selectorText.indexOf("div[data-tip]::before") >= 0) {
+                            rule.style.borderBottomColor = rgbaColor(
+                                this.color
                             );
                         }
 
