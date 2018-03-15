@@ -1,4 +1,4 @@
-li[role='menuitem']:hover, 
+li[role='menuitem']:hover,
 div[role='button']:not(.searchBtn):not(.searchClear):not(.home):not(.zoomLocateButton):hover,
 .no-touch .esriMeasurement .esriButton .dijitButtonNode:hover,
 #dijit_form_ComboButton_0_arrow:hover,
@@ -30,13 +30,13 @@ http://reference.sitepoint.com/css/outline-color
     }
 }
 
-.esriSimpleSliderIncrementButton:focus, 
+.esriSimpleSliderIncrementButton:focus,
 .esriSimpleSliderHomeButton:hover,
 .esriSimpleSliderDecrementButton:focus{
     outline-offset: 2px;
 }
 
-.homeContainer input:focus, .locateContainer input:focus 
+.homeContainer input:focus, .locateContainer input:focus
 {
 }
 
@@ -64,7 +64,7 @@ http://reference.sitepoint.com/css/outline-color
 }
 
 .activeMarker,
-.panelToolActive, 
+.panelToolActive,
 .esriBasemapGallerySelectedNode,
 .dijitSplitterThumb {
   background-color: rgba(0, 0, 0, 0.7);
@@ -102,7 +102,7 @@ http://reference.sitepoint.com/css/outline-color
   padding: 5px;
   margin:-5px;
   border-radius: 5px 5px 0 0;
-  /*background:navy; 
+  /*background:navy;
   color:white;*/
 }
 
@@ -116,29 +116,105 @@ http://reference.sitepoint.com/css/outline-color
   color:black;
 }
 
-.tooltip__focus {  
-    font-size: 14px;
-    font-family: 'Raleway', sans-serif;
-    padding:5px;
-    margin-top: 1.5em;
-    position: absolute;
-    max-width: 200px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    border-style: solid;
-    border-width: 2px;
-    z-index:1000;
-    white-space: nowrap;
-    overflow-x: hidden;
-    text-overflow: ellipsis;
-    -webkit-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
-    -moz-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
-    box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+/* .tooltip__focus,  */
+/* .tooltip {
+  position: absolute;
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  padding:5px;
+  margin-top: 1.5em;
+  max-width: 200px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 2px;
+  z-index:1000;
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+  -moz-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+  box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+  cursor : help;
+} */
+
+/* div > .tooltip::before, div > .tooltip::after {
+  position : absolute;
+  left : 50%;
+  opacity : 0;
+  z-index: -100;
+  max-width: 200px;
+  margin-top: 10px;
+  font-size: 14px;
+  font-family: 'Raleway', sans-serif;
+  padding:5px;
+
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  border-style: solid;
+  border-width: 2px;
+
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  -webkit-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+  -moz-box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+  box-shadow: 1px 1px 1px 0px rgba(255,255,255,0.51);
+  cursor : help;
 }
 
-.tool--focus {
+div > .tooltip:hover::before,
+div > .tooltip:focus::before,
+div > .tooltip:hover::after
+div > .tooltip:focus::after  {
+  margin-top: 1.5em;
+  max-width: 200px;
+  opacity : 1;
+  z-index: 10000;
+}
+
+div > .tooltip::before {
+  border-style : solid;
+  border-width: 0.5em;
+  border-color: transparent transparent red transparent;
+  bottom : 100%;
+  margin-left : -.5em;
+  content: "";
+}
+
+div > .tooltip::after {
+  background : red;
+  border-radius : 4px;
+
+  color : white;
+  width : 17.5em;
+  padding: 1em;
+  margin-left : -8.75em;
+  content: "abc";
+} */
+
+/* input {
+  position: relative;
+  display: inline-block;
+  margin-top: 40px;
+  tabindex:0;
+} */
+/* input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
+  content: attr(alt);
+  position: absolute;
+  top: -200%;
+  border: solid red 1px;
+  background:black;
+  color:white;
+  padding:0.2em;
+  left:0;
+} */
+
+/* .tool--focus {
     background-color: black;
     color: white;
     border-color: black;
-}
+} */

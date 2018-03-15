@@ -26,64 +26,64 @@ var _gaq = _gaq || [];
 })();
 
 
-define(["dojo/ready", 
+define(["dojo/ready",
     "dojo/aspect", "dijit/registry",
-    "dojo/json", "dojo/_base/array", "dojo/_base/Color", "dojo/_base/declare", 
-    "dojo/_base/lang", "dojo/dom", "dojo/dom-geometry", "dojo/dom-attr", "dojo/dom-class", 
-    "dojo/dom-construct", "dojo/dom-style", "dojo/on", "dojo/Deferred", "dojo/promise/all", 
-    "dojo/query", "dijit/Menu", "dijit/CheckedMenuItem", "application/toolbar", 
-    "application/has-config", "esri/arcgis/utils", "esri/lang", 
+    "dojo/json", "dojo/_base/array", "dojo/_base/Color", "dojo/_base/declare",
+    "dojo/_base/lang", "dojo/dom", "dojo/dom-geometry", "dojo/dom-attr", "dojo/dom-class",
+    "dojo/dom-construct", "dojo/dom-style", "dojo/on", "dojo/Deferred", "dojo/promise/all",
+    "dojo/query", "dijit/Menu", "dijit/CheckedMenuItem", "application/toolbar",
+    "application/has-config", "esri/arcgis/utils", "esri/lang",
     "dijit/layout/BorderContainer", "dijit/layout/ContentPane", "dijit/focus",
-    "esri/tasks/query", 
-    "esri/dijit/Search", 
+    "esri/tasks/query",
+    "esri/dijit/Search",
     "esri/tasks/locator",
-    "esri/dijit/HomeButton", "esri/dijit/LocateButton", 
-    "esri/dijit/Legend", "esri/dijit/BasemapGallery", 
+    "esri/dijit/HomeButton", "esri/dijit/LocateButton",
+    "esri/dijit/Legend", "esri/dijit/BasemapGallery",
     "dojo/i18n!application/nls/resources",
     "dojo/i18n!application/nls/BaseMapLabels",
-    "esri/dijit/Measurement", "esri/dijit/OverviewMap", "esri/geometry/Extent", 
+    "esri/dijit/Measurement", "esri/dijit/OverviewMap", "esri/geometry/Extent",
     "esri/layers/FeatureLayer", "esri/geometry/ScreenPoint",
 
     "application/LayerManager/LayerManager",
-    "application/NavToolBar/NavToolBar", 
-    "application/SuperNavigator/SuperNavigator", 
-    "application/PopupInfo/PopupInfo", 
-    "application/GeoCoding/GeoCoding", 
-    "application/ImageToggleButton/ImageToggleButton", 
-    "application/FeatureList/FeatureList", 
-    "application/Filters/Filters", 
-    "application/TableOfContents/TableOfContents", 
+    "application/NavToolBar/NavToolBar",
+    "application/SuperNavigator/SuperNavigator",
+    "application/PopupInfo/PopupInfo",
+    "application/GeoCoding/GeoCoding",
+    "application/ImageToggleButton/ImageToggleButton",
+    "application/FeatureList/FeatureList",
+    "application/Filters/Filters",
+    "application/TableOfContents/TableOfContents",
 
     "application/LanguageSelect/LanguageSelect",
     "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/PictureMarkerSymbol", "esri/graphic",
-    "esri/dijit/InfoWindow", 
-    "dojo/NodeList-dom", "dojo/NodeList-traverse"], 
+    "esri/dijit/InfoWindow",
+    "dojo/NodeList-dom", "dojo/NodeList-traverse"],
     function (
-    ready, 
+    ready,
     aspect, registry,
-    JSON, array, Color, declare, 
-    lang, dom, domGeometry, domAttr, domClass, 
-    domConstruct, domStyle, on, Deferred, all, 
-    query, Menu, CheckedMenuItem, Toolbar, 
-    has, arcgisUtils, esriLang, 
+    JSON, array, Color, declare,
+    lang, dom, domGeometry, domAttr, domClass,
+    domConstruct, domStyle, on, Deferred, all,
+    query, Menu, CheckedMenuItem, Toolbar,
+    has, arcgisUtils, esriLang,
     BorderContainer, ContentPane, focusUtil,
     Query,
     Search, Locator,
-    HomeButton, LocateButton, 
-    Legend, BasemapGallery, 
+    HomeButton, LocateButton,
+    Legend, BasemapGallery,
     i18n, i18n_BaseMapLabels,
-    Measurement, OverviewMap, Extent, 
+    Measurement, OverviewMap, Extent,
     FeatureLayer, ScreenPoint,
 
-    LayerManager, 
+    LayerManager,
     NavToolBar,
     SuperNavigator, PopupInfo, GeoCoding,
     ImageToggleButton,
-    FeatureList, Filters, TableOfContents, 
+    FeatureList, Filters, TableOfContents,
 
     LanguageSelect,
-    ShareDialog, 
+    ShareDialog,
     SimpleMarkerSymbol, PictureMarkerSymbol, Graphic,
     InfoWindow) {
 
@@ -98,7 +98,7 @@ define(["dojo/ready",
         editor: null,
         editableLayers: null,
         timeFormats: ["shortDateShortTime", "shortDateLEShortTime", "shortDateShortTime24", "shortDateLEShortTime24", "shortDateLongTime", "shortDateLELongTime", "shortDateLongTime24", "shortDateLELongTime24"],
-        
+
         startup: function (config) {
             // config will contain application and user defined info for the template such as i18n strings, the web map id
             // and application id and any url parameters and any application specific configuration information.
@@ -128,9 +128,9 @@ define(["dojo/ready",
                 ready(lang.hitch(this, function () {
                     var description = this.config.description;
                     if(!description && this.config.response) {
-                        description = this.config.response.itemInfo.item.description || 
+                        description = this.config.response.itemInfo.item.description ||
                             this.config.response.itemInfo.item.snippet;
-                    } 
+                    }
                     if (description) {
                         dojo.byId("splashScreenContent").innerHTML = description;
                         domStyle.set("splashScreen", "display", "block");
@@ -164,7 +164,7 @@ define(["dojo/ready",
                     img:this.config.lang1imageSrc,
                     shortName:this.config.lang1shortName,
                     name:this.config.lang1name,
-                    appId:this.config.lang1appId 
+                    appId:this.config.lang1appId
                 },
                 {
                     code:this.config.lang2code,
@@ -257,7 +257,7 @@ define(["dojo/ready",
                 if(!dojo.getAttr(images[i], 'alt'))
                 {
                     dojo.setAttr(images[i], 'alt', '');
-                } 
+                }
             }
 
             dojo.setAttr(node, "role", "dialog");
@@ -312,11 +312,11 @@ define(["dojo/ready",
         // Create UI
         _createUI: function () {
             var borderContainer = this.mainBorderContainer = new BorderContainer({
-                gutters:false, 
+                gutters:false,
                 liveSplitters:true,
                 id:"borderContainer"
             });
-             
+
             var contentPaneTop = new ContentPane({
                 region: "top",
                 splitter: false,
@@ -324,7 +324,7 @@ define(["dojo/ready",
                 content: dojo.byId("panelTitle"),
             });
             borderContainer.addChild(contentPaneTop);
-              
+
             var contentPaneLeft = this.contentPaneLeft = new ContentPane({
                 region: "leading",
                 splitter: 'true',
@@ -333,7 +333,7 @@ define(["dojo/ready",
                 class: "splitterContent",
             });
             borderContainer.addChild(contentPaneLeft);
-              
+
             var contentPaneRight = this.contentPaneRight = new ContentPane({
                 style: "padding:1px; background-color:white;",
                 region: "center",
@@ -351,7 +351,7 @@ define(["dojo/ready",
                 this.map.resize();
                 this.map.reposition();
             }));
-            
+
             domStyle.set("panelPages", "visibility", "hidden");
             //Add tools to the toolbar. The tools are listed in the defaults.js file
             var toolbar = new Toolbar(this.config);
@@ -365,8 +365,8 @@ define(["dojo/ready",
                     id: 'collapseLeftPanelButton',
                     imgSelected: 'images/icons_white/right.png',
                     imgUnselected: 'images/icons_white/left.png',
-                    titleUnselected: i18n.leftCollapse, 
-                    titleSelected: i18n.leftExpand, 
+                    titleUnselected: i18n.leftCollapse,
+                    titleSelected: i18n.leftExpand,
                 }, domConstruct.create('div', {}, vSplitterTools));
                 collapseLeftPanelButton.startup();
 
@@ -458,7 +458,7 @@ define(["dojo/ready",
                             break;
                     }
                 }
-    
+
                 all(toolList).then(lang.hitch(this, function (results) {
                     var tools = array.some(results, function (r) {
                         return r;
@@ -582,7 +582,7 @@ define(["dojo/ready",
                     style:'left:20%; top:-75%;'
                 }, dom.byId('panelBottom'));
             }
-            
+
             var skipTools = query('.skip #skip-tools')[0];
             var skipSearch = query('.skip #skip-search')[0];
             var skipContent = query('.skip #skip-content')[0];
@@ -704,7 +704,7 @@ define(["dojo/ready",
                 activeTool = activeTool[0].childNodes[0];
                 activeTool.click();
             }
-            dom.byId('instructionsDiv').focus();            
+            dom.byId('instructionsDiv').focus();
         },
 
         skipToFeature: function() {
@@ -725,7 +725,7 @@ define(["dojo/ready",
             if(!featureTableContainer || featureTableContainer.clientHeight === 0) return;
             var focusCells = query("#featureTableNode div.dgrid-content .dgrid-focus");
             if(focusCells && focusCells.length>0)
-            {    
+            {
                 focusCells[0].scrollIntoView();
                 focusCells[0].focus();
             } else {
@@ -766,7 +766,7 @@ define(["dojo/ready",
                 var featuresDiv = toolbar.createTool(tool, "", "reload1.gif", "featureSelected");
 
                 var layers = this.config.response.itemInfo.itemData.operationalLayers;
-                
+
                 featureList = new FeatureList({
                     map: this.map,
                     layers: layers,
@@ -782,22 +782,22 @@ define(["dojo/ready",
                 // }));
 
                 deferred.resolve(true);
-            } 
+            }
             else {
                 // window._prevSelected = null;
                 deferred.resolve(false);
             }
-        
+
             return deferred.promise;
         },
-        
+
         navDeferred : null,
 
         _addNavigation: function (tool, oldNaviagationToolBar, deferred) {
             var navToolBar = domConstruct.create("div", {
                 id: "newNaviagationToolBar",
             });
-            
+
             nav = new NavToolBar({
                 map: this.map,
                 navToolBar: oldNaviagationToolBar,
@@ -830,7 +830,7 @@ define(["dojo/ready",
                 var filterDiv = toolbar.createTool(tool, "", "", "someFilters");
 
                 var layers = this.config.response.itemInfo.itemData.operationalLayers;
-                
+
                 filter = new Filters({
                     map: this.map,
                     layers: layers,
@@ -843,15 +843,15 @@ define(["dojo/ready",
                 // }));
 
                 deferred.resolve(true);
-            } 
+            }
             else {
                 // window._prevSelected = null;
                 deferred.resolve(false);
             }
-        
+
             return deferred.promise;
         },
-        
+
         _addBasemapGallery: function (tool, toolbar) {
             var deferred = new Deferred();
             if(has("layerManager")) {
@@ -882,12 +882,12 @@ define(["dojo/ready",
                             if(dojo.hasClass(node, "esriBasemapGallerySelectedNode"))
                             {
                                 l += ' '+this.config.i18n.tools.basemapGallery.selected;
-                            }       
-                            l += '.';                          
+                            }
+                            l += '.';
                             //node.querySelector('a').focus();
                             domAttr.set(aSpan, 'aria-label', l);
                             //aSpan.focus();
-                        });    
+                        });
                     });
 
                     var observerCfg = { attributes: true, childList: false, characterData: false };
@@ -922,17 +922,17 @@ define(["dojo/ready",
                             if(dojo.hasClass(node, "esriBasemapGallerySelectedNode"))
                             {
                                 l += ' '+this.config.i18n.tools.basemapGallery.selected;
-                            }       
-                            l += '.';                          
+                            }
+                            l += '.';
                             domAttr.set(aSpan, 'aria-label', l);
                             //img.alt=aSpan.innerText;
                         } catch(e) {}
-                        
-                        domAttr.set(labelNode, "tabindex", 0);   
+
+                        domAttr.set(labelNode, "tabindex", 0);
                         on(img, "click", function() { node.focus();});
                         on(node,"keydown", function(ev) {
                             if(ev.key === "Enter" || ev.key === " " || ev.char === " ") {
-                                aNode.click();  
+                                aNode.click();
                             } else if(ev.key === "Tab" && !ev.shiftKey) {
                                 if(node.nextElementSibling.nodeName != "BR") {
                                     node.nextElementSibling.focus();
@@ -1031,12 +1031,12 @@ define(["dojo/ready",
             var deferred = new Deferred();
             if (!has("instructions")) {
                deferred.resolve(false);
-            } 
-            else 
-            { 
+            }
+            else
+            {
                 if(!has("details"))
                 {
-                    require(["dojo/text!application/dijit/templates/"+this.config.i18n.instructions+".html"], 
+                    require(["dojo/text!application/dijit/templates/"+this.config.i18n.instructions+".html"],
                         function(instructionsText){
                         var instructionsDiv = toolbar.createTool(tool);
                         domConstruct.create('div',{
@@ -1048,10 +1048,10 @@ define(["dojo/ready",
 
                     var instructionsBtn = dojo.query("#toolButton_instructions")[0];
                     domClass.add(instructionsBtn, "panelToolDefault");
-                } 
+                }
                 else {
                     deferedDetails.then(lang.hitch(this, function(r) {
-                        require(["dojo/text!application/dijit/templates/"+this.config.i18n.instructions+".html"], 
+                        require(["dojo/text!application/dijit/templates/"+this.config.i18n.instructions+".html"],
                             function(instructionsText){
 
                                 if(this.config.moreHelpURL.isNonEmpty())
@@ -1076,13 +1076,13 @@ define(["dojo/ready",
         },
 
         _adjustDetails :function() {
-            try 
+            try
             {
                 var pageBody = dojo.byId('pageBody_details');
                 var detailDiv = dojo.byId('detailDiv');
                 detailDiv.style.maxHeight=(pageBody.clientHeight-instructionsDiv.clientHeight - 30) + 'px';
             } catch (e) {
-                /* ignore instructionDiv not defined error: will come defined next time! */      
+                /* ignore instructionDiv not defined error: will come defined next time! */
             }
         },
 
@@ -1242,7 +1242,7 @@ define(["dojo/ready",
                     deferred.resolve(false);
                 }
             }
-            return deferred.promise;        
+            return deferred.promise;
         },
 
         _addLegend: function (tool, toolbar) {
@@ -1339,7 +1339,7 @@ define(["dojo/ready",
                             // });
                         }
                     };
-                    
+
                     this.legendNodeObserver = new MutationObserver(function(mutations) {
                         mutations.forEach(function(mutation) {
                             if(mutation.addedNodes && mutation.addedNodes.length>=1) {
@@ -1352,14 +1352,14 @@ define(["dojo/ready",
                                 }
                                 // });
                             }
-                        });    
+                        });
                     });
 
-                    this.legendNodeObserver.observe(dojo.byId('esri_dijit_Legend_0'), { 
-                        attributes: true, 
-                        childList: true, 
+                    this.legendNodeObserver.observe(dojo.byId('esri_dijit_Legend_0'), {
+                        attributes: true,
+                        childList: true,
                         characterData: false,
-                        subtree: true 
+                        subtree: true
                     });
 
                     deferred.resolve(true);
@@ -1388,7 +1388,7 @@ define(["dojo/ready",
                     geolocatorLabelColor: this.config.geolocatorLabelColor
                 }, infoPanelDiv);
                 popupInfo.startup();
-                
+
                 deferred.resolve(true);
 
             } else {
@@ -1417,7 +1417,7 @@ define(["dojo/ready",
                     geolocatorLabelColor: this.config.geolocatorLabelColor
                 }, geoCodingDiv);
                 geoCoding.startup();
-                
+
                 deferred.resolve(true);
 
             } else {
@@ -1473,7 +1473,7 @@ define(["dojo/ready",
                 for(i = 0; i< esriMeasurementTableHeaders.length; i++)
                 {
                     esriMeasurementTableHeader = esriMeasurementTableHeaders[i];
-                    //alert(esriMeasurementTableHeader.innerHTML); 
+                    //alert(esriMeasurementTableHeader.innerHTML);
                     var newHeader = document.createElement('th');
                     newHeader.innerHTML = esriMeasurementTableHeader.innerHTML;
                     colspan = esriMeasurementTableHeader.getAttribute('colspan');
@@ -1487,7 +1487,7 @@ define(["dojo/ready",
                 var AccessAuditMarkers = esriMeasurementResultTable.querySelectorAll('img');
                 for(i = 0; i< AccessAuditMarkers.length; i++)
                 {
-                     AccessAuditMarkers[i].setAttribute('Alt','');  
+                     AccessAuditMarkers[i].setAttribute('Alt','');
                 }
 
                 areaIconNode = measureDiv.querySelector('.areaIcon');
@@ -1519,7 +1519,7 @@ define(["dojo/ready",
                 var panelHeight = this.map.height;
 
                 this.createOverviewMap(ovMapDiv, panelHeight);
-                
+
                 on(this.map, "layer-add", lang.hitch(this, function (args) {
                     //delete and re-create the overview map if the basemap gallery changes
                     if (args.layer.hasOwnProperty("_basemapGalleryLayerType") && args.layer._basemapGalleryLayerType === "basemap") {
@@ -1550,7 +1550,7 @@ define(["dojo/ready",
             ovwHighlight = div.querySelector('.ovwHighlight');
             dojo.setAttr(ovwHighlight, 'tabindex', 0);
             dojo.setAttr(ovwHighlight, 'title', i18n.map.overviewTip);
-            
+
             on(ovwHighlight, 'keydown', lang.hitch({ div: ovwHighlight, map: ovMap}, function(event) {
                 var top = dojo.style(this.div, 'top');
                 var left = dojo.style(this.div, 'left');
@@ -1652,7 +1652,7 @@ define(["dojo/ready",
             legendNode = null,
             print = null;
 
-            require(["application/has-config!print?esri/dijit/Print"], lang.hitch(this, 
+            require(["application/has-config!print?esri/dijit/Print"], lang.hitch(this,
             function (Print) {
                 if (!Print) {
                     deferred.resolve(false);
@@ -1668,7 +1668,7 @@ define(["dojo/ready",
                 var printDiv = domConstruct.create("div", {
                     class: 'PrintDialog',
                     id: 'printDialog'
-                }, toolbar.createTool(tool, "", "reload1.gif")); 
+                }, toolbar.createTool(tool, "", "reload1.gif"));
 
                 var printError = domConstruct.create('div', {
                     id:'printError',
@@ -1733,8 +1733,8 @@ define(["dojo/ready",
                 }
 
                 require([
-                    "application/has-config!print-layouts?esri/request", 
-                    "application/has-config!print-layouts?esri/tasks/PrintTemplate"], lang.hitch(this, 
+                    "application/has-config!print-layouts?esri/request",
+                    "application/has-config!print-layouts?esri/tasks/PrintTemplate"], lang.hitch(this,
                 function (esriRequest, PrintTemplate) {
                     if (!esriRequest && !PrintTemplate) {
                         //Use the default print templates
@@ -1779,7 +1779,7 @@ define(["dojo/ready",
                             var printError = dojo.byId('printError');
                             if(printError)
                                 printError.innerHTML = '';
-                        
+
                             var loading_print = dojo.byId('loading_print');
                             domClass.replace(loading_print, "showLoading", "hideLoading");
                         }));
@@ -1875,7 +1875,7 @@ define(["dojo/ready",
                 // role: 'presentation',
                 src: 'images/icons_black/carret-down.32.png',
                 alt: 'carret-down',
-                }, arrowButton);        
+                }, arrowButton);
         },
 
         _addShare: function (tool, toolbar) {
@@ -1886,7 +1886,7 @@ define(["dojo/ready",
             if (has("share")) {
 
                 var shareDiv = domConstruct.create('div', {class:'pageBody'},toolbar.createTool(tool));//);
-                
+
                 var shareDialog = new ShareDialog({
                     bitlyLogin: this.config.bitlyLogin,
                     bitlyKey: this.config.bitlyKey,
@@ -1945,10 +1945,10 @@ define(["dojo/ready",
         },
 
         _addSearch: function() {
-            // require(["application/has-config!search?esri/dijit/Search", 
-            //     "application/has-config!search?esri/tasks/locator"], 
+            // require(["application/has-config!search?esri/dijit/Search",
+            //     "application/has-config!search?esri/tasks/locator"],
             //     lang.hitch(this, function (Search, Locator) {
-                if (!Search && !Locator) 
+                if (!Search && !Locator)
                 {
                     //add class so we know we don't have to hide title since search isn't visible
                     domClass.add("panelTop", "no-search");
@@ -1969,7 +1969,7 @@ define(["dojo/ready",
                 }, this.map.container));
                 var defaultSources = [];
 
-                //setup geocoders defined in common config 
+                //setup geocoders defined in common config
                 if (this.config.helperServices.geocode && this.config.locationSearch) {
                     var geocoders = lang.clone(this.config.helperServices.geocode);
                     // var searchSymbol = new esri.symbol.PictureMarkerSymbol({
@@ -1990,7 +1990,7 @@ define(["dojo/ready",
 
                             geocoder.singleLineFieldName = "SingleLine";
                             // geocoder.highlightSymbol = searchSymbol;
-                            
+
                             geocoder.outFields = ['*'];//["Match_addr"];
                             if(this.config.countryCodeSearch && this.config.countryCodeSearch !== "") {
                                 geocoder.countryCode = this.config.countryCodeSearch;
@@ -2011,7 +2011,7 @@ define(["dojo/ready",
                             defaultSources.push(geocoder);
                         } else if (esriLang.isDefined(geocoder.singleLineFieldName)) {
 
-                            //Add geocoders with a singleLineFieldName defined 
+                            //Add geocoders with a singleLineFieldName defined
                             geocoder.locator = new Locator(geocoder.url);
 
                             defaultSources.push(geocoder);
@@ -2019,7 +2019,7 @@ define(["dojo/ready",
                     }));
                 }
 
-                //add configured search layers to the search widget 
+                //add configured search layers to the search widget
                 var configuredSearchLayers = (this.config.searchLayers instanceof Array) ? this.config.searchLayers : JSON.parse(this.config.searchLayers);
                 configuredSearchLayers.forEach(lang.hitch(this, function (layer) {
                     var mapLayer = this.map.getLayer(layer.id);
@@ -2037,12 +2037,12 @@ define(["dojo/ready",
                     }
                 }));
 
-                //Add search layers defined on the web map item 
-                if (this.config.response.itemInfo.itemData && 
-                    this.config.response.itemInfo.itemData.applicationProperties && 
-                    this.config.response.itemInfo.itemData.applicationProperties.viewing && 
+                //Add search layers defined on the web map item
+                if (this.config.response.itemInfo.itemData &&
+                    this.config.response.itemInfo.itemData.applicationProperties &&
+                    this.config.response.itemInfo.itemData.applicationProperties.viewing &&
                     this.config.response.itemInfo.itemData.applicationProperties.viewing.search) {
-                    
+
                     var searchOptions = this.config.response.itemInfo.itemData.applicationProperties.viewing.search;
 
                     array.forEach(searchOptions.layers, lang.hitch(this, function (searchLayer) {
@@ -2090,7 +2090,7 @@ define(["dojo/ready",
                     if(!source.placeholder || source.placeholder === undefined || source.placeholder ==="") {
                         if(source.featureLayer && source.featureLayer.name) {
                             source.placeholder = i18n.searchEnterCriteria+" "+source.featureLayer.name;
-                        } 
+                        }
                         else {
                             source.placeholder = i18n.searchPlaceholder;
                         }
@@ -2106,13 +2106,13 @@ define(["dojo/ready",
 
                 if (search && search.domNode) {
                     domConstruct.place(search.domNode, "panelGeocoder");
-            
+
                     var esriIconDownArrowNode = dojo.query(".searchIcon.esri-icon-down-arrow")[0];
                     if(esriIconDownArrowNode)
                     {
                         domClass.remove(esriIconDownArrowNode, "searchIcon esri-icon-down-arrow");
 
-                        esriIconDownArrowNode.innerHTML = 
+                        esriIconDownArrowNode.innerHTML =
                         '<img src="images\\downArrow.png" alt="Search in" width="20" height="20">';
                     }
 
@@ -2123,15 +2123,15 @@ define(["dojo/ready",
                     if(esriIconZoomNode)
                     {
                         domClass.remove(esriIconZoomNode, "searchIcon esri-icon-search");
-                        esriIconZoomNode.innerHTML = 
+                        esriIconZoomNode.innerHTML =
                         // '<img src="images\\searchZoom.png" alt="Search" width="20" height="20">';
                         '<img src="images\\searchZoom.png" alt="Search Button" width="20" height="20">';
                     }
 
-                    var esriIconCloseNode = dojo.query(".searchIcon.esri-icon-close.searchClose")[0]; 
+                    var esriIconCloseNode = dojo.query(".searchIcon.esri-icon-close.searchClose")[0];
                     if(esriIconCloseNode) {
                         domClass.remove(esriIconCloseNode, "searchIcon esri-icon-close");
-                        esriIconCloseNode.innerHTML = 
+                        esriIconCloseNode.innerHTML =
                             '<img src="images\\searchClear.png" alt="Clear search" width="19" height="19">';
                     }
                 }
@@ -2173,7 +2173,7 @@ define(["dojo/ready",
                                 dojo.removeAttr(box, 'tabindex');
                                 dojo.removeAttr(box, 'aria-label');
                             }
-                        });    
+                        });
                     });
 
                     var observerCfg = { attributes: true, childList: false, characterData: false };
@@ -2184,11 +2184,11 @@ define(["dojo/ready",
                 return search;
             // }));
         },
- 
+
         _updateTheme: function () {
 
             if(!dojo.byId("themeColors")) {
-                var themeCss = 
+                var themeCss =
                 // '<style id="themeColors">' +
                 '.bg, .esriPopup .pointer, .esriPopup .titlePane {\n' +
                 '   background-color:' + this.theme.toString() +' !important;\n'+
@@ -2251,10 +2251,10 @@ define(["dojo/ready",
                         }
                         if(rule.selectorText.indexOf('.tool--focus') >= 0) {
                             rule.style.backgroundColor = rgbaColor(this.color);
-                            rule.style.borderColor = 
+                            rule.style.borderColor =
                             rule.style.color = rgbaColor(this.theme);
                         }
-                        
+
                         //focus
                         if(rule.selectorText.indexOf(':focus') >= 0) {
                             if(rule.selectorText.indexOf('#mapDiv') >= 0) {
@@ -2282,7 +2282,7 @@ define(["dojo/ready",
                 this.mapExt = this.map.extent;
             }
         },
- 
+
         _adjustPopupSize: function (evn) {
             // if (!this.map)  return;
             // var box = domGeometry.getContentBox(this.map.container);
@@ -2292,13 +2292,13 @@ define(["dojo/ready",
             // var height = Math.round(box.h * 0.35);
             // this.map.infoWindow.resize(width, height);
         },
- 
+
         _createWebMap: function (itemInfo) {
 
             window.config = this.config;
 
             var options = {};
-            //specify center and zoom if provided as url params 
+            //specify center and zoom if provided as url params
             if (this.config.level) {
                 options.zoom = this.config.level;
             }
@@ -2307,7 +2307,6 @@ define(["dojo/ready",
                 if (points && points.length === 2) {
                     options.center = [parseFloat(points[0]), parseFloat(points[1])];
                 }
-
             }
 
             // create a map based on the input web map id
@@ -2337,9 +2336,9 @@ define(["dojo/ready",
 
                 var mapScroll = function(event){
                     var focusElement = document.querySelector(':focus');
-                    if(!focusElement || focusElement !== mapDiv) return; 
+                    if(!focusElement || focusElement !== mapDiv) return;
                     // console.log(event.keyCode);
-                    
+
                     var _mapScroll = lang.hitch(this, function(x, y){
                         var dx = x * this.stepX;
                         var dy = y * this.stepY;
@@ -2397,7 +2396,7 @@ define(["dojo/ready",
 
                 on(mapDiv, 'keypress', lang.hitch(this, function(evn){
                     var focusElement = document.querySelector(':focus');
-                    if(!focusElement || focusElement !== mapDiv) return; 
+                    if(!focusElement || focusElement !== mapDiv) return;
                     if((evn.keyCode === 43) && !evn.ctrlKey && !evn.altKey)  // Shift-'+'
                     {
                         this.map.setLevel(this.map.getLevel() + 1);
@@ -2423,7 +2422,7 @@ define(["dojo/ready",
                     var altMapText = esriLang.stripTags(this.config.altMapText);
                     domAttr.set(this.map.container, "aria-label", altMapText);
                 }
-                
+
                 //Add a logo if provided
                 if (this.config.logo) {
                     var altText = this.config.logoAltText;
@@ -2431,9 +2430,9 @@ define(["dojo/ready",
                         altText = title;
                     var panelLogo = domConstruct.create("div", {
                         id: "panelLogo",
-                        TabIndex:0, 
-                        innerHTML: "<img id='logo' src=" + this.config.logo + " alt='" + altText + 
-                        //"' Title='" + altText + 
+                        TabIndex:0,
+                        innerHTML: "<img id='logo' src=" + this.config.logo + " alt='" + altText +
+                        //"' Title='" + altText +
                         "' aria-label='" + altText + "'></>"
                     }, dom.byId("panelTitle"));//, "first");
                     //domClass.add("panelTop", "largerTitle");
@@ -2444,7 +2443,7 @@ define(["dojo/ready",
                 //this.map = response.map;
                 //Set the title - use the config value if provided.
                 //var title = (this.config.title === null) ? response.itemInfo.item.title : this.config.title;
-          
+
                 //if title is short make title area smaller
                 if (title && title.length && title.length === 0) {
                     domClass.add("panelTop", "smallerTitle");
@@ -2470,19 +2469,19 @@ define(["dojo/ready",
                 if(!response.itemInfo.itemData.applicationProperties.viewing.search)
                     response.itemInfo.itemData.applicationProperties.viewing.search = { hintText: i18n.searchPlaceholder };
                 this.config.response = response;
-                
+
                 // window.config = this.config;
 
                 if (this.initExt !== null) {
                     this.map.setExtent(this.initExt);
                 }
                 window.initExt = this.initExt = this.map.extent;
-                
+
                 on.once(this.map, "extent-change", lang.hitch(this, function() {
                     navDeferred.then(lang.hitch(this, function (results) {
                         this._checkExtent();
                         var homeButton = document.querySelector(".HomeButton input[type='image']");
-                        if(homeButton) 
+                        if(homeButton)
                             homeButton.click();
                     }));
 
