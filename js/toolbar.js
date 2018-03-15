@@ -125,14 +125,6 @@ on, mouse, query, Deferred) {
             }, panelTool);
 
             on(panelTool, "keypress", lang.hitch(this, this._toolKeyPress));
-            // on(pTool, "focus", lang.hitch(this, this._toolFocus));
-            // on(pTool, "blur", lang.hitch(this, this._toolBlur));
-
-            // if (!has("touch"))
-            // {
-            //     domAttr.set(pTool, "title", tip);
-            // }
-
 
             if(badgeEvName && badgeEvName !== '') {
                 var setIndicator = domConstruct.create("img", {
@@ -233,21 +225,6 @@ on, mouse, query, Deferred) {
                 }
             }
         },
-
-        // _toolFocus: function(ev) {
-        //     var alt = ev.target.alt;
-        //     if(!alt || alt.replace(/\s/g, '').length < 1)
-        //         return;
-        //     domConstruct.create("span", {
-        //         id: "focusTooltip",
-        //         class: "tooltip__focus tool--focus",
-        //         innerHTML: alt
-        //     }, ev.target, 'before');
-        // },
-
-        // _toolBlur: function(ev) {
-        //     domConstruct.destroy("focusTooltip");
-        // },
 
         _toolClick: function (name) {
 
