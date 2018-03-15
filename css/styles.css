@@ -1969,6 +1969,7 @@ myKey {
     position:absolute;
     top:5px;
     right:8px;
+    /* z-index:  10000000; */
 }
 
 .thumbFeature * {
@@ -1988,3 +1989,31 @@ myKey {
   display:block;
   float:right;
 }
+
+h3.header {
+  padding: 0;
+  /* display: block; */
+  /* font-size: 1.17em; */
+  margin: 0;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0px;
+  -webkit-margin-end: 0px;
+}
+
+/* input {
+  position: relative;
+  display: inline-block;
+  margin-top: 40px;
+  tabindex:0;
+}
+input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
+  content: attr(alt);
+  position: absolute;
+  top: -200%;
+  border: solid red 1px;
+  background:black;
+  color:white;
+  padding:0.2em;
+  left:0;
+} */

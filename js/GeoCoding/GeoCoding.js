@@ -1,42 +1,42 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
+define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
-    "dojo/on", 
+    "dojo/on",
     "esri/tasks/locator",
     "esri/geometry/webMercatorUtils",
-    "dojo/Deferred", "dojo/query", 
-    "dojo/text!application/GeoCoding/Templates/GeoCoding.html", 
-    "dojo/text!application/GeoCoding/Templates/GeoCodingHeader.html", 
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
+    "dojo/Deferred", "dojo/query",
+    "dojo/text!application/GeoCoding/Templates/GeoCoding.html",
+    "dojo/text!application/GeoCoding/Templates/GeoCodingHeader.html",
+    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
     "dojo/parser", "dojo/ready",
     "dijit/layout/BorderContainer",
-    "dojox/layout/ContentPane",  
-    "esri/InfoTemplate", 
-    "esri/symbols/PictureMarkerSymbol", "esri/symbols/TextSymbol", "esri/graphic", 
-    "dojo/string", 
+    "dojox/layout/ContentPane",
+    "esri/InfoTemplate",
+    "esri/symbols/PictureMarkerSymbol", "esri/symbols/TextSymbol", "esri/graphic",
+    "dojo/string",
     "dojo/i18n!application/nls/PopupInfo",
     "esri/domUtils",
-    // "esri/dijit/Popup", 
+    // "esri/dijit/Popup",
     "application/GeoCoding/GeoCodingHeader",
     "application/SuperNavigator/SuperNavigator",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
-    
+
     ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, registry,
-        on, 
+        on,
         Locator, webMercatorUtils,
         Deferred, query,
-        GeoCodingTemplate, GeoCodingHeaderTemplate, 
-        dom, domClass, domAttr, domStyle, domConstruct, event, 
+        GeoCodingTemplate, GeoCodingHeaderTemplate,
+        dom, domClass, domAttr, domStyle, domConstruct, event,
         parser, ready,
         BorderContainer,
         ContentPane,
-        InfoTemplate, 
+        InfoTemplate,
         PictureMarkerSymbol, TextSymbol, Graphic,
         string,
         i18n,
         domUtils,
-        // Popup, 
+        // Popup,
         GeoCodingHeader, SuperNavigator
     ) {
 
@@ -51,7 +51,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         options: {
             map: null,
-            toolbar: null, 
+            toolbar: null,
             header: 'pageHeader_geoCoding',
             superNavigator : null,
             iconColor: 'white',
@@ -126,7 +126,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     if (evt.address.address) {
                         var address = evt.address.address;
                         var infoTemplate = new InfoTemplate(
-                            i18n.widgets.geoCoding.Location, 
+                            i18n.widgets.geoCoding.Location,
                             this.makeAddressTemplate(address)
                             );
                         var location = webMercatorUtils.geographicToWebMercator(
@@ -135,9 +135,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         //this service returns geocoding results in geographic - convert to web mercator to display on map
                         // var location = webMercatorUtils.geographicToWebMercator(evt.location);
                         this.geoCodingMarkerGraphic = new Graphic(
-                            location, 
-                            this.searchMarker, 
-                            address, 
+                            location,
+                            this.searchMarker,
+                            address,
                             infoTemplate
                             );
                         this.map.graphics.add(this.geoCodingMarkerGraphic);
@@ -151,7 +151,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 this.locator.on('error', lang.hitch(this, function(evt) {
                     console.log('locator error', evt);
                     this.clearSearchGraphics();
-                    this.contentPanel.set("content", 
+                    this.contentPanel.set("content",
                         "<div class='esriViewPopup'>"+
                             "<div tabindex=0 class='header'>"+
                                 i18n.widgets.geoCoding.noAddressFound+
@@ -188,21 +188,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             var result = "";
 
-            if(address.Address.isNonEmpty()) 
+            if(address.Address.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Address+"</th><td>${Address}</td></tr>";
-            if(address.Block.isNonEmpty()) 
+            if(address.Block.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Block+"</th><td>${Block}</td></tr>";
-            if(address.Sector.isNonEmpty()) 
+            if(address.Sector.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Sector+"</th><td>${Sector}</td></tr>";
-            if(address.Neighborhood.isNonEmpty()) 
+            if(address.Neighborhood.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Neighborhood+"</th><td>${Neighborhood}</td></tr>";
-            if(address.PlaceName.isNonEmpty()) 
+            if(address.PlaceName.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.PlaceName+"</th><td>${PlaceName}</td></tr>";
-            if(address.MetroArea.isNonEmpty()) 
+            if(address.MetroArea.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.MetroArea+"</th><td>${MetroArea}</td></tr>";
-            if(address.District.isNonEmpty() && address.District !== address.City) 
+            if(address.District.isNonEmpty() && address.District !== address.City)
                 result += "<tr><th>"+i18n.widgets.geoCoding.District+"</th><td>${District}</td></tr>";
-            if(address.City.isNonEmpty()) 
+            if(address.City.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.City+"</th><td>${City}</td></tr>";
             if(address.Postal.isNonEmpty()) {
                 result += "<tr><th>"+i18n.widgets.geoCoding.PostalCode+"</th><td>${Postal}";
@@ -216,23 +216,23 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
                 result += "</td></tr>";
             }
-            if(address.Territory.isNonEmpty()) 
+            if(address.Territory.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Territory+"</th><td>${Territory}</td></tr>";
-            if(address.CountryCode.isNonEmpty()) 
+            if(address.CountryCode.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${CountryCode}</td></tr>";
 
             if(result !=='') {
-                var title="Location to Address";
-                result = 
+                var title=i18n.widgets.popupInfo.addressToLocation;;
+                result =
                 "<div class='esriViewPopup'>"+
-                    "<div class='header'>"+
-                        (address.Addr_type.isNonEmpty() || address.Type.isNonEmpty() ? 
+                    "<h3 class='header'>"+
+                        (address.Addr_type.isNonEmpty() || address.Type.isNonEmpty() ?
                             (
                                 (address.Addr_type.isNonEmpty() ? '${AddrTypeLoc}':'')+
                                 (address.Addr_type.isNonEmpty() && address.Type.isNonEmpty() ? ' - ': '')+
                                 (address.Type.isNonEmpty() ? '${TypeLoc}':'')
-                            ) 
-                            : '')+"</div>"+
+                            )
+                            : '')+"</h3>"+
                         "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"'/></div>"+
                         "<div class='hzLine'></div>"+
                         "<table class='address-tooltip__address-info'>"+result+"</table>"+
@@ -264,12 +264,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }, dom.byId("geoCoding_content"));
             this.contentPanel.startup();
             this.contentPanel.set("content", i18n.widgets.geoCoding.instructions);
-            
+
             this.geoCodingHeader = new GeoCodingHeader({
                 map: this.map,
-                toolbar: this.toolbar, 
-                header: 'pageHeader_geoCoding', 
-                id: 'geoCoding_headerId', 
+                toolbar: this.toolbar,
+                header: 'pageHeader_geoCoding',
+                id: 'geoCoding_headerId',
                 superNavigator : this.superNavigator,
                 template: GeoCodingHeaderTemplate,
                 contentPanel: this.contentPanel,

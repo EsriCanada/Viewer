@@ -1,38 +1,38 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
+define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
-    "dojo/on", 
-    "dojo/Deferred", "dojo/query", 
-    "dojo/text!application/PopupInfo/Templates/PopupInfo.html", 
-    // "dojo/text!application/PopupInfo/Templates/PopupInfoHeader.html", 
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
+    "dojo/on",
+    "dojo/Deferred", "dojo/query",
+    "dojo/text!application/PopupInfo/Templates/PopupInfo.html",
+    // "dojo/text!application/PopupInfo/Templates/PopupInfoHeader.html",
+    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
     "dojo/parser", "dojo/ready",
     "dijit/layout/BorderContainer",
-    "dojox/layout/ContentPane",  
-    "esri/InfoTemplate", 
-    "esri/symbols/PictureMarkerSymbol", "esri/symbols/TextSymbol", "esri/graphic", 
-    "dojo/string", 
+    "dojox/layout/ContentPane",
+    "esri/InfoTemplate",
+    "esri/symbols/PictureMarkerSymbol", "esri/symbols/TextSymbol", "esri/graphic",
+    "dojo/string",
     "dojo/i18n!application/nls/PopupInfo",
     "esri/domUtils",
-    "esri/dijit/Popup", 
+    "esri/dijit/Popup",
     "application/PopupInfo/PopupInfoHeader",
     "application/SuperNavigator/SuperNavigator",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
-    
+
     ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, registry,
-        on, 
+        on,
         Deferred, query,
-        PopupInfoTemplate, // PopupInfoHeaderTemplate, 
-        dom, domClass, domAttr, domStyle, domConstruct, event, 
+        PopupInfoTemplate, // PopupInfoHeaderTemplate,
+        dom, domClass, domAttr, domStyle, domConstruct, event,
         parser, ready,
         BorderContainer,
         ContentPane,
-        InfoTemplate, 
+        InfoTemplate,
         PictureMarkerSymbol, TextSymbol, Graphic,
         string,
         i18n,
-        domUtils, 
+        domUtils,
         Popup, PopupInfoHeader, SuperNavigator
     ) {
 
@@ -48,7 +48,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         options: {
             map: null,
-            toolbar: null, 
+            toolbar: null,
             header: 'pageHeader_infoPanel',
             superNavigator : null,
             maxSearchResults: 10,
@@ -147,7 +147,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     if(features && features !== undefined && features.length > 0) {
                         this.search.map.infoWindow.setFeatures(features);
                     }
-                    else { 
+                    else {
                         this.search.map.infoWindow.clearFeatures();
                     }
                 }));
@@ -159,7 +159,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         makeSearchResultTemplate: function(address) {
             console.log('Info Address:', address);
-            
+
             if(address.Addr_type.isNonEmpty()) {
                 var prop = address.Addr_type.replace(' ', '');
                 address.AddrTypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop)) ?
@@ -181,9 +181,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
                 result += "</td></tr>";
             }
-            if(address.Status.isNonEmpty()) 
+            if(address.Status.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Status+"</th><td>${Status}</td></tr>";
-            if(address.Side.isNonEmpty()) 
+            if(address.Side.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Side+"</th><td>${Side}</td></tr>";
             if(address.StDir.isNonEmpty()) {
                 result += "<tr><th>"+i18n.widgets.geoCoding.StDir+"</th><td>${StDir}";
@@ -209,7 +209,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
                 result += "</td></tr>";
             }
-            if(address.Block.isNonEmpty()) 
+            if(address.Block.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Block+"</th><td>${Block}</td></tr>";
             if(address.UnitName.isNonEmpty()) {
                 result += "<tr><th>"+i18n.widgets.geoCoding.UnitName+"</th><td>${UnitName}";
@@ -218,17 +218,17 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
                 result += "</td></tr>";
             }
-            if(address.Sector.isNonEmpty()) 
+            if(address.Sector.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Sector+"</th><td>${Sector}</td></tr>";
-            if(address.Nbrhd.isNonEmpty()) 
+            if(address.Nbrhd.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Neighborhood+"</th><td>${Nbrhd}</td></tr>";
-            if(address.PlaceName.isNonEmpty()) 
+            if(address.PlaceName.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.PlaceName+"</th><td>${PlaceName}</td></tr>";
-            if(address.MetroArea.isNonEmpty()) 
+            if(address.MetroArea.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.MetroArea+"</th><td>${MetroArea}</td></tr>";
-            if(address.District.isNonEmpty() && address.District !== address.City) 
+            if(address.District.isNonEmpty() && address.District !== address.City)
                 result += "<tr><th>"+i18n.widgets.geoCoding.District+"</th><td>${District}</td></tr>";
-            if(address.City.isNonEmpty()) 
+            if(address.City.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.City+"</th><td>${City}</td></tr>";
             if(address.Postal.isNonEmpty()) {
                 result += "<tr><th>"+i18n.widgets.geoCoding.PostalCode+"</th><td>${Postal}";
@@ -242,26 +242,26 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
                 result += "</td></tr>";
             }
-            if(address.Territory.isNonEmpty()) 
+            if(address.Territory.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Territory+"</th><td>${Territory}</td></tr>";
-            if(address.Country.isNonEmpty()) 
+            if(address.Country.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.CountryCode+"</th><td>${Country}</td></tr>";
 
-            if(address.Phone.isNonEmpty()) 
+            if(address.Phone.isNonEmpty())
                 result += "<tr><th>"+i18n.widgets.geoCoding.Phone+"</th><td>${Phone}</td></tr>";
 
             if(result !=='') {
-                var title="Address to Location"; 
-                result = 
+                var title=i18n.widgets.popupInfo.addressToLocation;
+                result =
                 "<div class='esriViewPopup'>"+
-                    "<div class='header'>"+
-                        (address.Addr_type.isNonEmpty() || address.Loc_name.isNonEmpty() ? 
+                    "<h3 class='header'>"+
+                        (address.Addr_type.isNonEmpty() || address.Loc_name.isNonEmpty() ?
                             (
                                 (address.Addr_type.isNonEmpty() ? '${AddrTypeLoc}':'')+
                                 (address.Addr_type.isNonEmpty() && address.Loc_name.isNonEmpty() ? ' - ': '')+
                                 (address.Loc_name.isNonEmpty() ? '${TypeLoc}':'')
-                            ) 
-                            : '')+"</div>"+
+                            )
+                            : '')+"</h3>"+
                         "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"''/></div>"+
                     "<div class='hzLine'></div>"+
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
@@ -285,7 +285,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 yoffset : -fontSize,//-14,
                 haloColor: [25,25,25,155],
                 haloSize: 4,
-                font : 
+                font :
                 {
                     family : cs.fontFamily, //"Roboto Condensed",
                     size : fontSize, //18,
@@ -318,12 +318,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }, dom.byId("feature_content"));
             this.contentPanel.startup();
             this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
-            
+
             this.popupInfoHeader = new PopupInfoHeader({
                 map: this.map,
-                toolbar: this.toolbar, 
+                toolbar: this.toolbar,
                 header: 'pageHeader_infoPanel',
-                id: 'infoPanel_headerId', 
+                id: 'infoPanel_headerId',
                 superNavigator : this.superNavigator,
                 emptyMessage: this.emptyMessage,
             }, domConstruct.create('Div', {}, this.headerNode));
@@ -349,7 +349,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 // if(rows) {
                                 //     rows.forEach(function(row) {domAttr.set(row, 'tabindex', 0);});
                                 // }
-                            } 
+                            }
                             // else {
                             //     var description = query('[dojoattachpoint=_description]', mainSection[0]);
                             //     if(description && description.length > 0) {
@@ -359,7 +359,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                             // var popupTitle =  query('[dojoattachpoint=_title]', mainSection[0]);
                             // if(popupTitle) {
-                                
+
                             // }
 
                             var editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
@@ -434,19 +434,19 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
                     else {
                         var mainSectionHeader = query('.esriViewPopup .mainSection .header', dojo.byId('popupInfoContent'))[0];
-                        var title = (selectedFeature._layer && selectedFeature._layer.arcgisProps && selectedFeature._layer.arcgisProps.title) ? 
+                        var title = (selectedFeature._layer && selectedFeature._layer.arcgisProps && selectedFeature._layer.arcgisProps.title) ?
                             selectedFeature._layer.arcgisProps.title.replace('_',' ') : '';
-                        var thumb =dojo.create('div', { 
-                            id: 'thumb', 
+                        var thumb =dojo.create('div', {
+                            id: 'thumb',
                             class: 'thumbFeature',
                             'title':title,
                             'aria-label':title,
                             // tabindex:0
-                       }, mainSectionHeader);
+                        }, mainSectionHeader);
                         var source = selectedFeature._shape.rawNode.attributes['xlink:href'];
                         if(source && source.value) {
                             dojo.create(
-                                'img', 
+                                'img',
                                 {
                                     src : source.value,
                                     alt:title,
@@ -455,6 +455,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                     // tabindex:0
                                 }, thumb);
                         }
+                        mainSectionHeader.outerHTML = mainSectionHeader.outerHTML.replace(/^<div/, '<h3').replace(/div>$/, 'h3>');
                     }
                 }
             }));
