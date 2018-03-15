@@ -1,4 +1,4 @@
-li[role='menuitem']:hover, 
+li[role='menuitem']:hover,
 div[role='button']:not(.searchBtn):not(.geoCodingBtn):not(.searchClear):not(.home):not(.zoomLocateButton):hover,
 .no-touch .esriMeasurement .esriButton .dijitButtonNode:hover,
 #dijit_form_ComboButton_0_arrow:hover,
@@ -30,19 +30,19 @@ http://reference.sitepoint.com/css/outline-color
     }
 }
 
-.esriSimpleSliderIncrementButton:focus, 
+.esriSimpleSliderIncrementButton:focus,
 .esriSimpleSliderHomeButton:hover,
 .esriSimpleSliderDecrementButton:focus{
     outline-offset: 2px;
 }
 
-.homeContainer input:focus, .locateContainer input:focus 
+.homeContainer input:focus, .locateContainer input:focus
 {
 }
 
 .panelTool input[type="image" i]:focus
 {
-    /*--outline: -webkit-focus-ring-color auto 5px !important;*/
+    --outline: -webkit-focus-ring-color auto 5px !important;
     outline-width: 2px;
 }
 
@@ -64,7 +64,7 @@ http://reference.sitepoint.com/css/outline-color
 }
 
 .activeMarker,
-.panelToolActive, 
+.panelToolActive,
 .esriBasemapGallerySelectedNode,
 .dijitSplitterThumb {
   background-color: rgba(0, 0, 0, 0.7);
@@ -102,7 +102,7 @@ http://reference.sitepoint.com/css/outline-color
   padding: 5px;
   margin:-5px;
   border-radius: 5px 5px 0 0;
-  /*background:navy; 
+  /*background:navy;
   color:white;*/
 }
 
@@ -116,7 +116,41 @@ http://reference.sitepoint.com/css/outline-color
   color:black;
 }
 
-.tooltip__focus {  
+div[data-tip]:after {
+    font-size: 14px;
+    font-family: 'Raleway', sans-serif;
+    content: attr(data-tip);
+    position: absolute;
+    bottom: -2.5em;
+    border-radius: 5px;
+    padding: 2px 8px;
+    left:0;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-shadow: 2 2 6 0 rgba(0, 0, 0, 1);
+    -moz-box-shadow: 2 2 6 0 rgba(0, 0, 0, 1);
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 1);
+    z-index: 4;
+    display: none;
+}
+
+div[data-tip]:hover:after {
+    border: solid white 2px;
+    background:black;
+    color:white;
+    display: inline-block;
+}
+
+div[data-tip]:focus:after {
+    border: solid white 2px;
+    background:black;
+    color:white;
+    display: inline-block;
+}
+
+/* .tooltip__focus {
     font-size: 14px;
     font-family: 'Raleway', sans-serif;
     padding:5px;
@@ -141,4 +175,4 @@ http://reference.sitepoint.com/css/outline-color
     background-color: black;
     color: white;
     border-color: black;
-}
+} */

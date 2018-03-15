@@ -1992,28 +1992,23 @@ myKey {
 
 h3.header {
   padding: 0;
-  /* display: block; */
-  /* font-size: 1.17em; */
   margin: 0;
   -webkit-margin-before: 0;
   -webkit-margin-after: 0;
-  -webkit-margin-start: 0px;
-  -webkit-margin-end: 0px;
+  -webkit-margin-start: 0;
+  -moz-margin-start: 0;
+  -webkit-margin-end: 0;
+  -moz-margin-end: 0;
 }
 
-/* input {
-  position: relative;
-  display: inline-block;
-  margin-top: 40px;
-  tabindex:0;
-}
 input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
   content: attr(alt);
   position: absolute;
-  top: -200%;
+  bottom: -200%;
   border: solid red 1px;
   background:black;
   color:white;
-  padding:0.2em;
+  padding: 2px 8px;
   left:0;
-} */
+  z-index: 4;
+}

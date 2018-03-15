@@ -1,10 +1,10 @@
 define([
-    "dojo/Evented", "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx", 
-    "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom", 
-    "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry", 
+    "dojo/Evented", "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx",
+    "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
+    "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
     "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
-Evented, declare, win, fx, html, lang, has, dom, 
-domClass, domStyle, domAttr, domConstruct, domGeometry, 
+Evented, declare, win, fx, html, lang, has, dom,
+domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
     return declare([Evented], {
         map: null,
@@ -26,7 +26,7 @@ on, mouse, query, Deferred) {
                 lang.hitch(this, function (config) {
                     // optional ready event to listen to
                     this.emit("ready", config);
-                }), 
+                }),
                 lang.hitch(this, function (error) {
                     // optional error event to listen to
                     this.emit("error", error);
@@ -112,19 +112,23 @@ on, mouse, query, Deferred) {
                 tabindex: -1,
                 id: "toolButton_" + name,
                 autofocus: true,
+                tabindex:0,
                 // "aria-label": tip,
+                'data-tip': tip,
             }, refNode);
             var pTool = domConstruct.create("input", {
                 type: "image",
                 src: "images/icons_" + this.config.icons + "/" + name + ".png",
                 // title: tip,
+                tabindex:-1,
                 alt: tip
             }, panelTool);
 
-            on(pTool, "focus", lang.hitch(this, this._toolFocus));
-            on(pTool, "blur", lang.hitch(this, this._toolBlur));
+            on(panelTool, "keypress", lang.hitch(this, this._toolKeyPress));
+            // on(pTool, "focus", lang.hitch(this, this._toolFocus));
+            // on(pTool, "blur", lang.hitch(this, this._toolBlur));
 
-            // if (!has("touch")) 
+            // if (!has("touch"))
             // {
             //     domAttr.set(pTool, "title", tip);
             // }
@@ -163,7 +167,7 @@ on, mouse, query, Deferred) {
                 id: "pageHeader_" + name,
                 className: "pageHeader fr bg",
                 //tabindex: 0,
-            }, 
+            },
             pageContent);
 
             domConstruct.create("h2", {
@@ -193,7 +197,7 @@ on, mouse, query, Deferred) {
                 className: "pageBody",
                 tabindex: 0,
                 id: "pageBody_" + name,
-            }, 
+            },
             pageContent);
             domClass.add(pageBody, panelClass);
 
@@ -220,23 +224,33 @@ on, mouse, query, Deferred) {
             return !hidden;
         },
 
-        _toolFocus: function(ev) {
-            var alt = ev.target.alt;
-            if(!alt || alt.replace(/\s/g, '').length < 1) 
-                return;
-            domConstruct.create("span", {
-                id: "focusTooltip",
-                class: "tooltip__focus tool--focus",
-                innerHTML: alt
-            }, ev.target, 'before');
+        _toolKeyPress: function(ev) {
+            var target = ev.target;
+            if(ev.keyCode===13) {
+                var input = dojo.query("input", target);
+                if(input) {
+                    input[0].click();
+                }
+            }
         },
 
-        _toolBlur: function(ev) {
-            domConstruct.destroy("focusTooltip");
-        },
+        // _toolFocus: function(ev) {
+        //     var alt = ev.target.alt;
+        //     if(!alt || alt.replace(/\s/g, '').length < 1)
+        //         return;
+        //     domConstruct.create("span", {
+        //         id: "focusTooltip",
+        //         class: "tooltip__focus tool--focus",
+        //         innerHTML: alt
+        //     }, ev.target, 'before');
+        // },
+
+        // _toolBlur: function(ev) {
+        //     domConstruct.destroy("focusTooltip");
+        // },
 
         _toolClick: function (name) {
-            
+
             var defaultBtns = dojo.query(".panelToolDefault");
             var defaultBtn;
             if(defaultBtns !== undefined && defaultBtns.length > 0) {
@@ -266,7 +280,7 @@ on, mouse, query, Deferred) {
                 }
             }));
             var tool = dom.byId("toolButton_"+name);
-            var tools = query(".panelTool");           
+            var tools = query(".panelTool");
             tools.forEach(lang.hitch(this, function(t){
                 if(active && t === tool) {
                     domClass.add(t, "panelToolActive");
@@ -274,7 +288,7 @@ on, mouse, query, Deferred) {
                 } else {
                     domClass.remove(t,"panelToolActive");
                 }
-            }));           
+            }));
 
             if(!active && defaultBtns !== undefined) {
                 this._activateDefautTool();
@@ -306,7 +320,7 @@ on, mouse, query, Deferred) {
             }
             else if (this.config.activeTool !== "" && has(this.config.activeTool)) {
                 toolbar.activateTool(this.config.activeTool);
-            } 
+            }
             // else {
             //     toolbar._closePage();
             // }
@@ -315,7 +329,7 @@ on, mouse, query, Deferred) {
         closePage: function() {
 
         },
-        
+
         // // menu click
         // _menuClick: function () {
         //     if (query("#panelTools").style("display") == "block") {
