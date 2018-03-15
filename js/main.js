@@ -807,7 +807,7 @@ define([
                                 );
                                 var toolBtn = document
                                     .querySelector(
-                                        "#" + id + " input[type='image'"
+                                        "#" + id// + " input[type='image'"
                                     )
                                     .focus();
 
