@@ -65,7 +65,7 @@
 
 h3.moreItem,
 h4.popupHeader {
-    margin: 0; 
+    margin: 0;
     padding: 3px;
 }
 
@@ -77,15 +77,21 @@ h4.popupHeader {
     margin: 0 0 8px 0;
 }
 
+.infoPanelFooter{
+  height: auto;
+  position: absolute;
+  /* width: calc(100% - 16px); */
+  margin: 0px -8px;
+  padding: 8px;
+  bottom: 0px;
+  background: white;
+}
+
 .locatorScore {
-    position: absolute;
-    bottom: 10px;
+    white-space: nowrap;
 }
 
 .locatorCopy {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
 }
 
 .locatorCopy:hover {

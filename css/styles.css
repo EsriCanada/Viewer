@@ -538,7 +538,7 @@ img {
 
 @media only screen and (min-width: 720px) {
   .pageBody {
-    height: calc(100% - 26px);
+    height: calc(100% - 25px);
   }
 }
 
@@ -1219,7 +1219,7 @@ html, body {
     #panelBottom {
         width: calc(100% - 8px);
         padding: 4px;
-        font-size: 16px;
+        font-size: 17px;
         }
 }
 

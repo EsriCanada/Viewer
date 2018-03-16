@@ -261,13 +261,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 (address.Addr_type.isNonEmpty() && address.Loc_name.isNonEmpty() ? ' - ': '')+
                                 (address.Loc_name.isNonEmpty() ? '${TypeLoc}':'')
                             )
-                            : '')+"</h3>"+
-                        "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"''/></div>"+
+                            : '')+
+                    "</h3>"+
+                    "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"''/></div>"+
                     "<div class='hzLine'></div>"+
+
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
-                    "<span class='locatorScore'>Score: ${Score}</span>"+
-                    "<a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span>"+
-                    "</div>";
+                "</div>"+
+                "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
+                "<td width='33%'><span class='locatorScore'>Score: ${Score}</span></td>"+
+                "<td width='34%' style='text-align:center;'>"+
+                    "<img src='images/icons_black/downArrow.png' alt='Prev' aria-label='Previous Feature' title='Previous Feature' tabindex='0' style='transform: rotate(90deg);' class='popupInfoButton prev' role='button'>"+
+                    "<img src='images/icons_black/downArrow.png' alt='Next' aria-label='Next Feature' title='Next Feature' tabindex='0' style='transform: rotate(-90deg);' class='popupInfoButton next' role='button'>"+
+                "</td>"+
+                "<td width='33%' style='text-align:right;'><a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span></td>"+
+                "</tr></table>";
             }
             return result;
         },
