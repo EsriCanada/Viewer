@@ -467,8 +467,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
 
 
-                    on(query('.infoPanelFooter .popupInfoButton.prev')[0], 'click', lang.hitch(this.popupInfoHeader, this.popupInfoHeader.ToPrev));
-                    on(query('.infoPanelFooter .popupInfoButton.next')[0], 'click', lang.hitch(this.popupInfoHeader, this.popupInfoHeader.ToNext));
+                    on(query('.infoPanelFooter .popupInfoButton.prev')[0], 'click', lang.hitch(this, this.footerToPrev));
+                    on(query('.infoPanelFooter .popupInfoButton.next')[0], 'click', lang.hitch(this, this.footerToNext));
 
                 }
             }));
@@ -516,6 +516,20 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         break;
 
                 }}));
+        },
+
+        footerToPrev(event){
+            this.popupInfoHeader.ToPrev();
+            event.stopPropagation();
+            event.preventDefault();
+            query('.infoPanelFooter .popupInfoButton.prev')[0].focus();
+        },
+
+        footerToNext(event){
+            this.popupInfoHeader.ToNext();
+            event.stopPropagation();
+            event.preventDefault();
+            query('.infoPanelFooter .popupInfoButton.next')[0].focus();
         },
 
         clear: function() {
