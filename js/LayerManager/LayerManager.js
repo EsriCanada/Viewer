@@ -1,20 +1,20 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on", "dojo/Deferred", 
-    "esri/dijit/Legend", "application/ShowFeatureTable/ShowFeatureTable", 
+define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on", "dojo/Deferred",
+    "esri/dijit/Legend", "application/ShowFeatureTable/ShowFeatureTable",
     "application/ShowBasemapGallery/ShowBasemapGallery",
-    "application/ImageToggleButton/ImageToggleButton", 
+    "application/ImageToggleButton/ImageToggleButton",
     "dojo/i18n!application/nls/LayerManager",
     "dojo/i18n!application/nls/resources",
-    "dojo/text!application/LayerManager/Templates/LayerManager.html", 
-    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
+    "dojo/text!application/LayerManager/Templates/LayerManager.html",
+    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
     "dojo/_base/array",
     "esri/layers/LabelLayer"
     ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, on, Deferred,
         Legend, ShowFeatureTable, ShowBasemapGallery, ImageToggleButton,
-        i18n, i18n_app, dijitTemplate, 
-        domClass, domAttr, domStyle, domConstruct, event, 
+        i18n, i18n_app, dijitTemplate,
+        domClass, domAttr, domStyle, domConstruct, event,
         array,
         LabelLayer
     ) {
@@ -127,7 +127,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         _drag: function(evt) {
-            this._dropTarget = 
+            this._dropTarget =
             this._startTarget = evt.target.closest('.toc-layer');
             if(!this._startTarget) {
                 evt.cancelBubble = true;
@@ -231,7 +231,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         'data-layerid': layer.id,
                     });
                     domConstruct.place(layerDiv, this._layersNode, "first");
-                    
+
                     // title of layer
                     var titleDiv = domConstruct.create("div", {
                         className: 'toc-title',
@@ -259,7 +259,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         // draggable: true,
                         id: 'titleContainerDiv_'+i,
                     }, titleDiv);
-                    
+
                     var titleText = domConstruct.create("div", {
                         className: "checkbox",
                         title : layer.title,
@@ -267,11 +267,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         tabindex:-1,
                     }, titleContainerDiv);
 
-                    var titleCheckbox = domConstruct.create("input", 
+                    var titleCheckbox = domConstruct.create("input",
                     {
                         id: "layer_ck_"+i,
                         'data-layerid': layer.id,
-                        className: "checkbox", 
+                        className: "checkbox",
                         type: "checkbox",
                         tabindex: 0,
                         checked: layer.visibility,
@@ -310,7 +310,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 title: 'Vector Tiles',
                             }, settingsDiv);
                         }
-                        else 
+                        else
                         {
                             var cbShowTable = new ImageToggleButton({
                                 imgSelected: 'images/icons_black/TableClose.Red.png',
@@ -330,8 +330,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                     // settings
                     var settingsDiv, settingsIcon;
-                    if (layer.layerObject && dojo.exists("settings", layer) && layer.layerObject.isEditable()) 
-                    { 
+                    if (layer.layerObject && dojo.exists("settings", layer) && layer.layerObject.isEditable())
+                    {
                         settingsIcon = domConstruct.create("img", {
                             'src' : 'images/icon-cog.png',
                             alt:'Configuration',
@@ -355,7 +355,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             }, titleDiv)));
                             expandLegend.startup();
                             on(expandLegend, 'change', lang.hitch(this, this._showHidelayerExpandArea));
-                        
+
                         var layerExpandArea = domConstruct.create('div', {
                             id: 'layerExpandArea_'+i,
                             class: 'layerExpandArea',
@@ -370,7 +370,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             'data-layerid':layer.id,
                             title: i18n.widgets.layerManager.opacity,
                         }, layerExpandArea);
-                        
+
                         on(slider, isIE11() ?'change':'input', lang.hitch(this, this._layerSliderChanged));
 
                         var legendTitle = i18n.widgets.layerManager.legendFor+layer.title;
@@ -382,7 +382,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 title: layer.title,
                             }],
                         }, domConstruct.create("div", {
-                            role:'application', 
+                            role:'application',
                             class:'legend',
                             tabindex: 0,
                             title: legendTitle,
@@ -405,13 +405,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                         domAttr.set(table, "role", "presentation");
                                     });
                                 }
-                                
-                            }));    
+
+                            }));
                         }));
-                        legendObserver.observe(legend.domNode, { 
-                            attributes: false, 
-                            childList: true, 
-                            characterData: false 
+                        legendObserver.observe(legend.domNode, {
+                            attributes: false,
+                            childList: true,
+                            characterData: false
                         });
 
 
@@ -419,7 +419,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                         on(titleCheckbox, 'click', lang.hitch(this, this._showHidelayerExpandAreaBtn));
                     }
-                    
+
                     // lets save all the nodes for events
                     var nodesObj = {
                         checkbox: titleCheckbox,
@@ -457,13 +457,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     className: this.css.title,
                     style: 'min-height: 24px;',
                 }, layerBaseDiv);
-                
+
                 // title container
                 var titleBaseContainerDiv = domConstruct.create("div", {
                     className: "toc-title-container",
                     tabindex: -1,
                 }, titleBaseDiv);
-                
+
                 var titleBaseText = domConstruct.create("div", {
                     className: "checkbox",
                 }, titleBaseContainerDiv);
@@ -533,7 +533,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         baseMapLabel.innerHTML = this.baseMap.title = basemapGallery.getLocalizedMapName(newBasemap.title);
 
                         // this.baseMap = array.filter(Object.values(this.map._layers), function(l) {return l._basemapGalleryLayerType === "basemap";})[0];
-                        var bm = array.filter(Object.keys(this.map._layers), 
+                        var bm = array.filter(Object.keys(this.map._layers),
                             lang.hitch(this.map._layers, function(k) {
                                 return this[k]._basemapGalleryLayerType === "basemap";
                             })
@@ -555,10 +555,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         _showHidelayerExpandAreaBtn : function(evt) {
             var i = evt.target.id.split('_')[2];
-            
+
             var expand = evt.target.checked;
             domStyle.set(dojo.byId('legendBtn_'+i), 'display', expand?'table':'none');
-            
+
             var ck = dojo.query('#legendBtn_'+i+' input')[0].checked;
             domStyle.set(dojo.byId('layerExpandArea_'+i), 'display', (ck && expand)?'':'none');
 
@@ -570,7 +570,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         _showLegend : function(layer) {
             for(var il=0; il < this.defaults.layers.length; il++) {
-                if(this.defaults.layers[il].id === layer.id && 
+                if(this.defaults.layers[il].id === layer.id &&
                     (!layer.hasOwnProperty("showLegend") || layer.showLegend))
                     return true;
             }
@@ -650,7 +650,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // update checkbox and layer visibility classes
             domClass.toggle(this._nodes[index].layer, this.css.visible, visible);
             domClass.toggle(this._nodes[index].checkbox, this.css.checkboxCheck, visible);
-            
+
             this.emit("toggle", {
                 index: index,
                 visible: visible
@@ -665,6 +665,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         _layerEvent: function (layer, index) {
+            if(!layer)
+                return;
             // layer visibility changes
             var visChange = on(layer, "visibility-change", lang.hitch(this, function (evt) {
                 // update checkbox and layer visibility classes
@@ -785,7 +787,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         _checkboxEvent: function (index) {
             // when checkbox is clicked
-            var checkEvent = on(this._nodes[index].checkbox, "click", lang.hitch(this, 
+            var checkEvent = on(this._nodes[index].checkbox, "click", lang.hitch(this,
                 function (evt) {
                 // toggle layer visibility
                 this._toggleLayer(index);
@@ -815,7 +817,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     this._forceClose();
                     this._loadTableByLayerId(evt.layerId);
                 }));
-      
+
                 on(ft, "destroied", lang.hitch(this, function(evt) {
                     this.showBadge(false);
                 }));
@@ -842,7 +844,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 if(this.layers[i].id === layerId) {
                     if(this.featureTable) {
                         this.featureTable.destroy();
-                        domConstruct.create("div", { 
+                        domConstruct.create("div", {
                             id: 'featureTableNode',
                             //tabindex: 0
                         }, dojo.byId('featureTableContainer'));
@@ -890,7 +892,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             } else {
                 domStyle.set(indicator,'display','none');
             }
-        },    
+        },
 
     });
     if (has("extend-esri")) {
