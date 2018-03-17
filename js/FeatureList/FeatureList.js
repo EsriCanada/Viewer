@@ -274,7 +274,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 _query.outFields = ["*"];
                 _query.returnGeometry = false;
                 _query.spatialRelationship = "esriSpatialRelIntersects";
-                if(!layer || !layer.layerObject) continue;
+                if(!layer || !layer.layerObject)
+                    continue;
                 window.tasks.push({
                     layer : layer.layerObject,
                     task : new QueryTask(this.map._layers[layer.id].url),

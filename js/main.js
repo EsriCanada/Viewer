@@ -1839,6 +1839,8 @@ define([
                     legend.startup();
 
                     var fixLegend = function(node) {
+                        if(typeof node.querySelectorAll !== 'function')
+                            return;
                         var tables = node.querySelectorAll("table");
                         if (tables) {
                             array.forEach(tables, function(table) {
@@ -1972,6 +1974,7 @@ define([
                                     var node = mutation.addedNodes[i];
                                     try{
                                         if (
+                                            !node.hasOwnProperty('display')  ||
                                             domStyle.get(node, "display") !== "none"
                                         ) {
                                             fixLegend(node);
