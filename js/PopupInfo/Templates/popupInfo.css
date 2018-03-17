@@ -82,7 +82,7 @@ h4.popupHeader {
   position: absolute;
   /* width: calc(100% - 16px); */
   margin: 0px -8px;
-  padding: 8px;
+  padding: 0 8px;
   bottom: 0px;
   background: white;
 }

@@ -271,8 +271,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
                 "<td width='33%'><span class='locatorScore'>Score: ${Score}</span></td>"+
                 "<td width='34%' style='text-align:center;'>"+
-                    "<img src='images/icons_black/downArrow.png' alt='Prev' aria-label='Previous Feature' title='Previous Feature' tabindex='0' style='transform: rotate(90deg);' class='popupInfoButton prev' role='button'>"+
-                    "<img src='images/icons_black/downArrow.png' alt='Next' aria-label='Next Feature' title='Next Feature' tabindex='0' style='transform: rotate(-90deg);' class='popupInfoButton next' role='button'>"+
+                    "<input type='image' src='images/icons_black/downArrow.png' alt='Prev' aria-label='Previous Feature' title='Previous Feature' tabindex='0' style='transform: rotate(90deg);' class='popupInfoButton prev'>"+
+                    "<input type='image' src='images/icons_black/downArrow.png' alt='Next' aria-label='Next Feature' title='Next Feature' tabindex='0' style='transform: rotate(-90deg);' class='popupInfoButton next'>"+
                 "</td>"+
                 "<td width='33%' style='text-align:right;'><a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span></td>"+
                 "</tr></table>";
@@ -465,6 +465,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         }
                         mainSectionHeader.outerHTML = mainSectionHeader.outerHTML.replace(/^<div/, '<h3').replace(/div>$/, 'h3>');
                     }
+
+
+                    on(query('.infoPanelFooter .popupInfoButton.prev')[0], 'click', lang.hitch(this.popupInfoHeader, this.popupInfoHeader.ToPrev));
+                    on(query('.infoPanelFooter .popupInfoButton.next')[0], 'click', lang.hitch(this.popupInfoHeader, this.popupInfoHeader.ToNext));
+
                 }
             }));
 
