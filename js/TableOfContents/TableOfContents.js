@@ -340,6 +340,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         _layerEvent: function (layer, index) {
+            if(!layer)
+                return;
             try {
                 // layer visibility changes
                 var visChange = on(layer, "visibility-change", lang.hitch(this, function (evt) {
