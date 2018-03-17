@@ -1970,12 +1970,17 @@ define([
                                     i++
                                 ) {
                                     var node = mutation.addedNodes[i];
-                                    if (
-                                        domStyle.get(node, "display") !== "none"
-                                    ) {
-                                        fixLegend(node);
+                                    try{
+                                        if (
+                                            domStyle.get(node, "display") !== "none"
+                                        ) {
+                                            fixLegend(node);
+                                        }
+                                    } catch (ex) {
+                                        console.log('error', ex);
                                     }
                                 }
+
                                 // });
                             }
                         });

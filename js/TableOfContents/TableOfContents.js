@@ -1,18 +1,18 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
+define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
-    "application/ShowFeatureTable/ShowFeatureTable", 
-    "application/ImageToggleButton/ImageToggleButton", 
+    "application/ShowFeatureTable/ShowFeatureTable",
+    "application/ImageToggleButton/ImageToggleButton",
     "dojo/i18n!application/nls/TableOfContents",
-    "dojo/text!application/TableOfContents/Templates/TableOfContents.html", 
-    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
+    "dojo/text!application/TableOfContents/Templates/TableOfContents.html",
+    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
     "dojo/_base/array",
     "esri/renderers/SimpleRenderer", "esri/layers/LabelLayer"
     ], function (
         Evented, declare, lang, has, esriNS,
-        _WidgetBase, _TemplatedMixin, on, 
+        _WidgetBase, _TemplatedMixin, on,
         ShowFeatureTable, ImageToggleButton,
-        i18n, dijitTemplate, 
-        domClass, domAttr, domStyle, domConstruct, event, 
+        i18n, dijitTemplate,
+        domClass, domAttr, domStyle, domConstruct, event,
         array,
         SimpleRenderer, LabelLayer
     ) {
@@ -162,17 +162,17 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     var titleDiv = domConstruct.create("div", {
                         className: this.css.title,
                     }, layerDiv);
-                    
+
                     // title container
                     var tocTitleContainer = domConstruct.create("div", {
                         className: "toc-title-container",
                         tabindex: -1,
                     }, titleDiv);
-                    
-                    titleCheckbox = domConstruct.create("input", 
+
+                    titleCheckbox = domConstruct.create("input",
                     {
                         id: "layer_ck_"+i,
-                        className: titleCheckBoxClass, 
+                        className: titleCheckBoxClass,
                         type: "checkbox",
                         tabindex: 0,
                         checked: layer.visibility,
@@ -200,8 +200,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     var tocSettings, settingsIcon;
                     if ((layer.layerObject &&
                         dojo.exists("settings", layer) &&
-                        layer.layerObject.isEditable()) || has("featureTable")) 
-                    { 
+                        layer.layerObject.isEditable()) || has("featureTable"))
+                    {
                         tocSettings = domConstruct.create("div", {
                             className: "toc-settings",
                             //id: layer.settings
@@ -238,7 +238,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     var clearCSS = domConstruct.create("div", {
                         className: this.css.clear
                     }, tocTitleContainer);
-                    
+
                     // lets save all the nodes for events
                     var nodesObj = {
                         checkbox: titleCheckbox,
@@ -279,7 +279,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 if(this.layers[i].id === layerId) {
                     if(this.featureTable) {
                         this.featureTable.destroy();
-                        domConstruct.create("div", { 
+                        domConstruct.create("div", {
                             id: 'featureTableNode',
                             //tabindex: 0
                         }, dojo.byId('featureTableContainer'));
@@ -325,7 +325,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // update checkbox and layer visibility classes
             domClass.toggle(this._nodes[index].layer, this.css.visible, visible);
             domClass.toggle(this._nodes[index].checkbox, this.css.checkboxCheck, visible);
-            
+
             this.emit("toggle", {
                 index: index,
                 visible: visible
@@ -340,12 +340,16 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         _layerEvent: function (layer, index) {
-            // layer visibility changes
-            var visChange = on(layer, "visibility-change", lang.hitch(this, function (evt) {
-                // update checkbox and layer visibility classes
-                this._toggleVisible(index, evt.visible);
-            }));
-            this._layerEvents.push(visChange);
+            try {
+                // layer visibility changes
+                var visChange = on(layer, "visibility-change", lang.hitch(this, function (evt) {
+                    // update checkbox and layer visibility classes
+                    this._toggleVisible(index, evt.visible);
+                }));
+                this._layerEvents.push(visChange);
+            } catch (ex) {
+                console.log('error:',ex);
+            }
         },
 
         _featureCollectionVisible: function (layer, index, visible) {
@@ -460,7 +464,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         _checkboxEvent: function (index) {
             // when checkbox is clicked
-            var checkEvent = on(this._nodes[index].checkbox, "click", lang.hitch(this, 
+            var checkEvent = on(this._nodes[index].checkbox, "click", lang.hitch(this,
                 function (evt) {
                 // toggle layer visibility
                 this._toggleLayer(index);
@@ -483,7 +487,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             if(has('featureTable')) {
                 var ft = this.featureTable = new ShowFeatureTable({
                     map: this.map,
-                    layers: this.layers, 
+                    layers: this.layers,
                 }, dojo.byId('mapPlace'));
                 ft.startup();
                 on(ft, "destroy", lang.hitch(this, function(evy) {
@@ -493,7 +497,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     this._forceClose();
                     this._loadTableByLayerId(evt.layerId);
                 }));
-      
+
                 on(ft, "destroied", lang.hitch(this, function(evt) {
                     this.showBadge(false);
                 }));
@@ -532,7 +536,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             } else {
                 domStyle.set(indicator,'display','none');
             }
-        },    
+        },
 
     });
     if (has("extend-esri")) {
