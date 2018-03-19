@@ -1864,9 +1864,7 @@ define([
                         var svgs = node.querySelectorAll("svg");
                         if (svgs) {
                             array.forEach(svgs, function(svg) {
-                                // for(var jj=0; jj<svgs.length; jj++) {
                                 domAttr.set(svg, "title", "symbol");
-                                // }
                             });
                         }
 
@@ -1874,7 +1872,6 @@ define([
                             ".esriLegendServiceLabel"
                         );
                         if (legendServiceLabels) {
-                            // legendServiceLabels.forEach(function(legendServiceLabel) {
                             for (
                                 var kk = 0;
                                 kk < legendServiceLabels.length;
@@ -1911,7 +1908,6 @@ define([
                                     );
                                 }
                             }
-                            // });
                         }
 
                         var legendLayers = node.querySelectorAll(
@@ -1945,7 +1941,6 @@ define([
                             ".esriLegendLayer image, .esriLegendLayer img"
                         );
                         if (legendLayerImages) {
-                            // legendLayerImages.forEach(function(image) {
                             for (
                                 var iii = 0;
                                 iii < legendLayerImages.length;
@@ -1960,12 +1955,12 @@ define([
 
                         var messages = node.querySelectorAll(".esriLegendMsg");
                         if (messages) {
-                            // messages.forEach(function(message) {
                             for (var iiii = 0; iiii < messages.length; iiii++)
                                 domAttr.set(messages[iiii], "tabindex", 0);
-                            // });
                         }
                     };
+
+                    fixLegend(dom.byId('esri_dijit_Legend_0'));
 
                     this.legendNodeObserver = new MutationObserver(function(
                         mutations
@@ -1975,12 +1970,8 @@ define([
                                 mutation.addedNodes &&
                                 mutation.addedNodes.length >= 1
                             ) {
-                                // mutation.addedNodes.forEach(function(node) {
                                 for (
-                                    var i = 0;
-                                    i < mutation.addedNodes.length;
-                                    i++
-                                ) {
+                                    var i = 0; i < mutation.addedNodes.length; i++) {
                                     var node = mutation.addedNodes[i];
                                     try{
                                         if (
@@ -1993,8 +1984,6 @@ define([
                                         console.log('error', ex);
                                     }
                                 }
-
-                                // });
                             }
                         });
                     });
