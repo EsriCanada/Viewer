@@ -488,8 +488,8 @@ define([
                     var collapseLeftPanelButton = (this.collapseLeftPanelButton = new ImageToggleButton(
                         {
                             id: "collapseLeftPanelButton",
-                            imgSelected: "images/icons_white/right.png",
-                            imgUnselected: "images/icons_white/left.png",
+                            imgSelected: "images/icons_"+this.config.icons+"/right.png",
+                            imgUnselected: "images/icons_"+this.config.icons+"/left.png",
                             titleUnselected: i18n.leftCollapse,
                             titleSelected: i18n.leftExpand
                         },
