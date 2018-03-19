@@ -363,43 +363,45 @@ define([
 
             var tableTitle = query('.esri-feature-table-title')[0];
 
-            if(this.layers && this.layers.length > 1) {
+            if(this.layers && this.layers.length > 1)
+            {
                 var menu = new DropDownMenu({ style: "display: none;"});
                 this.layers.forEach(lang.hitch(this, function(layer){
-                    var menuItem1 = new MenuItem({
-                        label: layer.title,
-                        'data-layerid': layer.id,
-                    });
-                    if(!layer.layerObject.visible) {
-                        domClass.add(menuItem1.domNode, 'menuItemDisabled');
-                    }
-
-                    on(menuItem1.domNode, 'click', lang.hitch(this, function(ev){
-                        //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev);
-                        this.emit("change", { layerId: ev.target.parentElement.dataset.layerid });
-                    }));
-                    //menu.addChild(menuItem1);
-                    domConstruct.place(menuItem1.domNode, menu.domNode, 0);
-
-                    on(layer.layerObject, "visibility-change", lang.hitch(this, function (evt) {
-                        var layerId = evt.target.id;
-                        if(layerId === this.layer.layerObject.id) {
-                            this.emit("destroy", {});
+                    if(layer && layer.layerObject) {
+                        var menuItem1 = new MenuItem({
+                            label: layer.title,
+                            'data-layerid': layer.id,
+                        });
+                        if(!layer.layerObject.visible) {
+                            domClass.add(menuItem1.domNode, 'menuItemDisabled');
                         }
-                        var menuItem = query('.dijitMenuItem[data-layerId='+layerId+']');
 
-                        if(menuItem && menuItem.length>0) {
-                            menuItem = menuItem[0];
-                            if(evt.visible) {
-                                domClass.remove(menuItem, 'menuItemDisabled');
-                            } else {
-                                domClass.add(menuItem, 'menuItemDisabled');
+                        on(menuItem1.domNode, 'click', lang.hitch(this, function(ev){
+                            //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev);
+                            this.emit("change", { layerId: ev.target.parentElement.dataset.layerid });
+                        }));
+                        //menu.addChild(menuItem1);
+                        domConstruct.place(menuItem1.domNode, menu.domNode, 0);
+
+                        on(layer.layerObject, "visibility-change", lang.hitch(this, function (evt) {
+                            var layerId = evt.target.id;
+                            if(layerId === this.layer.layerObject.id) {
+                                this.emit("destroy", {});
                             }
-                        }
+                            var menuItem = query('.dijitMenuItem[data-layerId='+layerId+']');
 
-                        // this.showRegionButton();
-                    }));
+                            if(menuItem && menuItem.length>0) {
+                                menuItem = menuItem[0];
+                                if(evt.visible) {
+                                    domClass.remove(menuItem, 'menuItemDisabled');
+                                } else {
+                                    domClass.add(menuItem, 'menuItemDisabled');
+                                }
+                            }
+                        }));
+                    }
                 }));
+
                 var menuItem2 = new MenuSeparator();
                 domConstruct.place(menuItem2.domNode, menu.domNode);
 
