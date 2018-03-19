@@ -67,7 +67,7 @@ http://reference.sitepoint.com/css/outline-color
 .panelToolActive,
 .esriBasemapGallerySelectedNode,
 .dijitSplitterThumb {
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.38);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4D000000,endColorstr=#4D000000) !important;
 }
 
