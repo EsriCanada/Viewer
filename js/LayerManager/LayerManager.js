@@ -327,6 +327,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             cbShowTable.startup();
                             on(cbShowTable, 'change', lang.hitch(this, this._layerShowTable));
                         }
+
+                        domStyle.set(settingsDiv, "display", layer.visibility ? "inline-block" : "none");
                     }
 
                     // settings
@@ -651,17 +653,17 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // update checkbox and layer visibility classes
             domClass.toggle(this._nodes[index].layer, this.css.visible, visible);
             domClass.toggle(this._nodes[index].checkbox, this.css.checkboxCheck, visible);
+            domAttr.set(this._nodes[index].checkbox, "checked", visible ? "checked" : "");
 
             this.emit("toggle", {
                 index: index,
                 visible: visible
             });
 
-            if(visible) {
-                domAttr.set(this._nodes[index].checkbox, "checked", "checked");
-            }
-            else {
-                domAttr.set(this._nodes[index].checkbox, "checked", "");
+            var tocSettings = dojo.query('.toc-settings',this._nodes[index].titleContainer);
+            if(tocSettings && tocSettings.length > 0) {
+                tocSettings = tocSettings[0];
+                domStyle.set(tocSettings, "display", visible ? "inline-block" : "none");
             }
         },
 
