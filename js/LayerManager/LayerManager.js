@@ -31,7 +31,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             hasFeatureTable:false,
             hasBasemapGallery:true,
             mapNode: dojo.byId('mapPlace'),
-            toolbar: null
+            toolbar: null,
+            OnDisplay: function(show) { console.log('LayerManager featureTable',show);}
         },
 
         constructor: function (options, srcRefNode) {
@@ -804,6 +805,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 var ft = new ShowFeatureTable({
                     map: this.map,
                     layers: this.layers,
+                    OnDisplay: this.defaults.OnDisplay
                 }, this.defaults.mapNode);
                 ft.startup();
                 this.featureTable = ft;

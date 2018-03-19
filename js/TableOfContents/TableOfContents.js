@@ -23,13 +23,15 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             theme: "TableOfContents",
             map: null,
             layers: null,
-            visible: true
+            visible: true,
+            OnDisplay: function(show) {console.log('Layers featureTable',show);}
         },
 
         // lifecycle: 1
         constructor: function (options, srcRefNode) {
             // mix in settings and defaults
             var defaults = lang.mixin({}, this.options, options);
+            this.defaults = defaults;
             // widget node
             this.domNode = srcRefNode;
             // properties
@@ -490,6 +492,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 var ft = this.featureTable = new ShowFeatureTable({
                     map: this.map,
                     layers: this.layers,
+                    OnDisplay: this.defaults.OnDisplay
                 }, dojo.byId('mapPlace'));
                 ft.startup();
                 on(ft, "destroy", lang.hitch(this, function(evy) {

@@ -1,45 +1,45 @@
 define([
-    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", 
-    "esri/arcgis/utils", "dojo/has", "dojo/dom","esri/kernel", 
-    "dijit/layout/_LayoutWidget", 
-    "esri/dijit/FeatureTable", 
-    "application/ImageToggleButton/ImageToggleButton", 
-    "esri/map", "dojo/_base/array", 
+    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang",
+    "esri/arcgis/utils", "dojo/has", "dojo/dom","esri/kernel",
+    "dijit/layout/_LayoutWidget",
+    "esri/dijit/FeatureTable",
+    "application/ImageToggleButton/ImageToggleButton",
+    "esri/map", "dojo/_base/array",
     "dojo/i18n!application/nls/ShowFeatureTable",
     "dojo/i18n!application/nls/resources",
-    "dojo/on", "dojo/query", 
+    "dojo/on", "dojo/query",
     "esri/tasks/query", "esri/tasks/QueryTask",
-    "dijit/registry", "dojo/aspect", 
-    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", 
+    "dijit/registry", "dojo/aspect",
+    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "esri/toolbars/draw",
     "dijit/layout/ContentPane", "dijit/layout/BorderContainer",
     "dijit/form/DropDownButton", "dijit/DropDownMenu", "dijit/MenuItem", "dijit/MenuSeparator",
-    "dojo/dom-construct", "dojo/_base/event", 
-    // "esri/symbols/SimpleMarkerSymbol", 
-    "esri/symbols/PictureMarkerSymbol", 
-    "esri/symbols/CartographicLineSymbol", 
+    "dojo/dom-construct", "dojo/_base/event",
+    // "esri/symbols/SimpleMarkerSymbol",
+    "esri/symbols/PictureMarkerSymbol",
+    "esri/symbols/CartographicLineSymbol",
     "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/graphic", "esri/Color", "esri/graphicsUtils",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
-    
+
     ], function (
         Evented, declare, lang, arcgisUtils, has, dom, esriNS,
         _LayoutWidget,
-        FeatureTable, 
+        FeatureTable,
         ImageToggleButton,
         Map, array,
         i18n, Ri18n,
-        on, query, 
+        on, query,
         Query, QueryTask,
         registry, aspect,
         domClass, domAttr, domStyle,
         Draw,
-        ContentPane, BorderContainer, 
+        ContentPane, BorderContainer,
         DropDownButton, DropDownMenu, MenuItem, MenuSeparator,
         domConstruct, event,
-        // SimpleMarkerSymbol, 
-        PictureMarkerSymbol, 
-        CartographicLineSymbol, 
+        // SimpleMarkerSymbol,
+        PictureMarkerSymbol,
+        CartographicLineSymbol,
         SimpleFillSymbol, SimpleLineSymbol,
         Graphic, Color, graphicsUtils
     ) {
@@ -52,13 +52,14 @@ define([
         options: {
             map: null,
             layers: null,
+            OnDisplay: function(show) { alert('FeatureTable '+show); }
         },
 
-        _getShowAttr: function() { 
+        _getShowAttr: function() {
             if (!dojo.byId('featureTableContainer_splitter')) return false;
             return domStyle.get(dojo.byId('featureTableContainer_splitter'), "display") !== "none";
         },
-        _setShowAttr: function(visible) { 
+        _setShowAttr: function(visible) {
             switch(visible){
                 case true:
                     domStyle.set(dojo.byId('featureTableContainer'), "height","50%");
@@ -81,6 +82,7 @@ define([
             this.layers = defaults.layers;
             this.domNode = srcRefNode;
             this.containerNode = srcRefNode;
+            this.OnDisplay = defaults.OnDisplay;
 
             dojo.create("link", {
                 href : "js/ShowFeatureTable/Templates/ShowFeatureTable.css",
@@ -117,12 +119,12 @@ define([
             // }
 
             this.lineMarker = new CartographicLineSymbol(
-                CartographicLineSymbol.STYLE_SOLID, new Color([0, 127, 255]), 10, 
+                CartographicLineSymbol.STYLE_SOLID, new Color([0, 127, 255]), 10,
                 CartographicLineSymbol.CAP_ROUND,
                 CartographicLineSymbol.JOIN_ROUND, 5);
 
             this.polygonMarker = new SimpleFillSymbol(
-                SimpleFillSymbol.STYLE_SOLID, 
+                SimpleFillSymbol.STYLE_SOLID,
                 new SimpleLineSymbol(
                     SimpleLineSymbol.STYLE_SOLID,
                     new Color([0, 127, 255]), 3),
@@ -130,19 +132,19 @@ define([
 
             this.borderContainer = new BorderContainer({
                 design:'headline',
-                gutters:false, 
+                gutters:false,
                 liveSplitters:true,
                 class:"myBorderContainer",
                 id:'bc',
                 widgetsInTemplate: true
             });
-             
+
             this.contentPaneMap = new ContentPane({
                 region: "center",
-                gutters:false, 
+                gutters:false,
                 splitter: false,
                 style: "height:100%; width:100%; padding:0; overflow: none;",
-                content: dojo.byId("mapDiv"), 
+                content: dojo.byId("mapDiv"),
                 id: 'contentPaneMap',
                 class: "splitterContent",
             });
@@ -150,7 +152,7 @@ define([
 
             this.contentPaneFeatureTable = new ContentPane({
                 region: "bottom",
-                gutters:false, 
+                gutters:false,
                 splitter: true,
                 class: "bg",
                 style: "height:50%;",
@@ -201,15 +203,15 @@ define([
                 this.borderContainer.resize();
             }));
             aspect.after(
-                this.contentPaneFeatureTable.containerNode.parentNode, "resize", 
+                this.contentPaneFeatureTable.containerNode.parentNode, "resize",
                 lang.hitch(this, function() {
                 this.borderContainer.resize();
-            }));            
+            }));
             aspect.after(
-                this.contentPaneMap, "resize", 
+                this.contentPaneMap, "resize",
                 lang.hitch(this, function() {
                 this.resize();
-            }));            
+            }));
             this.resize();
         },
 
@@ -218,6 +220,7 @@ define([
             if(this.myFeatureTable)
                 this.myFeatureTable.destroy();
             this.emit("destroied", {});
+            this.OnDisplay(false);
             this.set('show', false);
         },
 
@@ -265,10 +268,10 @@ define([
                                 datePattern: i18n.widgets.showFeatureTable.datePattern,
                                 timeEnabled: false,
                             };
-                        } 
+                        }
                         else if(format.hasOwnProperty('time')) {
                             fieldInfo.dateOptions = {
-                                datePattern: i18n.widgets.showFeatureTable.shortDatePattern, 
+                                datePattern: i18n.widgets.showFeatureTable.shortDatePattern,
                                 timeEnabled: true,
                                 timePattern: i18n.widgets.showFeatureTable.shortTimePattern,
                             };
@@ -288,8 +291,8 @@ define([
                 "featureLayer" : myFeatureLayer.layerObject,
                 "map" : this.map,
                 showAttachments: true,
-                syncSelection: false, 
-                zoomToSelection: true, 
+                syncSelection: false,
+                zoomToSelection: true,
                 gridOptions: {
                     allowSelectAll: false,
                     allowTextSelection: false,
@@ -302,7 +305,7 @@ define([
                     datePattern: i18n.widgets.showFeatureTable.datePattern,
                     timeEnabled: false
                 },
-                
+
                 "outFields": outFields,
                 fieldInfos: fieldInfos,
                 // showRelatedRecords: true,
@@ -311,7 +314,7 @@ define([
                 showStatistics:false,
                 menuFunctions: [
                     {
-                        label: i18n.widgets.showFeatureTable.showTypes, 
+                        label: i18n.widgets.showFeatureTable.showTypes,
                         callback: lang.hitch(this, function(evt){
                             // console.log(" Callback evt: ", evt);
                             var typeLabels = query('.esri-feature-table-column-header-type');
@@ -332,7 +335,7 @@ define([
                     },
 
                     {
-                        label: i18n.widgets.showFeatureTable.close, 
+                        label: i18n.widgets.showFeatureTable.close,
                         callback: lang.hitch(this, function(evt){
                             //this.destroy();
                             this.emit("destroy", {});
@@ -371,8 +374,8 @@ define([
                         domClass.add(menuItem1.domNode, 'menuItemDisabled');
                     }
 
-                    on(menuItem1.domNode, 'click', lang.hitch(this, function(ev){ 
-                        //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev); 
+                    on(menuItem1.domNode, 'click', lang.hitch(this, function(ev){
+                        //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev);
                         this.emit("change", { layerId: ev.target.parentElement.dataset.layerid });
                     }));
                     //menu.addChild(menuItem1);
@@ -381,10 +384,10 @@ define([
                     on(layer.layerObject, "visibility-change", lang.hitch(this, function (evt) {
                         var layerId = evt.target.id;
                         if(layerId === this.layer.layerObject.id) {
-                            this.emit("destroy", {}); 
+                            this.emit("destroy", {});
                         }
                         var menuItem = query('.dijitMenuItem[data-layerId='+layerId+']');
-                        
+
                         if(menuItem && menuItem.length>0) {
                             menuItem = menuItem[0];
                             if(evt.visible) {
@@ -399,12 +402,12 @@ define([
                 }));
                 var menuItem2 = new MenuSeparator();
                 domConstruct.place(menuItem2.domNode, menu.domNode);
-        
+
                 var menuItem3 = new MenuItem({
                     label: i18n.widgets.showFeatureTable.close,
                 });
-                on(menuItem3.domNode, 'click', lang.hitch(this, function(ev){ 
-                        //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev); 
+                on(menuItem3.domNode, 'click', lang.hitch(this, function(ev){
+                        //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev);
                         this.emit("destroy", {});
                     }));
                 domConstruct.place(menuItem3.domNode, menu.domNode);
@@ -449,12 +452,12 @@ define([
                                 this._addArrowCarrets();
                             }
                         }
-                    }));    
+                    }));
                 }));
-                titleNodeObserver.observe(tableTitle, { 
-                    attributes: false, 
-                    childList: true, 
-                    characterData: true 
+                titleNodeObserver.observe(tableTitle, {
+                    attributes: false,
+                    childList: true,
+                    characterData: true
                 });
             }
 
@@ -485,9 +488,9 @@ define([
                 group:'selectOn',
                 imgSelected: 'images/ListRectangle.Selected.png',
                 imgUnselected: 'images/ListRectangle.Unselected.png',
-                titleUnselected: i18n.widgets.showFeatureTable.listFromRectangle, 
+                titleUnselected: i18n.widgets.showFeatureTable.listFromRectangle,
                 titleSelected: i18n.widgets.showFeatureTable.listFromMap,
-                autoCloseMessage: false, 
+                autoCloseMessage: false,
                 domMessage: dojo.byId('mapDiv_root'),
             }, domConstruct.create('div', {}, featureTableTools));
             this.SelectOnRectangle.startup();
@@ -497,7 +500,7 @@ define([
                     this.map.graphics.remove(this._rectangleGr);
                     this.myFeatureTable.clearFilter();
                 }
-                if(this._selectSignal) 
+                if(this._selectSignal)
                     this._selectSignal.remove();
 
                 if(this.SelectOnRectangle.isChecked()) {
@@ -518,8 +521,8 @@ define([
             //     group:'selectOn',
             //     imgSelected: 'images/ListRegion.Selected.png',
             //     imgUnselected: 'images/ListRegion.Unselected.png',
-            //     titleUnselected: i18n.widgets.showFeatureTable.listFromPolygon, 
-            //     titleSelected: i18n.widgets.showFeatureTable.listFromMap, 
+            //     titleUnselected: i18n.widgets.showFeatureTable.listFromPolygon,
+            //     titleSelected: i18n.widgets.showFeatureTable.listFromMap,
             //     domMessage: this.map.container,
             // }, domConstruct.create('div', {}, featureTableTools));
             // this.SelectOnRegion.startup();
@@ -529,7 +532,7 @@ define([
             //         this.map.graphics.remove(this._rectangleGr);
             //         this.myFeatureTable.clearFilter();
             //     }
-            //     if(this._selectSignal) 
+            //     if(this._selectSignal)
             //         this._selectSignal.remove();
 
             //     if(this.SelectOnRegion.isChecked()) {
@@ -557,8 +560,8 @@ define([
                 group:'selectOn',
                 imgSelected: 'images/ListExtent.Selected.png',
                 imgUnselected: 'images/ListExtent.Unselected.png',
-                titleUnselected: i18n.widgets.showFeatureTable.listFromView, 
-                titleSelected: i18n.widgets.showFeatureTable.listFromMap, 
+                titleUnselected: i18n.widgets.showFeatureTable.listFromView,
+                titleSelected: i18n.widgets.showFeatureTable.listFromMap,
             }, domConstruct.create('div', {}, featureTableTools));
             this.SelectOnMapOrView.startup();
 
@@ -573,7 +576,7 @@ define([
                         _endDraw();
                     }
                     this._selectViewIds();
-                    this._selectSignal = on(this.map, "extent-change", 
+                    this._selectSignal = on(this.map, "extent-change",
                         lang.hitch(this, function() {this._selectViewIds();}));
                 } else {
                     this._selectSignal.remove();
@@ -585,7 +588,7 @@ define([
             var _endDraw = lang.hitch(this, function(evt) {
                 this.SelectOnRectangle.HideMessage();
                 this.map.setMapCursor("default");
-                
+
                 this.draw.deactivate();
                 this.map.showZoomSlider();
 
@@ -595,6 +598,8 @@ define([
             });
 
             this.set('show', true);
+            this.OnDisplay(true);
+
 
             dojo.create('img', {
                 src:'images/reload1.gif',
@@ -661,9 +666,9 @@ define([
                         gr.name = 'ftMarker';
                         this.map.graphics.add(gr);
 
-                        // if(!this.SelectOnMapOrView.isCheckedAny()) { 
-                        //     var grs = array.filter(this.map.graphics.graphics, function(gr){ 
-                        //         return gr.name && gr.name === 'ftMarker'; 
+                        // if(!this.SelectOnMapOrView.isCheckedAny()) {
+                        //     var grs = array.filter(this.map.graphics.graphics, function(gr){
+                        //         return gr.name && gr.name === 'ftMarker';
                         //     });
 
                         //     this._fitToMapExtent(graphicsUtils.graphicsExtent(grs));
@@ -677,14 +682,14 @@ define([
             on(this.myFeatureTable, "row-deselect", lang.hitch(this, function(evt){
                 //console.log("deselect event: ", evt.rows.length);
                 evt.rows.forEach(lang.hitch(this, function(row) {
-                    this.map.graphics.graphics.forEach(lang.hitch(this, function(gr) { 
+                    this.map.graphics.graphics.forEach(lang.hitch(this, function(gr) {
                         if(gr.tag && gr.tag === row.id) {
                             this.map.graphics.remove(gr);
                         }
                     }));
                 }));
 
-                // if(!this.SelectOnMapOrView.isCheckedAny()) { 
+                // if(!this.SelectOnMapOrView.isCheckedAny()) {
                 //     var grs = array.filter(this.map.graphics.graphics, function(gr){ return gr.name && gr.name === 'ftMarker'; });
                 //     if(grs && grs.length>=2) {
                 //         var extent = (this, graphicsUtils.graphicsExtent(grs)).expand(1.5);
@@ -767,7 +772,7 @@ define([
         _addArrowCarrets: function() {
             var arrowButtons = query('.esri-feature-table .dijitArrowButtonInner');
             if(arrowButtons) {
-                arrowButtons.forEach(function(arrowButton) {            
+                arrowButtons.forEach(function(arrowButton) {
                     if(arrowButton && arrowButton.innerHTML === '') {
                         domConstruct.create('img', {
                             // role: 'presentation',
@@ -779,7 +784,7 @@ define([
             }
         },
         _removeAllGraphics: function(names) {
-            this.map.graphics.graphics.forEach(lang.hitch(this, function(gr) { 
+            this.map.graphics.graphics.forEach(lang.hitch(this, function(gr) {
                 if(gr.name && names.contains(gr.name)) { //(gr.name === 'ftMarker' || gr.name === 'rectView')) {
                     this.map.graphics.remove(gr);
                 }

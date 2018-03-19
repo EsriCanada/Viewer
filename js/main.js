@@ -926,31 +926,20 @@ define([
             var skipHSplitter = query(".skip #skip-Hsplitter")[0];
             var skipTableHeader = query(".skip #skip-tableHeader")[0];
             var skipTable = query(".skip #skip-table")[0];
-            if (!has("featureTable")) {
-                domStyle.set(skipHSplitter, "display", "none");
-                domStyle.set(skipTableHeader, "display", "none");
-                domStyle.set(skipTable, "display", "none");
-            }
+            // if (!has("featureTable")) {
+            //     domStyle.set(skipHSplitter, "display", "none");
+            //     domStyle.set(skipTableHeader, "display", "none");
+            //     domStyle.set(skipTable, "display", "none");
+            // }
 
             dojo.html.set(skipTools, "1. " + this.config.i18n.skip.tools);
             dojo.html.set(skipSearch, "2. " + this.config.i18n.skip.search);
             dojo.html.set(skipContent, "3. " + this.config.i18n.skip.content);
-            dojo.html.set(
-                skipVSplitter,
-                "4. " + this.config.i18n.skip.vsplitter
-            );
+            dojo.html.set(skipVSplitter,"4. " + this.config.i18n.skip.vsplitter);
             dojo.html.set(skipMap, "5. " + this.config.i18n.skip.map);
             dojo.html.set(skipInstructions, "6. " + this.config.i18n.skip.help);
-            // dojo.html.set(skipFeature, "7. "+this.config.i18n.skip.featureDetaills);
-
-            dojo.html.set(
-                skipHSplitter,
-                "7. " + this.config.i18n.skip.hsplitter
-            );
-            dojo.html.set(
-                skipTableHeader,
-                "8. " + this.config.i18n.skip.tableHeader
-            );
+            dojo.html.set(skipHSplitter,"7. " + this.config.i18n.skip.hsplitter);
+            dojo.html.set(skipTableHeader,"8. " + this.config.i18n.skip.tableHeader);
             dojo.html.set(skipTable, "9. " + this.config.i18n.skip.table);
 
             skipTools.addEventListener(
@@ -974,7 +963,6 @@ define([
                 "click",
                 lang.hitch(this, this.skipToInstructions)
             );
-            // skipFeature.addEventListener('click', lang.hitch(this, this.skipToFeature));
             skipHSplitter.addEventListener(
                 "click",
                 lang.hitch(this, this.skipToHSplitter)
@@ -1730,6 +1718,18 @@ define([
             }
         },
 
+        _OnFeatureTableDisplay: function(show) {
+            // console.log('main featureTable',show);
+            var skipHSplitter = query(".skip #skip-Hsplitter")[0];
+            var skipTableHeader = query(".skip #skip-tableHeader")[0];
+            var skipTable = query(".skip #skip-table")[0];
+            if(skipHSplitter && skipTableHeader && skipTable) {
+                domStyle.set(skipHSplitter, "display", show ? "inline-block":"none");
+                domStyle.set(skipTableHeader, "display", show ? "inline-block":"none");
+                domStyle.set(skipTable, "display", show ? "inline-block":"none");
+            }
+        },
+
         _addLayers: function(tool, toolbar) {
             //Toggle layer visibility if web map has operational layers
             var deferred = new Deferred();
@@ -1754,7 +1754,8 @@ define([
                     var toc = new TableOfContents(
                         {
                             map: this.map,
-                            layers: layers
+                            layers: layers,
+                            OnDisplay: this._OnFeatureTableDisplay
                         },
                         domConstruct.create("div", {}, layersDivDesc)
                     );
@@ -1800,11 +1801,20 @@ define([
                             hasFeatureTable: has("featureTable"),
                             hasBasemapGallery: has("basemap"),
                             mapNode: dojo.byId("mapPlace"),
-                            toolbar: toolbar
+                            toolbar: toolbar,
+                            OnDisplay: this._OnFeatureTableDisplay
                         },
                         domConstruct.create("div", {}, layersDivDesc)
                     );
                     toc.startup();
+
+                    // on(toc.featureTable, "show", lang.hitch(this, function(evt) {
+                    //     alert('show feature table');
+                    // }));
+
+                    // on(toc.featureTable, "hide", lang.hitch(this, function(evt) {
+                    //     alert('hide feature table');
+                    // }));
 
                     deferred.resolve(true);
                 } else {
