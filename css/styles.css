@@ -2013,3 +2013,8 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
   left:0;
   z-index: 4;
 }
+
+.esriBasemapGallerySelectedNode:hover span {
+  color: black;
+  text-align: center;
+}
