@@ -1,25 +1,25 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
+define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
-    "dojo/on", 
-    "dojo/Deferred", "dojo/query", 
-    "dojo/text!application/PopupInfo/Templates/PopupInfoHeader.html", 
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event", 
+    "dojo/on",
+    "dojo/Deferred", "dojo/query",
+    "dojo/text!application/PopupInfo/Templates/PopupInfoHeader.html",
+    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
     "dojo/parser", "dojo/ready",
-    "dijit/layout/ContentPane",    
-    "dojo/string", 
+    "dijit/layout/ContentPane",
+    "dojo/string",
     "dojo/i18n!application/nls/PopupInfo",
     "esri/domUtils",
     "esri/dijit/Popup",
-    // "application/ImageToggleButton/ImageToggleButton", 
+    // "application/ImageToggleButton/ImageToggleButton",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
-    
+
     ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, registry,
-        on, 
+        on,
         Deferred, query,
-        PopupInfoHeaderTemplate, 
-        dom, domClass, domAttr, domStyle, domConstruct, event, 
+        PopupInfoHeaderTemplate,
+        dom, domClass, domAttr, domStyle, domConstruct, event,
         parser, ready,
         ContentPane,
         string,
@@ -38,13 +38,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         options: {
             map: null,
-            toolbar: null, 
+            toolbar: null,
             header: 'pageHeader_infoPanel',
             id: 'popupInfoHeadrId',
             popupInfo: null,
             superNavigator: null,
             template: PopupInfoHeaderTemplate,
-            emptyMessage: '***'
+            emptyMessage: '***',
+            iconsColor: 'black'
         },
 
         constructor: function (options, srcRefNode) {
@@ -60,6 +61,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.headerNode = dom.byId(defaults.header);
             this.popupInfo = defaults.popupInfo;
             this.emptyMessage = defaults.emptyMessage;
+            this.iconsColor = defaults.iconsColor;
 
         },
 
@@ -82,12 +84,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         total:0,
 
         // toggleGeoCoding:function(e) {
-        //     if(e.type === 'keyup' && !(e.key === ' ' || e.key === 'Spacebar') && e.key !== 'Enter') return; 
+        //     if(e.type === 'keyup' && !(e.key === ' ' || e.key === 'Spacebar') && e.key !== 'Enter') return;
         //     var cb = dom.byId('popupGeoCoding_cb');
         //     this.GeoCodingEnabled = cb.checked=!cb.checked;
         //     var img1 = dom.byId('geoCodingDisableBtn');
         //     var img2 = dom.byId('geoCodingEnableBtn');
-        //     if(this.GeoCodingEnabled) 
+        //     if(this.GeoCodingEnabled)
         //     {
         //        dojo.removeClass(img2, 'geoCodingUnselected');
         //        dojo.addClass(img1, 'geoCodingUnselected');
@@ -123,7 +125,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             buttons.forEach(lang.hitch(this, function (btn) {
                 on(btn,'keydown', lang.hitch(this, function(ev) {
                     switch(ev.keyCode) {
-                        case 13: 
+                        case 13:
                             btn.click();
                             ev.stopPropagation();
                             ev.preventDefault();
@@ -197,7 +199,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             if(!this.pagerIsVisible()) return;
             var _prev = query('.popupInfoButton.prev')[0];
             _prev.focus();
-            _prev.click();        
+            _prev.click();
         },
 
         ToNext:function() {
@@ -297,7 +299,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         clearSuperNavigator: function() {
-            if(this.superNavigator) 
+            if(this.superNavigator)
                 this.superNavigator.clearZone();
         },
 

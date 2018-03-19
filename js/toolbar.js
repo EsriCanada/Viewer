@@ -157,7 +157,7 @@ on, mouse, query, Deferred) {
 
             var pageHeader = domConstruct.create("div", {
                 id: "pageHeader_" + name,
-                className: "pageHeader fr bg",
+                className: "pageHeader fc bg",
                 //tabindex: 0,
             },
             pageContent);

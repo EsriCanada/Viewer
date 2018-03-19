@@ -54,7 +54,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             maxSearchResults: 10,
             searchMarker: './images/SearchPin.png',
             geolocatorLabelColor: "#ff0000", // 'red'
-            emptyMessage: i18n.widgets.popupInfo.noFeatures
+            emptyMessage: i18n.widgets.popupInfo.noFeatures,
+            iconsColor: "white",
         },
 
         constructor: function (options, srcRefNode) {
@@ -72,6 +73,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.headerNode = dom.byId(defaults.header);
             this.superNavigator = defaults.superNavigator;
             this.emptyMessage = defaults.emptyMessage;
+            this.iconsColor = defaults.iconsColor;
 
             dojo.create("link", {
                 href : "js/PopupInfo/Templates/PopupInfo.css",
@@ -334,6 +336,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 id: 'infoPanel_headerId',
                 superNavigator : this.superNavigator,
                 emptyMessage: this.emptyMessage,
+                iconsColor: this.iconsColor,
             }, domConstruct.create('Div', {}, this.headerNode));
             this.popupInfoHeader.startup();
 

@@ -2026,7 +2026,8 @@ define([
                         search: this.search,
                         maxSearchResults: this.config.maxSearchResults,
                         searchMarker: this.config.searchMarker,
-                        geolocatorLabelColor: this.config.geolocatorLabelColor
+                        geolocatorLabelColor: this.config.geolocatorLabelColor,
+                        iconsColor: this.config.icons,
                     },
                     infoPanelDiv
                 );
