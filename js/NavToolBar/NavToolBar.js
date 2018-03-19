@@ -1,23 +1,23 @@
 define([
-    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel", 
+    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "esri/toolbars/navigation", "dijit/registry",
-    "esri/dijit/HomeButton", "esri/dijit/LocateButton", 
+    "esri/dijit/HomeButton", "esri/dijit/LocateButton",
     "esri/symbols/SimpleLineSymbol", "esri/Color",
-    "dojo/text!application/NavToolBar/Templates/NavToolBar.html", 
+    "dojo/text!application/NavToolBar/Templates/NavToolBar.html",
     "dojo/i18n!application/nls/NavToolBar",
-    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", 
-    "dojo/dom-construct", "dojo/_base/event", 
+    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
+    "dojo/dom-construct", "dojo/_base/event",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
-    
+
     ], function (
         Evented, declare, lang, has, dom, esriNS,
-        _WidgetBase, _TemplatedMixin, on, 
+        _WidgetBase, _TemplatedMixin, on,
         query, Navigation, registry,
-        HomeButton, LocateButton, 
+        HomeButton, LocateButton,
         SimpleLineSymbol, Color,
         NavToolBarTemplate, i18n,
-        domClass, domAttr, domStyle, 
+        domClass, domAttr, domStyle,
         domConstruct, event
     ) {
     var Widget = declare("esri.dijit.NavToolBar", [_WidgetBase, _TemplatedMixin, Evented], {
@@ -53,7 +53,7 @@ define([
                 }));
             }
         },
-        
+
         __init:false,
 
         _init: function () {
@@ -96,8 +96,8 @@ define([
                 dojo.destroy("navHome");
             }
 
-            // var isLocationEnabled = //!(!!window.chrome && !!window.chrome.webstore) || 
-            //     (window.location.protocol === "https:") || 
+            // var isLocationEnabled = //!(!!window.chrome && !!window.chrome.webstore) ||
+            //     (window.location.protocol === "https:") ||
             //     (window.location.hostname === "localhost");
             if (has("locate")) {// && isLocationEnabled) {
                 var geoLocate = new LocateButton({
@@ -191,11 +191,12 @@ define([
             dojo.setStyle(dis, "cursor", crs);
             dojo.setAttr(btn, "tabIndex", disable?-1:0);
             dojo.setStyle(dis, "display", disable?null:"none");
+            dojo.setAttr(btn, "aria-hidden", disable?"true":"false");
             return disable;
         },
 
         blurAll: function(text) {
-            if(text===undefined) 
+            if(text===undefined)
                 text='';
             var tmp = domConstruct.create("div", {tabindex:0, 'aria-label':text}, document.body);
             tmp.focus();
