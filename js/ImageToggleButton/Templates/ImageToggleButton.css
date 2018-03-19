@@ -5,7 +5,7 @@
 
 .ImageToggleButton img {
     width: 23px;
-    height: 23px; 
+    height: 23px;
     margin: 0px 1px;
     padding: 3px;
 }
@@ -22,7 +22,7 @@
 .ImageToggleButton input.cbToggleBtn + label.cbToggleBtn img.UnselectedToggleImg,
 .ImageToggleButton input.cbToggleBtn:checked + label.cbToggleBtn img.SelectedToggleImg
 {
-    display: block;
+    display: inline-block;
 }
 
 .ImageToggleButton input.cbToggleBtn:checked + label.cbToggleBtn img.UnselectedToggleImg,
