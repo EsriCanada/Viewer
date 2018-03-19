@@ -466,10 +466,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         mainSectionHeader.outerHTML = mainSectionHeader.outerHTML.replace(/^<div/, '<h3').replace(/div>$/, 'h3>');
                     }
 
-
-                    on(query('.infoPanelFooter .popupInfoButton.prev')[0], 'click', lang.hitch(this, this.footerToPrev));
-                    on(query('.infoPanelFooter .popupInfoButton.next')[0], 'click', lang.hitch(this, this.footerToNext));
-
+                    try {
+                        on(query('.infoPanelFooter .popupInfoButton.prev')[0], 'click', lang.hitch(this, this.footerToPrev));
+                        on(query('.infoPanelFooter .popupInfoButton.next')[0], 'click', lang.hitch(this, this.footerToNext));
+                    }
+                    catch (ex)  {
+                        // skip - no infoPanelFooter - experimental
+                    }
                 }
             }));
 
@@ -518,14 +521,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }}));
         },
 
-        footerToPrev(event){
+        footerToPrev: function(event){
             this.popupInfoHeader.ToPrev();
             event.stopPropagation();
             event.preventDefault();
             query('.infoPanelFooter .popupInfoButton.prev')[0].focus();
         },
 
-        footerToNext(event){
+        footerToNext: function(event){
             this.popupInfoHeader.ToNext();
             event.stopPropagation();
             event.preventDefault();

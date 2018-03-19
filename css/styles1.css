@@ -135,6 +135,7 @@ div[data-tip]:after {
     display: none;
 }
 
+*[data-tip]:focus:after,
 div[data-tip]:focus:after {
     border: solid white 2px;
     background:black;
@@ -143,6 +144,7 @@ div[data-tip]:focus:after {
     display: inline-block;
 }
 
+*[data-tip]:hover:after,
 div[data-tip]:hover:after {
     border: solid white 2px;
     background:black;
@@ -151,6 +153,7 @@ div[data-tip]:hover:after {
     display: inline-block;
 }
 
+*[data-tip]::before,
 div[data-tip]::before {
   position: absolute;
   border-style : solid;
@@ -164,6 +167,7 @@ div[data-tip]::before {
   background: transparent !important;
 }
 
+*[data-tip]:hover::before, *[data-tip]:focus::before,
 div[data-tip]:hover::before, div[data-tip]:focus::before{
   display: inline-block;
 }
