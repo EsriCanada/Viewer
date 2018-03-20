@@ -294,7 +294,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.searchLabel = new TextSymbol({
                 yoffset : -fontSize,//-14,
                 haloColor: [25,25,25,155],
-                haloSize: 4,
+                haloSize: isIE11()?1:4,
                 font :
                 {
                     family : cs.fontFamily, //"Roboto Condensed",
