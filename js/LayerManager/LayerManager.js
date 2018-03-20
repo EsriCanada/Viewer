@@ -448,6 +448,10 @@ define(["dojo/Evented", "dojo/_base/declare",
                                 id: 'legendBtn_'+i,
                             }, titleDiv)));
                             expandLegend.startup();
+
+                            // var thisLabel = dojo.byId('layerExpandArea_'+i);
+                            // domStyle.set(dojo.byId(thisLabel), 'display', expand?'':'none');
+
                             on(expandLegend, 'change', lang.hitch(this, this._showHidelayerExpandArea));
 
                         var layerExpandArea = domConstruct.create('div', {
@@ -482,9 +486,8 @@ define(["dojo/Evented", "dojo/_base/declare",
                             title: legendTitle,
                             'aria-label': legendTitle,
                         }, layerExpandArea));
-                        // legend.startup();
 
-                        // fixLegend(dom.byId('esri_dijit_LayerManager_0'));
+                        domStyle.set(dojo.byId('legendBtn_'+i), 'display', layer.visible?'table':'none');
 
                         new MutationObserver(function(mutations) {
                             mutations.forEach(function(mutation) {
@@ -509,7 +512,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                                 }
                             });
                         }).observe(legend.domNode, {
-                            attributes: false,
+                            attributes: true,
                             childList: true,
                             characterData: false
                         });
