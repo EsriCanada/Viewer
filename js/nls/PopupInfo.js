@@ -4,6 +4,7 @@ define({
             "popupInfo" : {
                 "Next":"Next",
                 "Prev":"Previous",
+                "Score": "Score:",
                 "clickToSelect":"Click on map to select features",
                 "current":"Current Feature",
                 "total": "Total Features",

@@ -3,6 +3,7 @@ define({
         popupInfo: ({
             "Next":"Suivante",
             "Prev":"Précédente",
+            "Score":"Marque :",
             "clickToSelect":"Cliquez sur la carte pour sélectionner des caractéristiques",
             "current":"Caractéristique actuelle",
             "total": "Le total du caractéristiques sélectionnées",

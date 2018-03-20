@@ -275,7 +275,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
                 "<td width='33%'>"+
                 (!this.showSearchScore ? ''
-                     : "<span class='locatorScore'>Score: ${Score}</span>"
+                     : "<span class='locatorScore'>"+i18n.widgets.popupInfo.Score+" ${Score}%</span>"
                 )+
                 "</td>"+
                 "<td width='34%' style='text-align:center;'>"+
