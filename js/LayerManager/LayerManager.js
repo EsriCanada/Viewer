@@ -1,4 +1,6 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
+define(["dojo/Evented", "dojo/_base/declare",
+    "dojo/_base/lang", "dojo/dom",
+    "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on", "dojo/Deferred",
     "esri/dijit/Legend", "application/ShowFeatureTable/ShowFeatureTable",
     "application/ShowBasemapGallery/ShowBasemapGallery",
@@ -10,7 +12,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/_base/array",
     "esri/layers/LabelLayer"
     ], function (
-        Evented, declare, lang, has, esriNS,
+        Evented, declare, lang, dom, has, esriNS,
         _WidgetBase, _TemplatedMixin, on, Deferred,
         Legend, ShowFeatureTable, ShowBasemapGallery, ImageToggleButton,
         i18n, i18n_app, dijitTemplate,
@@ -221,12 +223,101 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             domAttr.set(this._layersNode, "role", "list");
             // if we got layers
             if (layers && layers.length) {
+                let fixLegend = function(node) {
+                    if(!node) {
+                        node = dom.byId('esri_dijit_LayerManager_0');
+                    }
+                    if(typeof node.querySelectorAll !== 'function')
+                        return;
+                    var tables = node.querySelectorAll("table");
+                    if (tables) {
+                        array.forEach(tables, function(table) {
+                            domAttr.set(table, "role", "presentation");
+                        });
+                    }
 
-                for (var i = 0; i < layers.length; i++) {
-                    var layer = layers[i];
+                    var svgs = node.querySelectorAll("svg");
+                    if (svgs) {
+                        array.forEach(svgs, function(svg) {
+                            domAttr.set(svg, "title", i18n_app.map.symbol);
+                        });
+                    }
+
+                    var legendServiceLabels = node.querySelectorAll(
+                        ".esriLegendServiceLabel"
+                    );
+                    if (legendServiceLabels) {
+                        for (
+                            var kk = 0;
+                            kk < legendServiceLabels.length;
+                            kk++
+                        ) {
+                            var legendServiceLabel =
+                                legendServiceLabels[kk];
+
+                            var service = legendServiceLabel.closest(
+                                ".esriLegendService"
+                            );
+                            var tabindex = service && (!service.style || service.style.display !== "none") ? 0 : -1;
+
+                            if (legendServiceLabel.nodeName !== "H2") {
+                                var h2 = domConstruct.create("h2", {
+                                    className: legendServiceLabel.className,
+                                    innerHTML: legendServiceLabel.innerHTML,
+                                    tabindex: tabindex
+                                });
+                                legendServiceLabel.parentNode.replaceChild(
+                                    h2,
+                                    legendServiceLabel
+                                );
+                            } else {
+                                domAttr.set(
+                                    legendServiceLabel,
+                                    "tabindex",
+                                    tabindex
+                                );
+                            }
+                        }
+                    }
+
+                    var legendLayers = node.querySelectorAll(
+                        ".esriLegendLayer"
+                    );
+                    for (let i = 0; i < legendLayers.length; i++) {
+                        domAttr.set(legendLayers[i], "role", "presentation");
+                        var legendServiceList = legendLayers[i].querySelector("tbody");
+
+                        domAttr.set(legendServiceList, "role", "list");
+                        //domAttr.set(legendServiceList, "aria-label", legendServiceLabel.innerHTML);
+
+                        for (let j = 0; j < legendServiceList.childNodes.length; j++) {
+                            var item = legendServiceList.childNodes[j];
+                            domAttr.set(item, "role", "listitem");
+                            domAttr.set(item, "tabindex", "0");
+                        }
+                    }
+
+                    var legendLayerImages = node.querySelectorAll(
+                        ".esriLegendLayer image, .esriLegendLayer img"
+                    );
+                    if (legendLayerImages && legendLayerImages.length > 0) {
+                        let symbol = i18n_app.map.symbol;
+                        for (let i = 0; i < legendLayerImages.length; i++)
+                            domAttr.set(legendLayerImages[i], "alt", symbol);
+                    }
+
+                    var messages = node.querySelectorAll(".esriLegendMsg");
+                    if (messages) {
+                        for (var iiii = 0; iiii < messages.length; iiii++)
+                            domAttr.set(messages[iiii], "tabindex", 0);
+                    }
+                };
+
+                for (let i = 0; i < layers.length; i++) {
+                    let layer = layers[i];
 
                     // layer node
-                    var layerDiv = domConstruct.create("div", {
+                    let layerDiv = domConstruct.create("div", {
                         className: "toc-layer",
                         role: "listitem",
                         'data-layerid': layer.id,
@@ -234,7 +325,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     domConstruct.place(layerDiv, this._layersNode, "first");
 
                     // title of layer
-                    var titleDiv = domConstruct.create("div", {
+                    let titleDiv = domConstruct.create("div", {
                         className: 'toc-title',
                         id: 'tocTitle_'+i,
                         draggable: true,
@@ -385,46 +476,52 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 title: layer.title,
                             }],
                         }, domConstruct.create("div", {
-                            role:'application',
+                            // role:'application',
                             class:'legend',
                             tabindex: 0,
                             title: legendTitle,
                             'aria-label': legendTitle,
                         }, layerExpandArea));
-                        legend.startup();
+                        // legend.startup();
 
+                        // fixLegend(dom.byId('esri_dijit_LayerManager_0'));
 
-                        var legendObserver = new MutationObserver(lang.hitch(this, function(mutations) {
-                            // console.log(mutations);
-                            mutations.forEach(lang.hitch(this, function(mutation) {
-                                // console.log(mutation);
-                                var target = mutation.target.childNodes[0];
-                                // console.log('mutation', mutation);
-                                var tables = dojo.query('.esriLegendService table', mutation.target);
-                                // console.log('tables', tables);
-                                if(tables && tables.length>0) {
-                                    tables.forEach(function(table) {
-                                        // console.log('table', table.outerHTML);
-                                        domAttr.set(table, "role", "presentation");
-                                    });
+                        new MutationObserver(function(mutations) {
+                            mutations.forEach(function(mutation) {
+                                if (
+                                    mutation.addedNodes &&
+                                    mutation.addedNodes.length > 0
+                                ) {
+                                    for (
+                                        var i = 0; i < mutation.addedNodes.length; i++) {
+                                        var node = mutation.addedNodes[i];
+                                        try{
+                                            if (
+                                                !node.hasOwnProperty('display')  ||
+                                                domStyle.get(node, "display") !== "none"
+                                            ) {
+                                                fixLegend(node);
+                                            }
+                                        } catch (ex) {
+                                            console.log('error', ex);
+                                        }
+                                    }
                                 }
-
-                            }));
-                        }));
-                        legendObserver.observe(legend.domNode, {
+                            });
+                        }).observe(legend.domNode, {
                             attributes: false,
                             childList: true,
                             characterData: false
                         });
 
-
-
+                        legend.startup();
+                        fixLegend();
 
                         on(titleCheckbox, 'click', lang.hitch(this, this._showHidelayerExpandAreaBtn));
                     }
 
                     // lets save all the nodes for events
-                    var nodesObj = {
+                    this._nodes.push({
                         checkbox: titleCheckbox,
                         title: titleDiv,
                         titleContainer: titleContainerDiv,
@@ -433,8 +530,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         settingsIcon: settingsIcon,
                         settingsDiv: settingsDiv,
                         layer: layerDiv
-                    };
-                    this._nodes.push(nodesObj);
+                    });
 
                     this._checkboxEvent(i);
                 }

@@ -1808,14 +1808,6 @@ define([
                     );
                     toc.startup();
 
-                    // on(toc.featureTable, "show", lang.hitch(this, function(evt) {
-                    //     alert('show feature table');
-                    // }));
-
-                    // on(toc.featureTable, "hide", lang.hitch(this, function(evt) {
-                    //     alert('hide feature table');
-                    // }));
-
                     deferred.resolve(true);
                 } else {
                     deferred.resolve(false);
@@ -1844,7 +1836,7 @@ define([
                             { role: "application" },
                             legendDiv
                         )
-                    ); //Desc));
+                    );
                     domClass.add(legend.domNode, "legend");
                     legend.startup();
 
@@ -1962,9 +1954,7 @@ define([
 
                     fixLegend(dom.byId('esri_dijit_Legend_0'));
 
-                    this.legendNodeObserver = new MutationObserver(function(
-                        mutations
-                    ) {
+                    this.legendNodeObserver = new MutationObserver(function(mutations) {
                         mutations.forEach(function(mutation) {
                             if (
                                 mutation.addedNodes &&
