@@ -441,9 +441,38 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             attributes[n]='';
                         }
                     });
-                    content = string.substitute(content, attributes);
-                    listTemplate=string.substitute(listTemplate, attributes);
-                    var result =  string.substitute(listTemplate, attributes);
+
+                    let _substitute = function(template,attrs) {
+                        var regex = /\${((?:\w)*)}/gm;
+
+                        let matches = [];
+                        let m;
+
+                        while ((m = regex.exec(template)) !== null) {
+                            // This is necessary to avoid infinite loops with zero-width matches
+                            if (matches.index === regex.lastIndex) {
+                                regex.lastIndex++;
+                            }
+
+                            matches.push(m);
+                        };
+
+                        matches.forEach((g) => {
+                            // console.log('g', g[0], g[1]);
+                            let attr = '';
+                            if(attrs.hasOwnProperty(g[1])) {
+                                attr = attrs[g[1]];
+                            }
+                            template = template.replace(g[0], attr);
+                        })
+
+                        return(template);
+                    };
+                    content = _substitute(content, attributes);
+
+                    // content = string.substitute(content, attributes);
+                    listTemplate=_substitute(listTemplate, attributes);
+                    var result =  _substitute(listTemplate, attributes);
                     var re = /((>)((?:http:\/\/www\.|https:\/\/www\.|ftp:\/\/www.|www\.)[a-z0-9]+(?:[\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(?:\/.*)?)(?:<))|(FORMAT_(DATE|TIME|NUM)\((-?\d*\.?\d*),\"(.+)\"\))/gm;
                     do {
                         var matches = re.exec(result);
@@ -510,6 +539,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
             };
         },
+
+
+
     });
     if (has("extend-esri")) {
         lang.setObject("dijit.FeaturesList", Widget, esriNS);
