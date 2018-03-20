@@ -487,7 +487,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                             'aria-label': legendTitle,
                         }, layerExpandArea));
 
-                        domStyle.set(dojo.byId('legendBtn_'+i), 'display', layer.visible?'table':'none');
+                        domStyle.set(dojo.byId('legendBtn_'+i), 'display', layer.visibility?'table':'none');
 
                         new MutationObserver(function(mutations) {
                             mutations.forEach(function(mutation) {
