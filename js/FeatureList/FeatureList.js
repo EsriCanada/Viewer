@@ -442,11 +442,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         }
                     });
 
-                    let _substitute = function(template,attrs) {
+                    var _substitute = function(template,attrs) {
                         var regex = /\${((?:\w)*)}/gm;
 
-                        let matches = [];
-                        let m;
+                        var matches = [];
+                        var m;
 
                         while ((m = regex.exec(template)) !== null) {
                             // This is necessary to avoid infinite loops with zero-width matches
@@ -457,14 +457,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             matches.push(m);
                         };
 
-                        matches.forEach((g) => {
+                        matches.forEach(function(g) {
                             // console.log('g', g[0], g[1]);
-                            let attr = '';
+                            var attr = '';
                             if(attrs.hasOwnProperty(g[1])) {
                                 attr = attrs[g[1]];
                             }
                             template = template.replace(g[0], attr);
-                        })
+                        });
 
                         return(template);
                     };

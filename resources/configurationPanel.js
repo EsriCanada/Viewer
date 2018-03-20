@@ -329,6 +329,12 @@
                "label": "Max Results"
             },
             {
+               "type": "boolean",
+               "fieldName": "showSearchScore",
+               "label": "Show Search Result Score",
+               "tooltip": "Search Results may display a score of the match (1 to 100.)"
+            },
+            {
                "label": "<strong>Geocoder Image Marker:</strong>",
                "fieldName": "searchMarker",
                "type": "string",
@@ -538,7 +544,7 @@
             {
                "label": "Use Google Analytics",
                "type": "boolean",
-               "fieldName": "useGoogleAnalytics", 
+               "fieldName": "useGoogleAnalytics",
                "tooltip": "Check to get information in your Google Analytics account."
             },
             {
@@ -597,6 +603,7 @@
       "tool_print": true,
       "locationSearch": true,
       "maxSearchResults": 10,
+      "showSearchScore": true,
       "countryCodeSearch": "",
       "searchExtent": false,
       "languageLabel": true,

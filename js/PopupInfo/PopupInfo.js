@@ -52,6 +52,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             header: 'pageHeader_infoPanel',
             superNavigator : null,
             maxSearchResults: 10,
+            showSearchScore: false,
             searchMarker: './images/SearchPin.png',
             geolocatorLabelColor: "#ff0000", // 'red'
             emptyMessage: i18n.widgets.popupInfo.noFeatures,
@@ -66,6 +67,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.map = defaults.map;
             this.search = defaults.search;
             this.maxSearchResults = defaults.maxSearchResults;
+            this.showSearchScore = defaults.showSearchScore;
             this.searchMarker = defaults.searchMarker;
             this.geolocatorLabelColor = defaults.geolocatorLabelColor;
             this.toolbar = defaults.toolbar;
@@ -271,10 +273,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
                 "</div>"+
                 "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
-                "<td width='33%'><span class='locatorScore'>Score: ${Score}</span></td>"+
+                "<td width='33%'>"+
+                (!this.showSearchScore ? ''
+                     : "<span class='locatorScore'>Score: ${Score}</span>"
+                )+
+                "</td>"+
                 "<td width='34%' style='text-align:center;'>"+
-                    "<input type='image' src='images/icons_black/downArrow.png' alt='Prev' aria-label='Previous Feature' title='Previous Feature' tabindex='0' style='transform: rotate(90deg);' class='popupInfoButton prev'>"+
-                    "<input type='image' src='images/icons_black/downArrow.png' alt='Next' aria-label='Next Feature' title='Next Feature' tabindex='0' style='transform: rotate(-90deg);' class='popupInfoButton next'>"+
+                    "<input type='image' src='images/icons_black/downArrow.png' alt='Prev' aria-label='"+i18n.widgets.popupInfo.Prev+"' title='"+i18n.widgets.popupInfo.Prev+"' style='transform: rotate(90deg);' class='popupInfoButton prev'>"+
+                    "<input type='image' src='images/icons_black/downArrow.png' alt='Next' aria-label='"+i18n.widgets.popupInfo.Next+"' title='"+i18n.widgets.popupInfo.Next+"' style='transform: rotate(-90deg);' class='popupInfoButton next'>"+
                 "</td>"+
                 "<td width='33%' style='text-align:right;'><a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span></td>"+
                 "</tr></table>";

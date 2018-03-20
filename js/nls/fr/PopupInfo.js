@@ -1,16 +1,16 @@
 define({
     widgets: ({
         popupInfo: ({
-            "Next":"Caractéristique suivante",
-            "Prev":"Caractéristique précédente",
+            "Next":"Suivante",
+            "Prev":"Précédente",
             "clickToSelect":"Cliquez sur la carte pour sélectionner des caractéristiques",
             "current":"Caractéristique actuelle",
             "total": "Le total du caractéristiques sélectionnées",
             "zoomTo": "Zoomer sur caractéristique",
             "map": "Aller à la carte",
             "clear": "Effacer la sélection",
-            "noFeatures": "Pas des caractéristiques",
-            "instructions" : 
+            "noFeatures": "Rien à montrer",
+            "instructions" :
                 "Cliquez sur la carte pour sélectionner des caractéristiques, <br/>ou <br/>"+
                 "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Aller à la carte</a> et:"+
                 "<ul>"+
@@ -33,7 +33,7 @@ define({
             "clear": "Effacer la sélection",
             "noAddress": "Pas d'adresse",
             "noAddressFound": "Aucune adresse trouvée au point",
-            "instructions" : 
+            "instructions" :
                 "Cliquez sur la carte pour obtenir l'adresse du lieu, <br/>ou <br/>"+
                 "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Aller à la carte</a> et:"+
                 "<ul>"+

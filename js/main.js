@@ -2014,6 +2014,7 @@ define([
                         superNavigator: this.superNav,
                         search: this.search,
                         maxSearchResults: this.config.maxSearchResults,
+                        showSearchScore: this.config.showSearchScore,
                         searchMarker: this.config.searchMarker,
                         geolocatorLabelColor: this.config.geolocatorLabelColor,
                         iconsColor: this.config.icons,

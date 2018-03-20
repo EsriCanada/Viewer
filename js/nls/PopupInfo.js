@@ -2,16 +2,16 @@ define({
     root: ({
         widgets: ({
             "popupInfo" : {
-                "Next":"Next Feature",
-                "Prev":"Previous Feature",
+                "Next":"Next",
+                "Prev":"Previous",
                 "clickToSelect":"Click on map to select features",
                 "current":"Current Feature",
                 "total": "Total Features",
                 "zoomTo": "Zoom to Feature",
                 "map": "Skip to Map",
                 "clear": "Clear Selection",
-                "noFeatures": "No features",
-                "instructions" : 
+                "noFeatures": "Nothing to show",
+                "instructions" :
                     "Click the map to select features <br/>or <br/>"+
                     "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Skip to Map</a> and:<br/>"+
                     "<ul>"+
@@ -34,7 +34,7 @@ define({
                 "noAddress": "No Point Address",
                 "noAddressFound": "No Address Found at Point",
                 "clear": "Clear Selection",
-                "instructions" : 
+                "instructions" :
                     "Click the map to get location address <br/>or <br/>"+
                         "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Skip to Map</a> and:<br/>"+
                     "<ul>"+
