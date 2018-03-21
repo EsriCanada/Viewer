@@ -78,13 +78,14 @@ h4.popupHeader {
 }
 
 .infoPanelFooter{
-  height: auto;
+  /* height: auto; */
   position: absolute;
   /* width: calc(100% - 16px); */
-  margin: 0px -8px;
+  /* margin: 0px -8px; */
   padding: 0 8px;
   bottom: 0px;
-  background: white;
+  background: yellow;
+  padding-top: 6px;
 }
 
 .locatorScore {
@@ -113,3 +114,15 @@ h4.popupHeader {
     display:none !important;
 }
 
+#pageBody_infoPanel {
+    overflow-y: hidden;
+}
+
+/* #popupInfoFooter {
+    bottom: 0;
+    width: 100%;
+    position: absolute;
+    text-align: center;
+    text-align: -webkit-center;
+    padding-top: 6px;
+} */

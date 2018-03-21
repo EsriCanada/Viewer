@@ -68,6 +68,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.search = defaults.search;
             this.maxSearchResults = defaults.maxSearchResults;
             this.showSearchScore = defaults.showSearchScore;
+            this.Score = 100;
             this.searchMarker = defaults.searchMarker;
             this.geolocatorLabelColor = defaults.geolocatorLabelColor;
             this.toolbar = defaults.toolbar;
@@ -136,10 +137,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                         dataFeatures[j].infoTemplate = infoTemplate;
                                         dataFeatures[j]._layer = layer;
                                     } else {
+                                        // this.Score=e.results[i][j].feature.attributes.Score;
                                         dataFeatures[j].infoTemplate = new InfoTemplate(
                                             i18n.widgets.geoCoding.Location,
-                                            this.makeSearchResultTemplate(e.results[i][j].feature.attributes)+
-                                            this.makeSerchResultFooter(this.showSearchScore, dataFeatures.length > 1)
+                                            this.makeSearchResultTemplate(e.results[i][j].feature.attributes)
+                                            // +this.makeSerchResultFooter(this.showSearchScore, dataFeatures.length > 1)
                                         );
                                     }
                                 }
@@ -156,14 +158,44 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         this.search.map.infoWindow.clearFeatures();
                     }
                 }));
+
+                this.map.infoWindow.on("SelectionChange", lang.hitch(this, function() {
+                    var featureIndex = this.map.infoWindow.selectedIndex;
+                    var feature =  (this.map.infoWindow.features && this.map.infoWindow.features.length>0) ? this.map.infoWindow.features[featureIndex] : null;
+                    // console.log('SelectionChange', featureIndex, feature);
+                    this.setUpFooter(featureIndex, feature);
+                    })
+                );
             }
         },
 
         popupInfoHeader : null,
         contentPanel : null,
 
+        setUpFooter: function(featureIndex, feature) {
+            var popupInfoFooter = dom.byId('popupInfoFooter');
+            if(feature) {
+                domStyle.set(popupInfoFooter, 'display', '');
+                var locatorScore = dom.byId('locatorScore');
+                var locatorCopy = dom.byId('locatorCopy');
+                if(feature.attributes.hasOwnProperty('Score')) {
+                    domStyle.set(locatorScore, 'display', '');
+                    domStyle.set(locatorCopy, 'display', '');
+                    dom.byId('locatorScoreValue').innerText = feature.attributes.Score+'%';
+                }
+                else {
+                    domStyle.set(locatorScore, 'display', 'none');
+                    domStyle.set(locatorCopy, 'display', 'none');
+                }
+            }
+            else
+            {
+                domStyle.set(popupInfoFooter, 'display', 'none');
+            }
+        },
+
         makeSearchResultTemplate: function(address) {
-            console.log('Info Address:', address);
+            // console.log('Info Address:', address);
 
             if(address.Addr_type.isNonEmpty()) {
                 var prop = address.Addr_type.replace(' ', '');
@@ -272,34 +304,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     "<div class='hzLine'></div>"+
 
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
-                "</div>"+
-
-
-                "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
-                "<td width='33%'>"+
-                (!this.showSearchScore ? ''
-                     : "<span class='locatorScore'>"+i18n.widgets.popupInfo.Score+" ${Score}%</span>"
-                )+
-                "</td>";
+                "</div>";
             }
             return result;
-        },
-
-        makeSerchResultFooter: function(showScore, showNavigation) {
-            return  "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
-                        "<td width='33%'>"+
-                        (!this.showSearchScore ? ''
-                             : "<span class='locatorScore'>"+i18n.widgets.popupInfo.Score+" ${Score}%</span>"
-                        )+
-                        "</td>"+
-                    "<td width='34%' style='text-align:center;'>"+
-                    (!showNavigation ? '' :
-                        "<input type='image' src='images/icons_black/downArrow.png' aria-label='"+i18n.widgets.popupInfo.Prev+"' title='"+i18n.widgets.popupInfo.Prev+"' style='transform: rotate(90deg);' alt='Previous' class='popupInfoButton prev'>"+
-                        "<input type='image' src='images/icons_black/downArrow.png' aria-label='"+i18n.widgets.popupInfo.Next+"' title='"+i18n.widgets.popupInfo.Next+"' style='transform: rotate(-90deg);' alt='Next' class='popupInfoButton next'>"
-                    )+
-                    "</td>"+
-                    "<td width='33%' style='text-align:right;'><a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span></td>"+
-                    "</tr></table>";
         },
 
         _init: function () {
@@ -428,7 +435,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             on(popup, "ClearFeatures", lang.hitch(this, function() {
                 if(this.toolbar.IsToolSelected('geoCoding')) return;
-
                 this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
                 // if(this.superNavigator) {
                 //     this.superNavigator.clearZone();
@@ -488,14 +494,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         }
                         mainSectionHeader.outerHTML = mainSectionHeader.outerHTML.replace(/^<div/, '<h3').replace(/div>$/, 'h3>');
                     }
-
-                    try {
-                        on(query('.infoPanelFooter .popupInfoButton.prev')[0], 'click', lang.hitch(this, this.footerToPrev));
-                        on(query('.infoPanelFooter .popupInfoButton.next')[0], 'click', lang.hitch(this, this.footerToNext));
-                    }
-                    catch (ex)  {
-                        // skip - no infoPanelFooter - experimental
-                    }
                 }
             }));
 
@@ -548,14 +546,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.popupInfoHeader.ToPrev();
             event.stopPropagation();
             event.preventDefault();
-            query('.infoPanelFooter .popupInfoButton.prev')[0].focus();
+            query('#infoPanelFooterNavigation .popupInfoButton.prev')[0].focus();
         },
 
         footerToNext: function(event){
             this.popupInfoHeader.ToNext();
             event.stopPropagation();
             event.preventDefault();
-            query('.infoPanelFooter .popupInfoButton.next')[0].focus();
+            query('#infoPanelFooterNavigation .popupInfoButton.next')[0].focus();
         },
 
         clear: function() {

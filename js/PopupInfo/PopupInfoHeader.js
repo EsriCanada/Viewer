@@ -44,8 +44,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             popupInfo: null,
             superNavigator: null,
             template: PopupInfoHeaderTemplate,
-            emptyMessage: '***',
-            iconsColor: 'black'
+            emptyMessage: 'empty',
+            iconsColor: 'black',
         },
 
         constructor: function (options, srcRefNode) {
@@ -62,7 +62,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.popupInfo = defaults.popupInfo;
             this.emptyMessage = defaults.emptyMessage;
             this.iconsColor = defaults.iconsColor;
-
         },
 
         startup: function () {
@@ -197,14 +196,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         ToPrev: function() {
             if(!this.pagerIsVisible()) return;
-            var _prev = query('.popupInfoButton.prev')[0];
+            var _prev = query('#popupPager .popupInfoButton.prev')[0];
             _prev.focus();
             _prev.click();
         },
 
         ToNext:function() {
             if(!this.pagerIsVisible()) return;
-            var _next = query('.popupInfoButton.next')[0];
+            var _next = query('#popupPager .popupInfoButton.next')[0];
             _next.focus();
             _next.click();
         },
@@ -243,7 +242,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // }
 
             if(this.total > 0) {
-                query('.popupInfoButton.next')[0].focus();
+                query('#popupPager .popupInfoButton.next')[0].focus();
             }
         },
 

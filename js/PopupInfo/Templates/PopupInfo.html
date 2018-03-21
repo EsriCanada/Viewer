@@ -1,3 +1,23 @@
 <div role="presentation" class="pageBody" tabindex=0>
-    <div id="feature_content"></div>
+	<div style="overflow-y:auto; height: calc(100% - 25px);">
+		<div >
+		    <div id="feature_content"></div>
+		</div>
+	</div>
+	<div id="popupInfoFooter" style="display:none;">
+	    <table width='100%' role='presentation' class='infoPanelFooter'>
+	    	<tr>
+	            <td width='33%'>
+	            	<span id='locatorScore' class='locatorScore'>${_i18n.widgets.popupInfo.Score} <span id='locatorScoreValue'></span></span>
+	            </td>
+	            <td id='infoPanelFooterNavigation' width='34%' style='text-align:center;'>
+	                <input type='image' src='images/icons_black/downArrow.png' aria-label='${_i18n.widgets.popupInfo.Prev}' title='${_i18n.widgets.popupInfo.Prev}' style='transform: rotate(90deg);' alt='Previous' class='popupInfoButton prev' data-dojo-attach-event='onclick: footerToPrev'>
+	                <input type='image' src='images/icons_black/downArrow.png' aria-label='${_i18n.widgets.popupInfo.Next}' title='${_i18n.widgets.popupInfo.Next}' style='transform: rotate(-90deg);' alt='Next' class='popupInfoButton next' data-dojo-attach-event='onclick: footerToNext'>
+                </td>
+                <td width='33%' style='text-align:right;'>
+                	<a id='locatorCopy' class='locatorCopy' tabindex=0  title='${_i18n.widgets.geoCoding.CopyToClipboard}'>${_i18n.widgets.geoCoding.Copy}</span>
+                </td>
+            </tr>
+        </table>
+	</div>
 </div>
