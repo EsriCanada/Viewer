@@ -181,8 +181,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 domStyle.set(popupInfoContentWrapper, 'height', '');
                 var locatorScore = dom.byId('locatorScore');
                 var locatorCopy = dom.byId('locatorCopy');
-                if(feature.attributes.hasOwnProperty('Score')) {
-                    domStyle.set(locatorScore, 'display', '');
+                var isSearchResult = feature.attributes.hasOwnProperty('Score');
+                if(isSearchResult) {
+                    domStyle.set(locatorScore, 'display', this.showSearchScore ? '' : 'none');
                     domStyle.set(locatorCopy, 'display', '');
                     this.Score.innerHTML = feature.attributes.Score+'%';
                 }
