@@ -181,7 +181,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 if(feature.attributes.hasOwnProperty('Score')) {
                     domStyle.set(locatorScore, 'display', '');
                     domStyle.set(locatorCopy, 'display', '');
-                    dom.byId('locatorScoreValue').innerText = feature.attributes.Score+'%';
+                    this.Score.innerHTML = feature.attributes.Score+'%';
                 }
                 else {
                     domStyle.set(locatorScore, 'display', 'none');
@@ -192,6 +192,15 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             {
                 domStyle.set(popupInfoFooter, 'display', 'none');
             }
+        },
+
+        copyAddress: function() {
+            var infoWindow = this.map.infoWindow;
+            var feature = infoWindow.features[infoWindow.selectedIndex];
+            if(feature.attributes.hasOwnProperty('LongLabel')) {
+                feature.attributes.LongLabel.copyToClipboard();
+            }
+            // console.log(feature);
         },
 
         makeSearchResultTemplate: function(address) {
