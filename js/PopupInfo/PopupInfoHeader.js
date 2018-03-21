@@ -248,18 +248,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         selectPrevious : function (event) {
-            if(event && event.ctrlKey && this.map.infoWindow.count>1) {
-                this.map.infoWindow.selectedIndex = 1;
+            if(event && event.ctrlKey) {
+                this.map.infoWindow.select(0);
             }
-            this.map.infoWindow.selectPrevious();
+            else {
+                this.map.infoWindow.selectPrevious();
+            }
             this.clearSuperNavigator();
         },
 
         selectNext : function (event) {
-            if(event && event.ctrlKey && this.map.infoWindow.count>2) {
-                this.map.infoWindow.selectedIndex = this.map.infoWindow.count - 2;
+            if(event && event.ctrlKey) {
+                this.map.infoWindow.select(this.map.infoWindow.count-1);
+            } else {
+                this.map.infoWindow.selectNext();
             }
-            this.map.infoWindow.selectNext();
             this.clearSuperNavigator();
         },
 
