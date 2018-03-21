@@ -138,7 +138,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                     } else {
                                         dataFeatures[j].infoTemplate = new InfoTemplate(
                                             i18n.widgets.geoCoding.Location,
-                                            this.makeSearchResultTemplate(e.results[i][j].feature.attributes)
+                                            this.makeSearchResultTemplate(e.results[i][j].feature.attributes)+
+                                            this.makeSerchResultFooter(this.showSearchScore, dataFeatures.length > 1)
                                         );
                                     }
                                 }
@@ -272,20 +273,33 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
                 "</div>"+
+
+
                 "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
                 "<td width='33%'>"+
                 (!this.showSearchScore ? ''
                      : "<span class='locatorScore'>"+i18n.widgets.popupInfo.Score+" ${Score}%</span>"
                 )+
-                "</td>"+
-                "<td width='34%' style='text-align:center;'>"+
-                    "<input type='image' src='images/icons_black/downArrow.png' alt='Prev' aria-label='"+i18n.widgets.popupInfo.Prev+"' title='"+i18n.widgets.popupInfo.Prev+"' style='transform: rotate(90deg);' class='popupInfoButton prev'>"+
-                    "<input type='image' src='images/icons_black/downArrow.png' alt='Next' aria-label='"+i18n.widgets.popupInfo.Next+"' title='"+i18n.widgets.popupInfo.Next+"' style='transform: rotate(-90deg);' class='popupInfoButton next'>"+
-                "</td>"+
-                "<td width='33%' style='text-align:right;'><a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span></td>"+
-                "</tr></table>";
+                "</td>";
             }
             return result;
+        },
+
+        makeSerchResultFooter: function(showScore, showNavigation) {
+            return  "<table width='100%' role='presentation' class='infoPanelFooter'><tr>"+
+                        "<td width='33%'>"+
+                        (!this.showSearchScore ? ''
+                             : "<span class='locatorScore'>"+i18n.widgets.popupInfo.Score+" ${Score}%</span>"
+                        )+
+                        "</td>"+
+                    "<td width='34%' style='text-align:center;'>"+
+                    (!showNavigation ? '' :
+                        "<input type='image' src='images/icons_black/downArrow.png' aria-label='"+i18n.widgets.popupInfo.Prev+"' title='"+i18n.widgets.popupInfo.Prev+"' style='transform: rotate(90deg);' alt='Previous' class='popupInfoButton prev'>"+
+                        "<input type='image' src='images/icons_black/downArrow.png' aria-label='"+i18n.widgets.popupInfo.Next+"' title='"+i18n.widgets.popupInfo.Next+"' style='transform: rotate(-90deg);' alt='Next' class='popupInfoButton next'>"
+                    )+
+                    "</td>"+
+                    "<td width='33%' style='text-align:right;'><a class='locatorCopy' tabindex=0 onkeydown='if(event.keyCode===13 || event.keyCode===32) this.click();' onclick='\"${LongLabel}\".copyToClipboard();' title='"+i18n.widgets.geoCoding.CopyToClipboard+"'>"+i18n.widgets.geoCoding.Copy+"</span></td>"+
+                    "</tr></table>";
         },
 
         _init: function () {
