@@ -118,11 +118,7 @@ h4.popupHeader {
     overflow-y: hidden;
 }
 
-/* #popupInfoFooter {
-    bottom: 0;
-    width: 100%;
-    position: absolute;
-    text-align: center;
-    text-align: -webkit-center;
-    padding-top: 6px;
-} */
+#popupInfoContentWrapper {
+  overflow-y:auto;
+  height: calc(100% - 32px);
+}

@@ -159,23 +159,26 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
                 }));
 
-                this.map.infoWindow.on("SelectionChange", lang.hitch(this, function() {
-                    var featureIndex = this.map.infoWindow.selectedIndex;
-                    var feature =  (this.map.infoWindow.features && this.map.infoWindow.features.length>0) ? this.map.infoWindow.features[featureIndex] : null;
-                    // console.log('SelectionChange', featureIndex, feature);
-                    this.setUpFooter(featureIndex, feature);
-                    })
-                );
+                // this.map.infoWindow.on("SelectionChange", lang.hitch(this, function() {
+                //     this.setUpFooter();
+                //     })
+                // );
             }
         },
 
         popupInfoHeader : null,
         contentPanel : null,
 
-        setUpFooter: function(featureIndex, feature) {
+        setUpFooter: function() {
+            var index = this.map.infoWindow.selectedIndex;
+            var count = this.map.infoWindow.count;
+            var feature =  (this.map.infoWindow.features && this.map.infoWindow.features.length>0) ? this.map.infoWindow.features[index] : null;
+
+            var popupInfoContentWrapper = dom.byId('popupInfoContentWrapper');
             var popupInfoFooter = dom.byId('popupInfoFooter');
             if(feature) {
                 domStyle.set(popupInfoFooter, 'display', '');
+                domStyle.set(popupInfoContentWrapper, 'height', '');
                 var locatorScore = dom.byId('locatorScore');
                 var locatorCopy = dom.byId('locatorCopy');
                 if(feature.attributes.hasOwnProperty('Score')) {
@@ -187,9 +190,16 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     domStyle.set(locatorScore, 'display', 'none');
                     domStyle.set(locatorCopy, 'display', 'none');
                 }
+
+                var infoPanelFooterNavigation = dom.byId('infoPanelFooterNavigation');
+                if(infoPanelFooterNavigation) {
+                    domStyle.set(infoPanelFooterNavigation, 'display', count>1 ? '' : 'none');
+                    //
+                }
             }
             else
             {
+                domStyle.set(popupInfoContentWrapper, 'height', '100%');
                 domStyle.set(popupInfoFooter, 'display', 'none');
             }
         },
@@ -436,13 +446,15 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
             });
 
-            // on(popup, "SetFeatures", lang.hitch(this, function() {
-            //     console.log("SetFeatures", popup.features);
-            //     if(this.toolbar.IsToolSelected('geoCoding')) {
-            //     }
-            // }));
+            popup.on("SetFeatures", lang.hitch(this, function() {
+                this.setUpFooter();
+            }));
 
-            on(popup, "ClearFeatures", lang.hitch(this, function() {
+            popup.on("SelectionChange", lang.hitch(this, function() {
+                this.setUpFooter();
+            }));
+
+            popup.on("ClearFeatures", lang.hitch(this, function() {
                 if(this.toolbar.IsToolSelected('geoCoding')) return;
                 this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
                 // if(this.superNavigator) {
@@ -453,7 +465,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
             }));
 
-            on(popup, "SelectionChange", lang.hitch(this, function() {
+            popup.on("SelectionChange", lang.hitch(this, function() {
                 if(this.toolbar.IsToolSelected('geoCoding')) return;
 
                 var selectedFeature = popup.getSelectedFeature();
@@ -506,13 +518,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
             }));
 
-            on(this.toolbar, 'updateTool', lang.hitch(this, function(name) {
+            this.toolbar.on('updateTool', lang.hitch(this, function(name) {
                 if(this.superNavigator && name !== 'infoPanel') {
                     this.superNavigator.followTheMapMode(false);
                 }
             }));
 
-            on(dojo.byId('pageBody_infoPanel'), 'keydown', lang.hitch(this, function(ev) {
+            on(dojo.byId('popupInfoContentWrapper'), 'keydown', lang.hitch(this, function(ev) {
                 switch(ev.keyCode) {
                     case 37: // <
                         if(this.popupInfoHeader.total>1) {
@@ -547,7 +559,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         ev.stopPropagation();
                         ev.preventDefault();
                         break;
-
                 }}));
         },
 
