@@ -1812,8 +1812,8 @@ myKey {
 
 myKey img {
   display: inline-block;
-  height: 16px;
-  margin-bottom: -3px;
+  height: 13px;
+  margin-bottom: -2px;
 }
 
 .esriPopup.light .titlePane, .dj_ie7 .esriPopup.light .titlePane .title, .esriPopup.light .contentPane, .esriPopup.light .actionsPane {
