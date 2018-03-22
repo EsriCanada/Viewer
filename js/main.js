@@ -1290,22 +1290,37 @@ define([
                     var dataItems = this.config.response.itemInfo.itemData;
                     var bm = dataItems.baseMap;
 
-                    var bmIndex = basemap.basemaps.findIndex(function(b) {
-                        return b.title==bm.title;
-                    });
-                    if(bmIndex<0)
-                    {
-                        var basemap1 = new Basemap({
-                            layers: bm.baseMapLayers,
-                            title: bm.title,
-                            thumbnailUrl: bm.title.includes('Canada')? "images/genericCanadaThumbMap.png":"images/genericThumbMap.png"
-                        });
-                        basemap.add(basemap1);
+                    var bmIndex=-1;
+                    try {
+                        if(isIE11) {
+                            basemap.basemaps.some(function(b, i) {
+                                if (b.title==bm.title) {
+                                    bmIndex = i;
+                                    return true;
+                                }
+                            });
+                        }
+                        else {
+                            bmIndex = basemap.basemaps.findIndex(function(b) {
+                                return b.title==bm.title;
+                            });
+                        }
+                        if(bmIndex<0)
+                        {
+                            var basemap1 = new Basemap({
+                                layers: bm.baseMapLayers,
+                                title: bm.title,
+                                thumbnailUrl: (bm.title.indexOf('Canada') >= 0) ? "images/genericCanadaThumbMap.png":"images/genericThumbMap.png"
+                            });
+                            basemap.add(basemap1);
 
-                        basemap.select(basemap1.id);
-                    }
-                    else {
-                        basemap.select(basemap.basemaps[bmIndex].id);
+                            basemap.select(basemap1.id);
+                        }
+                        else {
+                            basemap.select(basemap.basemaps[bmIndex].id);
+                        }
+                    } catch (ex) {
+                        console.log('IE11 Error', ex);
                     }
 
                 }));
