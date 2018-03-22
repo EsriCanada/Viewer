@@ -1906,7 +1906,7 @@ myKey img {
 }
 
 #collapseLeftPanelButton label img {
-  opacity: 0.5;
+  /* opacity: 0.5; */
 }
 #collapseLeftPanelButton label:hover img,
 #collapseLeftPanelButton label:focus img,
