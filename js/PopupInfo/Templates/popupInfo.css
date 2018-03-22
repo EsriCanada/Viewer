@@ -115,6 +115,6 @@ h4.popupHeader {
 
 #popupInfoContentWrapper {
     background-color: white;
-    height: calc(100% - 32px);
+    height: calc(100% - 35px);
     overflow-y:auto;
 }
