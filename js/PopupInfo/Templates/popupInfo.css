@@ -1,21 +1,19 @@
 .nav {
-  padding: 5px 10px;
   border: solid 1px grey;
+  padding: 5px 10px;
   text-decoration: none;
 }
 
 #header {
-    text-align: center;
-    height: 60px;
     border-bottom: solid 1px #ccc;
+    height: 60px;
+    text-align: center;
 }
 
 .popupInfoHeader {
-    /* color: white; */
     float: right;
     margin-right: 4px;
     margin-top: 1px;
-    /*font-size: 15px;*/
 }
 
 .popupInfoHeader * {
@@ -37,7 +35,7 @@
 }
 
 .titleButton {
-	  width: 12px;
+	width: 12px;
     height: 12px;
     display: inline-block !important;
 }
@@ -47,12 +45,12 @@
 }
 
 .esriViewPopup .mainSection .attrTable td.attrName {
-  color: black;
+    color: black;
 }
 
 .esriViewPopup .mainSection .attrTable td.attrValue {
-  color: black;
-  font-weight: bold;
+    color: black;
+    font-weight: bold;
 }
 
 #search_more_results_show {
@@ -78,14 +76,11 @@ h4.popupHeader {
 }
 
 .infoPanelFooter{
-  /* height: auto; */
-  position: absolute;
-  /* width: calc(100% - 16px); */
-  /* margin: 0px -8px; */
-  padding: 0 8px;
-  bottom: 0px;
-  background: yellow;
-  padding-top: 6px;
+    position: absolute;
+    padding: 0 8px;
+    bottom: 0px;
+    background: white;
+    padding-top: 6px;
 }
 
 .locatorScore {
@@ -119,6 +114,7 @@ h4.popupHeader {
 }
 
 #popupInfoContentWrapper {
-  overflow-y:auto;
-  height: calc(100% - 32px);
+    background-color: white;
+    height: calc(100% - 32px);
+    overflow-y:auto;
 }

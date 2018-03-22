@@ -195,7 +195,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 var infoPanelFooterNavigation = dom.byId('infoPanelFooterNavigation');
                 if(infoPanelFooterNavigation) {
                     domStyle.set(infoPanelFooterNavigation, 'display', count>1 ? '' : 'none');
-                    //
+                    if(!isSearchResult && count<=1) {
+                        domStyle.set(popupInfoContentWrapper, 'height', '100%');
+                        domStyle.set(popupInfoFooter, 'display', 'none');
+                    }
                 }
             }
             else
