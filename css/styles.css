@@ -1810,6 +1810,12 @@ myKey {
     filter: drop-shadow(1px 1px 2px rgba(127,127,127,0.9));
 }
 
+myKey img {
+  display: inline-block;
+  height: 16px;
+  margin-bottom: -3px;
+}
+
 .esriPopup.light .titlePane, .dj_ie7 .esriPopup.light .titlePane .title, .esriPopup.light .contentPane, .esriPopup.light .actionsPane {
     color: black;
 }
