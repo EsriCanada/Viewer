@@ -1492,15 +1492,16 @@ define([
 
                 if (description) {
                     var detailDiv = toolbar.createTool(tool);
-                    domConstruct.create("div", {
-                        // tabindex: 0
-                    });
+
                     detailDiv.innerHTML =
-                        "<div id='detailDiv'>" + description + "</div>";
-                    detailDiv = dojo.query("#detailDiv")[0];
-                    if (!has("instructions"))
+                        "<div id='detailDiv' tabindex=0>" + description + "</div>";
+                    detailDiv = dom.byId("detailDiv");
+                    if (!has("instructions")) {
                         domClass.add(detailDiv, "detailFull");
-                    else domClass.add(detailDiv, "detailHalf");
+                    }
+                    else {
+                        domClass.add(detailDiv, "detailHalf");
+                    }
 
                     var detailBtn = dojo.query("#toolButton_details")[0];
                     domClass.add(detailBtn, "panelToolDefault");
@@ -1536,9 +1537,7 @@ define([
                         );
                     });
 
-                    var instructionsBtn = dojo.query(
-                        "#toolButton_instructions"
-                    )[0];
+                    var instructionsBtn = dom.byId("toolButton_instructions");
                     domClass.add(instructionsBtn, "panelToolDefault");
                 } else {
                     deferedDetails.then(
@@ -1760,11 +1759,7 @@ define([
                         domConstruct.create("div", {}, layersDivDesc)
                     );
                     toc.startup();
-
-                    // on(toolbar, 'updateTool_layers', lang.hitch(this, function(name) {
-                    //     dom.byId('pageBody_layers').focus();
-                    // }));
-
+                    domAttr.set(toc.domNode, 'tabindex', '0');
                     deferred.resolve(true);
                 } else {
                     deferred.resolve(false);
@@ -1839,6 +1834,7 @@ define([
                     );
                     domClass.add(legend.domNode, "legend");
                     legend.startup();
+                    domAttr.set(legend.domNode, 'tabindex', 0);
 
                     var fixLegend = function(node) {
                         if(typeof node.querySelectorAll !== 'function')

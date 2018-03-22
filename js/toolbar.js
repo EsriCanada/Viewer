@@ -109,9 +109,9 @@ on, mouse, query, Deferred) {
             var tip = this.config.i18n.tooltips[name] || name;
             var panelTool = domConstruct.create("div", {
                 className: "panelTool",
-                tabindex: -1,
                 id: "toolButton_" + name,
                 autofocus: true,
+                // tabindex: -1,
                 tabindex: 0,
                 // "aria-label": tip,
                 'data-tip': tip,
@@ -194,8 +194,12 @@ on, mouse, query, Deferred) {
             domClass.add(pageBody, panelClass);
 
             on(this, "updateTool_" + name, lang.hitch(name, function() {
-                var page = dom.byId('pageBody_'+this);
-                if(page) page.focus();
+                // var page = dom.byId('pageBody_'+this);
+                // if(page) page.focus();
+                var focusables = dojo.query('#pageBody_'+this+' [tabindex=0]');
+                if(focusables && focusables.length>0){
+                    focusables[0].focus();
+                }
             }));
 
             return pageBody;

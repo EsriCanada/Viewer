@@ -158,11 +158,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         this.search.map.infoWindow.clearFeatures();
                     }
                 }));
-
-                // this.map.infoWindow.on("SelectionChange", lang.hitch(this, function() {
-                //     this.setUpFooter();
-                //     })
-                // );
             }
         },
 
