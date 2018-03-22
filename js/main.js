@@ -60,6 +60,7 @@ define([
     "esri/dijit/LocateButton",
     "esri/dijit/Legend",
     "esri/dijit/BasemapGallery",
+    "esri/dijit/Basemap",
     "dojo/i18n!application/nls/resources",
     "dojo/i18n!application/nls/BaseMapLabels",
     "esri/dijit/Measurement",
@@ -121,6 +122,7 @@ define([
     LocateButton,
     Legend,
     BasemapGallery,
+    Basemap,
     i18n,
     i18n_BaseMapLabels,
     Measurement,
@@ -1284,6 +1286,29 @@ define([
                     domConstruct.create("div", {}, basemapDiv)
                 );
 
+                on(basemap, 'load', lang.hitch(this, function() {
+                    var dataItems = this.config.response.itemInfo.itemData;
+                    var bm = dataItems.baseMap;
+
+                    var bmIndex = basemap.basemaps.findIndex(function(b) {
+                        return b.title==bm.title;
+                    });
+                    if(bmIndex<0)
+                    {
+                        var basemap1 = new Basemap({
+                            layers: bm.baseMapLayers,
+                            title: bm.title,
+                            thumbnailUrl: bm.title.includes('Canada')? "images/genericCanadaThumbMap.png":"images/genericThumbMap.png"
+                        });
+                        basemap.add(basemap1);
+
+                        basemap.select(basemap1.id);
+                    }
+                    else {
+                        basemap.select(basemap.basemaps[bmIndex].id);
+                    }
+
+                }));
                 basemap.startup();
 
                 on(
@@ -1760,6 +1785,7 @@ define([
                     );
                     toc.startup();
                     domAttr.set(toc.domNode, 'tabindex', '0');
+
                     deferred.resolve(true);
                 } else {
                     deferred.resolve(false);
