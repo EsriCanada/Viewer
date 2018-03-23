@@ -113,7 +113,7 @@ on, mouse, query, Deferred) {
                 autofocus: true,
                 // tabindex: -1,
                 tabindex: 0,
-                // "aria-label": tip,
+                "aria-label": tip,
                 'data-tip': tip,
             }, refNode);
             var pTool = domConstruct.create("input", {
