@@ -1,21 +1,21 @@
 define([
-    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel", 
+    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
-    "dojo/text!application/LanguageSelect/Templates/LanguageSelect.html", 
+    "dojo/text!application/LanguageSelect/Templates/LanguageSelect.html",
     "dojo/i18n!application/nls/LanguageSelect",
     "dijit/form/DropDownButton", "dijit/DropDownMenu", "dijit/MenuItem",
-    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", 
-    "dojo/dom-construct", "dojo/_base/event", "esri/lang", 
+    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
+    "dojo/dom-construct", "dojo/_base/event", "esri/lang",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
-    
+
     ], function (
         Evented, declare, _lang, has, dom, esriNS,
-        _WidgetBase, _TemplatedMixin, on, 
+        _WidgetBase, _TemplatedMixin, on,
         query, registry,
         LanguageSelectTemplate, i18n,
         DropDownButton, DropDownMenu, MenuItem,
-        domClass, domAttr, domStyle, 
+        domClass, domAttr, domStyle,
         domConstruct, event, esriLang
     ) {
     var Widget = declare("esri.dijit.LanguageSelect", [_WidgetBase, _TemplatedMixin, Evented], {
@@ -23,7 +23,7 @@ define([
 
         options: {
             locale: 'en-us',
-            languages:{}, 
+            languages:{},
             textColor:null,
             showLabel:true
         },
@@ -40,7 +40,7 @@ define([
             query('head')[0].appendChild(link);
         },
 
-        Click: function(e) { 
+        Click: function(e) {
             //console.log(e.target.parentElement);
             var menuItemDataSet = query(e.target).closest('.dijitMenuItem')[0].dataset;
             var docLocale = query('html')[0].lang;
@@ -66,7 +66,7 @@ define([
         startup: function () {
             if(this.button) return;
 
-            var menu = new DropDownMenu({ 
+            var menu = new DropDownMenu({
                 style: "display: none;",
                 //id: 'languageMenu',
             });
@@ -123,7 +123,10 @@ define([
             var currentHint = i18n.widgets.languageSelect.aria.currentLanguage+" "+(currentLanguage ? currentLanguage : document.documentElement.lang);
             var btnLbl = this.defaults.showLabel ? i18n.widgets.languageSelect.language : "";
             if(!currentIcon) {
-                btnLbl += ' <span style="font-weight:bold;">'+document.documentElement.lang.substring(0,2).toUpperCase()+'</span>';
+                var shortName = document.documentElement.lang.substring(0,2).toUpperCase();
+                var langName = this.defaults.languages.filter(function(l) {return l.shortName == shortName;})[0].name;
+                langName = langName.replace(/<.*?>/g, '');
+                btnLbl += ' <span aria-label="'+langName+'" style="font-weight:bold;">'+shortName+'</span>';
             }
             if(this.defaults.textColor) {
                 btnLbl = '<span style="color:'+this.defaults.textColor+';">'+btnLbl+'</span>';
