@@ -1,22 +1,22 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
-    "dojo/on", 
+define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin",
+    "dojo/on",
     "esri/tasks/locator", "esri/geometry/webMercatorUtils",
     "dojo/query", "dojo/Deferred",
-    "dojo/text!application/GeoCoding/templates/GeoAddressTooltip.html", 
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", 
+    "dojo/text!application/GeoCoding/Templates/GeoAddressTooltip.html",
+    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct",
     "esri/geometry/Point",
     "dojo/parser", "dojo/ready",
     "dojo/i18n!application/nls/PopupInfo",
     "dojo/parser", "dojo/ready"
 ], function (
         Evented, declare, lang, has, esriNS,
-        _WidgetBase, _TemplatedMixin, 
-        on, 
+        _WidgetBase, _TemplatedMixin,
+        on,
         Locator, webMercatorUtils,
         query, Deferred,
-        GeoAddressTooltip, 
-        dom, domClass, domAttr, domStyle, domConstruct, 
+        GeoAddressTooltip,
+        dom, domClass, domAttr, domStyle, domConstruct,
         Point,
         parser, ready,
         i18n
@@ -33,7 +33,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         options: {
             map: null,
-            toolbar: null, 
+            toolbar: null,
             header: 'pageHeader_geoCoding',
             superNavigator : null,
             iconColor: 'white',
@@ -76,7 +76,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         switchTooltips: function(active) {
         	switch(active) {
-        		case false: 
+        		case false:
                     if(this.locatorSignal) {
                         this.locatorSignal.remove();
                         this.locatorSignal = null;
@@ -127,7 +127,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 		showTooltip: function (evt){
             this.closeDialog();
             var address = evt.address;
-            
+
             if(address.Addr_type.isNonEmpty()) {
                 var prop = address.Addr_type.replace(' ', '');
                 address.AddrTypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop)) ?
@@ -135,10 +135,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }
             if(address.Type.isNonEmpty()) {
                 var prop1 = address.Type.replace(' ', '');
-                address.TypeLoc = " - <i>"+((i18n.widgets.hasOwnProperty('addrType') && 
+                address.TypeLoc = " - <i>"+((i18n.widgets.hasOwnProperty('addrType') &&
                     i18n.widgets.addrType.hasOwnProperty(prop1)) ?
                 i18n.widgets.addrType[prop1] : address.Type) + "</i>";
-            } 
+            }
             else {
                 address.TypeLoc = '';
             }
@@ -195,8 +195,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             domStyle.set(this.addressToolTip, "display", "block");
 
-            this.map.setMapCursor('none');  
-            this.tipContent.focus();            
+            this.map.setMapCursor('none');
+            this.tipContent.focus();
         },
 
         closeDialog: function () {
@@ -210,7 +210,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         timeout: null,
 
         hoverMap : function(ev) {
-        	if(this.timeoutDeffered && !this.timeoutDeffered.isResolved() 
+        	if(this.timeoutDeffered && !this.timeoutDeffered.isResolved()
         		&& this.timeout) {
         		clearTimeout(this.timeout);
         		// this.timeoutDeffered.cancel("CancelError");
@@ -219,7 +219,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             if(this.locatorDeffered && !this.locatorDeffered.isFulfilled()) {
                 this.closeDialog();
             }
-            else 
+            else
             {
             	var location = this.map.toScreen(ev.mapPoint);
             	if(location.x < this.mapMin.x+12 || location.x>this.mapMax.x-18) {
