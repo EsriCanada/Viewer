@@ -79,7 +79,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.iconsColor = defaults.iconsColor;
 
             dojo.create("link", {
-                href : "js/PopupInfo/Templates/PopupInfo.css",
+                href : "js/PopupInfo/Templates/popupInfo.css",
                 type : "text/css",
                 rel : "stylesheet",
             }, document.head);
