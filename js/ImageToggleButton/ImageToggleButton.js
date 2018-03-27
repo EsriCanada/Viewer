@@ -1,30 +1,28 @@
 define([
-    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", 
-    "dojo/dom", "esri/kernel", 
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
+    "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has",
+    "dojo/dom", "esri/kernel",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin",
     "dojo/on", "dojo/query", "dijit/registry",
-    "dojo/text!application/ImageToggleButton/Templates/ImageToggleButton.html", 
-    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", 
-    "dojo/dom-construct", "dojo/_base/event", "esri/lang", 
+    "dojo/text!application/ImageToggleButton/Templates/ImageToggleButton.html",
+    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
+    "dojo/dom-construct", "dojo/_base/event", "esri/lang",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
-    
+
     ], function (
         Evented, declare, lang, has, dom, esriNS,
-        _WidgetBase, _TemplatedMixin, 
+        _WidgetBase, _TemplatedMixin,
         on, query, registry,
         dijitTemplate,
-        domClass, domAttr, domStyle, 
+        domClass, domAttr, domStyle,
         domConstruct, event, esriLang
     ) {
     var Widget = declare("esri.dijit.ImageToggleButton", [
-        _WidgetBase, 
+        _WidgetBase,
         _TemplatedMixin,
         Evented], {
         templateString: dijitTemplate,
-        
+
         options: {
-            // labelText:'My Label',
-            // showLabel:false,
             class: null,
             value: null,
             type: 'checkbox',
@@ -60,17 +58,13 @@ define([
         },
 
         startup: function() {
-            var cbInput = this.cbInput = dojo.byId(this.id+'_cb');
-            if(!cbInput) return;
-            this.message = dojo.byId(this.id+'_msg');
             if(this.defaults.domMessage) {
-                domConstruct.place(this.message, this.defaults.domMessage);
+                domConstruct.place(this.myMessage, this.defaults.domMessage);
             }
-            var cbLabel = this.cbLabel = dojo.byId(this.id+'_lbl');
-            on(cbLabel, 'keydown', lang.hitch(this, this._keyDown));
+            on(this.myLabel, 'keypress', lang.hitch(this, this._keyDown));
 
-            on(cbInput, 'change', lang.hitch(this, function(ev) {
-                if(this.type === "checkbox" && this.defaults.group && cbInput.checked) {
+            on(this.myInput, 'change', lang.hitch(this, function(ev) {
+                if(this.type === "checkbox" && this.defaults.group && this.myInput.checked) {
                     var elements = query(".ImageToggleButton .cbToggleBtn[name="+this.defaults.group+"]:not(#"+this.id+"_cb):checked");
                     // console.log('elements', elements);
                     if(elements)
@@ -78,26 +72,32 @@ define([
                             cb.checked = false;
                         });
                 }
+                domAttr.set(this.myLabel,'aria-label',this.myInput.checked?this.defaults.titleSelected:this.defaults.titleUnselected);
+                domAttr.set(this.myLabel,'aria-checked',this.myInput.checked.toString());
                 this.emit('change', {
-                    checked: cbInput.checked,
-                    value: cbInput.value,
+                    checked: this.myInput.checked,
+                    value: this.myInput.value,
                 });
             }));
 
             if(this.defaults.autoCloseMessage) {
-                on(this.message, 'click', lang.hitch(this, this.HideMessage));
-                on(this.message, 'focusout', lang.hitch(this, this.HideMessage));
-                on(this.message, 'keydown', lang.hitch(this, this.HideMessage));
+                on(this.myMessage, 'click', lang.hitch(this, this.HideMessage));
+                on(this.myMessage, 'focusout', lang.hitch(this, this.HideMessage));
+                on(this.myMessage, 'keydown', lang.hitch(this, this.HideMessage));
             }
         },
 
+        postCreate : function() {
+            domAttr.set(this.myLabel,'aria-label',this.myInput.checked?this.defaults.titleSelected:this.defaults.titleUnselected)
+        },
+
         focus: function() {
-            this.cbLabel.focus();
+            this.myLabel.focus();
         },
 
         preset: function(value) {
-            if(!value != ! this.cbInput.checked) {
-                this.cbInput.click();
+            if(!value != ! this.myInput.checked) {
+                this.myInput.click();
             }
         },
 
@@ -106,10 +106,11 @@ define([
                 case " " :
                 case "Enter" :
                     evt.preventDefault();
+                    evt.stopPropagation();
                     if(this.type === 'radio' && this.isChecked())
                         this._uncheck();
                     else
-                        this.cbInput.click();
+                        this.myInput.click();
                     break;
                 case "Escape" :
                     evt.preventDefault();
@@ -119,42 +120,42 @@ define([
         },
 
         _uncheck: function() {
-            this.cbInput.checked = false;
+            this.myInput.checked = false;
             this.HideMessage();
             this.emit('change', {
-                checked: false, 
-                value: this.cbInput.value,
+                checked: false,
+                value: this.myInput.value,
             });
         },
 
         isChecked : function() {
-            return this.cbInput.checked;
+            return this.myInput.checked;
         },
 
         Check: function(value) {
-            if(this.cbInput.checked !== value) {
-                this.cbInput.checked = value;
+            if(this.myInput.checked !== value) {
+                this.myInput.checked = value;
                 this.emit('change', {
-                    checked: this.cbInput.checked,
-                    value: this.cbInput.value
+                    checked: this.myInput.checked,
+                    value: this.myInput.value
                 });
             }
         },
 
         msgType : null,
         ShowMessage: function(message, messageType) {
-            if(!this.message) return;
-            domClass.add(this.message, this.msgType = messageType);
-            this.message.innerHTML = message;
-            this.message.focus();
+            if(!this.myMessage) return;
+            domClass.add(this.myMessage, this.msgType = messageType);
+            this.myMessage.innerHTML = message;
+            this.myMessage.focus();
         },
 
         HideMessage: function(evn) {
-            if(!this.msgType || !this.message || this.message==='') return;
-            if(this.message === document.activeElement) {
+            if(!this.msgType || !this.myMessage || this.myMessage==='') return;
+            if(this.myMessage === document.activeElement) {
                 this.focus();
             }
-            domClass.remove(this.message, this.msgType);
+            domClass.remove(this.myMessage, this.msgType);
             this.msgType = null;
         },
 

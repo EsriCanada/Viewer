@@ -582,7 +582,7 @@ define([
                         this._addNavigation(
                             "navigation",
                             query("#mapDiv_zoom_slider")[0],
-                            (navDeferred = new Deferred())
+                            (this.navDeferred = new Deferred())
                         )
                     ];
 
@@ -3575,7 +3575,7 @@ define([
                             this.map,
                             "extent-change",
                             lang.hitch(this, function() {
-                                navDeferred.then(
+                                this.navDeferred.then(
                                     lang.hitch(this, function(results) {
                                         this._checkExtent();
                                         var homeButton = document.querySelector(
