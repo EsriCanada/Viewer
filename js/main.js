@@ -487,94 +487,128 @@ define([
                         },
                         dojo.byId("panelTools")
                     );
-                    var collapseLeftPanelButton = (this.collapseLeftPanelButton = new ImageToggleButton(
-                        {
-                            id: "collapseLeftPanelButton",
-                            imgSelected: "images/icons_"+this.config.icons+"/right.png",
-                            imgUnselected: "images/icons_"+this.config.icons+"/left.png",
-                            titleUnselected: i18n.leftCollapse,
-                            titleSelected: i18n.leftExpand
-                        },
-                        domConstruct.create("div", {}, vSplitterTools)
-                    ));
-                    collapseLeftPanelButton.startup();
+                    var collapseLeftPanelButton = (this.collapseLeftPanelButton =
+                        domConstruct.create("input", {
+                            type: 'image',
+                            src: "images/icons_"+this.config.icons+"/left.png",
+                            alt: i18n.leftCollapse,
+                            title: i18n.leftCollapse,
+                        }, vSplitterTools));
+
+                    aspect.after(this.contentPaneLeft, "resize", lang.hitch(this, function(size) {
+                        // console.log(size);
+                        if(size && size.w != undefined) {
+                            domAttr.set(
+                                this.contentPaneLeft,
+                                "aria-hidden",
+                                (size.w == 0) ? "true" : "false"
+                            );
+                        }
+                    }), true);
 
                     on(
                         collapseLeftPanelButton,
-                        "change",
+                        "click",
                         lang.hitch(this, function(ev) {
-                            var vSplitterTools = dojo.byId("vSplitterTools");
-                            if (collapseLeftPanelButton.isChecked()) {
-                                this._saveLeftPanelWidth = this.contentPaneLeft.domNode.clientWidth;
-                                dojo.hitch(
-                                    this.mainBorderContainer,
-                                    this.mainBorderContainer._layoutChildren(
-                                        this.contentPaneLeft.id,
-                                        0
-                                    )
-                                );
-                                dojo.hitch(
-                                    this.mainBorderContainer,
-                                    this.mainBorderContainer._layoutChildren(
-                                        this.contentPaneLeft.id + "_splitter",
-                                        0
-                                    )
-                                );
-                                domAttr.set(
-                                    dojo.byId(this.contentPaneLeft.id),
-                                    "aria-hidden",
-                                    "true"
-                                );
-                                domAttr.set(
-                                    dojo.byId(
-                                        this.contentPaneLeft.id + "_splitter"
-                                    ),
-                                    "aria-hidden",
-                                    "true"
-                                );
-                                domConstruct.place(
-                                    vSplitterTools,
-                                    dojo.byId("mapFocus"),
-                                    "before"
-                                );
-                                domClass.add(vSplitterTools, "onMap");
-                            } else {
-                                dojo.hitch(
-                                    this.mainBorderContainer,
-                                    this.mainBorderContainer._layoutChildren(
-                                        this.contentPaneLeft.id,
-                                        this._saveLeftPanelWidth
-                                    )
-                                );
-                                dojo.hitch(
-                                    this.mainBorderContainer,
-                                    this.mainBorderContainer._layoutChildren(
-                                        this.contentPaneLeft.id + "_splitter",
-                                        12
-                                    )
-                                );
-                                domAttr.set(
-                                    dojo.byId(this.contentPaneLeft.id),
-                                    "aria-hidden",
-                                    "false"
-                                );
-                                domAttr.set(
-                                    dojo.byId(
-                                        this.contentPaneLeft.id + "_splitter"
-                                    ),
-                                    "aria-hidden",
-                                    "false"
-                                );
-                                domConstruct.place(
-                                    vSplitterTools,
-                                    dojo.byId("panelTools"),
-                                    "before"
-                                );
-                                domClass.remove(vSplitterTools, "onMap");
-                            }
-                            collapseLeftPanelButton.focus();
+                            // ev.target.blur();
+                            dojo.hitch(
+                                this.mainBorderContainer,
+                                this.mainBorderContainer._layoutChildren(
+                                    this.contentPaneLeft.id,
+                                    0
+                                )
+                            );
                         })
                     );
+
+                    //     new ImageToggleButton(
+                    //     {
+                    //         id: "collapseLeftPanelButton",
+                    //         imgSelected: "images/icons_"+this.config.icons+"/right.png",
+                    //         imgUnselected: "images/icons_"+this.config.icons+"/left.png",
+                    //         titleUnselected: i18n.leftCollapse,
+                    //         titleSelected: i18n.leftExpand
+                    //     },
+                    //     domConstruct.create("div", {}, vSplitterTools)
+                    // ));
+                    // collapseLeftPanelButton.startup();
+
+                    // on(
+                    //     collapseLeftPanelButton,
+                    //     "change",
+                    //     lang.hitch(this, function(ev) {
+                    //         var vSplitterTools = dojo.byId("vSplitterTools");
+                    //         if (collapseLeftPanelButton.isChecked()) {
+                    //             this._saveLeftPanelWidth = this.contentPaneLeft.domNode.clientWidth;
+                    //             dojo.hitch(
+                    //                 this.mainBorderContainer,
+                    //                 this.mainBorderContainer._layoutChildren(
+                    //                     this.contentPaneLeft.id,
+                    //                     0
+                    //                 )
+                    //             );
+                    //             dojo.hitch(
+                    //                 this.mainBorderContainer,
+                    //                 this.mainBorderContainer._layoutChildren(
+                    //                     this.contentPaneLeft.id + "_splitter",
+                    //                     0
+                    //                 )
+                    //             );
+                    //             domAttr.set(
+                    //                 dojo.byId(this.contentPaneLeft.id),
+                    //                 "aria-hidden",
+                    //                 "true"
+                    //             );
+                    //             domAttr.set(
+                    //                 dojo.byId(
+                    //                     this.contentPaneLeft.id + "_splitter"
+                    //                 ),
+                    //                 "aria-hidden",
+                    //                 "true"
+                    //             );
+                    //             domConstruct.place(
+                    //                 vSplitterTools,
+                    //                 dojo.byId("mapFocus"),
+                    //                 "before"
+                    //             );
+                    //             domClass.add(vSplitterTools, "onMap");
+                    //         } else {
+                    //             dojo.hitch(
+                    //                 this.mainBorderContainer,
+                    //                 this.mainBorderContainer._layoutChildren(
+                    //                     this.contentPaneLeft.id,
+                    //                     this._saveLeftPanelWidth
+                    //                 )
+                    //             );
+                    //             dojo.hitch(
+                    //                 this.mainBorderContainer,
+                    //                 this.mainBorderContainer._layoutChildren(
+                    //                     this.contentPaneLeft.id + "_splitter",
+                    //                     12
+                    //                 )
+                    //             );
+                    //             domAttr.set(
+                    //                 dojo.byId(this.contentPaneLeft.id),
+                    //                 "aria-hidden",
+                    //                 "false"
+                    //             );
+                    //             domAttr.set(
+                    //                 dojo.byId(
+                    //                     this.contentPaneLeft.id + "_splitter"
+                    //                 ),
+                    //                 "aria-hidden",
+                    //                 "false"
+                    //             );
+                    //             domConstruct.place(
+                    //                 vSplitterTools,
+                    //                 dojo.byId("panelTools"),
+                    //                 "before"
+                    //             );
+                    //             domClass.remove(vSplitterTools, "onMap");
+                    //         }
+                    //         collapseLeftPanelButton.focus();
+                    //     })
+                    // );
 
                     // set map so that it can be repositioned when page is scrolled
                     toolbar.map = this.map;
@@ -887,9 +921,10 @@ define([
                         innerHTML:
                             "<b>Alt&nbsp;+&nbsp;4</b> " +
                             this.config.i18n.skip.vsplitter,
-                        style: "right:5px; top:55%; z-index:1000;"
+                        style: "left:5px; top:55%; z-index:1000;"
                     },
-                    dom.byId("leftPanel")
+                    this.map.container
+                    // dom.byId("leftPanel")
                 );
 
                 domConstruct.create(
@@ -1056,7 +1091,7 @@ define([
         },
 
         skipToTools: function() {
-            this.collapseLeftPanelButton.preset(false);
+            // this.collapseLeftPanelButton.preset(false);
             query(
                 '#panelTools .panelToolActive input[type="image"]'
             )[0].focus();
@@ -1064,18 +1099,18 @@ define([
         },
 
         skipToSearch: function() {
-            this.collapseLeftPanelButton.preset(false);
+            // this.collapseLeftPanelButton.preset(false);
             dom.byId("search_input").focus();
         },
 
         skipToContent: function() {
-            this.collapseLeftPanelButton.preset(false);
+            // this.collapseLeftPanelButton.preset(false);
             //dom.byId('panelPages').focus();
             dojo.query(".page.showAttr .pageBody")[0].focus();
         },
 
         skipToVSplitter: function() {
-            this.collapseLeftPanelButton.preset(false);
+            // this.collapseLeftPanelButton.preset(false);
             dojo.byId("dijit_layout_ContentPane_1_splitter").focus();
         },
 
@@ -1084,7 +1119,7 @@ define([
         },
 
         skipToInstructions: function() {
-            this.collapseLeftPanelButton.preset(false);
+            // this.collapseLeftPanelButton.preset(false);
             var activeTool = query(".panelToolActive");
             if (activeTool && activeTool.length > 0) {
                 activeTool = activeTool[0].childNodes[0];
@@ -1093,12 +1128,12 @@ define([
             dom.byId("instructionsDiv").focus();
         },
 
-        skipToFeature: function() {
-            if (featureList) {
-                this.collapseLeftPanelButton.preset(false);
-                featureList.FocusDetails();
-            }
-        },
+        // skipToFeature: function() {
+        //     if (featureList) {
+        //         this.collapseLeftPanelButton.preset(false);
+        //         featureList.FocusDetails();
+        //     }
+        // },
 
         skipToHSplitter: function() {
             var featureTableContainer = dojo.byId("featureTableContainer");
