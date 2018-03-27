@@ -112,7 +112,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             on(query('#'+this.popupHeaderId+' .popupInfoButton.map')[0], 'click', lang.hitch(this, this.toMap));
             on(query('#'+this.popupHeaderId+' .popupInfoButton.clear')[0], 'click', lang.hitch(this, this.clearFeatures));
 
-            this.GeoCodingEnabled = has("geoCoding") && dom.byId('popupGeoCoding_cb').checked;
+            // this.GeoCodingEnabled = has("geoCoding") && dom.byId('popupGeoCoding_cb').checked;
             // if(has("geoCoding")) {
             //     on(dom.byId('popupGeoCoding_lbl'), 'click', lang.hitch(this, this.toggleGeoCoding));
             //     on(dom.byId('popupGeoCoding_lbl'), 'keyup', lang.hitch(this, this.toggleGeoCoding));
