@@ -503,6 +503,8 @@ define([
                                 "aria-hidden",
                                 (size.w == 0) ? "true" : "false"
                             );
+                            if(size.w == 0)
+                                this.skipToVSplitter();
                         }
                     }), true);
 
@@ -1091,26 +1093,20 @@ define([
         },
 
         skipToTools: function() {
-            // this.collapseLeftPanelButton.preset(false);
             query(
                 '#panelTools .panelToolActive input[type="image"]'
             )[0].focus();
-            //dom.byId('panelTools').focus();
         },
 
         skipToSearch: function() {
-            // this.collapseLeftPanelButton.preset(false);
             dom.byId("search_input").focus();
         },
 
         skipToContent: function() {
-            // this.collapseLeftPanelButton.preset(false);
-            //dom.byId('panelPages').focus();
             dojo.query(".page.showAttr .pageBody")[0].focus();
         },
 
         skipToVSplitter: function() {
-            // this.collapseLeftPanelButton.preset(false);
             dojo.byId("dijit_layout_ContentPane_1_splitter").focus();
         },
 
@@ -1119,7 +1115,6 @@ define([
         },
 
         skipToInstructions: function() {
-            // this.collapseLeftPanelButton.preset(false);
             var activeTool = query(".panelToolActive");
             if (activeTool && activeTool.length > 0) {
                 activeTool = activeTool[0].childNodes[0];
@@ -1127,13 +1122,6 @@ define([
             }
             dom.byId("instructionsDiv").focus();
         },
-
-        // skipToFeature: function() {
-        //     if (featureList) {
-        //         this.collapseLeftPanelButton.preset(false);
-        //         featureList.FocusDetails();
-        //     }
-        // },
 
         skipToHSplitter: function() {
             var featureTableContainer = dojo.byId("featureTableContainer");
