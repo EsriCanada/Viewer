@@ -61,6 +61,11 @@ define([
             if(this.defaults.domMessage) {
                 domConstruct.place(this.myMessage, this.defaults.domMessage);
             }
+        },
+
+        postCreate : function() {
+            domAttr.set(this.myLabel,'aria-label',this.myInput.checked?this.defaults.titleSelected:this.defaults.titleUnselected)
+
             on(this.myLabel, 'keypress', lang.hitch(this, this._keyDown));
 
             on(this.myInput, 'change', lang.hitch(this, function(ev) {
@@ -85,10 +90,6 @@ define([
                 on(this.myMessage, 'focusout', lang.hitch(this, this.HideMessage));
                 on(this.myMessage, 'keydown', lang.hitch(this, this.HideMessage));
             }
-        },
-
-        postCreate : function() {
-            domAttr.set(this.myLabel,'aria-label',this.myInput.checked?this.defaults.titleSelected:this.defaults.titleUnselected)
         },
 
         focus: function() {
