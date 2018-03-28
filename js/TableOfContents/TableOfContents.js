@@ -184,7 +184,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         "for": "layer_ck_"+i,
                         "className": this.css.titleText,
                         "innerHTML": layer.title,
-                        role: "presentation",
+                        // role: "presentation",
                         //"title" : layer.title
                     }, tocTitleContainer);
 
