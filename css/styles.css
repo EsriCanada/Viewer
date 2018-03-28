@@ -2025,3 +2025,7 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4D000000,endColorstr=#4D000000) !important;
 }
 
+#expandLeftPanelButton {
+  position: absolute;
+  z-index: 1;
+}

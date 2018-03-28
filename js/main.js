@@ -495,25 +495,48 @@ define([
                             title: i18n.leftCollapse,
                         }, vSplitterTools));
 
-                    aspect.after(this.contentPaneLeft, "resize", lang.hitch(this, function(size) {
-                        // console.log(size);
-                        if(size && size.w != undefined) {
-                            domAttr.set(
-                                this.contentPaneLeft,
-                                "aria-hidden",
-                                (size.w == 0).toString()
-                            );
-                            if(size.w == 0)
-                                this.skipToMap();
-                        }
-                    }), true);
+                    var expandLeftPanelButton = (this.expandLeftPanelButton =
+                        domConstruct.create("input", {
+                            id: 'expandLeftPanelButton',
+                            type: 'image',
+                            src: "images/icons_black/right.png",
+                            alt: i18n.leftExpand,
+                            title: i18n.leftExpand,
+                            style: "display:none;"
+                        }, dojo.byId("mapFocus"),"before"));
+
+                    // aspect.after(this.contentPaneLeft, "resize", lang.hitch(this, function(size) {
+                    //     // console.log(size);
+                    //     if(size && size.w != undefined) {
+                    //         domAttr.set(
+                    //             this.contentPaneLeft,
+                    //             "aria-hidden",
+                    //             (size.w == 0).toString()
+                    //         );
+                    //         domAttr.set(
+                    //             dojo.byId(
+                    //                 this.contentPaneLeft.id + "_splitter"
+                    //             ),
+                    //             "aria-hidden",
+                    //             (size.w == 0).toString()
+                    //         );
+                    //     }
+                    // }), true);
 
                     on(
                         collapseLeftPanelButton,
                         "click",
                         lang.hitch(this, function(ev) {
-                            // ev.target.blur();
+                            this._saveLeftPanelWidth = this.contentPaneLeft.domNode.clientWidth+'px';
                             this.collapseLeftPanelWidth();
+                        })
+                    );
+
+                    on(
+                        expandLeftPanelButton,
+                        "click",
+                        lang.hitch(this, function(ev) {
+                            this.restoreLeftPanelWidth(this._saveLeftPanelWidth);
                         })
                     );
 
@@ -1068,13 +1091,31 @@ define([
 
         collapseLeftPanelAction: function(show) {
             if(show) {
-                this.restoreLeftPanelWidth();
+                this.restoreLeftPanelWidth(this._saveLeftPanelWidth);
             } else {
                 this.collapseLeftPanelWidth();
             }
         },
 
+        showLefPanelArea: function(hide) {
+            domAttr.set(
+                this.contentPaneLeft,
+                "aria-hidden",
+                hide.toString()
+            );
+            domAttr.set(
+                dojo.byId(
+                    this.contentPaneLeft.id + "_splitter"
+                ),
+                "aria-hidden",
+                hide.toString()
+            );
+        },
+
         collapseLeftPanelWidth: function() {
+            domStyle.set(this.expandLeftPanelButton, 'display', '');
+            this.expandLeftPanelButton.focus();
+            this.showLefPanelArea(true);
             dojo.hitch(
                 this.mainBorderContainer,
                 this.mainBorderContainer._layoutChildren(
@@ -1082,18 +1123,38 @@ define([
                     0
                 )
             );
+            dojo.hitch(
+                this.mainBorderContainer,
+                this.mainBorderContainer._layoutChildren(
+                    this.contentPaneLeft.id + "_splitter",
+                    0
+                )
+            );
         },
 
-        restoreLeftPanelWidth: function() {
-            var leftPanel = dojo.byId("leftPanel");
-            var minWidth = window.getComputedStyle(leftPanel)[
-                "min-width"
-            ];
+        restoreLeftPanelWidth: function(width) {
+            domStyle.set(this.expandLeftPanelButton, 'display', 'none');
+            this.collapseLeftPanelButton.focus();
+            this.showLefPanelArea(false);
+
+            if(!width) {
+                var leftPanel = dojo.byId("leftPanel");
+                width = window.getComputedStyle(leftPanel)[
+                    "min-width"
+                ];
+            }
             domStyle.set(
                 this.contentPaneLeft.domNode,
-                "width",
-                minWidth
+                "width", width
             );
+            dojo.hitch(
+                this.mainBorderContainer,
+                this.mainBorderContainer._layoutChildren(
+                    this.contentPaneLeft.id + "_splitter",
+                    12
+                )
+            );
+
             this.mainBorderContainer.resize();
         },
 
