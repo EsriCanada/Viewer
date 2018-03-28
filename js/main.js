@@ -513,13 +513,7 @@ define([
                         "click",
                         lang.hitch(this, function(ev) {
                             // ev.target.blur();
-                            dojo.hitch(
-                                this.mainBorderContainer,
-                                this.mainBorderContainer._layoutChildren(
-                                    this.contentPaneLeft.id,
-                                    0
-                                )
-                            );
+                            this.collapseLeftPanelWidth();
                         })
                     );
 
@@ -1070,6 +1064,24 @@ define([
                     })
                 );
             }
+        },
+
+        collapseLeftPanelAction(show) {
+            if(show) {
+                this.restoreLeftPanelWidth();
+            } else {
+                this.collapseLeftPanelWidth();
+            }
+        },
+
+        collapseLeftPanelWidth() {
+            dojo.hitch(
+                this.mainBorderContainer,
+                this.mainBorderContainer._layoutChildren(
+                    this.contentPaneLeft.id,
+                    0
+                )
+            );
         },
 
         restoreLeftPanelWidth: function() {
@@ -1786,6 +1798,7 @@ define([
                 domStyle.set(skipTableHeader, "display", show ? "inline-block":"none");
                 domStyle.set(skipTable, "display", show ? "inline-block":"none");
             }
+            this.collapseLeftPanelAction(!show);
         },
 
         _addLayers: function(tool, toolbar) {
@@ -1813,7 +1826,7 @@ define([
                         {
                             map: this.map,
                             layers: layers,
-                            OnDisplay: this._OnFeatureTableDisplay
+                            OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
                         },
                         domConstruct.create("div", {}, layersDivDesc)
                     );
@@ -1857,7 +1870,7 @@ define([
                             hasBasemapGallery: has("basemap"),
                             mapNode: dojo.byId("mapPlace"),
                             toolbar: toolbar,
-                            OnDisplay: this._OnFeatureTableDisplay
+                            OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
                         },
                         domConstruct.create("div", {}, layersDivDesc)
                     );
