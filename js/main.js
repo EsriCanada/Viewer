@@ -1066,7 +1066,7 @@ define([
             }
         },
 
-        collapseLeftPanelAction(show) {
+        collapseLeftPanelAction: function(show) {
             if(show) {
                 this.restoreLeftPanelWidth();
             } else {
@@ -1074,7 +1074,7 @@ define([
             }
         },
 
-        collapseLeftPanelWidth() {
+        collapseLeftPanelWidth: function() {
             dojo.hitch(
                 this.mainBorderContainer,
                 this.mainBorderContainer._layoutChildren(
