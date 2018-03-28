@@ -175,7 +175,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             r = results[i];
 
                             if(r) {
-                                var content = '';
+                                var content = '<table width=100% tabindex=0>';
                                 if(!layer.infoTemplate) {
                                     var x = 1;
                                 }
@@ -202,14 +202,16 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                             }
                                         }
 
-                                        content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr" tabindex="0" aria-label="'+pField.label+', '+fieldValue+',"">\n';
-                                        content+='    <td valign="top"></td>\n';
-                                        content+='    <td valign="top" align="right">'+pField.label+'</td>\n';
+                                        // content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr" tabindex="0" aria-label="'+pField.label+', '+fieldValue+',"">\n';
+                                        content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr">\n';
+                                        // content+='    <td valign="top"></td>\n';
+                                        content+='    <th valign="top" align="right">'+pField.label+'</th>\n';
                                         content+='    <td valign="top">:</td>\n';
                                         content+='    <td valign="top">'+fieldValue+'</td>\n';
                                         content+='</tr>\n';
                                     }
                                 }
+                                content += '</table>';
                                 for(var j = 0; j<r.features.length; j++) {
                                     var f = r.features[j];
                                     if(window._prevSelected && window._prevSelected.split('_')[1] == f.attributes[r.objectIdFieldName]) {
