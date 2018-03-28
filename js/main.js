@@ -3138,9 +3138,9 @@ define([
             });
             search.set("sources", defaultSources);
 
-            var searchInputGroup = dojo.byId("search_input");
-            dojo.setAttr(searchInputGroup, "role", "search");
-            dojo.setAttr(searchInputGroup, "aria-label", "Search Input");
+            var searchInput= dojo.byId("search_input");
+            dojo.setAttr(searchInput, "aria-label", "Search Input");
+            dojo.setAttr(searchInput, "role", "application");
 
             search.startup();
 
@@ -3160,8 +3160,8 @@ define([
                         '<img src="images\\downArrow.png" alt="Search in" width="20" height="20">';
                 }
 
-                // var searchInputGroup = dojo.query(".searchInputGroup")[0];
-                // dojo.setAttr(searchInputGroup, 'role', 'search');
+                var searchInputGroup = dojo.query(".searchInputGroup")[0];
+                dojo.setAttr(searchInputGroup, 'role', 'search');
 
                 var esriIconZoomNode = dojo.query(
                     ".searchIcon.esri-icon-search"
