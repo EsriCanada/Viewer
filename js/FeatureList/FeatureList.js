@@ -175,43 +175,46 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             r = results[i];
 
                             if(r) {
-                                var content = '<table width=100% tabindex=0>';
+                                var content = '';
                                 if(!layer.infoTemplate) {
                                     var x = 1;
                                 }
                                 var fieldsMap = layer.infoTemplate._fieldsMap;
-                                for(var p in layer.infoTemplate._fieldsMap) {
-                                    if(fieldsMap.hasOwnProperty(p) && fieldsMap[p].visible)
-                                    {
-                                        var pField = fieldsMap[p];
-                                        var fieldName = '${'+pField.fieldName+'}';
-                                        var fieldValue = fieldName;
-                                        if(pField.format)
+                                if(fieldsMap) {
+                                    content = '<table tabindex=0 class="FeatureTableAttributes">';
+                                    for(var p in fieldsMap) {
+                                        if(fieldsMap.hasOwnProperty(p) && fieldsMap[p].visible)
                                         {
-                                            if(pField.format.dateFormat) {
-                                                fieldValue='FORMAT_DATE('+fieldName+',"'+pField.format.dateFormat+'")';
+                                            var pField = fieldsMap[p];
+                                            var fieldName = '${'+pField.fieldName+'}';
+                                            var fieldValue = fieldName;
+                                            if(pField.format)
+                                            {
+                                                if(pField.format.dateFormat) {
+                                                    fieldValue='FORMAT_DATE('+fieldName+',"'+pField.format.dateFormat+'")';
+                                                }
+                                                else if(pField.format.time) {
+                                                    fieldValue='FORMAT_TIME('+fieldName+',"'+pField.format.time+'")';
+                                                }
+                                                else if(pField.format.hasOwnProperty("digitSeparator")) {
+                                                    fieldValue='FORMAT_NUM('+fieldName+',"'+pField.format.places+'|'+pField.format.digitSeparator+'")';
+                                                }
+                                                else {
+                                                    fieldValue=fieldName;
+                                                }
                                             }
-                                            else if(pField.format.time) {
-                                                fieldValue='FORMAT_TIME('+fieldName+',"'+pField.format.time+'")';
-                                            }
-                                            else if(pField.format.hasOwnProperty("digitSeparator")) {
-                                                fieldValue='FORMAT_NUM('+fieldName+',"'+pField.format.places+'|'+pField.format.digitSeparator+'")';
-                                            }
-                                            else {
-                                                fieldValue=fieldName;
-                                            }
-                                        }
 
-                                        // content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr" tabindex="0" aria-label="'+pField.label+', '+fieldValue+',"">\n';
-                                        content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr">\n';
-                                        // content+='    <td valign="top"></td>\n';
-                                        content+='    <th valign="top" align="right">'+pField.label+'</th>\n';
-                                        content+='    <td valign="top">:</td>\n';
-                                        content+='    <td valign="top">'+fieldValue+'</td>\n';
-                                        content+='</tr>\n';
+                                            // content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr" tabindex="0" aria-label="'+pField.label+', '+fieldValue+',"">\n';
+                                            content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr">\n';
+                                            // content+='    <td valign="top"></td>\n';
+                                            content+='    <th valign="top" align="right">'+pField.label+'</th>\n';
+                                            // content+='    <td valign="top">:</td>\n';
+                                            content+='    <td valign="top">'+fieldValue+'</td>\n';
+                                            content+='</tr>\n';
+                                        }
                                     }
+                                    content += '</table>';
                                 }
-                                content += '</table>';
                                 for(var j = 0; j<r.features.length; j++) {
                                     var f = r.features[j];
                                     if(window._prevSelected && window._prevSelected.split('_')[1] == f.attributes[r.objectIdFieldName]) {

@@ -21,6 +21,12 @@
     text-align: left;
 }
 
+.FeatureTableAttributes th {
+    font-weight: normal;
+}
+.FeatureTableAttributes td {
+    font-weight: bold;
+}
 /*.featureItem tr .filterBtn {
     width:18px;
     height:18px;
