@@ -1962,7 +1962,9 @@ define([
                         },
                         domConstruct.create(
                             "div",
-                            { role: "application" },
+                            {
+                                // role: "application"
+                            },
                             legendDiv
                         )
                     );
