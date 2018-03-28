@@ -1056,18 +1056,8 @@ define([
                     verticalSplitter,
                     "keydown",
                     lang.hitch(this, function(ev) {
-                        // alert('verticalSplitter');
                         if (ev.keyCode === 13) {
-                            var leftPanel = dojo.byId("leftPanel");
-                            var minWidth = window.getComputedStyle(leftPanel)[
-                                "min-width"
-                            ];
-                            domStyle.set(
-                                this.contentPaneLeft.domNode,
-                                "width",
-                                minWidth
-                            );
-                            borderContainer.resize();
+                            this.restoreLeftPanelWidth();
                         }
                     })
                 );
@@ -1076,33 +1066,39 @@ define([
                     verticalSplitter,
                     "dblclick",
                     lang.hitch(this, function(ev) {
-                        // alert('verticalSplitter');
-                        var leftPanel = dojo.byId("leftPanel");
-                        var minWidth = window.getComputedStyle(leftPanel)[
-                            "min-width"
-                        ];
-                        domStyle.set(
-                            this.contentPaneLeft.domNode,
-                            "width",
-                            minWidth
-                        );
-                        borderContainer.resize();
+                        this.restoreLeftPanelWidth();
                     })
                 );
             }
         },
 
+        restoreLeftPanelWidth: function() {
+            var leftPanel = dojo.byId("leftPanel");
+            var minWidth = window.getComputedStyle(leftPanel)[
+                "min-width"
+            ];
+            domStyle.set(
+                this.contentPaneLeft.domNode,
+                "width",
+                minWidth
+            );
+            this.mainBorderContainer.resize();
+        },
+
         skipToTools: function() {
+            this.restoreLeftPanelWidth();
             query(
-                '#panelTools .panelToolActive input[type="image"]'
+                '#panelTools .panelToolActive'
             )[0].focus();
         },
 
         skipToSearch: function() {
+            this.restoreLeftPanelWidth();
             dom.byId("search_input").focus();
         },
 
         skipToContent: function() {
+            this.restoreLeftPanelWidth();
             dojo.query(".page.showAttr .pageBody")[0].focus();
         },
 
