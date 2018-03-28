@@ -501,10 +501,10 @@ define([
                             domAttr.set(
                                 this.contentPaneLeft,
                                 "aria-hidden",
-                                (size.w == 0) ? "true" : "false"
+                                (size.w == 0).toString()
                             );
                             if(size.w == 0)
-                                this.skipToVSplitter();
+                                this.skipToMap();
                         }
                     }), true);
 
@@ -1054,7 +1054,7 @@ define([
 
                 on(
                     verticalSplitter,
-                    "keyup",
+                    "keydown",
                     lang.hitch(this, function(ev) {
                         // alert('verticalSplitter');
                         if (ev.keyCode === 13) {
