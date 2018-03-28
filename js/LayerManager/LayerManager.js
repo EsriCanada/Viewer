@@ -982,11 +982,6 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         showBadge: function(show) {
-            var collapseLeftPanelButton = dijit.byId('collapseLeftPanelButton');
-            if(collapseLeftPanelButton) {
-                collapseLeftPanelButton.preset(show);
-            }
-
             var indicator = dojo.byId('badge_Table'); // !
             if (show) {
                 domStyle.set(indicator,'display','');
