@@ -74,6 +74,7 @@ define({
                 StreetName : "Street Name",
                 StreetAddress : "Street Address",
                 POI: "Point Of Interest",
+                World: "World",
                 Locality: "Locality",
                 Neighborhood: "Neighborhood",
                 City: "City",

@@ -73,6 +73,7 @@ define({
             StreetName : "Nom de rue",
             StreetAddress : "Adresse de rue",
             POI: "Point d'intérêt",
+            World: "Monde",
             Locality: "Localité",
             Neighborhood: "Quartier",
             City: "Ville",

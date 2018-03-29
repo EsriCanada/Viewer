@@ -60,7 +60,7 @@ define(
             "layers": "Couches",
             "infoPanel" : "Panneau d'information",
         	"geoCoding" : "Géocodage inversé",
-            "basemap": "Galerie des Cartes de Base",
+            "basemap": "Bibliothèque des Fonds de Cartes",
         	"overview": "Vue Générale",
         	"measure": "Mesurer",
         	"edit": "Modifier",
