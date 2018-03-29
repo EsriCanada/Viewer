@@ -1,7 +1,7 @@
 define({
     widgets: ({
         navToolBar: ({
-            home: "Taille de la carte par défaut",
+            home: "Étendue de la carte par défaut",
             zoomIn : "Zoom avant",
             zoomOut : "Zoom arrière",
             hideNav : "Masquer les outils de navigation étendus",
@@ -14,7 +14,7 @@ define({
             aria: ({
                 maxZoomIn: "Zoom maximum.",
                 maxZoomOut: "Zoom minimum.",
-                atDefaultExt: "À l'étendue par défaut.", 
+                atDefaultExt: "À l'étendue par défaut.",
                 prevExtDisabled: "Étendue précédente, désactivée!",
                 nextExtDisabled: "Étendue suivante, désactivée!",
             })
