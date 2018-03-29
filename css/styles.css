@@ -2029,3 +2029,8 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
   position: absolute;
   z-index: 1;
 }
+
+.esriBasemapGalleryLabelContainer {
+    height: auto;
+    min-height: 40px;
+}
