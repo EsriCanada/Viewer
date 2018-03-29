@@ -175,10 +175,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             r = results[i];
 
                             if(r) {
-                                var content = '';
-                                if(!layer.infoTemplate) {
-                                    var x = 1;
-                                }
+                                var content = '<table tabindex=0 class="FeatureTableAttributes">';
+
                                 var fieldsMap = layer.infoTemplate._fieldsMap;
                                 for(var p in fieldsMap) {
                                     if(fieldsMap.hasOwnProperty(p) && fieldsMap[p].visible)
@@ -211,6 +209,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                         content+='</tr>\n';
                                     }
                                 }
+                                content += '</table>';
                                 for(var j = 0; j<r.features.length; j++) {
                                     var f = r.features[j];
                                     if(window._prevSelected && window._prevSelected.split('_')[1] == f.attributes[r.objectIdFieldName]) {
@@ -424,6 +423,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             _getFeatureListItem = function(r, f, objectIdFieldName, layer, content, listTemplate) {
                 try {
                     var featureId = f.attributes[objectIdFieldName];
+                    var description = layer.infoTemplate._getPopupValues(f).description;
+                    if(description && description != "")
+                        content = description;
                     var attributes = {
                         _featureId:featureId,
                         _layerId:r,
