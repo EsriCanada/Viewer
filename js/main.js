@@ -3140,7 +3140,7 @@ define([
 
             var searchInput= dojo.byId("search_input");
             dojo.setAttr(searchInput, "aria-label", "Search Input");
-            dojo.setAttr(searchInput, "role", "application");
+            // dojo.setAttr(searchInput, "role", "application");
 
             search.startup();
 
