@@ -207,6 +207,20 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                                     domConstruct.destroy(mainSection.querySelector('.header'));
                                                 }
 
+                                                var attrTables = query('.attrTable', mainSection);
+                                                if(attrTables && attrTables.length > 0) {
+                                                    for(var i = 0; i<attrTables.length; i++) {
+                                                        var attrTable = attrTables[i];
+                                                        // domAttr.set(attrTable, 'role', 'presentation');
+                                                        var attrNames = query('td.attrName', attrTable);
+                                                        if(attrNames && attrNames.length > 0) {
+                                                            for(var j = 0; j<attrNames.length; j++) {
+                                                                attrNames[j].outerHTML = attrNames[j].outerHTML.replace(/^<td/, '<th').replace(/td>$/, 'th>');
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
                                                 var images = query('.esriViewPopup img', myContent.domNode);
                                                 if(images) {
                                                     images.forEach(function(img) {
