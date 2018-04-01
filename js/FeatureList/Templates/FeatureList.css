@@ -27,6 +27,12 @@
 .FeatureTableAttributes td {
     font-weight: bold;
 }
+
+.featureContent {
+    margin-left: -8px;
+    margin-right: -4px;
+}
+
 /*.featureItem tr .filterBtn {
     width:18px;
     height:18px;

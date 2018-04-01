@@ -2,6 +2,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/Deferred", "dojo/promise/all", "dojo/query",
     "esri/tasks/query", "esri/tasks/QueryTask",
+    "dojox/layout/ContentPane",
     "dojo/text!application/FeatureList/Templates/FeatureList.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
     "dojo/string",
@@ -19,6 +20,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         _WidgetBase, _TemplatedMixin, on,
         Deferred, all, query,
         Query, QueryTask,
+        ContentPane,
         FeatureList,
         dom, domClass, domAttr, domStyle, domConstruct, event,
         string,
@@ -175,54 +177,55 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             r = results[i];
 
                             if(r) {
-                                var content = '<table tabindex=0 class="FeatureTableAttributes">';
-
-                                var fieldsMap = layer.infoTemplate._fieldsMap;
-                                for(var p in fieldsMap) {
-                                    if(fieldsMap.hasOwnProperty(p) && fieldsMap[p].visible)
-                                    {
-                                        var pField = fieldsMap[p];
-                                        var fieldName = '${'+pField.fieldName+'}';
-                                        var fieldValue = fieldName;
-                                        if(pField.format)
-                                        {
-                                            if(pField.format.dateFormat) {
-                                                fieldValue='FORMAT_DATE('+fieldName+',"'+pField.format.dateFormat+'")';
-                                            }
-                                            else if(pField.format.time) {
-                                                fieldValue='FORMAT_TIME('+fieldName+',"'+pField.format.time+'")';
-                                            }
-                                            else if(pField.format.hasOwnProperty("digitSeparator")) {
-                                                fieldValue='FORMAT_NUM('+fieldName+',"'+pField.format.places+'|'+pField.format.digitSeparator+'")';
-                                            }
-                                            else {
-                                                fieldValue=fieldName;
-                                            }
-                                        }
-
-                                        // content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr" tabindex="0" aria-label="'+pField.label+', '+fieldValue+',"">\n';
-                                        content+='<tr class="featureItem_${_layerId}_${_featureId} hideAttr">\n';
-                                        // content+='    <td valign="top"></td>\n';
-                                        content+='    <th valign="top" align="right">'+pField.label+'</th>\n';
-                                        // content+='    <td valign="top">:</td>\n';
-                                        content+='    <td valign="top">'+fieldValue+'</td>\n';
-                                        content+='</tr>\n';
-                                    }
-                                }
-                                content += '</table>';
                                 for(var j = 0; j<r.features.length; j++) {
                                     var f = r.features[j];
                                     if(window._prevSelected && window._prevSelected.split('_')[1] == f.attributes[r.objectIdFieldName]) {
                                         preselected = f;
                                     }
 
-                                    var featureListItem = this._getFeatureListItem(i, f, r.objectIdFieldName, layer, content, listTemplate);
+                                    var featureListItem = this._getFeatureListItem(i, f, r.objectIdFieldName, layer, listTemplate);
                                     if(featureListItem)
                                     {
-                                        domConstruct.create("li", {
+                                        var li = domConstruct.create("li", {
                                             // tabindex : 0,
                                             innerHTML : featureListItem
                                         }, list);
+                                        var liTdContent =li.querySelector('.featureContent_'+i+'_'+f.attributes[layer.objectIdField]);
+
+                                        var contentPane = new ContentPane({ }, liTdContent);
+                                        contentPane.startup();
+
+                                        var myContent = layer.infoTemplate.getContent(f);
+
+                                        contentPane.set("content", myContent).then(lang.hitch(this, function() {
+                                            var mainView = liTdContent.querySelector('.esriViewPopup');
+                                            if(mainView) {
+                                                domAttr.set(mainView, 'tabindex',0);
+
+                                                var mainSection = mainView.querySelector('.mainSection');
+                                                if(mainSection) {
+                                                    domConstruct.destroy(mainSection.querySelector('.header'));
+                                                }
+
+                                                var images = query('.esriViewPopup img', myContent.domNode);
+                                                if(images) {
+                                                    images.forEach(function(img) {
+                                                        var alt = domAttr.get(img, 'alt');
+                                                        if(!alt) {
+                                                            domAttr.set(img,'alt','');
+                                                        } else {
+                                                            domAttr.set(img,'tabindex',0);
+                                                            if(!domAttr.get(img, 'title'))
+                                                            {
+                                                                domAttr.set(img,'title', alt);
+                                                            }
+                                                        }
+                                                    });
+                                                }
+                                            }
+                                        }));
+
+                                        // console.log(liTdContent);
                                     }
                                 }
                             }
@@ -420,17 +423,16 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             on(this.map, "extent-change", lang.hitch(this, this._reloadList), this);
 
-            _getFeatureListItem = function(r, f, objectIdFieldName, layer, content, listTemplate) {
+            _getFeatureListItem = function(r, f, objectIdFieldName, layer, listTemplate) {
+
                 try {
                     var featureId = f.attributes[objectIdFieldName];
-                    var description = layer.infoTemplate._getPopupValues(f).description;
-                    if(description && description != "")
-                        content = description;
+                    var popupValues = layer.infoTemplate._getPopupValues(f);
                     var attributes = {
                         _featureId:featureId,
                         _layerId:r,
                         _title:layer.infoTemplate.title(f),
-                        _content:content,
+                        // _content:popupValues.hasDescription ? popupValues.description : content,
                         _panTo: i18n.widgets.featureList.panTo,
                         _zoomTo: i18n.widgets.featureList.zoomTo,
                         hint:Ri18n.skip.featureDetaills,
@@ -458,7 +460,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             }
 
                             matches.push(m);
-                        };
+                        }
 
                         matches.forEach(function(g) {
                             // console.log('g', g[0], g[1]);
@@ -471,9 +473,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                         return(template);
                     };
-                    content = _substitute(content, attributes);
 
-                    // content = string.substitute(content, attributes);
                     listTemplate=_substitute(listTemplate, attributes);
                     var result =  _substitute(listTemplate, attributes);
                     var re = /((>)((?:http:\/\/www\.|https:\/\/www\.|ftp:\/\/www.|www\.)[a-z0-9]+(?:[\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(?:\/.*)?)(?:<))|(FORMAT_(DATE|TIME|NUM)\((-?\d*\.?\d*),\"(.+)\"\))/gm;
