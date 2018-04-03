@@ -441,7 +441,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 try {
                     var featureId = f.attributes[objectIdFieldName];
-                    var popupValues = layer.infoTemplate._getPopupValues(f);
+                    // var popupValues = layer.infoTemplate._getPopupValues(f);
                     var attributes = {
                         _featureId:featureId,
                         _layerId:r,
@@ -449,17 +449,17 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         // _content:popupValues.hasDescription ? popupValues.description : content,
                         _panTo: i18n.widgets.featureList.panTo,
                         _zoomTo: i18n.widgets.featureList.zoomTo,
-                        hint:Ri18n.skip.featureDetaills,
+                        // hint:Ri18n.skip.featureDetaills,
                     };
-                    lang.mixin(attributes, f.attributes);
-                    var nulls = window.tasks[r].layer.fields.map(function(f){return f.name;});
-                    var nullAttrs ={};
-                    nulls.forEach(function(n) {
-                        if(!attributes[n])
-                        {
-                            attributes[n]='';
-                        }
-                    });
+                    // lang.mixin(attributes, f.attributes);
+                    // var nulls = window.tasks[r].layer.fields.map(function(f){return f.name;});
+                    // var nullAttrs ={};
+                    // nulls.forEach(function(n) {
+                    //     if(!attributes[n])
+                    //     {
+                    //         attributes[n]='';
+                    //     }
+                    // });
 
                     var _substitute = function(template,attrs) {
                         var regex = /\${((?:\w)*)}/gm;
@@ -488,66 +488,66 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         return(template);
                     };
 
-                    listTemplate=_substitute(listTemplate, attributes);
+                    // listTemplate=_substitute(listTemplate, f.attributes);
                     var result =  _substitute(listTemplate, attributes);
-                    var re = /((>)((?:http:\/\/www\.|https:\/\/www\.|ftp:\/\/www.|www\.)[a-z0-9]+(?:[\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(?:\/.*)?)(?:<))|(FORMAT_(DATE|TIME|NUM)\((-?\d*\.?\d*),\"(.+)\"\))/gm;
-                    do {
-                        var matches = re.exec(result);
-                        if(!matches) break;
-                        if(matches[6] && (!matches[7] || matches[7] === '')) {
-                            result = result.replace(matches[5], '');
-                        }
-                        if(matches[2]===">") {
-                            result = result.replace(matches[1], "><a href='"+matches[3]+"' target='_blank'>"+i18n.widgets.featureList.followLink+"</a><");
-                        }
-                        else if(matches[6]==="DATE") {
-                            var dateNum = matches[7];
-                            if(!isNaN(parseFloat(dateNum)) && isFinite(dateNum)) {
-                                var date = new Date(Number(dateNum));
-                                result = result.replace(matches[5], date.toLocaleDateString(
-                                    document.documentElement.lang,
-                                    {
-                                        year: "numeric", month: "long", day: "numeric"
-                                    }
-                                ));
-                            } else
-                                result = result.replace(matches[5],'');
-                        }
-                        else if(matches[6]==="TIME") {
-                            var timeNum = matches[7];
-                            if(!isNaN(parseFloat(timeNum)) && isFinite(timeNum)) {
-                                var time = new Date(Number(timeNum));
-                                result = result.replace(matches[5], time.toLocaleDateString(
-                                    document.documentElement.lang,
-                                    {
-                                        year: "numeric", month: "numeric", day: "numeric",
-                                        hour: "2-digit", minute: "2-digit"
-                                    }
-                                ));
-                            } else
-                                result = result.replace(matches[5],'');
-                        }
-                        else if(matches[6]==="NUM") {
-                            var num = matches[7];
-                            if(!isNaN(parseFloat(num)) && isFinite(num)) {
-                                num = Number(num);
-                                var d89=matches[8].split('|');
-                                var dec = Number(d89[0]);
-                                var useSeparator = d89[1] === "true";
-                                num = num.toLocaleString(document.documentElement.lang,
-                                    {
-                                        minimumFractionDigits: dec,
-                                        maximumFractionDigits: dec,
-                                        useGrouping: useSeparator
-                                    }
-                                );
+                    // var re = /((>)((?:http:\/\/www\.|https:\/\/www\.|ftp:\/\/www.|www\.)[a-z0-9]+(?:[\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(?:\/.*)?)(?:<))|(FORMAT_(DATE|TIME|NUM)\((-?\d*\.?\d*),\"(.+)\"\))/gm;
+                    // do {
+                    //     var matches = re.exec(result);
+                    //     if(!matches) break;
+                    //     if(matches[6] && (!matches[7] || matches[7] === '')) {
+                    //         result = result.replace(matches[5], '');
+                    //     }
+                    //     if(matches[2]===">") {
+                    //         result = result.replace(matches[1], "><a href='"+matches[3]+"' target='_blank'>"+i18n.widgets.featureList.followLink+"</a><");
+                    //     }
+                    //     else if(matches[6]==="DATE") {
+                    //         var dateNum = matches[7];
+                    //         if(!isNaN(parseFloat(dateNum)) && isFinite(dateNum)) {
+                    //             var date = new Date(Number(dateNum));
+                    //             result = result.replace(matches[5], date.toLocaleDateString(
+                    //                 document.documentElement.lang,
+                    //                 {
+                    //                     year: "numeric", month: "long", day: "numeric"
+                    //                 }
+                    //             ));
+                    //         } else
+                    //             result = result.replace(matches[5],'');
+                    //     }
+                    //     else if(matches[6]==="TIME") {
+                    //         var timeNum = matches[7];
+                    //         if(!isNaN(parseFloat(timeNum)) && isFinite(timeNum)) {
+                    //             var time = new Date(Number(timeNum));
+                    //             result = result.replace(matches[5], time.toLocaleDateString(
+                    //                 document.documentElement.lang,
+                    //                 {
+                    //                     year: "numeric", month: "numeric", day: "numeric",
+                    //                     hour: "2-digit", minute: "2-digit"
+                    //                 }
+                    //             ));
+                    //         } else
+                    //             result = result.replace(matches[5],'');
+                    //     }
+                    //     else if(matches[6]==="NUM") {
+                    //         var num = matches[7];
+                    //         if(!isNaN(parseFloat(num)) && isFinite(num)) {
+                    //             num = Number(num);
+                    //             var d89=matches[8].split('|');
+                    //             var dec = Number(d89[0]);
+                    //             var useSeparator = d89[1] === "true";
+                    //             num = num.toLocaleString(document.documentElement.lang,
+                    //                 {
+                    //                     minimumFractionDigits: dec,
+                    //                     maximumFractionDigits: dec,
+                    //                     useGrouping: useSeparator
+                    //                 }
+                    //             );
 
-                                result = result.replace(matches[5], num);
-                            } else
-                                result = result.replace(matches[5],'');
-                        }
+                    //             result = result.replace(matches[5], num);
+                    //         } else
+                    //             result = result.replace(matches[5],'');
+                    //     }
 
-                    } while (true);
+                    // } while (true);
 
                     return result;
                 } catch (e) {

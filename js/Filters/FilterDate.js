@@ -7,7 +7,7 @@ define([
     "dojo/text!./Templates/FilterDate.html",
     "dojo/i18n!application/nls/FilterDialog",
 ], function(
-    declare, domConstruct, parser, ready, 
+    declare, domConstruct, parser, ready,
     DateTextBox,
     _WidgetBase, _TemplatedMixin, _WidgetsInTemplateMixin,
     lang, has, esriNS,
@@ -17,8 +17,7 @@ define([
         templateString: FilterItemTemplate,
 
         options: {
-        },        
-
+        },
 
         constructor: function(options, srcRefNode){
             var defaults = lang.mixin({}, this.options, options);
@@ -30,7 +29,7 @@ define([
             this.set('id1', dijit.registry.getUniqueId(this.declaredClass));
             this.set('id2', dijit.registry.getUniqueId(this.declaredClass));
         },
-        
+
         startup: function () {
             if (!this.map) {
                 this.destroy();
@@ -65,10 +64,10 @@ define([
 
         criteriaChanged: function(ev) {
             switch(this.getBetweenMode()) {
-                case false: 
+                case false:
                     domStyle.set(this.divMaxValue,'display', 'none');
                     break;
-                case true: 
+                case true:
                     domStyle.set(this.divMaxValue,'display', 'inline');
                     break;
             }
@@ -97,7 +96,7 @@ define([
                     return null;
                 }
             }
-        }    
+        }
     });
 
     if (has("extend-esri")) {
