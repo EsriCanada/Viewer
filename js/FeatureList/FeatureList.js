@@ -190,7 +190,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                             // tabindex : 0,
                                             innerHTML : featureListItem
                                         }, list);
-                                        // var liTdContent =li.querySelector('.featureContent_'+i+'_'+f.attributes[layer.objectIdField]);
                                    }
                                 }
                             }
@@ -384,6 +383,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             }));
                         }
 
+                        li[0].scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
+
                         var markerGeometry;
                         var marker;
 
@@ -419,8 +420,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         gr.name = 'featureMarker';
                         layer._map.graphics.add(gr);
                     });
-
-                    li[0].scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
                 } else {
                     li.removeClass('borderLi');
                     dojo.query('.featureItem_'+_prevSelected).forEach(function(e) {
