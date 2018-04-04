@@ -190,57 +190,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                             // tabindex : 0,
                                             innerHTML : featureListItem
                                         }, list);
-                                        var liTdContent =li.querySelector('.featureContent_'+i+'_'+f.attributes[layer.objectIdField]);
-
-                                        var contentPane = new ContentPane({ }, liTdContent);
-                                        contentPane.startup();
-
-                                        var myContent = layer.infoTemplate.getContent(f);
-
-                                        contentPane.set("content", myContent).then(lang.hitch(this, function() {
-                                            var mainView = liTdContent.querySelector('.esriViewPopup');
-                                            if(mainView) {
-                                                domAttr.set(mainView, 'tabindex',0);
-
-                                                var mainSection = mainView.querySelector('.mainSection');
-                                                if(mainSection) {
-                                                    domConstruct.destroy(mainSection.querySelector('.header'));
-                                                }
-
-                                                var attrTables = query('.attrTable', mainSection);
-                                                if(attrTables && attrTables.length > 0) {
-                                                    for(var i = 0; i<attrTables.length; i++) {
-                                                        var attrTable = attrTables[i];
-                                                        // domAttr.set(attrTable, 'role', 'presentation');
-                                                        var attrNames = query('td.attrName', attrTable);
-                                                        if(attrNames && attrNames.length > 0) {
-                                                            for(var j = 0; j<attrNames.length; j++) {
-                                                                attrNames[j].outerHTML = attrNames[j].outerHTML.replace(/^<td/, '<th').replace(/td>$/, 'th>');
-                                                            }
-                                                        }
-                                                    }
-                                                }
-
-                                                var images = query('.esriViewPopup img', myContent.domNode);
-                                                if(images) {
-                                                    images.forEach(function(img) {
-                                                        var alt = domAttr.get(img, 'alt');
-                                                        if(!alt) {
-                                                            domAttr.set(img,'alt','');
-                                                        } else {
-                                                            domAttr.set(img,'tabindex',0);
-                                                            if(!domAttr.get(img, 'title'))
-                                                            {
-                                                                domAttr.set(img,'title', alt);
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        }));
-
-                                        // console.log(liTdContent);
-                                    }
+                                        // var liTdContent =li.querySelector('.featureContent_'+i+'_'+f.attributes[layer.objectIdField]);
+                                   }
                                 }
                             }
                         }
@@ -330,7 +281,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             window.featureExpandAndZoom = function(event, checkbox) {
                 if(event.charCode === 43 || event.charCode === 45 || event.charCode === 46) { // +,- or .
-                    //console.log(event.charCode, checkbox);
                     checkbox.checked = !checkbox.checked;
                     window.featureExpand(checkbox, false);
                     if(checkbox.checked) {
@@ -359,7 +309,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 var objectIdFieldName = r.layer.objectIdField;
                 var fid = values[1];
                 var layer = r.layer;
-                // layer._map.graphics.clear();
+
                 layer._map.graphics.graphics.forEach(lang.hitch(layer._map.graphics, function(gr) {
                     if(gr.name && gr.name === 'featureMarker') {
                         this.remove(gr);
@@ -367,48 +317,95 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }));
 
                 lang.hitch(window._this, window._this.showBadge(checkBox.checked));
-                //lang.hitch(this, this.showBadge(checkBox.checked));
 
+                var li = query(checkBox).closest('li');
+                li.addClass('borderLi');
                 if(checkBox.checked)
                 {
                     _prevSelected = values[0]+'_'+fid;
-                    dojo.query('.featureItem_'+_prevSelected).forEach(function(e) {
-                        //dojo.addClass(e, 'showAttr');
-                        dojo.removeClass(e, 'hideAttr');
-                        var li = query(e).closest('li');
-                        li.addClass('borderLi');
-                    });
+                    var featureControls = li[0].querySelector('.featureControls');
+                    dojo.removeClass(featureControls, 'hideAttr');
+                    var featureContent = li[0].querySelector('.featureContent');
+                    dojo.removeClass(featureContent, 'hideAttr');
+                    var featureContentPane = li[0].querySelector('.featureContentPane');
 
-                    q = new Query();
+                    var q = new Query();
                     q.where = objectIdFieldName+"="+fid;
-                    q.outFields = [objectIdFieldName];
+                    q.outFields = layer.fields.map(function(fld) {return fld.name;});//objectIdFieldName];
                     q.returnGeometry = true;
                     r.task.execute(q).then(function(ev) {
-                        //console.log(ev);
+                        var feature = ev.features[0];
+                        if(!featureContentPane.attributes.hasOwnProperty('widgetid')) {
+                            var contentPane = new ContentPane({ }, featureContentPane);
+                            contentPane.startup();
 
-                        var graphic = ev.features[0];
+                            var myContent = layer.infoTemplate.getContent(feature);
+
+                            contentPane.set("content", myContent).then(lang.hitch(this, function() {
+                                var mainView = featureContentPane.querySelector('.esriViewPopup');
+                                if(mainView) {
+                                    domAttr.set(mainView, 'tabindex',0);
+
+                                    var mainSection = mainView.querySelector('.mainSection');
+                                    if(mainSection) {
+                                        domConstruct.destroy(mainSection.querySelector('.header'));
+                                    }
+
+                                    var attrTables = query('.attrTable', mainSection);
+                                    if(attrTables && attrTables.length > 0) {
+                                        for(var i = 0; i<attrTables.length; i++) {
+                                            var attrTable = attrTables[i];
+                                            // domAttr.set(attrTable, 'role', 'presentation');
+                                            var attrNames = query('td.attrName', attrTable);
+                                            if(attrNames && attrNames.length > 0) {
+                                                for(var j = 0; j<attrNames.length; j++) {
+                                                    attrNames[j].outerHTML = attrNames[j].outerHTML.replace(/^<td/, '<th').replace(/td>$/, 'th>');
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    var images = query('.esriViewPopup img', myContent.domNode);
+                                    if(images) {
+                                        images.forEach(function(img) {
+                                            var alt = domAttr.get(img, 'alt');
+                                            if(!alt) {
+                                                domAttr.set(img,'alt','');
+                                            } else {
+                                                domAttr.set(img,'tabindex',0);
+                                                if(!domAttr.get(img, 'title'))
+                                                {
+                                                    domAttr.set(img,'title', alt);
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            }));
+                        }
+
                         var markerGeometry;
                         var marker;
 
-                        switch (graphic.geometry.type) {
+                        switch (feature.geometry.type) {
                             case "point":
-                                markerGeometry = graphic.geometry;
+                                markerGeometry = feature.geometry;
                                 marker = markerSymbol;
                                 break;
                             case "extent":
-                                markerGeometry = graphic.getCenter();
+                                markerGeometry = feature.getCenter();
                                 // marker = new SimpleMarkerSymbol
                                 break;
                             case "polyline" :
-                                markerGeometry = graphic.geometry;
+                                markerGeometry = feature.geometry;
                                 marker = new CartographicLineSymbol(
                                     CartographicLineSymbol.STYLE_SOLID, new Color([0, 127, 255]), 10,
                                     CartographicLineSymbol.CAP_ROUND,
                                     CartographicLineSymbol.JOIN_ROUND, 5);
                                 break;
                             default:
-                                // if the graphic is a polygon
-                                markerGeometry = graphic.geometry;
+                                // if the feature is a polygon
+                                markerGeometry = feature.geometry;
                                 marker = new SimpleFillSymbol(
                                     SimpleFillSymbol.STYLE_SOLID,
                                     new SimpleLineSymbol(
@@ -422,12 +419,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         gr.name = 'featureMarker';
                         layer._map.graphics.add(gr);
                     });
-                    // layer.selectFeatures(q, FeatureLayer.SELECTION_NEW).then(function(f) {
-                    //     f[0].symbol.size = 40;
-                    // });
+
+                    li[0].scrollIntoView({block: "start", inline: "nearest", behavior: "smooth"});
                 } else {
+                    li.removeClass('borderLi');
                     dojo.query('.featureItem_'+_prevSelected).forEach(function(e) {
-                        dojo.removeClass(e, 'showAttr');
                         dojo.addClass(e, 'hideAttr');
                     });
                     window._prevSelected = null;

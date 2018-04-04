@@ -28,9 +28,8 @@
     font-weight: bold;
 }
 
-.featureContent {
-    margin-left: -8px;
-    margin-right: -4px;
+.featureContentPane {
+    margin: -4px -8px;
 }
 
 /*.featureItem tr .filterBtn {
