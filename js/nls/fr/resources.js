@@ -71,7 +71,6 @@ define(
             "filter": "Filtres",
             "features": "Liste de caractéristiques",
             "vsplitter" : "Cliquer et déplacer avec la souris ou utiliser le flèches gauche droite quand cet outil est activé. \nDouble-cliquer ou presser ‘Entrer’ pour ajuster à la taille optimale."
-
         },
         "skip":{
             "tools" : "Aller au outils",
