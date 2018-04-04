@@ -95,6 +95,7 @@ define({
         leftCollapse: "Collapse Left Panel",
         leftExpand: "Expand Left Panel",
         moreHelp : "More Help",
+        totalCount : "Total Count: "
     }),
 "ar": 1,
 "cs": 1,

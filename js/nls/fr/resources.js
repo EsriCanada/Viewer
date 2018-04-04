@@ -69,7 +69,7 @@ define(
         	"details": "Détails",
         	"share": "Partager",
             "filter": "Filtres",
-            "features": "Liste de caractéristiques sur la carte",
+            "features": "Liste de caractéristiques",
             "vsplitter" : "Cliquer et déplacer avec la souris ou utiliser le flèches gauche droite quand cet outil est activé. \nDouble-cliquer ou presser ‘Entrer’ pour ajuster à la taille optimale."
 
         },
@@ -95,5 +95,6 @@ define(
         leftCollapse: "Réduire le panneau gauche",
         leftExpand: "Révéler le panneau gauche",
         moreHelp : "Plus d'aide",
+        totalCount : "Le compte total : "
     })
 );

@@ -84,8 +84,15 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                       }
                     });
             }
-            this.css = {
-            };
+            // this.css = {
+            // };
+            var featureListHeader = dom.byId('pageHeader_features');
+            dojo.create('div', {
+                id: 'featureListCount',
+                class:'bg',
+                tabindex: 0
+            },featureListHeader);
+
         },
 
         _getLayers : function(layers) {
@@ -122,23 +129,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }));
         },
 
-        // FocusDetails: function() {
-        //     if(!this._isVisible()) return;
-
-        //     var details = this.domNode.querySelector('.showAttr');
-        //     if(details) {
-        //         var page = query(details).closest('.borderLi')[0];
-        //         page.querySelector('.checkbox').focus();
-        //     }
-        // },
-
         _isVisible : function() {
             var page = query(this.domNode).closest('.page')[0];
             return dojo.hasClass(page, "showAttr");
         },
 
         _clearMarker: function() {
-            //this.map.graphics.clear();
             this.map.graphics.graphics.forEach(lang.hitch(this, function(gr) {
                 if(gr.name && gr.name === 'featureMarker') {
                     this.map.graphics.remove(gr);
@@ -155,7 +151,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this._clearMarker();
             window.tasks.filter(function(t) {
                 return t.layer.visible && t.layer.visibleAtMapScale;// && t.layer.infoTemplate;
-                // return t.layer.visible && t.layer.visibleAtMapScale;
             }).forEach(lang.hitch(this.map, function(t) {
                 t.query.geometry = ext.extent;
                 try {
@@ -167,49 +162,54 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     // ignore
                 }
             }));
+
             var promises = all(window.tasks.map(function(t) {return t.result;}));
-            promises.then(
-                function(results) {
-                    list.innerHTML = "";
-                    var preselected = null;
-                    if(results) for(var i = 0; i<results.length; i++)
-                    {
-                        var layer = window.tasks[i].layer;
-                        if(layer.visible && layer.visibleAtMapScale && layer.infoTemplate) {
-                            r = results[i];
 
-                            if(r) {
-                                for(var j = 0; j<r.features.length; j++) {
-                                    var f = r.features[j];
-                                    if(window._prevSelected && window._prevSelected.split('_')[1] == f.attributes[r.objectIdFieldName]) {
-                                        preselected = f;
-                                    }
+            promises.then(function(results) {
+                list.innerHTML = "";
+                var count = 0;
+                var preselected = null;
+                if(results) for(var i = 0; i<results.length; i++)
+                {
+                    var layer = window.tasks[i].layer;
+                    if(layer.visible && layer.visibleAtMapScale && layer.infoTemplate) {
+                        r = results[i];
 
-                                    var featureListItem = this._getFeatureListItem(i, f, r.objectIdFieldName, layer, listTemplate);
-                                    if(featureListItem)
-                                    {
-                                        var li = domConstruct.create("li", {
-                                            // tabindex : 0,
-                                            innerHTML : featureListItem
-                                        }, list);
-                                   }
+                        if(r) {
+                            count += r.features.length;
+                            for(var j = 0; j<r.features.length; j++) {
+                                var f = r.features[j];
+                                if(window._prevSelected && window._prevSelected.split('_')[1] == f.attributes[r.objectIdFieldName]) {
+                                    preselected = f;
                                 }
+
+                                var featureListItem = this._getFeatureListItem(i, f, r.objectIdFieldName, layer, listTemplate);
+                                if(featureListItem)
+                                {
+                                    var li = domConstruct.create("li", {
+                                        // tabindex : 0,
+                                        innerHTML : featureListItem
+                                    }, list);
+                               }
                             }
                         }
                     }
-                    if(!preselected) {
-                        window._prevSelected = null;
-                    } else {
-                        var checkbox = query("#featureButton_"+window._prevSelected)[0];
-                        if(checkbox) {
-                            checkbox.checked = true;
-                            window.featureExpand(checkbox, true);
-                            checkbox.focus();
-                        }
-                    }
-                deferred.resolve(true);
                 }
-            );
+                if(!preselected) {
+                    window._prevSelected = null;
+                } else {
+                    var checkbox = query("#featureButton_"+window._prevSelected)[0];
+                    if(checkbox) {
+                        checkbox.checked = true;
+                        window.featureExpand(checkbox, true);
+                        checkbox.focus();
+                    }
+                }
+
+                dom.byId('featureListCount').innerHTML = Ri18n.totalCount + count;
+
+                deferred.resolve(true);
+            });
             return deferred.promise;
         },
 
@@ -435,28 +435,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             on(this.map, "extent-change", lang.hitch(this, this._reloadList), this);
 
             _getFeatureListItem = function(r, f, objectIdFieldName, layer, listTemplate) {
-
                 try {
-                    var featureId = f.attributes[objectIdFieldName];
-                    // var popupValues = layer.infoTemplate._getPopupValues(f);
                     var attributes = {
-                        _featureId:featureId,
-                        _layerId:r,
-                        _title:layer.infoTemplate.title(f),
-                        // _content:popupValues.hasDescription ? popupValues.description : content,
+                        _featureId: f.attributes[objectIdFieldName],
+                        _layerId: r,
+                        _title: layer.infoTemplate.title(f),
                         _panTo: i18n.widgets.featureList.panTo,
                         _zoomTo: i18n.widgets.featureList.zoomTo,
-                        // hint:Ri18n.skip.featureDetaills,
                     };
-                    // lang.mixin(attributes, f.attributes);
-                    // var nulls = window.tasks[r].layer.fields.map(function(f){return f.name;});
-                    // var nullAttrs ={};
-                    // nulls.forEach(function(n) {
-                    //     if(!attributes[n])
-                    //     {
-                    //         attributes[n]='';
-                    //     }
-                    // });
 
                     var _substitute = function(template,attrs) {
                         var regex = /\${((?:\w)*)}/gm;
@@ -485,68 +471,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         return(template);
                     };
 
-                    // listTemplate=_substitute(listTemplate, f.attributes);
-                    var result =  _substitute(listTemplate, attributes);
-                    // var re = /((>)((?:http:\/\/www\.|https:\/\/www\.|ftp:\/\/www.|www\.)[a-z0-9]+(?:[\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(?:\/.*)?)(?:<))|(FORMAT_(DATE|TIME|NUM)\((-?\d*\.?\d*),\"(.+)\"\))/gm;
-                    // do {
-                    //     var matches = re.exec(result);
-                    //     if(!matches) break;
-                    //     if(matches[6] && (!matches[7] || matches[7] === '')) {
-                    //         result = result.replace(matches[5], '');
-                    //     }
-                    //     if(matches[2]===">") {
-                    //         result = result.replace(matches[1], "><a href='"+matches[3]+"' target='_blank'>"+i18n.widgets.featureList.followLink+"</a><");
-                    //     }
-                    //     else if(matches[6]==="DATE") {
-                    //         var dateNum = matches[7];
-                    //         if(!isNaN(parseFloat(dateNum)) && isFinite(dateNum)) {
-                    //             var date = new Date(Number(dateNum));
-                    //             result = result.replace(matches[5], date.toLocaleDateString(
-                    //                 document.documentElement.lang,
-                    //                 {
-                    //                     year: "numeric", month: "long", day: "numeric"
-                    //                 }
-                    //             ));
-                    //         } else
-                    //             result = result.replace(matches[5],'');
-                    //     }
-                    //     else if(matches[6]==="TIME") {
-                    //         var timeNum = matches[7];
-                    //         if(!isNaN(parseFloat(timeNum)) && isFinite(timeNum)) {
-                    //             var time = new Date(Number(timeNum));
-                    //             result = result.replace(matches[5], time.toLocaleDateString(
-                    //                 document.documentElement.lang,
-                    //                 {
-                    //                     year: "numeric", month: "numeric", day: "numeric",
-                    //                     hour: "2-digit", minute: "2-digit"
-                    //                 }
-                    //             ));
-                    //         } else
-                    //             result = result.replace(matches[5],'');
-                    //     }
-                    //     else if(matches[6]==="NUM") {
-                    //         var num = matches[7];
-                    //         if(!isNaN(parseFloat(num)) && isFinite(num)) {
-                    //             num = Number(num);
-                    //             var d89=matches[8].split('|');
-                    //             var dec = Number(d89[0]);
-                    //             var useSeparator = d89[1] === "true";
-                    //             num = num.toLocaleString(document.documentElement.lang,
-                    //                 {
-                    //                     minimumFractionDigits: dec,
-                    //                     maximumFractionDigits: dec,
-                    //                     useGrouping: useSeparator
-                    //                 }
-                    //             );
-
-                    //             result = result.replace(matches[5], num);
-                    //         } else
-                    //             result = result.replace(matches[5],'');
-                    //     }
-
-                    // } while (true);
-
-                    return result;
+                    return _substitute(listTemplate, attributes);
                 } catch (e) {
                     console.log("Error on feature ("+featureId+")\n\t "+layer.infoTemplate.title(f)+"\n\t",e);
                     return null;

@@ -32,6 +32,12 @@
     margin: -4px -8px;
 }
 
+#featureListCount {
+    float: right;
+    color: white;
+    padding: 1px 6px;
+}
+
 /*.featureItem tr .filterBtn {
     width:18px;
     height:18px;
