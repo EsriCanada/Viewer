@@ -2028,9 +2028,14 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
 #expandLeftPanelButton {
   position: absolute;
   z-index: 1;
+  background-color: white;
+  padding: 0 2px;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
 }
 
 .esriBasemapGalleryLabelContainer {
     height: auto;
     min-height: 40px;
 }
+
