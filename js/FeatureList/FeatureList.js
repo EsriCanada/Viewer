@@ -122,15 +122,15 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }));
         },
 
-        FocusDetails: function() {
-            if(!this._isVisible()) return;
+        // FocusDetails: function() {
+        //     if(!this._isVisible()) return;
 
-            var details = this.domNode.querySelector('.showAttr');
-            if(details) {
-                var page = query(details).closest('.borderLi')[0];
-                page.querySelector('.checkbox').focus();
-            }
-        },
+        //     var details = this.domNode.querySelector('.showAttr');
+        //     if(details) {
+        //         var page = query(details).closest('.borderLi')[0];
+        //         page.querySelector('.checkbox').focus();
+        //     }
+        // },
 
         _isVisible : function() {
             var page = query(this.domNode).closest('.page')[0];
@@ -149,7 +149,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         __reloadList : function(ext) {
             var deferred = new Deferred();
 
-            var list = query("#featuresList")[0];
+            lang.hitch(window._this, window._this.showBadge(false));
+
+            var list = dom.byId('featuresList');
             this._clearMarker();
             window.tasks.filter(function(t) {
                 return t.layer.visible && t.layer.visibleAtMapScale;// && t.layer.infoTemplate;
@@ -293,7 +295,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             window.featureExpand = function(checkBox, restore) {
                 if(_prevSelected && !restore) {
                     dojo.query('.featureItem_'+_prevSelected).forEach(function(e) {
-                        dojo.removeClass(e, 'showAttr');
+                        // dojo.removeClass(e, 'showAttr');
                         dojo.addClass(e, 'hideAttr');
                         var li = query(e).closest('li');
                         li.removeClass('borderLi');
