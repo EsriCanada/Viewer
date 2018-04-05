@@ -89,7 +89,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var featureListHeader = dom.byId('pageHeader_features');
             dojo.create('div', {
                 id: 'featureListCount',
-                class:'bg',
+                class:'fc bg',
                 'aria-live': 'polite',
                 tabindex: 0
             },featureListHeader);
