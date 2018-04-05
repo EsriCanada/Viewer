@@ -3199,50 +3199,9 @@ define([
                 }
             });
 
-            var containerNode = dojo.query(
-                "#search [data-dojo-attach-point=containerNode]"
-            );
-            if (containerNode && containerNode.length > 0) {
-                var containerNodeObserver = new MutationObserver(function(
-                    mutations
-                ) {
-                    mutations.forEach(function(mutation) {
-                        //console.log(mutation.target);
-                        var box = dojo.query("#search .searchInputGroup")[0];
-                        if (dojo.hasClass(mutation.target, "showNoResults")) {
-                            var nrText = "";
-                            var h = query("#search .noResultsText");
-                            if (h && h.length > 0) {
-                                nrText =
-                                    query("#search .noResultsHeader")[0]
-                                        .innerHTML +
-                                    ": " +
-                                    h[0].innerHTML;
-                            } else {
-                                h = query("#search .noValueText");
-                                if (h && h.length > 0) {
-                                    nrText = h[0].innerHTML;
-                                }
-                            }
-                            //console.log(nrText);
-                            //console.log(mutation.target);
-                            dojo.attr(box, "aria-label", nrText);
-                            dojo.attr(box, "tabindex", 0);
-                            box.focus();
-                        } else {
-                            dojo.removeAttr(box, "tabindex");
-                            dojo.removeAttr(box, "aria-label");
-                        }
-                    });
-                });
-
-                var observerCfg = {
-                    attributes: true,
-                    childList: false,
-                    characterData: false
-                };
-
-                containerNodeObserver.observe(containerNode[0], observerCfg);
+            var noResultsMenu = document.querySelector('.searchMenu.noResultsMenu');
+            if(noResultsMenu) {
+                domAttr.set(noResultsMenu, 'role', 'alert');
             }
 
             return search;
