@@ -1,13 +1,13 @@
-"use strict" 
+"use strict"
 
-function isIE11() 
-{ 
+function isIE11()
+{
     return (
-        (navigator.appName == 'Microsoft Internet Explorer') || 
+        (navigator.appName == 'Microsoft Internet Explorer') ||
         (
-            (navigator.appName == 'Netscape') && 
+            (navigator.appName == 'Netscape') &&
             (new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})").exec(navigator.userAgent) != null))
-        ); 
+        );
 }
 
 function isChrome() {
@@ -15,7 +15,7 @@ function isChrome() {
 }
 
 if (!Element.prototype.matches)
-    Element.prototype.matches = Element.prototype.msMatchesSelector || 
+    Element.prototype.matches = Element.prototype.msMatchesSelector ||
                                 Element.prototype.webkitMatchesSelector;
 
 if (!Element.prototype.closest)
@@ -30,7 +30,7 @@ if (!Element.prototype.closest)
                 return null;
             }
             ancestor = ancestor.parentElement;
-        } while (ancestor !== null); 
+        } while (ancestor !== null);
         return null;
     };
 
@@ -62,6 +62,18 @@ if (!('bind' in Function.prototype)) {
             };
         }
     };
+}
+
+if (!String.prototype.format) {
+  String.prototype.format = function() {
+    var args = arguments;
+    return this.replace(/{(\d+)}/g, function(match, number) {
+      return typeof args[number] != 'undefined'
+        ? args[number]
+        : match
+      ;
+    });
+  };
 }
 
 // Add ECMA262-5 string trim if not supported natively
@@ -214,7 +226,7 @@ if (!('copyToClipboard' in String.prototype)) {
         textArea.select();
 
         try {
-            // var successful = 
+            // var successful =
             document.execCommand('copy');
             // var msg = successful ? 'successful' : 'unsuccessful';
             // console.log('Copying text command was ' + msg);

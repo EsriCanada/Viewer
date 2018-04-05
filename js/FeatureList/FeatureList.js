@@ -90,6 +90,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             dojo.create('div', {
                 id: 'featureListCount',
                 class:'bg',
+                'aria-live': 'polite',
                 tabindex: 0
             },featureListHeader);
 
@@ -206,7 +207,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
                 }
 
-                dom.byId('featureListCount').innerHTML = Ri18n.totalCount + count;
+                dom.byId('featureListCount').innerHTML = Ri18n.totalCount.format(count);
 
                 deferred.resolve(true);
             });

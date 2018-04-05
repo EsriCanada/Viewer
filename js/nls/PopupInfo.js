@@ -25,7 +25,8 @@ define({
                     "</ul>"+
                     "Selecting the extent, starts the Follow-the-Map mode.",
                 "addressToLocation": "Address To Location",
-                "followTheMap": "Follow The Map Mode"
+                "followTheMap": "Follow The Map Mode",
+                "resultOf": 'Result {0} of {1}'
             },
             "geoCoding" : {
                 "tooltips" : "ToolTips",
