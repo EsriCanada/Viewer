@@ -3199,6 +3199,33 @@ define([
                 }
             });
 
+            // var searchMenuButton = document.querySelector('#search_menu_button span');
+            var containerNode = search.containerNode;
+            if(containerNode) {
+                var searchMenuButton = search.sourcesBtnNode;//.querySelector('span');
+                if(searchMenuButton) {
+                    domAttr.remove(searchMenuButton, 'aria-hidden');
+
+                    var span = searchMenuButton.querySelector('span');
+                    domAttr.remove(span, 'role');
+                    domAttr.remove(span, 'aria-hidden');
+                    var imgBtn = span.querySelector('img');
+                    if(imgBtn) {
+                        // domStyle.set(imgBtn, 'pointerEvents', 'none');
+                        domAttr.set(imgBtn, 'role', 'button');
+                        domAttr.set(imgBtn, 'aria-haspopup', 'true');
+                        domAttr.set(containerNode, 'aria-expanded', 'false');
+                        on(imgBtn, 'click', lang.hitch(this, function(ev) {
+                            domAttr.set(imgBtn, "aria-expanded", (!domClass.contains(containerNode, "showSources")).toString());
+                        }));
+
+                        // domAttr.set(imgBtn, 'role', 'button');
+                        // domAttr.set(imgBtn, 'aria-haspopup', 'true');
+                        // domAttr.remove(searchMenuButton, 'role');
+                    }
+                }
+            }
+
             var noResultsMenu = document.querySelector('.searchMenu.noResultsMenu');
             if(noResultsMenu) {
                 domAttr.set(noResultsMenu, 'role', 'alert');
