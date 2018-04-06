@@ -3205,29 +3205,26 @@ define([
                 if(searchMenuButton) {
                     domAttr.remove(searchMenuButton, 'aria-hidden');
                     domAttr.set(searchMenuButton, 'role', 'button');
-                    // domAttr.set(searchMenuButton, 'aria-label', searchMenuButton.title);
                     domAttr.set(searchMenuButton, 'aria-haspopup', 'true');
                     domAttr.set(searchMenuButton, 'aria-expanded', 'false');
-                    // on(searchMenuButton, 'click', lang.hitch(this, function(ev) {
-                    //     domAttr.set(searchMenuButton, "aria-expanded", (domClass.contains(containerNode, "showSources")).toString());
-                    // }));
-                    new MutationObserver(lang.hitch(search, function(
-                        mutations
-                    ) {
-                        mutations.forEach(lang.hitch(this, function(mutation) {
-                            if(mutation.target === this.containerNode) {
-                                domAttr.set(searchMenuButton, "aria-expanded", (domClass.contains(this.containerNode, "showSources")).toString());
-                            }
-                        }));
-                    })).observe(containerNode, {
-                        attributes: true,
-                        childList: false,
-                        characterData: false
-                    });
-
                     var span = searchMenuButton.querySelector('span');
                     domStyle.set(span, 'pointer-events', 'none');
                 }
+                domAttr.set(search.inputNode, 'aria-expanded', 'false');
+                new MutationObserver(lang.hitch(search, function(mutations) {
+                        mutations.forEach(lang.hitch(this, function(mutation) {
+                        if(mutation.target === this.containerNode) {
+                            if(searchMenuButton) {
+                                domAttr.set(searchMenuButton, "aria-expanded", (domClass.contains(this.containerNode, "showSources")).toString());
+                            }
+                            domAttr.set(this.inputNode, "aria-expanded", (domClass.contains(this.containerNode, "showSuggestions")).toString());
+                        }
+                    }));
+                })).observe(search.containerNode, {
+                    attributes: true,
+                    childList: false,
+                    characterData: false
+                });
             }
 
             var noResultsMenu = document.querySelector('.searchMenu.noResultsMenu');

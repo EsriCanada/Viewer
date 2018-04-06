@@ -2039,3 +2039,13 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
     min-height: 40px;
 }
 
+.arcgisSearch .searchMenu li {
+    background-color: white;
+    color: black;
+}
+
+.arcgisSearch .searchMenu li.active,
+.arcgisSearch .searchMenu .menuHeader {
+    background-color: black;
+    color:  white;
+}
