@@ -3199,30 +3199,34 @@ define([
                 }
             });
 
-            // var searchMenuButton = document.querySelector('#search_menu_button span');
             var containerNode = search.containerNode;
             if(containerNode) {
-                var searchMenuButton = search.sourcesBtnNode;//.querySelector('span');
+                var searchMenuButton = search.sourcesBtnNode;
                 if(searchMenuButton) {
                     domAttr.remove(searchMenuButton, 'aria-hidden');
+                    domAttr.set(searchMenuButton, 'role', 'button');
+                    // domAttr.set(searchMenuButton, 'aria-label', searchMenuButton.title);
+                    domAttr.set(searchMenuButton, 'aria-haspopup', 'true');
+                    domAttr.set(searchMenuButton, 'aria-expanded', 'false');
+                    // on(searchMenuButton, 'click', lang.hitch(this, function(ev) {
+                    //     domAttr.set(searchMenuButton, "aria-expanded", (domClass.contains(containerNode, "showSources")).toString());
+                    // }));
+                    new MutationObserver(lang.hitch(search, function(
+                        mutations
+                    ) {
+                        mutations.forEach(lang.hitch(this, function(mutation) {
+                            if(mutation.target === this.containerNode) {
+                                domAttr.set(searchMenuButton, "aria-expanded", (domClass.contains(this.containerNode, "showSources")).toString());
+                            }
+                        }));
+                    })).observe(containerNode, {
+                        attributes: true,
+                        childList: false,
+                        characterData: false
+                    });
 
                     var span = searchMenuButton.querySelector('span');
-                    domAttr.remove(span, 'role');
-                    domAttr.remove(span, 'aria-hidden');
-                    var imgBtn = span.querySelector('img');
-                    if(imgBtn) {
-                        // domStyle.set(imgBtn, 'pointerEvents', 'none');
-                        domAttr.set(imgBtn, 'role', 'button');
-                        domAttr.set(imgBtn, 'aria-haspopup', 'true');
-                        domAttr.set(containerNode, 'aria-expanded', 'false');
-                        on(imgBtn, 'click', lang.hitch(this, function(ev) {
-                            domAttr.set(imgBtn, "aria-expanded", (!domClass.contains(containerNode, "showSources")).toString());
-                        }));
-
-                        // domAttr.set(imgBtn, 'role', 'button');
-                        // domAttr.set(imgBtn, 'aria-haspopup', 'true');
-                        // domAttr.remove(searchMenuButton, 'role');
-                    }
+                    domStyle.set(span, 'pointer-events', 'none');
                 }
             }
 
