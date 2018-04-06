@@ -64,8 +64,8 @@ if (!('bind' in Function.prototype)) {
     };
 }
 
-if (!String.prototype.format) {
-  String.prototype.format = function() {
+if (!('format' in String.prototype)) {
+  String.prototype.format = function(owner) {
     var args = arguments;
     return this.replace(/{(\d+)}/g, function(match, number) {
       return typeof args[number] != 'undefined'
