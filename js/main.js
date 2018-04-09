@@ -2957,7 +2957,7 @@ define([
                 domConstruct.create(
                     "div",
                     {
-                        id: "search"
+                        id: "search",
                         // role: "search"
                     },
                     this.map.container
@@ -3138,18 +3138,16 @@ define([
             });
             search.set("sources", defaultSources);
 
-            var searchInput= dojo.byId("search_input");
-            dojo.setAttr(searchInput, "aria-label", "Search Input");
-            // dojo.setAttr(searchInput, "role", "application");
-
             search.startup();
 
             if (search && search.domNode) {
+                // dojo.setAttr(search.searchInput, "aria-label", "Search Input");
+
                 domConstruct.place(search.domNode, "panelGeocoder");
 
-                var esriIconDownArrowNode = dojo.query(
-                    ".searchIcon.esri-icon-down-arrow"
-                )[0];
+                var sourcesBtnNode = search.sourcesBtnNode;
+                domAttr.set(sourcesBtnNode, 'aria-label', sourcesBtnNode.title);
+                var esriIconDownArrowNode = sourcesBtnNode.querySelector('.searchIcon.esri-icon-down-arrow');
                 if (esriIconDownArrowNode) {
                     domClass.remove(
                         esriIconDownArrowNode,
@@ -3160,12 +3158,7 @@ define([
                         '<img src="images\\downArrow.png" alt="Search in" width="20" height="20">';
                 }
 
-                var searchInputGroup = dojo.query(".searchInputGroup")[0];
-                dojo.setAttr(searchInputGroup, 'role', 'search');
-
-                var esriIconZoomNode = dojo.query(
-                    ".searchIcon.esri-icon-search"
-                )[0];
+                var esriIconZoomNode = search.submitNode.querySelector('.searchIcon.esri-icon-search');
                 if (esriIconZoomNode) {
                     domClass.remove(
                         esriIconZoomNode,
@@ -3176,9 +3169,7 @@ define([
                         '<img src="images\\searchZoom.png" alt="Search Button" width="20" height="20">';
                 }
 
-                var esriIconCloseNode = dojo.query(
-                    ".searchIcon.esri-icon-close.searchClose"
-                )[0];
+                var esriIconCloseNode = search.clearNode.querySelector('.searchIcon.esri-icon-close.searchClose');
                 if (esriIconCloseNode) {
                     domClass.remove(
                         esriIconCloseNode,
@@ -3187,6 +3178,23 @@ define([
                     esriIconCloseNode.innerHTML =
                         '<img src="images\\searchClear.png" alt="Clear search" width="19" height="19">';
                 }
+
+                dojo.setAttr(search.expandNode, 'role', 'search');
+
+                search.suggestionsNode.id = search.id+'_suggestions_node';
+
+                //// https://www.w3.org/TR/wai-aria-1.1/#combobox
+                var searchInputGroup = search.expandNode.querySelector('.searchInputGroup');
+                dojo.setAttr(searchInputGroup, 'role', 'combobox');
+                // dojo.setAttr(searchInputGroup, 'aria-owns', search.suggestionsNode.id);
+
+                domAttr.set(searchInputGroup, 'aria-expanded', 'false');
+                domAttr.set(searchInputGroup, 'aria-haspopup', 'true');
+                domAttr.set(searchInputGroup, 'tabindex', '0');
+                domAttr.set(search.inputNode, 'tabindex', '-1');
+                domAttr.set(search.inputNode, 'aria-autocomplete', false);
+                domAttr.remove(search.inputNode, 'aria-haspopup');
+
             }
 
             var emptySearchItems = query(
@@ -3199,6 +3207,8 @@ define([
                 }
             });
 
+            domAttr.set(search.suggestionsNode, 'role', 'dialog');
+
             var containerNode = search.containerNode;
             if(containerNode) {
                 var searchMenuButton = search.sourcesBtnNode;
@@ -3210,14 +3220,19 @@ define([
                     var span = searchMenuButton.querySelector('span');
                     domStyle.set(span, 'pointer-events', 'none');
                 }
-                domAttr.set(search.inputNode, 'aria-expanded', 'false');
                 new MutationObserver(lang.hitch(search, function(mutations) {
                         mutations.forEach(lang.hitch(this, function(mutation) {
                         if(mutation.target === this.containerNode) {
                             if(searchMenuButton) {
                                 domAttr.set(searchMenuButton, "aria-expanded", (domClass.contains(this.containerNode, "showSources")).toString());
                             }
-                            domAttr.set(this.inputNode, "aria-expanded", (domClass.contains(this.containerNode, "showSuggestions")).toString());
+
+                            var suggestionsExpanded = domClass.contains(this.containerNode, "showSuggestions");
+                            domAttr.set(searchInputGroup, "aria-expanded", suggestionsExpanded.toString());
+                            if(suggestionsExpanded)
+                                domAttr.set(this.inputNode, 'aria-controls', this.suggestionsNode.id);
+                            else
+                                domAttr.remove(this.inputNode, 'aria-controls');
                         }
                     }));
                 })).observe(search.containerNode, {
