@@ -3190,8 +3190,8 @@ define([
 
                 domAttr.set(searchInputGroup, 'aria-expanded', 'false');
                 domAttr.set(searchInputGroup, 'aria-haspopup', 'true');
-                domAttr.set(searchInputGroup, 'tabindex', '0');
-                domAttr.set(search.inputNode, 'tabindex', '-1');
+                // domAttr.set(searchInputGroup, 'tabindex', '0');
+                // domAttr.set(search.inputNode, 'tabindex', '-1');
                 domAttr.set(search.inputNode, 'aria-autocomplete', false);
                 domAttr.remove(search.inputNode, 'aria-haspopup');
 
