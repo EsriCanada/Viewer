@@ -3183,6 +3183,8 @@ define([
 
                 search.suggestionsNode.id = search.id+'_suggestions_node';
 
+                domAttr.set(search.sourceNameNode, 'aria-hidden', 'true');
+
                 //// https://www.w3.org/TR/wai-aria-1.1/#combobox
                 var searchInputGroup = search.expandNode.querySelector('.searchInputGroup');
                 dojo.setAttr(searchInputGroup, 'role', 'combobox');
@@ -3224,7 +3226,15 @@ define([
                         mutations.forEach(lang.hitch(this, function(mutation) {
                         if(mutation.target === this.containerNode) {
                             if(searchMenuButton) {
-                                domAttr.set(searchMenuButton, "aria-expanded", (domClass.contains(this.containerNode, "showSources")).toString());
+                                var showSources = domClass.contains(this.containerNode, "showSources");
+                                domAttr.set(searchMenuButton, "aria-expanded", showSources.toString());
+                                if(showSources) {
+                                    var activeItem = search.sourcesNode.querySelector('.active');
+                                    activeItem.id = 'activeSource_'+activeItem.dataset.index;
+                                    domAttr.set(searchMenuButton, "aria-activedescendant", activeItem.id);
+                                }
+                                else
+                                    domAttr.remove(searchMenuButton, "aria-activedescendant");
                             }
 
                             var suggestionsExpanded = domClass.contains(this.containerNode, "showSuggestions");
