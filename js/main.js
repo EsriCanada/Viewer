@@ -845,7 +845,7 @@ define([
                 document.body,
                 "keydown",
                 lang.hitch(this, function(event) {
-                    if (event.altKey) {
+                    if (event.altKey && !event.shiftKey) {
                         query(".goThereHint").forEach(function(h) {
                             domStyle.set(h, "display", "inline-table");
                         });
