@@ -131,7 +131,7 @@
                "label": "Geolocator Label Color:",
                "type": "color",
                "fieldName": "geolocatorLabelColor",
-               "tooltip": "Color for Map Label when Geolocator is used in the Side Info Panel."
+               "tooltip": "Color for Map Label when Geolocator is used in Info Panel."
             },
             {
                "label": "Icons color:",
@@ -216,9 +216,14 @@
                "fieldName": "tool_featureTable"
             },
             {
-               "label": "Side Info Panel",
+               "label": "Info Panel",
                "type": "boolean",
                "fieldName": "tool_infoPanel"
+            },
+            {
+               "label": "Directions",
+               "type": "boolean",
+               "fieldName": "tool_directions"
             },
             {
                "label": "Reverse Geocode",
@@ -591,6 +596,7 @@
       "tool_features": true,
       "tool_featureTable": true,
       "tool_infoPanel": false,
+      "tool_directions": false,
       "tool_GeoCoding": false,
       "tool_mapKeyboardNavigation": false,
       "tool_home": true,

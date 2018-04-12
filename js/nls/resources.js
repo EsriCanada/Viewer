@@ -70,6 +70,7 @@ define({
         	"time": "Time",
         	"print": "Print",
         	"details": "Details",
+            "directions": "Directions",
         	"share": "Share",
             "vsplitter" : "Click and drag or focus and use left/right arrows to resize. \nDouble-click or type Enter for optimal size."
         },

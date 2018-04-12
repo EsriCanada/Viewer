@@ -688,6 +688,14 @@ define([
                                     )
                                 );
                                 break;
+                            case "directions":
+                                toolList.push(
+                                    this._addDirections(
+                                        this.config.tools[i],
+                                        toolbar
+                                    )
+                                );
+                                break;
                             case "filter":
                                 toolList.push(
                                     this._addFilter(
@@ -1327,6 +1335,40 @@ define([
                     .operationalLayers
             });
             this.superNav.startup();
+        },
+
+        _addDirections: function(tool, toolbar) {
+            var deferred = new Deferred();
+
+            if (has("directions")) {
+                var directionsDiv = toolbar.createTool(tool);
+
+                // var panelHeight = this.map.height;
+
+                // this.createOverviewMap(ovMapDiv, panelHeight);
+
+                // on(
+                //     this.map,
+                //     "layer-add",
+                //     lang.hitch(this, function(args) {
+                //         //delete and re-create the overview map if the basemap gallery changes
+                //         if (
+                //             args.layer.hasOwnProperty(
+                //                 "_basemapGalleryLayerType"
+                //             ) &&
+                //             args.layer._basemapGalleryLayerType === "basemap"
+                //         ) {
+                //             registry.byId("overviewMap").destroy();
+                //             this.createOverviewMap(ovMapDiv, panelHeight);
+                //         }
+                //     })
+                // );
+                deferred.resolve(true);
+            } else {
+                deferred.resolve(false);
+            }
+
+            return deferred.promise;
         },
 
         _addFilter: function(tool, toolbar) {

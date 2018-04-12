@@ -41,6 +41,15 @@ define(["dojo/has"], function (has) {
         }
         return basemap;
     });
+    has.add("directions", function (g) {
+        // https://developers.arcgis.com/javascript/3/jssamples/widget_directions_basic.html
+        var directions = getTool("directions", g.config);
+        //overwrite the default with app settings
+        if (g.config.hasOwnProperty("tool_directions")) {
+            directions = g.config.tool_directions;
+        }
+        return directions;
+    });
     has.add("bookmarks", function (g) {
         var bookmarks = getTool("bookmarks", g.config);
         //overwrite the default with app settings
