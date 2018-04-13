@@ -85,6 +85,8 @@ define([
     "esri/symbols/PictureMarkerSymbol",
     "esri/graphic",
     "esri/dijit/InfoWindow",
+    "esri/urlUtils", "esri/dijit/Directions",
+
     "dojo/NodeList-dom",
     "dojo/NodeList-traverse"
 ], function(
@@ -144,7 +146,8 @@ define([
     SimpleMarkerSymbol,
     PictureMarkerSymbol,
     Graphic,
-    InfoWindow
+    InfoWindow,
+    urlUtils, Directions
 ) {
     return declare(null, {
         config: {},
@@ -1343,26 +1346,36 @@ define([
             if (has("directions")) {
                 var directionsDiv = toolbar.createTool(tool);
 
-                // var panelHeight = this.map.height;
+                //all requests to route.arcgis.com will proxy to the proxyUrl defined in this object.
+                // urlUtils.addProxyRule({
+                //   urlPrefix: "route.arcgis.com",
+                //   proxyUrl: "/sproxy/"
+                // });
+                // urlUtils.addProxyRule({
+                //   urlPrefix: "traffic.arcgis.com",
+                //   proxyUrl: "/sproxy/"
+                // });
 
-                // this.createOverviewMap(ovMapDiv, panelHeight);
+                //default will point to ArcGIS world routing service
+                this.directions = new Directions({
+                  map: this.map
+                  // --------------------------------------------------------------------
+                  // New constuctor option and property showSaveButton added at version
+                  // 3.17 to allow saving route. For more information see the API Reference.
+                  // https://developers.arcgis.com/javascript/3/jsapi/directions-amd.html#showsavebutton
+                  //
+                  // Uncomment the line below to add the save button to the Directions widget
+                  // --------------------------------------------------------------------
+                  // , showSaveButton: true
+                },"pageBody_directions");
+                this.directions.startup();
 
-                // on(
-                //     this.map,
-                //     "layer-add",
-                //     lang.hitch(this, function(args) {
-                //         //delete and re-create the overview map if the basemap gallery changes
-                //         if (
-                //             args.layer.hasOwnProperty(
-                //                 "_basemapGalleryLayerType"
-                //             ) &&
-                //             args.layer._basemapGalleryLayerType === "basemap"
-                //         ) {
-                //             registry.byId("overviewMap").destroy();
-                //             this.createOverviewMap(ovMapDiv, panelHeight);
-                //         }
-                //     })
-                // );
+                var directionsPageBody = dom.byId("pageBody_directions");
+                domClass.add(directionsPageBody, "pageBody");
+
+                domAttr.set(this.directions._dndNode, "role", "presentation");
+                // domAttr.set(this.directions._popupStateNode, "role", "presentation");
+
                 deferred.resolve(true);
             } else {
                 deferred.resolve(false);
