@@ -1,23 +1,23 @@
-define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel", 
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
-    "dojo/on", 
+define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin",
+    "dojo/on",
     "esri/tasks/locator", "esri/geometry/webMercatorUtils",
-    "dojo/query", 
-    "dojo/text!application/GeoCoding/templates/GeoCodingHeader.html", 
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", 
+    "dojo/query",
+    "dojo/text!application/GeoCoding/Templates/GeoCodingHeader.html",
+    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct",
     "dojo/parser", "dojo/ready",
     "dojo/i18n!application/nls/PopupInfo",
     "application/GeoCoding/GeoAddressTooltip",
     "dojox/gfx"
-    
+
     ], function (
         Evented, declare, lang, has, esriNS,
-        _WidgetBase, _TemplatedMixin, 
-        on, 
+        _WidgetBase, _TemplatedMixin,
+        on,
         Locator, webMercatorUtils,
         query,
-        GeoCodingHeaderTemplate, 
-        dom, domClass, domAttr, domStyle, domConstruct, 
+        GeoCodingHeaderTemplate,
+        dom, domClass, domAttr, domStyle, domConstruct,
         parser, ready,
         i18n,
         GeoAddressTooltip,
@@ -34,7 +34,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         options: {
             map: null,
-            toolbar: null, 
+            toolbar: null,
             header: 'pageHeader_geoCoding',
             id: 'geoCodingHeadrId',
             popupInfo: null,
@@ -88,7 +88,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.loaded = true;
 
             this.addressTooltipButton = query('#'+this.popupHeaderId+' .popupInfoButton.tooltips')[0];
-            
+
             if(this.addressTooltipButton) {
                 on(this.addressTooltipButton, 'click', lang.hitch(this, this.switchTooltips));
             }
@@ -100,7 +100,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             buttons.forEach(lang.hitch(this, function (btn) {
                 on(btn,'keydown', lang.hitch(this, function(ev) {
                     switch(ev.keyCode) {
-                        case 13: 
+                        case 13:
                             btn.click();
                             ev.stopPropagation();
                             ev.preventDefault();
@@ -140,7 +140,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 this.geoAddressTooltip = new GeoAddressTooltip({
                     map: this.map,
-                    toolbar: this.toolbar, 
+                    toolbar: this.toolbar,
                     addressTooltipButton: this.addressTooltipButton,
                     iconColor: this.iconColor,
                     themeColor: this.themeColor,
@@ -221,7 +221,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         clearSuperNavigator: function() {
-            if(this.superNavigator) 
+            if(this.superNavigator)
                 this.superNavigator.clearZone();
         },
 
