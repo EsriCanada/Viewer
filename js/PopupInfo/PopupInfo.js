@@ -1,3 +1,5 @@
+"use strict";
+
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
     "dojo/on",
@@ -15,7 +17,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "esri/domUtils",
     "esri/dijit/Popup",
     "application/PopupInfo/PopupInfoHeader",
-    "application/SuperNavigator/SuperNavigator",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
 
     ], function (
@@ -33,7 +34,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         string,
         i18n,
         domUtils,
-        Popup, PopupInfoHeader, SuperNavigator
+        Popup, PopupInfoHeader
     ) {
 
     ready(function(){

@@ -91,6 +91,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 id: 'featureListCount',
                 class:'fc bg',
                 'aria-live': 'polite',
+                'aria-atomic': 'true',
                 tabindex: 0
             },featureListHeader);
 
