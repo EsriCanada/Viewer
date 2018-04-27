@@ -24,6 +24,7 @@ define({
                 "</ul>"+
                 "En sélectionnant l'étendue, commence le mode 'Suivre la Carte'.",
             "addressToLocation": "Adresse à l'emplacement",
+            symbol: "Symbole",
             "followTheMap": "Mode Suivez la carte",
             "resultOf": '{0} de {1}'
         }),

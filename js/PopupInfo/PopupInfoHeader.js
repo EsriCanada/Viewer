@@ -166,10 +166,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             on(popup, "SelectionChange", lang.hitch(this, function() {
                 if(popup.selectedIndex>=0) {
-                    this.setIndexOfTotal(this.map.infoWindow.selectedIndex + 1, this.total);
-                    // var index = popup.selectedIndex + 1;
-                    // domAttr.set(this._featureIndex, 'aria-label', index+' of '+this.total);
-                    // this._featureIndex.innerHTML = index;
+                    this.setIndexOfTotal(popup.selectedIndex, this.total);
+                    // domAttr.set(this._indexOfTotal, 'aria-label', this.map.infoWindow.features[popup.selectedIndex].infoTemplate.title(this.map.infoWindow.features[popup.selectedIndex]));
                 }
             }));
 
@@ -186,7 +184,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         setIndexOfTotal : function(index, total) {
-            this._indexOfTotal.innerHTML = i18n.widgets.popupInfo.resultOf.format(index, total);
+            this._indexOfTotal.innerHTML = i18n.widgets.popupInfo.resultOf.format(index + 1, total);
         },
 
         pagerIsVisible : function() {

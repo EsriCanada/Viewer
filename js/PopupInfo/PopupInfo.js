@@ -319,7 +319,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             )
                             : '')+
                     "</h3>"+
-                    "<div id='thumb' class='thumbFeature' title='"+title+"'><img src='"+this.searchMarker.url+"' alt='"+title+"''/></div>"+
+                    "<div id='thumb' class='thumbFeature'><img src='"+this.searchMarker.url+"' alt='"+i18n.widgets.popupInfo.symbol+"''/></div>"+
                     "<div class='hzLine'></div>"+
 
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
