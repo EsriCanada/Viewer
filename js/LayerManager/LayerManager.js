@@ -249,12 +249,12 @@ define(["dojo/Evented", "dojo/_base/declare",
                     );
                     if (legendServiceLabels) {
                         for (
-                            let kk = 0;
-                            kk < legendServiceLabels.length;
-                            kk++
+                            let i = 0;
+                            i < legendServiceLabels.length;
+                            i++
                         ) {
                             const legendServiceLabel =
-                                legendServiceLabels[kk];
+                                legendServiceLabels[i];
 
                             const service = legendServiceLabel.closest(
                                 ".esriLegendService"
@@ -309,8 +309,8 @@ define(["dojo/Evented", "dojo/_base/declare",
 
                     const messages = node.querySelectorAll(".esriLegendMsg");
                     if (messages) {
-                        for (let iiii = 0; iiii < messages.length; iiii++)
-                            domAttr.set(messages[iiii], "tabindex", 0);
+                        for (let i = 0; i < messages.length; i++)
+                            domAttr.set(messages[i], "tabindex", 0);
                     }
                 };
 
