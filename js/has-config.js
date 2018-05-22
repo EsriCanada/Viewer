@@ -1,13 +1,14 @@
+
 /*This module defines feature tests for Basic Viewer features and
 organizes all the conditional checking we have to do for the template in one place.
 https://dojotoolkit.org/documentation/tutorials/1.8/device_optimized_builds/
 http://dante.dojotoolkit.org/hasjs/tests/runTests.html*/
 
 define(["dojo/has"], function (has) {
-
-    var getTool = function (name, config) {
-        var tool = false;
-        for (var i = 0; i < config.tools.length; i++) {
+'use strict';
+    const getTool = function (name, config) {
+        let tool = false;
+        for (let i = 0; i < config.tools.length; i++) {
             if (config.tools[i].name === name) {
                 tool = config.tools[i].enabled;
                 break;
@@ -66,9 +67,9 @@ define(["dojo/has"], function (has) {
         return edit;
     });
     has.add("edit-toolbar", function (g) {
-        var toolbar = false;
+        let toolbar = false;
 
-        for (var i = 0; i < g.config.tools.length; i++) {
+        for (let i = 0; i < g.config.tools.length; i++) {
             if (g.config.tools[i].name === "edit") {
                 toolbar = g.config.tools[i].toolbar;
                 break;
@@ -224,8 +225,8 @@ define(["dojo/has"], function (has) {
     });
 
     has.add("print-legend", function (g) {
-        var printLegend = false;
-        for (var i = 0; i < g.config.tools.length; i++) {
+        let printLegend = false;
+        for (let i = 0; i < g.config.tools.length; i++) {
             if (g.config.tools[i].name === "print") {
                 printLegend = g.config.tools[i].legend;
                 break;
@@ -239,9 +240,9 @@ define(["dojo/has"], function (has) {
     });
 
     has.add("print-layouts", function (g) {
-        var printLayouts = false;
+        let printLayouts = false;
 
-        for (var i = 0; i < g.config.tools.length; i++) {
+        for (let i = 0; i < g.config.tools.length; i++) {
             if (g.config.tools[i].name === "print") {
                 printLayouts = g.config.tools[i].layouts;
                 break;
