@@ -2,7 +2,7 @@
 	<div id="popupMessage" tabindex=0>${emptyMessage}</div>
 	<div id="popupControls" style="display:none" role="navigation">
 		<div id="popupPager">
-			<div aria-live="polite" aria-label='' data-dojo-attach-point='_indexOfTotal'></div>
+			<div aria-live="polite" aria-atomic="true" aria-label='' data-dojo-attach-point='_indexOfTotal'></div>
 			<img src="images/icons_${iconsColor}/downArrow.png" alt="Prev" aria-label="${_i18n.widgets.popupInfo.Prev}" title="${_i18n.widgets.popupInfo.Prev}" tabindex=0 style="transform: rotate(90deg);" class="popupInfoButton prev" role="button"/>
 			<img src="images/icons_${iconsColor}/downArrow.png" alt="Next" aria-label="${_i18n.widgets.popupInfo.Next}" title="${_i18n.widgets.popupInfo.Next}" tabindex=0 style="transform: rotate(-90deg);" class="popupInfoButton next" role="button"/>
 		</div>

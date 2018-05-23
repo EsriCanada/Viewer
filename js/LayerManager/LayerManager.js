@@ -20,7 +20,8 @@ define(["dojo/Evented", "dojo/_base/declare",
         array,
         LabelLayer
     ) {
-    var Widget = declare("esri.dijit.LayerManager", [_WidgetBase, _TemplatedMixin, Evented], {
+    'use strict';
+    const Widget = declare("esri.dijit.LayerManager", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: dijitTemplate,
 
         options: {
@@ -38,19 +39,19 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         constructor: function (options, srcRefNode) {
-            var defaults = lang.mixin({}, this.options, options);
+            const defaults = lang.mixin({}, this.options, options);
             this.domNode = srcRefNode;
 
             dojo.create("link", {
                 href : "js/LayerManager/Templates/Slider.css",
                 type : "text/css",
-                rel : "stylesheet",
+                rel : "stylesheet"
             }, document.head);
 
             dojo.create("link", {
                 href : "js/LayerManager/Templates/LayerManager.css",
                 type : "text/css",
-                rel : "stylesheet",
+                rel : "stylesheet"
             }, document.head);
 
             // properties
@@ -121,7 +122,7 @@ define(["dojo/Evented", "dojo/_base/declare",
         _dropTarget: null,
 
         _allowDrop: function (evt) {
-            var target = evt.target.closest('.toc-layer');
+            const target = evt.target.closest('.toc-layer');
             if(target && target.firstChild && target.firstChild.id !== this._dropTarget.firstChild.id)
             {
                 this._dropTarget = target;
@@ -142,7 +143,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                 evt.preventDefault();
                 return;
             }
-            var bar = dojo.query('.dragabble', this._startTarget)[0];
+            const bar = dojo.query('.dragabble', this._startTarget)[0];
             if(bar) {
                 if(bar.setActive) {
                     bar.setActive();
@@ -157,8 +158,8 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _drop: function (evt) {
-            var indexStart = this._getLayerPosition(this._startTarget.firstChild.id);
-            var indexDrop = this._getLayerPosition(this._dropTarget.firstChild.id);
+            const indexStart = this._getLayerPosition(this._startTarget.firstChild.id);
+            const indexDrop = this._getLayerPosition(this._dropTarget.firstChild.id);
             dojo.place(this._startTarget, this._dropTarget, indexStart<indexDrop?"after":"before");
             this.map.reorderLayer(this._startTarget.firstChild.dataset.layerid, indexDrop);
             this._dropTarget = null;
@@ -167,11 +168,11 @@ define(["dojo/Evented", "dojo/_base/declare",
 
         _flipLayers: function(evt) {
             // console.log('_flipLayers', evt);
-            var startTarget = evt.target.closest('.toc-layer');
-            var indexStart = this._getLayerPosition(startTarget.firstChild.id);
-            var indexDrop = null;
-            var dropTarget = null;
-            var dropTargets = dojo.query('.toc-layer[data-layerid]', dojo.byId('pageBody_layers'));
+            const startTarget = evt.target.closest('.toc-layer');
+            const dropTargets = dojo.query('.toc-layer[data-layerid]', dojo.byId('pageBody_layers'));
+            const indexStart = this._getLayerPosition(startTarget.firstChild.id);
+            let indexDrop = null;
+            let dropTarget = null;
             switch(evt.key) {
                 case "ArrowDown" :
                 case "Down" :
@@ -203,9 +204,9 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _getLayerPosition:function(layerId) {
-            var layers = dojo.query('.toc-title', dojo.byId('pageBody_layers'));
-            var layersIds = layers.map(function(l) {return l.id;});
-            for(var i=0; i<layers.length; i++) {
+            const layers = dojo.query('.toc-title', dojo.byId('pageBody_layers'));
+            const layersIds = layers.map(function(l) {return l.id;});
+            for(let i=0; i<layers.length; i++) {
                 if(layers[i].id === layerId) {
                     return i;
                 }
@@ -214,7 +215,7 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _createList: function () {
-            var layers = this.layers;
+            const layers = this.layers;
             this._nodes = [];
             // kill events
             this._removeEvents();
@@ -229,39 +230,39 @@ define(["dojo/Evented", "dojo/_base/declare",
                     }
                     if(typeof node.querySelectorAll !== 'function')
                         return;
-                    var tables = node.querySelectorAll("table");
+                    const tables = node.querySelectorAll("table");
                     if (tables) {
                         array.forEach(tables, function(table) {
                             domAttr.set(table, "role", "presentation");
                         });
                     }
 
-                    var svgs = node.querySelectorAll("svg");
+                    const svgs = node.querySelectorAll("svg");
                     if (svgs) {
                         array.forEach(svgs, function(svg) {
                             domAttr.set(svg, "title", i18n_app.map.symbol);
                         });
                     }
 
-                    var legendServiceLabels = node.querySelectorAll(
+                    const legendServiceLabels = node.querySelectorAll(
                         ".esriLegendServiceLabel"
                     );
                     if (legendServiceLabels) {
                         for (
-                            var kk = 0;
-                            kk < legendServiceLabels.length;
-                            kk++
+                            let i = 0;
+                            i < legendServiceLabels.length;
+                            i++
                         ) {
-                            var legendServiceLabel =
-                                legendServiceLabels[kk];
+                            const legendServiceLabel =
+                                legendServiceLabels[i];
 
-                            var service = legendServiceLabel.closest(
+                            const service = legendServiceLabel.closest(
                                 ".esriLegendService"
                             );
-                            var tabindex = service && (!service.style || service.style.display !== "none") ? 0 : -1;
+                            const tabindex = service && (!service.style || service.style.display !== "none") ? 0 : -1;
 
                             if (legendServiceLabel.nodeName !== "H2") {
-                                var h2 = domConstruct.create("h2", {
+                                const h2 = domConstruct.create("h2", {
                                     className: legendServiceLabel.className,
                                     innerHTML: legendServiceLabel.innerHTML,
                                     tabindex: tabindex
@@ -280,24 +281,24 @@ define(["dojo/Evented", "dojo/_base/declare",
                         }
                     }
 
-                    var legendLayers = node.querySelectorAll(
+                    const legendLayers = node.querySelectorAll(
                         ".esriLegendLayer"
                     );
                     for (let i = 0; i < legendLayers.length; i++) {
                         domAttr.set(legendLayers[i], "role", "presentation");
-                        var legendServiceList = legendLayers[i].querySelector("tbody");
+                        const legendServiceList = legendLayers[i].querySelector("tbody");
 
                         domAttr.set(legendServiceList, "role", "list");
                         //domAttr.set(legendServiceList, "aria-label", legendServiceLabel.innerHTML);
 
                         for (let j = 0; j < legendServiceList.childNodes.length; j++) {
-                            var item = legendServiceList.childNodes[j];
+                            const item = legendServiceList.childNodes[j];
                             domAttr.set(item, "role", "listitem");
                             domAttr.set(item, "tabindex", "0");
                         }
                     }
 
-                    var legendLayerImages = node.querySelectorAll(
+                    const legendLayerImages = node.querySelectorAll(
                         ".esriLegendLayer image, .esriLegendLayer img"
                     );
                     if (legendLayerImages && legendLayerImages.length > 0) {
@@ -306,10 +307,10 @@ define(["dojo/Evented", "dojo/_base/declare",
                             domAttr.set(legendLayerImages[i], "alt", symbol);
                     }
 
-                    var messages = node.querySelectorAll(".esriLegendMsg");
+                    const messages = node.querySelectorAll(".esriLegendMsg");
                     if (messages) {
-                        for (var iiii = 0; iiii < messages.length; iiii++)
-                            domAttr.set(messages[iiii], "tabindex", 0);
+                        for (let i = 0; i < messages.length; i++)
+                            domAttr.set(messages[i], "tabindex", 0);
                     }
                 };
 
@@ -333,7 +334,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     }, layerDiv);
 
                     if(layers.length > 1) {
-                        var layerHandleDiv = domConstruct.create("div", {
+                        const layerHandleDiv = domConstruct.create("div", {
                             className: 'dragabble',
                             title: i18n.widgets.layerManager.dragLayer,//"Drag to change layers' order, or\nclick and use up/down arrow keys.",
                             tabindex:0,
@@ -345,21 +346,21 @@ define(["dojo/Evented", "dojo/_base/declare",
                     }
 
                     // title container
-                    var titleContainerDiv = domConstruct.create("div", {
+                    const titleContainerDiv = domConstruct.create("div", {
                         className: "toc-title-container",
                         tabindex: -1,
                         // draggable: true,
                         id: 'titleContainerDiv_'+i,
                     }, titleDiv);
 
-                    var titleText = domConstruct.create("div", {
+                    const titleText = domConstruct.create("div", {
                         className: "checkbox",
                         title : layer.title,
                         // role: "presentation",
                         tabindex:-1,
                     }, titleContainerDiv);
 
-                    var titleCheckbox = domConstruct.create("input",
+                    const titleCheckbox = domConstruct.create("input",
                     {
                         id: "layer_ck_"+i,
                         'data-layerid': layer.id,
@@ -376,7 +377,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                         innerHTML: layer.title
                     }, titleText);
 
-                    var accountText = '';
+                    let accountText = '';
                     if (layer.account) {
                         accountText = domConstruct.create("a", {
                             className: this.css.accountText,
@@ -385,7 +386,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     }
 
                     if(this.defaults.hasFeatureTable) {
-                        settingsDiv = domConstruct.create("div", {
+                        const settingsDiv = domConstruct.create("div", {
                             className: "toc-settings",
                             //id: layer.settings
                             'data-layerid': layer.id,
@@ -404,7 +405,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                         }
                         else
                         {
-                            var cbShowTable = new ImageToggleButton({
+                            const cbShowTable = new ImageToggleButton({
                                 imgSelected: 'images/icons_black/TableClose.Red.png',
                                 imgUnselected: 'images/icons_black/Table.png',
                                 value: layer.id,
@@ -423,7 +424,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     }
 
                     // settings
-                    var settingsDiv, settingsIcon;
+                    let settingsDiv, settingsIcon;
                     if (layer.layerObject && dojo.exists("settings", layer) && layer.layerObject.isEditable())
                     {
                         settingsIcon = domConstruct.create("img", {
@@ -436,7 +437,7 @@ define(["dojo/Evented", "dojo/_base/declare",
 
                     if(this.defaults.hasLegend && this._showLegend(layer)) {
 
-                        var expandLegend = new ImageToggleButton({
+                        const expandLegend = new ImageToggleButton({
                                 imgSelected: 'images/icons_black/down.png',
                                 imgUnselected: 'images/icons_black/up.png',
                                 value: i,
@@ -449,18 +450,18 @@ define(["dojo/Evented", "dojo/_base/declare",
                             }, titleDiv)));
                             expandLegend.startup();
 
-                            // var thisLabel = dojo.byId('layerExpandArea_'+i);
+                            // const thisLabel = dojo.byId('layerExpandArea_'+i);
                             // domStyle.set(dojo.byId(thisLabel), 'display', expand?'':'none');
 
                             on(expandLegend, 'change', lang.hitch(this, this._showHidelayerExpandArea));
 
-                        var layerExpandArea = domConstruct.create('div', {
+                        const layerExpandArea = domConstruct.create('div', {
                             id: 'layerExpandArea_'+i,
                             class: 'layerExpandArea',
                             style: 'display: none;'
                         }, titleDiv);
 
-                        var slider = domConstruct.create('input', {
+                        const slider = domConstruct.create('input', {
                             type:'range',
                             class:'layerOpacitySlider',
                             value:100,
@@ -471,8 +472,8 @@ define(["dojo/Evented", "dojo/_base/declare",
 
                         on(slider, isIE11() ?'change':'input', lang.hitch(this, this._layerSliderChanged));
 
-                        var legendTitle = i18n.widgets.layerManager.legendFor+layer.title;
-                        var legend = new Legend({
+                        const legendTitle = i18n.widgets.layerManager.legendFor+layer.title;
+                        const legend = new Legend({
                             map: this.map,
                             layerInfos: [{
                                 defaultSymbol:true,
@@ -496,8 +497,8 @@ define(["dojo/Evented", "dojo/_base/declare",
                                     mutation.addedNodes.length > 0
                                 ) {
                                     for (
-                                        var i = 0; i < mutation.addedNodes.length; i++) {
-                                        var node = mutation.addedNodes[i];
+                                        let i = 0; i < mutation.addedNodes.length; i++) {
+                                        let node = mutation.addedNodes[i];
                                         try{
                                             if (
                                                 !node.hasOwnProperty('display')  ||
@@ -544,9 +545,9 @@ define(["dojo/Evented", "dojo/_base/declare",
             this.baseMap = this.dataItems.baseMap;
             if(this.baseMap) {
 
-                var titleBaseCheckBoxClass = "checkbox";
+                const titleBaseCheckBoxClass = "checkbox";
 
-                var layerBaseDiv = domConstruct.create("div", {
+                const layerBaseDiv = domConstruct.create("div", {
                     id:'layerBaseDiv',
                     className: "toc-layer",
                     role: "listitem",
@@ -555,22 +556,22 @@ define(["dojo/Evented", "dojo/_base/declare",
                 domConstruct.place(layerBaseDiv, this._layersNode, "last");
 
                 // title of layer
-                var titleBaseDiv = domConstruct.create("div", {
+                const titleBaseDiv = domConstruct.create("div", {
                     className: this.css.title,
                     style: 'min-height: 24px;',
                 }, layerBaseDiv);
 
                 // title container
-                var titleBaseContainerDiv = domConstruct.create("div", {
+                const titleBaseContainerDiv = domConstruct.create("div", {
                     className: "toc-title-container",
                     tabindex: -1,
                 }, titleBaseDiv);
 
-                var titleBaseText = domConstruct.create("div", {
+                const titleBaseText = domConstruct.create("div", {
                     className: "checkbox",
                 }, titleBaseContainerDiv);
 
-                var baseMapLabel = domConstruct.create('label',{
+                const baseMapLabel = domConstruct.create('label',{
                     // for: 'layer_ck_baseMap',
                     class: 'labelText',
                     style: 'font-style: italic; font-weight: bold;',
@@ -579,7 +580,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     title : "BaseMap: "+this.baseMap.title,
                 }, titleBaseText);
 
-                var expandBaseMaps = new ImageToggleButton({
+                const expandBaseMaps = new ImageToggleButton({
                     imgSelected: 'images/icons_black/down.png',
                     imgUnselected: 'images/icons_black/up.png',
                     //value: i,
@@ -593,12 +594,12 @@ define(["dojo/Evented", "dojo/_base/declare",
                 }, titleBaseDiv)));
                 expandBaseMaps.startup();
 
-                var hideBasemapArea = domConstruct.create('div', {
+                const hideBasemapArea = domConstruct.create('div', {
                     style:'display:block',
                     class: 'hideBasemapArea',
                 }, titleBaseDiv);
 
-                var basemapSlider = domConstruct.create('input', {
+                const basemapSlider = domConstruct.create('input', {
                     type: 'range',
                     id: 'basemapSlider',
                     class:'layerOpacitySlider',
@@ -613,14 +614,14 @@ define(["dojo/Evented", "dojo/_base/declare",
                 }));
 
                 on(expandBaseMaps, 'change', lang.hitch(this, function(evt) {
-                    var expand = expandBaseMaps.isChecked();
+                    const expand = expandBaseMaps.isChecked();
                     domStyle.set(dojo.byId('showBasemapGallery'), 'display', expand?'inline':'none');
                     domStyle.set(basemapSlider, 'display', expand?'inline':'none');
                 }));
 
                 if(this.defaults.hasBasemapGallery) {
 
-                    var basemapGallery = new ShowBasemapGallery({
+                    const basemapGallery = new ShowBasemapGallery({
                         map: this.map,
                         basemapHost:{
                             sharinghost:'',
@@ -631,11 +632,11 @@ define(["dojo/Evented", "dojo/_base/declare",
                     basemapGallery.startup();
 
                     on(basemapGallery, "changed", lang.hitch(this, function(evt) {
-                        var newBasemap = evt.newBasemap;
+                        const newBasemap = evt.newBasemap;
                         baseMapLabel.innerHTML = this.baseMap.title = basemapGallery.getLocalizedMapName(newBasemap.title);
 
                         // this.baseMap = array.filter(Object.values(this.map._layers), function(l) {return l._basemapGalleryLayerType === "basemap";})[0];
-                        var bm = array.filter(Object.keys(this.map._layers),
+                        const bm = array.filter(Object.keys(this.map._layers),
                             lang.hitch(this.map._layers, function(k) {
                                 return this[k]._basemapGalleryLayerType === "basemap";
                             })
@@ -650,28 +651,28 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _showHidelayerExpandArea : function(evt) {
-            var expand = evt.checked;
-            var thisLabel = dojo.byId('layerExpandArea_'+evt.value);
+            const expand = evt.checked;
+            const thisLabel = dojo.byId('layerExpandArea_'+evt.value);
             domStyle.set(dojo.byId(thisLabel), 'display', expand?'':'none');
         },
 
         _showHidelayerExpandAreaBtn : function(evt) {
-            var i = evt.target.id.split('_')[2];
+            const i = evt.target.id.split('_')[2];
 
-            var expand = evt.target.checked;
+            const expand = evt.target.checked;
             domStyle.set(dojo.byId('legendBtn_'+i), 'display', expand?'table':'none');
 
-            var ck = dojo.query('#legendBtn_'+i+' input')[0].checked;
+            const ck = dojo.query('#legendBtn_'+i+' input')[0].checked;
             domStyle.set(dojo.byId('layerExpandArea_'+i), 'display', (ck && expand)?'':'none');
 
-            var toc_settings = dojo.query('.toc-settings[data-layerid='+evt.target.dataset.layerid+']');
+            const toc_settings = dojo.query('.toc-settings[data-layerid='+evt.target.dataset.layerid+']');
             if(toc_settings && toc_settings.length>0){
                 domStyle.set(toc_settings[0],'display', expand?'initial': 'none');
             }
         },
 
         _showLegend : function(layer) {
-            for(var il=0; il < this.defaults.layers.length; il++) {
+            for(let il=0; il < this.defaults.layers.length; il++) {
                 if(this.defaults.layers[il].id === layer.id &&
                     (!layer.hasOwnProperty("showLegend") || layer.showLegend))
                     return true;
@@ -680,8 +681,8 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _getLayerById: function(layerid) {
-            for(var il=0; il < this.layers.length; il++) {
-                var layer = this.defaults.layers[il];
+            for(let il=0; il < this.layers.length; il++) {
+                const layer = this.defaults.layers[il];
                 if(layer.id === layerid) {
                     return layer;
                 }
@@ -690,22 +691,22 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _layerSliderChanged: function(evt) {
-            var layer = this._getLayerById(evt.target.dataset.layerid);
+            const layer = this._getLayerById(evt.target.dataset.layerid);
             if(layer) {
                 layer.layerObject.setOpacity(evt.target.value / 100.0);
             }
         },
 
         _layerShowTable: function(arg)  {
-            var checked = arg.checked;
+            const checked = arg.checked;
             this.showBadge(checked);
             if(!checked) {
                 this.featureTable.destroy();
                 return;
             }
 
-            var layerId = arg.value;
-            for(var i = 0, m = null; i < this.layers.length; ++i) {
+            const layerId = arg.value;
+            for(let i = 0, m = null; i < this.layers.length; ++i) {
                 if(this.layers[i].id === layerId) {
                     if(this.featureTable) {
                         this.featureTable.destroy();
@@ -731,16 +732,16 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _removeEvents: function () {
-            var i;
+            // let i;
             // checkbox click events
             if (this._checkEvents && this._checkEvents.length) {
-                for (i = 0; i < this._checkEvents.length; i++) {
+                for (let i = 0; i < this._checkEvents.length; i++) {
                     this._checkEvents[i].remove();
                 }
             }
             // layer visibility events
             if (this._layerEvents && this._layerEvents.length) {
-                for (i = 0; i < this._layerEvents.length; i++) {
+                for (let i = 0; i < this._layerEvents.length; i++) {
                     this._layerEvents[i].remove();
                 }
             }
@@ -750,7 +751,7 @@ define(["dojo/Evented", "dojo/_base/declare",
 
         _toggleVisible: function (index, visible) {
             // update checkbox and layer visibility classes
-            domClass.toggle(this._nodes[index].layer, this.css.visible, visible);
+            // domClass.toggle(this._nodes[index].layer, this.css.visible, visible);
             domClass.toggle(this._nodes[index].checkbox, this.css.checkboxCheck, visible);
             domAttr.set(this._nodes[index].checkbox, "checked", visible ? "checked" : "");
 
@@ -759,10 +760,10 @@ define(["dojo/Evented", "dojo/_base/declare",
                 visible: visible
             });
 
-            var tocSettings = dojo.query('.toc-settings',this._nodes[index].titleContainer);
+            let tocSettings = dojo.query('.toc-settings',this._nodes[index].titleContainer);
             if(tocSettings && tocSettings.length > 0) {
-                tocSettings = tocSettings[0];
-                domStyle.set(tocSettings, "display", visible ? "inline-block" : "none");
+                let tocSetting = tocSettings[0];
+                domStyle.set(tocSetting, "display", visible ? "inline-block" : "none");
             }
         },
 
@@ -770,7 +771,7 @@ define(["dojo/Evented", "dojo/_base/declare",
             if(!layer)
                 return;
             // layer visibility changes
-            var visChange = on(layer, "visibility-change", lang.hitch(this, function (evt) {
+            const visChange = on(layer, "visibility-change", lang.hitch(this, function (evt) {
                 // update checkbox and layer visibility classes
                 this._toggleVisible(index, evt.visible);
             }));
@@ -779,11 +780,11 @@ define(["dojo/Evented", "dojo/_base/declare",
 
         _featureCollectionVisible: function (layer, index, visible) {
             // all layers either visible or not
-            var equal;
+            let equal;
             // feature collection layers turned on by default
-            var visibleLayers = layer.visibleLayers;
+            const visibleLayers = layer.visibleLayers;
             // feature collection layers
-            var layers = layer.featureCollection.layers;
+            const layers = layer.featureCollection.layers;
             // if we have layers set
             if (visibleLayers && visibleLayers.length) {
                 // check if all layers have same visibility
@@ -806,10 +807,10 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _createFeatureLayerEvent: function (layer, index, i) {
-            var layers = layer.featureCollection.layers;
+            const layers = layer.featureCollection.layers;
             // layer visibility changes
-            var visChange = on(layers[i].layerObject, "visibility-change", lang.hitch(this, function (evt) {
-                var visible = evt.visible;
+            const visChange = on(layers[i].layerObject, "visibility-change", lang.hitch(this, function (evt) {
+                const visible = evt.visible;
                 this._featureCollectionVisible(layer, index, visible);
             }));
             this._layerEvents.push(visChange);
@@ -817,10 +818,10 @@ define(["dojo/Evented", "dojo/_base/declare",
 
         _featureLayerEvent: function (layer, index) {
             // feature collection layers
-            var layers = layer.featureCollection.layers;
+            const layers = layer.featureCollection.layers;
             if (layers && layers.length) {
                 // make event for each layer
-                for (var i = 0; i < layers.length; i++) {
+                for (let i = 0; i < layers.length; i++) {
                     this._createFeatureLayerEvent(layer, index, i);
                 }
             }
@@ -828,12 +829,12 @@ define(["dojo/Evented", "dojo/_base/declare",
 
         _setLayerEvents: function () {
             // this function sets up all the events for layers
-            var layers = this.get("layers");
-            var layerObject;
+            const layers = this.get("layers");
+            let layerObject;
             if (layers && layers.length) {
                 // get all layers
-                for (var i = 0; i < layers.length; i++) {
-                    var layer = layers[i];
+                for (let i = 0; i < layers.length; i++) {
+                    const layer = layers[i];
                     // if it is a feature collection with layers
                     if (layer.featureCollection && layer.featureCollection.layers && layer.featureCollection.layers.length) {
                         this._featureLayerEvent(layer, i);
@@ -849,12 +850,11 @@ define(["dojo/Evented", "dojo/_base/declare",
         _toggleLayer: function (layerIndex) {
             // all layers
             if (this.layers && this.layers.length) {
-                var newVis;
-                var layer = this.layers[layerIndex];
-                var layerObject = layer.layerObject;
-                var featureCollection = layer.featureCollection;
-                var visibleLayers;
-                var i;
+                const layer = this.layers[layerIndex];
+                const featureCollection = layer.featureCollection;
+                let visibleLayers;
+                let newVis;
+                let layerObject = layer.layerObject;
                 if (featureCollection) {
                     // visible feature layers
                     visibleLayers = layer.visibleLayers;
@@ -865,7 +865,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     // toggle all feature collection layers
                     if (visibleLayers && visibleLayers.length) {
                         // toggle visible sub layers
-                        for (i = 0; i < visibleLayers.length; i++) {
+                        for (let i = 0; i < visibleLayers.length; i++) {
                             layerObject = featureCollection.layers[visibleLayers[i]].layerObject;
                             // toggle to new visibility
                             layerObject.setVisibility(newVis);
@@ -873,7 +873,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     }
                     else {
                         // toggle all sub layers
-                        for (i = 0; i < featureCollection.layers.length; i++) {
+                        for (let i = 0; i < featureCollection.layers.length; i++) {
                             layerObject = featureCollection.layers[i].layerObject;
                             // toggle to new visibility
                             layerObject.setVisibility(newVis);
@@ -889,7 +889,7 @@ define(["dojo/Evented", "dojo/_base/declare",
 
         _checkboxEvent: function (index) {
             // when checkbox is clicked
-            var checkEvent = on(this._nodes[index].checkbox, "click", lang.hitch(this,
+            const checkEvent = on(this._nodes[index].checkbox, "click", lang.hitch(this,
                 function (evt) {
                 // toggle layer visibility
                 this._toggleLayer(index);
@@ -903,7 +903,7 @@ define(["dojo/Evented", "dojo/_base/declare",
             this._createList();
 
             if(this.defaults.hasFeatureTable) {
-                var ft = new ShowFeatureTable({
+                const ft = new ShowFeatureTable({
                     map: this.map,
                     layers: this.layers,
                     OnDisplay: this.defaults.OnDisplay
@@ -911,7 +911,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                 ft.startup();
                 this.featureTable = ft;
                 on(ft, "destroy", lang.hitch(this, function(evt) {
-                    var checkedBtns = dojo.query('.LayerManager .cbShowTable input:checked');
+                    const checkedBtns = dojo.query('.LayerManager .cbShowTable input:checked');
                     array.forEach(checkedBtns, function(checkedBtn) {
                         checkedBtn.click();
                     });
@@ -931,19 +931,19 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _forceClose: function() {
-            var checkedBtns = dojo.query('.LayerManager .cbShowTable input:checked');
+            const checkedBtns = dojo.query('.LayerManager .cbShowTable input:checked');
             array.forEach(checkedBtns, function(checkedBtn) {
                 checkedBtn.click();
             });
         },
 
         _loadTableByLayerId:function(layerId) {
-            var cbToggleBtns = dojo.query('.LayerManager .cbShowTable .cbToggleBtn');
+            const cbToggleBtns = dojo.query('.LayerManager .cbShowTable .cbToggleBtn');
             array.forEach(cbToggleBtns, function(cb) {
                 cb.checked = cb.value === layerId;
             });
 
-            for(var i = 0, m = null; i < this.layers.length; ++i) {
+            for(let i = 0, m = null; i < this.layers.length; ++i) {
                 if(this.layers[i].id === layerId) {
                     if(this.featureTable) {
                         this.featureTable.destroy();
@@ -961,14 +961,14 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         _delay: function(ms) {
-            var deferred = new Deferred();
+            const deferred = new Deferred();
             setTimeout(function() {deferred.resolve(true);}, ms);
             return deferred.promise;
         },
 
         _updateThemeWatch: function () {
-            var oldVal = arguments[1];
-            var newVal = arguments[2];
+            const oldVal = arguments[1];
+            const newVal = arguments[2];
             domClass.remove(this.domNode, oldVal);
             domClass.add(this.domNode, newVal);
         },
@@ -982,7 +982,7 @@ define(["dojo/Evented", "dojo/_base/declare",
         },
 
         showBadge: function(show) {
-            var indicator = dojo.byId('badge_Table'); // !
+            const indicator = dojo.byId('badge_Table'); // !
             if (show) {
                 domStyle.set(indicator,'display','');
                 domAttr.set(indicator, "title", i18n.widgets.layerManager.showFeatureTable);
