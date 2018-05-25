@@ -289,7 +289,9 @@ define([
             ).startup();
 
             new ContactUs({
-
+                emailAddress: this.config.contactUsEmail,
+                subject: this.config.contactUsSubject,
+                body: this.config.contactUsBody
             },
                 dojo.byId("contactUsNode")
             ).startup();

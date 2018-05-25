@@ -103,13 +103,13 @@
             },
             {
                "label": "<strong>Subject:</strong>",
-               "fieldName": "contactUsEmail",
+               "fieldName": "contactUsSubject",
                "type": "string",
-               "tooltip": "Suggested Subject for the email."
+               "tooltip": "Suggested Subject for the email"
             },
             {
                "type": "string",
-               "stringFieldOption": "richtext",
+               "stringFieldOption": "textarea",
                "label": "<strong>Body Text:</strong>",
                "tooltip": "Suggested body text for the email",
                "fieldName": "contactUsBody"
@@ -649,7 +649,7 @@
       "lang3name": "",
       "lang3code": "",
       "contactUsEmail": "",
-      "contactUsSubject": "Enter Subject Here",
+      "contactUsSubject": "Enter subject line here",
       "contactUsBody": "Enter your text here"
    }
 }
