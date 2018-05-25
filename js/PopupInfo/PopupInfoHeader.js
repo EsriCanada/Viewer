@@ -167,7 +167,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             on(popup, "SelectionChange", lang.hitch(this, function() {
                 if(popup.selectedIndex>=0) {
                     this.setIndexOfTotal(popup.selectedIndex, this.total);
-                    // domAttr.set(this._indexOfTotal, 'aria-label', this.map.infoWindow.features[popup.selectedIndex].infoTemplate.title(this.map.infoWindow.features[popup.selectedIndex]));
                 }
             }));
 
@@ -233,7 +232,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             domStyle.set(pagerNode, 'display', (this.total > 1 ? 'inline' : 'none'));
 
             // this._totalFeatures.innerHTML = this.total;
-            this.setIndexOfTotal(this.map.infoWindow.selectedIndex + 1, this.total);
+            // this.setIndexOfTotal(this.map.infoWindow.selectedIndex + 1, this.total);
 
             // if(this.total===0) {
             //     popupInfo.clear();
