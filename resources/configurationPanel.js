@@ -89,6 +89,34 @@
          ]
       },
       {
+         "category": "<strong>Contact Us</strong>",
+         "fields": [
+            {
+               "type": "paragraph",
+               "value": "Add a 'Contact Us' button in the header for user enquirers and feedback."
+            },
+            {
+               "label": "<strong>Email Address:</strong>",
+               "fieldName": "contactUsEmail",
+               "type": "string",
+               "tooltip": "Leave it blank to disable the function."
+            },
+            {
+               "label": "<strong>Subject:</strong>",
+               "fieldName": "contactUsEmail",
+               "type": "string",
+               "tooltip": "Suggested Subject for the email."
+            },
+            {
+               "type": "string",
+               "stringFieldOption": "richtext",
+               "label": "<strong>Body Text:</strong>",
+               "tooltip": "Suggested body text for the email",
+               "fieldName": "contactUsBody"
+            }
+         ]
+      },
+      {
          "category": "<strong>Colors</strong>",
          "fields": [
             {
@@ -619,6 +647,9 @@
       "lang2imageSrc": "images/flag.fr.22.png",
       "lang3shortName": "",
       "lang3name": "",
-      "lang3code": ""
+      "lang3code": "",
+      "contactUsEmail": "",
+      "contactUsSubject": "Enter Subject Here",
+      "contactUsBody": "Enter your text here"
    }
 }
