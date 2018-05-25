@@ -3,7 +3,7 @@ define([
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
     "dojo/text!application/ContactUs/Templates/ContactUs.html",
-    // "dojo/i18n!application/nls/ContactUs",
+    "dojo/i18n!application/nls/resources",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "dojo/dom-construct", "dojo/_base/event", "esri/lang",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
@@ -13,7 +13,7 @@ define([
     _WidgetBase, _TemplatedMixin, on,
     query, registry,
     ContactUsTemplate,
-    // i18n,
+    i18n,
     domClass, domAttr, domStyle,
     domConstruct, event, esriLang
 ) {
@@ -28,13 +28,13 @@ define([
 
         constructor: function(options, srcRefNode) {
             this.defaults = _lang.mixin({}, this.options, options);
-            //this._i18n = i18n;
+            this._i18n = i18n;
             this.domNode = srcRefNode;
 
             if (this.defaults.emailAddress.isNonEmpty()) {
                 this.defaults.subject = escape(this.defaults.subject);
                 this.defaults.body = escape(this.defaults.body);
-                
+
                 const link = document.createElement("link");
                 link.href = "js/ContactUs/Templates/ContactUs.css";
                 link.type = "text/css";
