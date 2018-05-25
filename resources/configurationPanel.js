@@ -93,7 +93,7 @@
          "fields": [
             {
                "type": "paragraph",
-               "value": "Add a 'Contact Us' button in the header for user enquirers and feedback."
+               "value": "<h1>Add a 'Contact Us' button in the header</h1>"
             },
             {
                "label": "<strong>Email Address:</strong>",
