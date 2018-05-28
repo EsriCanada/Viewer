@@ -46,7 +46,7 @@
                "label": "<strong>Alternate Splash-Screen Text:</strong>",
                "placeHolder": "Map loading text",
                "fieldName": "alternateSplashText",
-               "type": "multiline",
+               "type": "textarea",
                "tooltip": "Opens in a separate page if defined"
             },
             {
