@@ -545,7 +545,13 @@ img {
 #pageBody_details {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+}
+
+@supports (justify-content: space-evenly) {
+  #pageBody_details {
     justify-content: space-evenly;
+  }
 }
 
 #panelTop {
