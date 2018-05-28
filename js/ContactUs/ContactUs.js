@@ -2,6 +2,9 @@ define([
     "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
+
+    "dijit/form/DropDownButton", "dijit/form/CheckBox", "dijit/TooltipDialog", "dijit/form/Button",
+
     "dojo/text!application/ContactUs/Templates/ContactUs.html",
     "dojo/i18n!application/nls/resources",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
@@ -12,6 +15,9 @@ define([
     Evented, declare, _lang, has, dom, esriNS,
     _WidgetBase, _TemplatedMixin, on,
     query, registry,
+
+    DropDownButton, CheckBox, TooltipDialog, Button,
+
     ContactUsTemplate,
     i18n,
     domClass, domAttr, domStyle,

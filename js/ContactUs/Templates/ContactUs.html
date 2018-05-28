@@ -1,3 +1,16 @@
 <div class="emailButton">
-	<a href="mailto:${defaults.emailAddress}?subject=${defaults.subject}&body=${defaults.body}">${_i18n.contactUs}</a>
+	<!-- <a href="mailto:${defaults.emailAddress}?subject=${defaults.subject}&body=${defaults.body}">${_i18n.contactUs}</a> -->
+
+	<div data-dojo-type="dijit/form/DropDownButton">
+	  	<span>${_i18n.contactUs}</span>
+	  	<div data-dojo-type="dijit/TooltipDialog">
+	  		<h2>Please select all that applies:</h2>
+	    	<input data-dojo-type="dijit/form/CheckBox" id="broken" name="broken"><label for="broken">Something is broken</label><br/>
+	    	<input data-dojo-type="dijit/form/CheckBox" id="spell" name="spell"><label for="spell">It has a spelling or grammar mistake</label><br/>
+	    	<input data-dojo-type="dijit/form/CheckBox" id="infoWrong" name="infoWrong"><label for="infoWrong">The information is wrong</label><br/>
+	    	<input data-dojo-type="dijit/form/CheckBox" id="infoOutdated" name="infoOutdated"><label for="infoOutdated">The information is outdated</label><br/>
+	    	<input data-dojo-type="dijit/form/CheckBox" id="notFound" name="notFound"><label for="notFound">I can't find what I'm looking for</label><br/><br/>
+	    	<button data-dojo-type="dijit/form/Button" type="submit">Send</button>
+	  	</div>
+	</div>
 </div>
