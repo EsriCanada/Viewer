@@ -203,12 +203,18 @@ define([
                 // document ready
                 ready(
                     lang.hitch(this, function() {
-                        var description = this.config.description;
-                        if (!description && this.config.response) {
-                            description =
-                                this.config.response.itemInfo.item
-                                    .description ||
-                                this.config.response.itemInfo.item.snippet;
+                        let description = this.config.alternateSplashText;
+                        if(description) {
+                            description = '<center><pre class="altSplash">'+description+'</pre></center>';
+                        }
+                        else {
+                            description = this.config.description;
+                            if (!description && this.config.response) {
+                                description =
+                                    this.config.response.itemInfo.item
+                                        .description ||
+                                    this.config.response.itemInfo.item.snippet;
+                            }
                         }
                         if (description) {
                             dojo.byId(

@@ -43,11 +43,11 @@
                "tooltip": "Opens in a separate page if defined"
             },
             {
+               "type": "string",
+               "stringFieldOption": "textarea",
                "label": "<strong>Alternate Splash-Screen Text:</strong>",
-               "placeHolder": "Map loading text",
                "fieldName": "alternateSplashText",
-               "type": "textarea",
-               "tooltip": "Opens in a separate page if defined"
+               "tooltip": "Alternate text for the splash screen when not null."
             },
             {
                "label": "<strong>Logo Image:</strong>",
@@ -661,6 +661,7 @@
       "lang3code": "",
       "contactUsEmail": "",
       "contactUsSubject": "Enter subject line here",
-      "contactUsBody": "Enter your text here"
+      "contactUsBody": "Enter your text here",
+      "alternateSplashText": ""
    }
 }
