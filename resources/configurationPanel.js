@@ -43,6 +43,13 @@
                "tooltip": "Opens in a separate page if defined"
             },
             {
+               "label": "<strong>Alternate Splash-Screen Text:</strong>",
+               "placeHolder": "Map loading text",
+               "fieldName": "alternateSplashText",
+               "type": "multiline",
+               "tooltip": "Opens in a separate page if defined"
+            },
+            {
                "label": "<strong>Logo Image:</strong>",
                "fieldName": "logo",
                "type": "string",
@@ -85,6 +92,10 @@
                "label": "<strong>New Icons</strong>",
                "type": "boolean",
                "fieldName": "new_icons"
+            },
+            {
+               "type": "paragraph",
+               "value": "New Icons refer to map’s zoom-in and zoom-out buttons."
             }
          ]
       },
