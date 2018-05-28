@@ -80,6 +80,7 @@ define([
     "application/TableOfContents/TableOfContents",
 
     "application/LanguageSelect/LanguageSelect",
+    "application/ContactUs/ContactUs",
     "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol",
     "esri/symbols/PictureMarkerSymbol",
@@ -142,6 +143,7 @@ define([
     Filters,
     TableOfContents,
     LanguageSelect,
+    ContactUs,
     ShareDialog,
     SimpleMarkerSymbol,
     PictureMarkerSymbol,
@@ -287,6 +289,14 @@ define([
                     showLabel: this.config.languageLabel
                 },
                 dojo.byId("languageSelectNode")
+            ).startup();
+
+            new ContactUs({
+                emailAddress: this.config.contactUsEmail,
+                subject: this.config.contactUsSubject,
+                body: this.config.contactUsBody
+            },
+                dojo.byId("contactUsNode")
             ).startup();
         },
 
