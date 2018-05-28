@@ -205,7 +205,7 @@ define([
                     lang.hitch(this, function() {
                         let description = this.config.alternateSplashText;
                         if(description) {
-                            description = '<center><pre class="altSplash">'+description+'</pre></center>';
+                            description = '<center><pre class="altSplash" role="alert">'+description+'</pre></center>';
                         }
                         else {
                             description = this.config.description;
