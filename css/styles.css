@@ -1499,7 +1499,7 @@ html, body {
 }
 
 #panelSearch {
-    margin: 2px;
+    margin:2px;
     width:100%;
     position: relative;
     width: calc(100% - 4px);
