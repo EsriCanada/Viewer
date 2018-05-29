@@ -1667,7 +1667,7 @@ define([
                             this.config.i18n.instructions +
                             ".html"
                     ], function(instructionsText) {
-                        var instructionsDiv = toolbar.createTool(tool);
+                        const instructionsDiv = toolbar.createTool(tool);
                         domConstruct.create(
                             "div",
                             {
@@ -1679,8 +1679,10 @@ define([
                         );
                     });
 
-                    var instructionsBtn = dom.byId("toolButton_instructions");
-                    domClass.add(instructionsBtn, "panelToolDefault");
+                    const instructionsBtn = dom.byId("toolButton_instructions");
+                    if(instructionsBtn) {
+                        domClass.add(instructionsBtn, "panelToolDefault");
+                    }
                 } else {
                     deferedDetails.then(
                         lang.hitch(this, function(r) {
