@@ -120,12 +120,16 @@ define([
 
             menu.startup();
 
-            var currentHint = i18n.widgets.languageSelect.aria.currentLanguage+" "+(currentLanguage ? currentLanguage : document.documentElement.lang);
-            var btnLbl = this.defaults.showLabel ? i18n.widgets.languageSelect.language : "";
+            let currentHint = i18n.widgets.languageSelect.aria.currentLanguage+" "+(currentLanguage ? currentLanguage : document.documentElement.lang);
+            let btnLbl = this.defaults.showLabel ? i18n.widgets.languageSelect.language : "";
             if(!currentIcon) {
-                var shortName = document.documentElement.lang.substring(0,2).toUpperCase();
-                var langName = this.defaults.languages.filter(function(l) {return l.shortName == shortName;})[0].name;
-                langName = langName.replace(/<.*?>/g, '');
+                let shortName = document.documentElement.lang.substring(0,2).toUpperCase();
+                let languages = this.defaults.languages.filter(function(l) {return l.shortName == shortName;});
+                let langName = 'English';
+                if(languages && languages.length>0) {
+                    langName = [0].name;
+                    langName = langName.replace(/<.*?>/g, '');
+                }
                 btnLbl += ' <span aria-label="'+langName+'" style="font-weight:bold;">'+shortName+'</span>';
             }
             if(this.defaults.textColor) {

@@ -299,9 +299,9 @@ on, mouse, query, Deferred) {
             if(defaultBtn !== undefined) {
                 this._toolClick(defaultBtn);
             }
-            else if (this.config.activeTool !== "" && has(this.config.activeTool)) {
-                toolbar.activateTool(this.config.activeTool);
-            }
+            // else if (this.config.activeTool !== "" && has(this.config.activeTool)) {
+            //     toolbar.activateTool(this.config.activeTool);
+            // }
             // else {
             //     toolbar._closePage();
             // }
