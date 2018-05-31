@@ -3,14 +3,18 @@
 
 	<div data-dojo-type="dijit/form/DropDownButton">
 	  	<span>${_i18n.contactUs}</span>
-	  	<div data-dojo-type="dijit/TooltipDialog">
+	  	<div data-dojo-type="dijit/TooltipDialog" class="contactUs">
 	  		<h2>Please select all that applies:</h2>
-	    	<input data-dojo-type="dijit/form/CheckBox" id="broken" name="broken"><label for="broken">Something is broken</label><br/>
-	    	<input data-dojo-type="dijit/form/CheckBox" id="spell" name="spell"><label for="spell">It has a spelling or grammar mistake</label><br/>
-	    	<input data-dojo-type="dijit/form/CheckBox" id="infoWrong" name="infoWrong"><label for="infoWrong">The information is wrong</label><br/>
-	    	<input data-dojo-type="dijit/form/CheckBox" id="infoOutdated" name="infoOutdated"><label for="infoOutdated">The information is outdated</label><br/>
-	    	<input data-dojo-type="dijit/form/CheckBox" id="notFound" name="notFound"><label for="notFound">I can't find what I'm looking for</label><br/><br/>
-	    	<button data-dojo-type="dijit/form/Button" type="submit">Send</button>
+	    	
+	    	<input type="checkbox" id="broken"><label tabindex=0 for="broken" data-dojo-attach-event="keydown:labelKeyDown" role="option">Something is broken</label>
+	    	<input type="checkbox" id="spell"><label tabindex=0 for="spell" data-dojo-attach-event="keydown:labelKeyDown" role="option">It has a spelling or grammar mistake</label>
+	    	<input type="checkbox" id="infoWrong"><label tabindex=0 for="infoWrong" data-dojo-attach-event="keydown:labelKeyDown" role="option">The information is wrong</label>
+	    	<input type="checkbox" id="infoOutdated"><label tabindex=0 for="infoOutdated" data-dojo-attach-event="keydown:labelKeyDown" role="option">The information is outdated</label>
+	    	<input type="checkbox" id="notFound"><label tabindex=0 for="notFound" data-dojo-attach-event="keydown:labelKeyDown" role="option">I can't find what I'm looking for</label>
+
+	    	<br/>
+	    	<input type="Button" value="Send">
+	    	<input type="Button" value="Cancel">
 	  	</div>
 	</div>
 </div>

@@ -2072,8 +2072,3 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
 .headerButton .dijitArrowButtonInner {
   padding: 0;
 }
-
-
-/*.headerButton hover, .headerButton focus {
-    text-decoration: underline;
-}*/

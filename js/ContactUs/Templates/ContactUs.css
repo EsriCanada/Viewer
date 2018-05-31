@@ -1,0 +1,22 @@
+.contactUs h2 {
+	font-size:18px;
+}
+
+.contactUs label {
+	margin: 4px 0;
+	padding: 0 4px;
+    display: block;
+    width: 100%;
+}
+
+.contactUs input[type=checkbox] {
+    height: 16px;
+    width: 16px;
+    vertical-align: bottom;
+    cursor: pointer;
+    display:none;
+}
+
+.contactUs input[type="checkbox"]:checked + label {
+	text-decoration: underline;
+}
