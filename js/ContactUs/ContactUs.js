@@ -57,12 +57,6 @@ define([
             }
         },
 
-        labelKeyDown : function(event) {
-            console.log('event', event);
-            if(event.key===" ") {
-                event.target.control.click(event);
-            }
-        }
     });
 
     if (has("extend-esri")) {

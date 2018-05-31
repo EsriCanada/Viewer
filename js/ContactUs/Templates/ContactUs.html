@@ -5,12 +5,18 @@
 	  	<span>${_i18n.contactUs}</span>
 	  	<div data-dojo-type="dijit/TooltipDialog" class="contactUs">
 	  		<h2>Please select all that applies:</h2>
-	    	
-	    	<input type="checkbox" id="broken"><label tabindex=0 for="broken" data-dojo-attach-event="keydown:labelKeyDown" role="option">Something is broken</label>
-	    	<input type="checkbox" id="spell"><label tabindex=0 for="spell" data-dojo-attach-event="keydown:labelKeyDown" role="option">It has a spelling or grammar mistake</label>
-	    	<input type="checkbox" id="infoWrong"><label tabindex=0 for="infoWrong" data-dojo-attach-event="keydown:labelKeyDown" role="option">The information is wrong</label>
-	    	<input type="checkbox" id="infoOutdated"><label tabindex=0 for="infoOutdated" data-dojo-attach-event="keydown:labelKeyDown" role="option">The information is outdated</label>
-	    	<input type="checkbox" id="notFound"><label tabindex=0 for="notFound" data-dojo-attach-event="keydown:labelKeyDown" role="option">I can't find what I'm looking for</label>
+	    	<ul>
+	    		<li>
+		    	<input type="checkbox" id="broken"><label for="broken" role="option">Something is broken</label></li>
+		    	<li>
+		    	<input type="checkbox" id="spell"><label for="spell" role="option">It has a spelling or grammar mistake</label></li>
+		    	<li>
+		    	<input type="checkbox" id="infoWrong"><label for="infoWrong" role="option">The information is wrong</label></li>
+		    	<li>
+		    	<input type="checkbox" id="infoOutdated"><label for="infoOutdated" role="option">The information is outdated</label></li>
+		    	<li>
+		    	<input type="checkbox" id="notFound"><label for="notFound" role="option">I can't find what I'm looking for</label></li>
+		    </ul>
 
 	    	<br/>
 	    	<input type="Button" value="Send">
