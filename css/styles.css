@@ -2055,3 +2055,25 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
     background-color: black;
     color:  white;
 }
+
+.headerButton {
+  padding-top: 6px;
+}
+
+.headerButton a, .headerButton span {
+    color: white;
+    display:inline-block;
+    text-decoration: none;
+}
+.headerButton {
+    margin-top: 1px
+}
+
+.headerButton .dijitArrowButtonInner {
+  padding: 0;
+}
+
+
+/*.headerButton hover, .headerButton focus {
+    text-decoration: underline;
+}*/
