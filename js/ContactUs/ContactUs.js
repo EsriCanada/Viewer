@@ -3,12 +3,12 @@ define([
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
 
-    "dijit/form/DropDownButton", "dijit/TooltipDialog", 
+    "dijit/form/Button", "dijit/form/DropDownButton", "dijit/TooltipDialog", 
 
     "dojo/text!application/ContactUs/Templates/ContactUs.html",
     "dojo/i18n!application/nls/resources",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
-    "dojo/dom-construct", "dojo/_base/event", "esri/lang",
+    "dojo/_base/event", 
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
 
 ], function(
@@ -16,12 +16,12 @@ define([
     _WidgetBase, _TemplatedMixin, on,
     query, registry,
 
-    DropDownButton, TooltipDialog,
+    Button, DropDownButton, TooltipDialog,
 
     ContactUsTemplate,
     i18n,
     domClass, domAttr, domStyle,
-    domConstruct, event, esriLang
+    event
 ) {
     var Widget = declare("esri.dijit.ContactUs", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: ContactUsTemplate,
@@ -52,9 +52,18 @@ define([
         startup: function() {
             if (!this.defaults.emailAddress.isNonEmpty()) {
                 domStyle.set(dojo.byId('contactUsNode'), 'display', 'none');
-            } else {
-
             }
+        },
+
+        // postCreate : function () {
+        //     const sendBtn = registry.byId('sendBtn');
+        //     console.log(sendBtn);
+        //     // on(sendBtn, 'click', this.sendExecute);
+        //     // sendDialog.onExecute(function(event) {console.log('onExecute', event)});
+        // },
+
+        sendExecute : function(event) {
+            console.log('sendExecute: ', dijit.byId('sendDialog'));
         },
 
     });

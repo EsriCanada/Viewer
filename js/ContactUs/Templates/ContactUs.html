@@ -3,7 +3,7 @@
 
 	<div data-dojo-type="dijit/form/DropDownButton">
 	  	<span>${_i18n.contactUs}</span>
-	  	<div data-dojo-type="dijit/TooltipDialog" class="contactUs">
+	  	<div data-dojo-type="dijit/TooltipDialog" class="contactUs" id="sendDialog" role="dialog">
 	  		<h2>Please select all that applies:</h2>
 	    	<ul>
 	    		<li>
@@ -19,8 +19,8 @@
 		    </ul>
 
 	    	<br/>
-	    	<input type="Button" value="Send">
-	    	<input type="Button" value="Cancel">
+	    	<button data-dojo-type="dijit/form/Button" type="submit" id="sendBtn" dojo-attach-event="click: alert('click);">Save</button>
+	    	<button data-dojo-type="dijit/form/Button" type="submit">Cancel</button>
 	  	</div>
 	</div>
 </div>
