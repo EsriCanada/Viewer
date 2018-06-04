@@ -902,7 +902,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;1</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;1</strong> " +
                             this.config.i18n.skip.tools,
                         style: "left:20%; top:10px;"
                     },
@@ -914,7 +914,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;2</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;2</strong> " +
                             this.config.i18n.skip.search,
                         style: "left:20%; top:50%;"
                     },
@@ -926,7 +926,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;3</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;3</strong> " +
                             this.config.i18n.skip.content,
                         style: "left:20%; top:45%;"
                     },
@@ -938,7 +938,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;4</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;4</strong> " +
                             this.config.i18n.skip.vsplitter,
                         style: "left:5px; top:55%; z-index:1000;"
                     },
@@ -951,7 +951,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;5</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;5</strong> " +
                             this.config.i18n.skip.map,
                         style: "left:10%; top:30%"
                     },
@@ -963,7 +963,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;6</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;6</strong> " +
                             this.config.i18n.skip.help,
                         style: "left:20%; top:-75%;"
                     },
