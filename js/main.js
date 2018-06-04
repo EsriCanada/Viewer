@@ -3257,6 +3257,7 @@ define([
             var noResultsMenu = document.querySelector('.searchMenu.noResultsMenu');
             if(noResultsMenu) {
                 domAttr.set(noResultsMenu, 'role', 'alert');
+                domAttr.set(noResultsMenu, 'aria-atomic', 'true');
             }
 
             return search;
