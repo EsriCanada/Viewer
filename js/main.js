@@ -205,7 +205,7 @@ define([
                     lang.hitch(this, function() {
                         let description = this.config.alternateSplashText;
                         if(description) {
-                            description = '<center><pre class="altSplash" role="alert">'+description+'</pre></center>';
+                            description = '<pre class="altSplash" role="alert" aria-atomic="true">'+description+'</pre>';
                         }
                         else {
                             description = this.config.description;
@@ -2069,36 +2069,36 @@ define([
                             //domAttr.set(legendServiceList, "aria-label", legendServiceLabel.innerHTML);
 
                             for (
-                                var k = 0;
+                                let k = 0;
                                 k < legendServiceList.childNodes.length;
                                 k++
                             ) {
-                                var item = legendServiceList.childNodes[k];
+                                let item = legendServiceList.childNodes[k];
                                 domAttr.set(item, "role", "listitem");
                                 domAttr.set(item, "tabindex", "0");
                             }
                         }
 
-                        var legendLayerImages = node.querySelectorAll(
+                        const legendLayerImages = node.querySelectorAll(
                             ".esriLegendLayer image, .esriLegendLayer img"
                         );
                         if (legendLayerImages) {
                             for (
-                                var iii = 0;
-                                iii < legendLayerImages.length;
-                                iii++
+                                let i = 0;
+                                i < legendLayerImages.length;
+                                i++
                             )
                                 domAttr.set(
-                                    legendLayerImages[iii],
+                                    legendLayerImages[i],
                                     "alt",
                                     i18n.map.symbol
                                 );
                         }
 
-                        var messages = node.querySelectorAll(".esriLegendMsg");
+                        const messages = node.querySelectorAll(".esriLegendMsg");
                         if (messages) {
-                            for (var iiii = 0; iiii < messages.length; iiii++)
-                                domAttr.set(messages[iiii], "tabindex", 0);
+                            for (let i = 0; i < messages.length; i++)
+                                domAttr.set(messages[i], "tabindex", 0);
                         }
                     };
 

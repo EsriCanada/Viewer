@@ -43,23 +43,23 @@
 	<!-- Map -->
 	<!-- The ArcGIS API for JavaScript provides bidirectional support.  When viewing the application in an right to left (rtl) language like Hebrew and Arabic the map needs to remain in left-to-right (ltr) mode. Specify this by setting the dir attribute on the div to ltr. -->
 	<header id="panelTitle" class="fc bg borderBottom" style="display: flex; flex-direction: row;">
-		<h1 id="panelText" class="fc bg" style="flex:1" tabindex=0>&nbsp;</h1>
+		<h1 id="panelText" class="fc bg" style="flex:1">&nbsp;</h1>
 		<div class="skip">
-			<a accesskey="1" href="#" tabindex="0" aria-hidden=true id="skip-tools">1. Skip to Tools</a>
-			<a accesskey="2" href="#" tabindex="0" aria-hidden=true id="skip-search">2. Skip to Search</a>
-			<a accesskey="3" href="#" tabindex="0" aria-hidden=true id="skip-content">3. Skip to Content</a>
-			<a accesskey="4" href="#" tabindex="0" aria-hidden=true id="skip-Vsplitter">4. Skip to Vertical Splitter</a>
-			<a accesskey="5" href="#" tabindex="0" aria-hidden=true id="skip-map">5. Skip to Map</a>
-			<a accesskey="6" href="#" tabindex="0" aria-hidden=true id="skip-instructions">6. Skip to Help</a>
-			<a accesskey="7" href="#" tabindex="0" aria-hidden=true style="display:none;" id="skip-Hsplitter">7. Skip to Horizontal Splitter</a>
-			<a accesskey="8" href="#" tabindex="0" aria-hidden=true style="display:none;" id="skip-tableHeader">8. Skip to Table Header</a>
-			<a accesskey="9" href="#" tabindex="0" aria-hidden=true style="display:none;" id="skip-table">9. Skip to Table</a>
+			<a accesskey="1" href="#" aria-hidden=true id="skip-tools">1. Skip to Tools</a>
+			<a accesskey="2" href="#" aria-hidden=true id="skip-search">2. Skip to Search</a>
+			<a accesskey="3" href="#" aria-hidden=true id="skip-content">3. Skip to Content</a>
+			<a accesskey="4" href="#" aria-hidden=true id="skip-Vsplitter">4. Skip to Vertical Splitter</a>
+			<a accesskey="5" href="#" aria-hidden=true id="skip-map">5. Skip to Map</a>
+			<a accesskey="6" href="#" aria-hidden=true id="skip-instructions">6. Skip to Help</a>
+			<a accesskey="7" href="#" aria-hidden=true style="display:none;" id="skip-Hsplitter">7. Skip to Horizontal Splitter</a>
+			<a accesskey="8" href="#" aria-hidden=true style="display:none;" id="skip-tableHeader">8. Skip to Table Header</a>
+			<a accesskey="9" href="#" aria-hidden=true style="display:none;" id="skip-table">9. Skip to Table</a>
 		</div>
 		<div id="contactUsNode"></div>
 		<footer id="languageSelectNode">
 		</footer>
 	</header>
-	<div id="leftPanel" class="leftWrapper leftPanelMin">
+	<div id="leftPanel" class="leftWrapper leftPanelMin" role="main">
 		<div id="panelTop" class="bg" style="color:transparent !important;">
 			<div id="panelTools" class="fc bg borderBottom" role="navigation" aria-label="Toolbar">
 				<!--Tools are created programatically-->
@@ -71,13 +71,13 @@
 				<div id="panelGeocoder"></div>
 			</div>
 		</div>
-		<div id="panelPages" tabindex="0" class="leftContent" aria-label="Main" role="region">
+		<div id="panelPages" tabindex="0" class="leftContent">
 		</div>
-		<footer id="panelBottom" class="fc bg" role="region" aria-label="Footer">
+		<footer id="panelBottom" class="fc bg">
 			<span id="panelBottomSpan">Press <strong>ALT + 0 to 9</strong> keys for fast navigation</span>
 		</footer>
 	</div>
-	<div id="mapPlace" style="height: 100%; width: 100%;" role="region" aria-label="Map">
+	<div id="mapPlace" style="height: 100%; width: 100%;">
 		<div id="mapDiv" dir="ltr" tabindex=0 role="application">
 			<div id="mapFocus" class="mapFocus"></div>
 		</div>
