@@ -43,6 +43,13 @@
                "tooltip": "Opens in a separate page if defined"
             },
             {
+               "type": "string",
+               "stringFieldOption": "textarea",
+               "label": "<strong>Alternate Splash-Screen Text:</strong>",
+               "fieldName": "alternateSplashText",
+               "tooltip": "Alternate text for the splash screen when not null."
+            },
+            {
                "label": "<strong>Logo Image:</strong>",
                "fieldName": "logo",
                "type": "string",
@@ -85,6 +92,38 @@
                "label": "<strong>New Icons</strong>",
                "type": "boolean",
                "fieldName": "new_icons"
+            },
+            {
+               "type": "paragraph",
+               "value": "New Icons refer to map’s zoom-in and zoom-out buttons."
+            }
+         ]
+      },
+      {
+         "category": "<strong>Contact Us</strong>",
+         "fields": [
+            {
+               "type": "paragraph",
+               "value": "<h1>Add a 'Contact Us' button in the header</h1>"
+            },
+            {
+               "label": "<strong>Email Address:</strong>",
+               "fieldName": "contactUsEmail",
+               "type": "string",
+               "tooltip": "Leave it blank to disable the function."
+            },
+            {
+               "label": "<strong>Subject:</strong>",
+               "fieldName": "contactUsSubject",
+               "type": "string",
+               "tooltip": "Suggested Subject for the email"
+            },
+            {
+               "type": "string",
+               "stringFieldOption": "textarea",
+               "label": "<strong>Body Text:</strong>",
+               "tooltip": "Suggested body text for the email",
+               "fieldName": "contactUsBody"
             }
          ]
       },
@@ -619,6 +658,10 @@
       "lang2imageSrc": "images/flag.fr.22.png",
       "lang3shortName": "",
       "lang3name": "",
-      "lang3code": ""
+      "lang3code": "",
+      "contactUsEmail": "",
+      "contactUsSubject": "Enter subject line here",
+      "contactUsBody": "Enter your text here",
+      "alternateSplashText": ""
    }
 }

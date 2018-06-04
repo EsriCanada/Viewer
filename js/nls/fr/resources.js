@@ -94,6 +94,7 @@ define(
         leftCollapse: "Réduire le panneau gauche",
         leftExpand: "Révéler le panneau gauche",
         moreHelp : "Plus d'aide",
-        totalCount : "Le compte total : {0}"
+        totalCount : "Le compte total : {0}",
+        contactUs: "Contactez nous"
     })
 );

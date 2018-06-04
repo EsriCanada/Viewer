@@ -80,6 +80,7 @@ define([
     "application/TableOfContents/TableOfContents",
 
     "application/LanguageSelect/LanguageSelect",
+    "application/ContactUs/ContactUs",
     "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol",
     "esri/symbols/PictureMarkerSymbol",
@@ -140,6 +141,7 @@ define([
     Filters,
     TableOfContents,
     LanguageSelect,
+    ContactUs,
     ShareDialog,
     SimpleMarkerSymbol,
     PictureMarkerSymbol,
@@ -201,12 +203,18 @@ define([
                 // document ready
                 ready(
                     lang.hitch(this, function() {
-                        var description = this.config.description;
-                        if (!description && this.config.response) {
-                            description =
-                                this.config.response.itemInfo.item
-                                    .description ||
-                                this.config.response.itemInfo.item.snippet;
+                        let description = this.config.alternateSplashText;
+                        if(description) {
+                            description = '<center><pre class="altSplash" role="alert">'+description+'</pre></center>';
+                        }
+                        else {
+                            description = this.config.description;
+                            if (!description && this.config.response) {
+                                description =
+                                    this.config.response.itemInfo.item
+                                        .description ||
+                                    this.config.response.itemInfo.item.snippet;
+                            }
                         }
                         if (description) {
                             dojo.byId(
@@ -284,6 +292,14 @@ define([
                     showLabel: this.config.languageLabel
                 },
                 dojo.byId("languageSelectNode")
+            ).startup();
+
+            new ContactUs({
+                emailAddress: this.config.contactUsEmail,
+                subject: this.config.contactUsSubject,
+                body: this.config.contactUsBody
+            },
+                dojo.byId("contactUsNode")
             ).startup();
         },
 
