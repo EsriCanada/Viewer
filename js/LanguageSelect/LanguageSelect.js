@@ -127,7 +127,7 @@ define([
                 let languages = this.defaults.languages.filter(function(l) {return l.shortName == shortName;});
                 let langName = 'English';
                 if(languages && languages.length>0) {
-                    langName = [0].name;
+                    langName = languages[0].name;
                     langName = langName.replace(/<.*?>/g, '');
                 }
                 btnLbl += ' <span aria-label="'+langName+'" style="font-weight:bold;">'+shortName+'</span>';
