@@ -30,6 +30,7 @@ define([
             emailAddress: 'example@email.com',
             subject: 'Email Subject',
             body: 'Email Body Text',
+            textColor: 'red',
         },
 
         constructor: function(options, srcRefNode) {
@@ -60,22 +61,35 @@ define([
             // const sendBtn = this.sendBtn;
             // console.log("sendBtn", sendBtn);
             // sendBtn._onClick = this.sendExecute;
-            var button = new dijit.form.Button({label:"Send", type:"submit"},"btn").placeAt(this.sendBtn);
+            var button = new dijit.form.Button({label:i18n.widgets.contactUs.sendLabel, type:"submit"},"btn").placeAt(this.sendBtn);
             dojo.connect(button, "onClick", lang.hitch(this, this.sendExecute));
         },
 
         sendExecute : function(event) {
             const optionsList = query('input[type="checkbox"]:checked + label',this.optionsList).map(function(t) {return " "+t.textContent;});
             let subject = new Array(optionsList).join(",").trim();
-            if(!subject || subject ==="") 
+            if(!subject || subject === "") {
                 subject = this.defaults.subject;
-            console.log('sendExecute: ', event, subject);
+            }
 
-            const link = 'mailto:'+this.defaults.emailAddress+'?subject='+escape(subject)+'&body='+escape(this.defaults.body);
+            const link = 'mailto:'+this.defaults.emailAddress+'?subject='+escape(this.parseHtmlEnteties(subject))+'&body='+escape(this.parseHtmlEnteties(this.defaults.body));
             window.location.href = link;
-            // const page = window.open(link);
-            // page.close();
         },
+
+        parseHtmlEnteties : function(str) {
+            // http://semplicewebsites.com/removing-accents-javascript
+            const latin = {
+                "á":"a", "à":"a", "â":"a",
+                "Á":"A", "À":"A", "Â":"A",
+                "ç":"c", 
+                "Ç":"C",
+                "é": "e", "è":"e", "ê":"e", "ë":"e", "ȅ":"e",
+                "È":"E", "É":"E", "Ê":"E", "Ë":"E"
+            };
+            return str.replace(/[^\w ]/g, function(char) {
+                return latin[char] || char;
+            });
+        }
 
     });
 

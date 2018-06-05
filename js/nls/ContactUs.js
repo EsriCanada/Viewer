@@ -2,7 +2,14 @@ define({
     root: ({
         widgets: ({
             contactUs: ({
-                contactUs: "Contact Us"
+                contactUs: "Contact Us",
+                selectAllApplies: "Please select all that applies:",
+                broken: "Something is broken",
+                spell: "It has a spelling or grammar mistake",
+                infoWrong: "The information is wrong",
+                infoOutdated: "The information is outdated",
+                notFound: "I can't find what I'm looking for",
+                sendLabel: "Send Email",
             })
         })
     }),

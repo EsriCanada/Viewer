@@ -304,6 +304,7 @@ define([
             // ).startup();
 
             new ContactUs({
+                textColor: this.color,
                 emailAddress: this.config.contactUsEmail,
                 subject: this.config.contactUsSubject,
                 body: this.config.contactUsBody

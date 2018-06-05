@@ -1,28 +1,28 @@
 <div class="headerButton">
 	<div data-dojo-type="dijit/form/DropDownButton">
-	  	<span>${_i18n.widgets.contactUs.contactUs}</span>
+	  	<span style="color:${defaults.textColor};">${_i18n.widgets.contactUs.contactUs}</span>
 	  	<div data-dojo-type="dijit/TooltipDialog" class="contactUs" id="${id}_sendDialog" data-dojo-attach-point="dialog">
-	  		<h2>Please select all that applies:</h2>
+	  		<h2>${_i18n.widgets.contactUs.selectAllApplies}</h2>
 	    	<ul data-dojo-attach-point="optionsList">
 	    		<li>
 			    	<input type="checkbox" id="${id}_broken" data-dojo-attach-point="broken">
-			    	<label for="${id}_broken">Something is broken</label>
+			    	<label for="${id}_broken">${_i18n.widgets.contactUs.broken}</label>
 			    </li>
 		    	<li>
 			    	<input type="checkbox" id="${id}_spell" data-dojo-attach-point="spell">
-			    	<label for="${id}_spell">It has a spelling or grammar mistake</label>
+			    	<label for="${id}_spell">${_i18n.widgets.contactUs.spell}</label>
 			    </li>
 		    	<li>
 			    	<input type="checkbox" id="${id}_infoWrong" data-dojo-attach-point="infoWrong">
-			    	<label for="${id}_infoWrong">The information is wrong</label>
+			    	<label for="${id}_infoWrong">${_i18n.widgets.contactUs.infoWrong}</label>
 			    </li>
 		    	<li>
 			    	<input type="checkbox" id="${id}_infoOutdated" data-dojo-attach-point="infoOutdated">
-			    	<label for="${id}_infoOutdated">The information is outdated</label>
+			    	<label for="${id}_infoOutdated">${_i18n.widgets.contactUs.infoOutdated}</label>
 			    </li>
 		    	<li>
 			    	<input type="checkbox" id="${id}_notFound" data-dojo-attach-point="notFound">
-			    	<label for="${id}_notFound">I can't find what I'm looking for</label>
+			    	<label for="${id}_notFound">${_i18n.widgets.contactUs.notFound}</label>
 			    </li>
 		    </ul>
 
