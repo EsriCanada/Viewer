@@ -127,7 +127,7 @@ define([
                 let languages = this.defaults.languages.filter(function(l) {return l.shortName == shortName;});
                 let langName = 'English';
                 if(languages && languages.length>0) {
-                    langName = [0].name;
+                    langName = languages[0].name;
                     langName = langName.replace(/<.*?>/g, '');
                 }
                 btnLbl += ' <span aria-label="'+langName+'" style="font-weight:bold;">'+shortName+'</span>';
@@ -151,16 +151,6 @@ define([
                 dojo.attr(this.button.iconNode,'aria-label', currentHint);
                 dojo.attr(this.button.iconNode,'title', esriLang.stripTags(currentHint));
             }
-
-            // if(this.defaults.showLabel) {
-            //     domConstruct.create("label", {
-            //         for: 'languageButton',
-            //         innerHTML: i18n.widgets.languageSelect.language,
-            //         title: i18n.widgets.languageSelect.changeHere,
-            //         'aria-label': i18n.widgets.languageSelect.changeHere,
-            //         tabindex: -1
-            //     }, this.domNode);
-            // }
 
             this.domNode.appendChild(this.button.domNode);
 

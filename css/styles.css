@@ -2057,7 +2057,8 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
 }
 
 .headerButton {
-  padding-top: 6px;
+  padding-top: 0px;
+  font-size: 12px;
 }
 
 .headerButton a, .headerButton span {
@@ -2065,10 +2066,30 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
     display:inline-block;
     text-decoration: none;
 }
+
+.claro .dijitButtonText {
+    padding: 2px 4px;
+}
+
 .headerButton {
     margin-top: 1px
 }
 
 .headerButton .dijitArrowButtonInner {
   padding: 0;
+}
+
+@media only screen and (min-width: 720px) {
+  .headerButton {
+    padding-top: 6px;
+    font-size: 16px;
+  }
+
+  .headerButton {
+      margin-top: 1px
+  }
+
+  .claro .dijitButtonText {
+    padding: 4px 8px;
+  }
 }
