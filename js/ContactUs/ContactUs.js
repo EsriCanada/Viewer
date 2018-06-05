@@ -12,7 +12,7 @@ define([
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
 
 ], function(
-    Evented, declare, _lang, has, dom, esriNS,
+    Evented, declare, lang, has, dom, esriNS,
     _WidgetBase, _TemplatedMixin, on,
     query, registry,
 
@@ -29,11 +29,11 @@ define([
         options: {
             emailAddress: 'example@email.com',
             subject: 'Email Subject',
-            body: 'Email Body Text'
+            body: 'Email Body Text',
         },
 
         constructor: function(options, srcRefNode) {
-            this.defaults = _lang.mixin({}, this.options, options);
+            this.defaults = lang.mixin({}, this.options, options);
             this._i18n = i18n;
             this.domNode = srcRefNode;
 
@@ -46,6 +46,7 @@ define([
                 link.type = "text/css";
                 link.rel = "stylesheet";
                 query('head')[0].appendChild(link);
+
             }
         },
 
@@ -55,21 +56,27 @@ define([
             }
         },
 
-        // postCreate : function () {
-        //     const sendBtn = registry.byId('sendBtn');
-        //     console.log(sendBtn);
-        //     // on(sendBtn, 'click', this.sendExecute);
-        //     // sendDialog.onExecute(function(event) {console.log('onExecute', event)});
-        // },
+        postCreate : function () {
+            // const sendBtn = this.sendBtn;
+            // console.log("sendBtn", sendBtn);
+            // sendBtn._onClick = this.sendExecute;
+            var button = new dijit.form.Button({label:"Send"},"btn").placeAt(this.sendBtn);
+            dojo.connect(button, "onClick", lang.hitch(this, this.sendExecute));
+        },
 
         sendExecute : function(event) {
-            console.log('sendExecute: ', dijit.byId('sendDialog'));
+            const optionsList = query('input[type="checkbox"]:checked + label',this.optionsList).map(function(t) {return " "+t.textContent;});
+            const subject = new Array(optionsList).join(",").trim();
+            console.log('sendExecute: ', event, subject);
+
+            const page = window.open('mailto:'+this.defaults.emailAddress+'?subject='+escape(subject)+'&body='+(this.defaults.body));
+            page.close();
         },
 
     });
 
     if (has("extend-esri")) {
-        _lang.setObject("dijit.ContactUs", Widget, esriNS);
+        lang.setObject("dijit.ContactUs", Widget, esriNS);
     }
     return Widget;
 });

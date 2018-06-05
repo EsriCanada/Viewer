@@ -3,24 +3,36 @@
 
 	<div data-dojo-type="dijit/form/DropDownButton">
 	  	<span>${_i18n.contactUs}</span>
-	  	<div data-dojo-type="dijit/TooltipDialog" class="contactUs" id="sendDialog" role="dialog">
+	  	<div data-dojo-type="dijit/TooltipDialog" class="contactUs" id="${id}_sendDialog" data-dojo-attach-point="dialog">
 	  		<h2>Please select all that applies:</h2>
-	    	<ul>
+	    	<ul data-dojo-attach-point="optionsList">
 	    		<li>
-		    	<input type="checkbox" id="broken"><label for="broken" role="option">Something is broken</label></li>
+			    	<input type="checkbox" id="${id}_broken" data-dojo-attach-point="broken">
+			    	<label for="${id}_broken">Something is broken</label>
+			    </li>
 		    	<li>
-		    	<input type="checkbox" id="spell"><label for="spell" role="option">It has a spelling or grammar mistake</label></li>
+			    	<input type="checkbox" id="${id}_spell" data-dojo-attach-point="spell">
+			    	<label for="${id}_spell">It has a spelling or grammar mistake</label>
+			    </li>
 		    	<li>
-		    	<input type="checkbox" id="infoWrong"><label for="infoWrong" role="option">The information is wrong</label></li>
+			    	<input type="checkbox" id="${id}_infoWrong" data-dojo-attach-point="infoWrong">
+			    	<label for="${id}_infoWrong">The information is wrong</label>
+			    </li>
 		    	<li>
-		    	<input type="checkbox" id="infoOutdated"><label for="infoOutdated" role="option">The information is outdated</label></li>
+			    	<input type="checkbox" id="${id}_infoOutdated" data-dojo-attach-point="infoOutdated">
+			    	<label for="${id}_infoOutdated">The information is outdated</label>
+			    </li>
 		    	<li>
-		    	<input type="checkbox" id="notFound"><label for="notFound" role="option">I can't find what I'm looking for</label></li>
+			    	<input type="checkbox" id="${id}_notFound" data-dojo-attach-point="notFound">
+			    	<label for="${id}_notFound">I can't find what I'm looking for</label>
+			    </li>
 		    </ul>
 
 	    	<br/>
-	    	<button data-dojo-type="dijit/form/Button" type="submit" id="sendBtn" dojo-attach-event="click: alert('click);">Save</button>
-	    	<button data-dojo-type="dijit/form/Button" type="submit">Cancel</button>
+	    	<!-- <input type="button" data-dojo-attach-event="click:sendExecute" value="Send">
+	    	<input type="button" data-dojo-attach-event="click:cancelExecute" value="Cancel"> -->
+	    	<!-- <button data-dojo-type="dijit/form/Button" type="submit" data-dojo-attach-point="sendBtn">Send</button> -->
+	    	<div data-dojo-attach-point="sendBtn"></div>
 	  	</div>
 	</div>
 </div>
