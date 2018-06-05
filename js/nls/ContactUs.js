@@ -10,6 +10,7 @@ define({
                 infoOutdated: "The information is outdated",
                 notFound: "I can't find what I'm looking for",
                 sendLabel: "Send Email",
+                cancel: "Cancel"
             })
         })
     }),

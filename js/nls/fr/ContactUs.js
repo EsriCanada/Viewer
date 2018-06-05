@@ -8,7 +8,8 @@ define({
             infoWrong: "L'information est fausse",
             infoOutdated: "L'information est périmée",
             notFound: "Je ne trouve pas ce que je cherche",
-            sendLabel: "Envoyer un e-mail"
+            sendLabel: "Envoyer un e-mail",
+            cancel: "Annuler"
           })
     })
 });
