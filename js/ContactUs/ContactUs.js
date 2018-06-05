@@ -38,8 +38,8 @@ define([
             this.domNode = srcRefNode;
 
             if (this.defaults.emailAddress.isNonEmpty()) {
-                this.defaults.subject = escape(this.defaults.subject);
-                this.defaults.body = escape(this.defaults.body);
+                this.defaults.subject = this.defaults.subject;
+                this.defaults.body = this.defaults.body;
 
                 const link = document.createElement("link");
                 link.href = "js/ContactUs/Templates/ContactUs.css";
@@ -60,17 +60,21 @@ define([
             // const sendBtn = this.sendBtn;
             // console.log("sendBtn", sendBtn);
             // sendBtn._onClick = this.sendExecute;
-            var button = new dijit.form.Button({label:"Send"},"btn").placeAt(this.sendBtn);
+            var button = new dijit.form.Button({label:"Send", type:"submit"},"btn").placeAt(this.sendBtn);
             dojo.connect(button, "onClick", lang.hitch(this, this.sendExecute));
         },
 
         sendExecute : function(event) {
             const optionsList = query('input[type="checkbox"]:checked + label',this.optionsList).map(function(t) {return " "+t.textContent;});
-            const subject = new Array(optionsList).join(",").trim();
+            let subject = new Array(optionsList).join(",").trim();
+            if(!subject || subject ==="") 
+                subject = this.defaults.subject;
             console.log('sendExecute: ', event, subject);
 
-            const page = window.open('mailto:'+this.defaults.emailAddress+'?subject='+escape(subject)+'&body='+(this.defaults.body));
-            page.close();
+            const link = 'mailto:'+this.defaults.emailAddress+'?subject='+escape(subject)+'&body='+escape(this.defaults.body);
+            window.location.href = link;
+            // const page = window.open(link);
+            // page.close();
         },
 
     });
