@@ -6,7 +6,7 @@ define([
     "dijit/form/Button", "dijit/form/DropDownButton", "dijit/TooltipDialog", 
 
     "dojo/text!application/ContactUs/Templates/ContactUs.html",
-    "dojo/i18n!application/nls/resources",
+    "dojo/i18n!application/nls/ContactUs",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "dojo/_base/event", 
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
@@ -34,8 +34,8 @@ define([
 
         constructor: function(options, srcRefNode) {
             this.defaults = lang.mixin({}, this.options, options);
-            this._i18n = i18n;
             this.domNode = srcRefNode;
+            this._i18n = i18n;
 
             if (this.defaults.emailAddress.isNonEmpty()) {
                 this.defaults.subject = this.defaults.subject;
