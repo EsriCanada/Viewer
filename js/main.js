@@ -1356,7 +1356,7 @@ define([
             if (has("directions")) {
                 var directionsDiv = toolbar.createTool(tool);
 
-                //all requests to route.arcgis.com will proxy to the proxyUrl defined in this object.
+                // // all requests to route.arcgis.com will proxy to the proxyUrl defined in this object.
                 // urlUtils.addProxyRule({
                 //   urlPrefix: "route.arcgis.com",
                 //   proxyUrl: "/sproxy/"
