@@ -62,6 +62,12 @@
                "tooltip": "Type here the text from the Logo Image"
             },
             {
+               "label": "<strong>Contact Us page URL:</strong>",
+               "fieldName": "contactUsURL",
+               "type": "string",
+               "tooltip": "Contact Us URL link to external application"
+            },
+            {
                "label": "<strong>Animated Marker</strong>",
                "type": "boolean",
                "fieldName": "animated_marker"
@@ -96,34 +102,6 @@
             {
                "type": "paragraph",
                "value": "New Icons refer to map’s zoom-in and zoom-out buttons."
-            }
-         ]
-      },
-      {
-         "category": "<strong>Contact Us</strong>",
-         "fields": [
-            {
-               "type": "paragraph",
-               "value": "<h1>Add a 'Contact Us' button in the header</h1>"
-            },
-            {
-               "label": "<strong>Email Address:</strong>",
-               "fieldName": "contactUsEmail",
-               "type": "string",
-               "tooltip": "Leave it blank to disable the function."
-            },
-            {
-               "label": "<strong>Subject:</strong>",
-               "fieldName": "contactUsSubject",
-               "type": "string",
-               "tooltip": "Suggested Subject for the email"
-            },
-            {
-               "type": "string",
-               "stringFieldOption": "textarea",
-               "label": "<strong>Body Text:</strong>",
-               "tooltip": "Suggested body text for the email",
-               "fieldName": "contactUsBody"
             }
          ]
       },
@@ -606,6 +584,7 @@
       "alt_keys": true,
       "logo": "images/logo.png",
       "logoAltText": "",
+      "contactUsURL": "",
       "color": "#ffffff",
       "hoverColor": "#00A9E6",
       "focusColor": "#FF7700",
