@@ -3,7 +3,7 @@ define([
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
 
-    "dijit/form/DropDownButton", "dijit/form/CheckBox", "dijit/TooltipDialog", "dijit/form/Button",
+    "dijit/form/Button",
 
     "dojo/text!application/ContactUs/Templates/ContactUs.html",
     "dojo/i18n!application/nls/resources",
@@ -16,7 +16,7 @@ define([
     _WidgetBase, _TemplatedMixin, on,
     query, registry,
 
-    DropDownButton, CheckBox, TooltipDialog, Button,
+    Button,
 
     ContactUsTemplate,
     i18n,
@@ -50,11 +50,11 @@ define([
         },
 
         startup: function() {
-            if (!this.defaults.emailAddress.isNonEmpty()) {
-                domStyle.set(dojo.byId('contactUsNode'), 'display', 'none');
-            } else {
+            // if (!this.defaults.emailAddress.isNonEmpty()) {
+            //     domStyle.set(dojo.byId('contactUsNode'), 'display', 'none');
+            // } else {
 
-            }
+            // }
         }
     });
 
