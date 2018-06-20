@@ -2062,3 +2062,36 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
     font-family: 'Raleway', sans-serif;
     text-align:center;
 }
+
+.headerButton {
+  padding-top: 6px;
+}
+
+.headerButton a, .headerButton span {
+    color: white;
+    display:inline-block;
+    text-decoration: none;
+}
+ 
+.headerButton {
+    margin-top: 1px
+}
+ 
+.headerButton .dijitArrowButtonInner {
+    padding: 0;
+}
+
+
+
+
+@media only screen and (min-width: 720px) {
+  .headerButton {
+    padding-top: 6px;
+    font-size: 16px;
+  }
+
+  .claro .dijitButtonText {
+    padding: 4px 8px;
+  }
+}
+
