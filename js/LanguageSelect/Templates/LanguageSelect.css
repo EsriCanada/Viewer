@@ -10,7 +10,7 @@
 
 @media only screen and (min-width: 720px) {
     #languageSelectNode {
-        padding: 12px;
+        /*padding: 12px;*/
     }
 
     #languageSelectNode label {

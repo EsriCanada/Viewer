@@ -2070,7 +2070,8 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
 }
  
 .headerButton {
-    margin-top: 1px
+    margin-top: 1px;
+    padding-top: 6px;
 }
  
 .headerButton .dijitArrowButtonInner {
