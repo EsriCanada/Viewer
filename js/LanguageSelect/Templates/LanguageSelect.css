@@ -1,7 +1,3 @@
-#languageSelectNode {
-    padding: 5px;
-}
-
 #languageSelectNode label {
     font-size: 14px;
     margin-right: 2px;
@@ -9,39 +5,23 @@
 }
 
 @media only screen and (min-width: 720px) {
-    #languageSelectNode {
-        /*padding: 12px;*/
-    }
-
     #languageSelectNode label {
         font-size: 18px;
         margin-right: 4px;
     }
 }
 
-#languageSelectNode .dijitDropDownButton {
-    margin:0;
-    padding:0;
-    width:100%
-    height:100%;
-}
-
 #languageSelectNode .dijitArrowButtonInner {
   display:none;
 }
 
-#languageSelectNode .dijitButtonText{
-    vertical-align: middle;
-    padding: 2px;
-}
-
 .langMenuItemIcon {
-   height:20px; 
+   height:15px; 
    vertical-align: middle;
 }
 
 .langIcon {
-    height:20px; 
+    height:16px; 
     vertical-align: middle;
 }
 
@@ -49,8 +29,9 @@
     .langIcon {
         height:22px; 
     }
-}
+    
+    .langMenuItemIcon {
+       height:20px; 
+    }
 
-#languageSelectNode .dijitButtonNode {
-    border:none;
 }
