@@ -80,6 +80,7 @@ define([
     "application/TableOfContents/TableOfContents",
 
     "application/LanguageSelect/LanguageSelect",
+    "application/LanguageSelect/LanguageSelectDDB",
     "application/ContactUs/ContactUs",
     "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol",
@@ -141,6 +142,7 @@ define([
     Filters,
     TableOfContents,
     LanguageSelect,
+    LanguageSelectDDB,
     ContactUs,
     ShareDialog,
     SimpleMarkerSymbol,
@@ -281,7 +283,7 @@ define([
                 }
             ];
 
-            new LanguageSelect(
+            new LanguageSelectDDB(
                 {
                     locale: document.documentElement.lang,
                     //location: window.location,
@@ -291,8 +293,21 @@ define([
 
                     showLabel: this.config.languageLabel
                 },
-                dojo.byId("languageSelectNode")
+                dojo.byId("languageSelectDDBNode")
             ).startup();
+
+            // new LanguageSelect(
+            //     {
+            //         locale: document.documentElement.lang,
+            //         //location: window.location,
+            //         languages: languages,
+
+            //         textColor: this.color,
+
+            //         showLabel: this.config.languageLabel
+            //     },
+            //     dojo.byId("languageSelectNode")
+            // ).startup();
 
             new ContactUs({
                 emailAddress: this.config.contactUsEmail,
