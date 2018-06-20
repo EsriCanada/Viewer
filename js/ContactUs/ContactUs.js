@@ -27,9 +27,7 @@ define([
         templateString: ContactUsTemplate,
 
         options: {
-            emailAddress: 'example@email.com',
-            subject: 'Email Subject',
-            body: 'Email Body Text'
+            contactUsURL: ""
         },
 
         constructor: function(options, srcRefNode) {
@@ -37,25 +35,27 @@ define([
             this._i18n = i18n;
             this.domNode = srcRefNode;
 
-            if (this.defaults.emailAddress.isNonEmpty()) {
-                this.defaults.subject = escape(this.defaults.subject);
-                this.defaults.body = escape(this.defaults.body);
+            // if (this.defaults.emailAddress.isNonEmpty()) {
+            //     this.defaults.subject = escape(this.defaults.subject);
+            //     this.defaults.body = escape(this.defaults.body);
 
-                const link = document.createElement("link");
-                link.href = "js/ContactUs/Templates/ContactUs.css";
-                link.type = "text/css";
-                link.rel = "stylesheet";
-                query('head')[0].appendChild(link);
-            }
+            //     const link = document.createElement("link");
+            //     link.href = "js/ContactUs/Templates/ContactUs.css";
+            //     link.type = "text/css";
+            //     link.rel = "stylesheet";
+            //     query('head')[0].appendChild(link);
+            // }
         },
 
         startup: function() {
-            // if (!this.defaults.emailAddress.isNonEmpty()) {
-            //     domStyle.set(dojo.byId('contactUsNode'), 'display', 'none');
-            // } else {
+            if (!this.defaults.contactUsURL.isNonEmpty()) {
+                domStyle.set(dojo.byId('contactUsNode'), 'display', 'none');
+            }
+        },
 
-            // }
-        }
+        // openContactUsPage: function() {
+        //     window.open(this.defaults.contactUsURL, '_blank').focus();
+        // }
     });
 
     if (has("extend-esri")) {

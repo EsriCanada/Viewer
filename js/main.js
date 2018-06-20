@@ -310,9 +310,8 @@ define([
             // ).startup();
 
             new ContactUs({
-                emailAddress: this.config.contactUsEmail,
-                subject: this.config.contactUsSubject,
-                body: this.config.contactUsBody
+                textColor: this.color,
+                contactUsURL: this.config.contactUsURL
             },
                 dojo.byId("contactUsNode")
             ).startup();
