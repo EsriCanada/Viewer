@@ -283,7 +283,7 @@ define([
                 }
             ];
 
-            new LanguageSelectDDB(
+            new LanguageSelect(
                 {
                     locale: document.documentElement.lang,
                     //location: window.location,
@@ -293,7 +293,7 @@ define([
 
                     showLabel: this.config.languageLabel
                 },
-                dojo.byId("languageSelectDDBNode")
+                dojo.byId("languageSelectNode")
             ).startup();
 
             // new LanguageSelect(

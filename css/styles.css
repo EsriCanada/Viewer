@@ -2063,10 +2063,6 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
     text-align:center;
 }
 
-.headerButton {
-  padding-top: 6px;
-}
-
 .headerButton a, .headerButton span {
     color: white;
     display:inline-block;
