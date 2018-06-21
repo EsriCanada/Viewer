@@ -36,11 +36,11 @@ define([
             this.deferred = this.defaults.deferred;
             const directionsProxy = this.defaults.directionsProxy;
 
-            // var link = document.createElement("link");
-            // link.href = "js/DirectionWidget/Templates/DirectionWidget.css";
-            // link.type = "text/css";
-            // link.rel = "stylesheet";
-            // query('head')[0].appendChild(link);
+            var link = document.createElement("link");
+            link.href = "js/DirectionsWidget/Templates/DirectionWidget.css";
+            link.type = "text/css";
+            link.rel = "stylesheet";
+            query('head')[0].appendChild(link);
 
             const directionOptions = {
                 map: this.map,

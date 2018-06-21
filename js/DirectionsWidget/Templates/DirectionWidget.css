@@ -1,0 +1,15 @@
+.simpleDirections .esriStopsAddDestination {
+    display: none !important;
+}
+
+.simpleDirections .esriStopsOptionsButton {
+    display: none !important;
+}
+
+.simpleDirections .esriStopsGetDirectionsContainer {
+    display: none !important;
+}
+
+.simpleDirections .esriStopsButtons {
+    display: none !important;
+}
