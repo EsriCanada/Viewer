@@ -78,6 +78,7 @@ define([
     "application/FeatureList/FeatureList",
     "application/Filters/Filters",
     "application/TableOfContents/TableOfContents",
+    "application/DirectionsWidget/DirectionsWidget",
 
     "application/LanguageSelect/LanguageSelect",
     "application/ContactUs/ContactUs",
@@ -86,7 +87,7 @@ define([
     "esri/symbols/PictureMarkerSymbol",
     "esri/graphic",
     "esri/dijit/InfoWindow",
-    "esri/urlUtils", "esri/dijit/Directions",
+    // "esri/urlUtils", "esri/dijit/Directions",
 
     "dojo/NodeList-dom",
     "dojo/NodeList-traverse"
@@ -142,6 +143,7 @@ define([
     FeatureList,
     Filters,
     TableOfContents,
+    DirectionsWidget,
     LanguageSelect,
     ContactUs,
     ShareDialog,
@@ -149,7 +151,8 @@ define([
     PictureMarkerSymbol,
     Graphic,
     InfoWindow,
-    urlUtils, Directions
+    urlUtils, 
+    // Directions
 ) {
     return declare(null, {
         config: {},
@@ -1355,38 +1358,11 @@ define([
 
             if (has("directions")) {
                 var directionsDiv = toolbar.createTool(tool);
-
-                // // all requests to route.arcgis.com will proxy to the proxyUrl defined in this object.
-                // urlUtils.addProxyRule({
-                //   urlPrefix: "route.arcgis.com",
-                //   proxyUrl: "/sproxy/"
-                // });
-                // urlUtils.addProxyRule({
-                //   urlPrefix: "traffic.arcgis.com",
-                //   proxyUrl: "/sproxy/"
-                // });
-
-                //default will point to ArcGIS world routing service
-                this.directions = new Directions({
-                  map: this.map
-                  // --------------------------------------------------------------------
-                  // New constuctor option and property showSaveButton added at version
-                  // 3.17 to allow saving route. For more information see the API Reference.
-                  // https://developers.arcgis.com/javascript/3/jsapi/directions-amd.html#showsavebutton
-                  //
-                  // Uncomment the line below to add the save button to the Directions widget
-                  // --------------------------------------------------------------------
-                  // , showSaveButton: true
-                },"pageBody_directions");
+                this.directions = new DirectionsWidget({
+                    map: this.map,
+                    deferred: deferred,
+                }, dom.byId("pageBody_directions"));
                 this.directions.startup();
-
-                var directionsPageBody = dom.byId("pageBody_directions");
-                domClass.add(directionsPageBody, "pageBody");
-
-                domAttr.set(this.directions._dndNode, "role", "presentation");
-                // domAttr.set(this.directions._popupStateNode, "role", "presentation");
-
-                deferred.resolve(true);
             } else {
                 deferred.resolve(false);
             }
