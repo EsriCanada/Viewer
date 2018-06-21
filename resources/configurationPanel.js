@@ -243,6 +243,13 @@
                "fieldName": "tool_directions"
             },
             {
+               "label": "Directions Proxy:",
+               "placeHolder": "",
+               "fieldName": "directionsProxy",
+               "type": "string",
+               "tooltip": "Leave it blank for none"
+            },
+            {
                "label": "Reverse Geocode",
                "type": "boolean",
                "fieldName": "tool_GeoCoding"
@@ -615,6 +622,7 @@
       "tool_featureTable": true,
       "tool_infoPanel": false,
       "tool_directions": false,
+      "directionsProxy": "",
       "tool_GeoCoding": false,
       "tool_mapKeyboardNavigation": false,
       "tool_home": true,

@@ -25,6 +25,7 @@ define([
             id: "directionsWidget",
             deferred: null,
             proxyUrl: null,
+            directionsProxy: null,
         },
 
         constructor: function (options, srcRefNode) {
@@ -33,6 +34,7 @@ define([
             this.domNode = srcRefNode;
             this.map = this.defaults.map;
             this.deferred = this.defaults.deferred;
+            const directionsProxy = this.defaults.directionsProxy;
 
             // var link = document.createElement("link");
             // link.href = "js/DirectionWidget/Templates/DirectionWidget.css";
@@ -40,22 +42,10 @@ define([
             // link.rel = "stylesheet";
             // query('head')[0].appendChild(link);
 
-            // // all requests to route.arcgis.com will proxy to the proxyUrl defined in this object.
-            urlUtils.addProxyRule({
-                urlPrefix: "route.arcgis.com",
-                proxyUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World/solve"
-            });
-            urlUtils.addProxyRule({
-                urlPrefix: "traffic.arcgis.com",
-                proxyUrl: "https://utility.arcgis.com/usrsvcs/appservices/e89iFkIt1bqHbraa/rest/services/World/Traffic/MapServer"
-            });
-
-            // //default will point to ArcGIS world routing service - else portalUrl
-
             const directionOptions = {
                 map: this.map,
                 id: this.defaults.id,
-                routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
+                // routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
                 // showSaveButton: true,
 
                 // canModifyStops: false,
@@ -71,6 +61,9 @@ define([
 
                 directionsLengthUnits: units.KILOMETERS
             };
+            if(directionsProxy && directionsProxy.isNonEmpty()) {
+                directionOptions.routeTaskUrl = directionsProxy;
+            }
             this.directions = new Directions(directionOptions,this.domNode); //"pageBody_directions");
         },
 

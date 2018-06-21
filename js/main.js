@@ -1381,6 +1381,7 @@ define([
                 this.directions = new DirectionsWidget({
                     map: this.map,
                     deferred: deferred,
+                    directionsProxy: this.config.directionsProxy
                 }, dom.byId("pageBody_directions"));
                 this.directions.startup();
             } else {
