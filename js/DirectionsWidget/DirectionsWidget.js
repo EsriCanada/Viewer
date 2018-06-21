@@ -52,7 +52,7 @@ define([
 
             // //default will point to ArcGIS world routing service - else portalUrl
 
-            const options = {
+            const directionOptions = {
                 map: this.map,
                 id: this.defaults.id,
                 routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
@@ -71,7 +71,7 @@ define([
 
                 directionsLengthUnits: units.KILOMETERS
             };
-            this.directions = new Directions(options,this.domNode); //"pageBody_directions");
+            this.directions = new Directions(directionOptions,this.domNode); //"pageBody_directions");
         },
 
         startup: function () {
