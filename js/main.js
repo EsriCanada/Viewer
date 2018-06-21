@@ -3365,15 +3365,10 @@ define([
                         typeof rule.selectorText != "undefined" &&
                         rule.selectorText !== null
                     ) {
-                        var rgbaColor = function(color) {
+                        const rgbaColor = function(color) {
                             return (
-                                "rgb(" +
-                                color.r +
-                                ", " +
-                                color.g +
-                                ", " +
-                                color.b +
-                                ")"
+                                //string.Format("rgb({0}, {1}, {2})", color.r, color.g, color.b)
+                                "rgb(" + color.r + ", " + color.g + ", " + color.b + ")"
                             );
                         };
                         //hover

@@ -194,3 +194,7 @@ div[data-tip]:hover::before, div[data-tip]:focus::before{
     color: white;
     border-color: black;
 } */
+
+.simpleDirections .dojoDndItemOver, .simpleDirections .dojoDndItemAnchor {
+    background-color: green;
+}

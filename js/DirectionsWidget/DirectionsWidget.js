@@ -41,14 +41,14 @@ define([
             // query('head')[0].appendChild(link);
 
             // // all requests to route.arcgis.com will proxy to the proxyUrl defined in this object.
-            // urlUtils.addProxyRule({
-            //   urlPrefix: "route.arcgis.com",
-            //   proxyUrl: "/sproxy/"
-            // });
-            // urlUtils.addProxyRule({
-            //   urlPrefix: "traffic.arcgis.com",
-            //   proxyUrl: "/sproxy/"
-            // });
+            urlUtils.addProxyRule({
+                urlPrefix: "route.arcgis.com",
+                proxyUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World/solve"
+            });
+            urlUtils.addProxyRule({
+                urlPrefix: "traffic.arcgis.com",
+                proxyUrl: "https://utility.arcgis.com/usrsvcs/appservices/e89iFkIt1bqHbraa/rest/services/World/Traffic/MapServer"
+            });
 
             // //default will point to ArcGIS world routing service - else portalUrl
             this.directions = new Directions({
