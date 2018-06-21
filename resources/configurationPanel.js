@@ -43,6 +43,13 @@
                "tooltip": "Opens in a separate page if defined"
             },
             {
+               "type": "string",
+               "stringFieldOption": "textarea",
+               "label": "<strong>Alternate Splash-Screen Text:</strong>",
+               "fieldName": "alternateSplashText",
+               "tooltip": "Alternate text for the splash screen when not null."
+            },
+            {
                "label": "<strong>Logo Image:</strong>",
                "fieldName": "logo",
                "type": "string",
@@ -53,6 +60,12 @@
                "fieldName": "logoAltText",
                "type": "string",
                "tooltip": "Type here the text from the Logo Image"
+            },
+            {
+               "label": "<strong>Contact Us page URL:</strong>",
+               "fieldName": "contactUsURL",
+               "type": "string",
+               "tooltip": "Contact Us URL link to external application"
             },
             {
                "label": "<strong>Animated Marker</strong>",
@@ -85,34 +98,10 @@
                "label": "<strong>New Icons</strong>",
                "type": "boolean",
                "fieldName": "new_icons"
-            }
-         ]
-      },
-      {
-         "category": "<strong>Contact Us</strong>",
-         "fields": [
+            },
             {
                "type": "paragraph",
-               "value": "<h1>Add a 'Contact Us' button in the header</h1>"
-            },
-            {
-               "label": "<strong>Email Address:</strong>",
-               "fieldName": "contactUsEmail",
-               "type": "string",
-               "tooltip": "Leave it blank to disable the function."
-            },
-            {
-               "label": "<strong>Subject:</strong>",
-               "fieldName": "contactUsSubject",
-               "type": "string",
-               "tooltip": "Suggested Subject for the email"
-            },
-            {
-               "type": "string",
-               "stringFieldOption": "textarea",
-               "label": "<strong>Body Text:</strong>",
-               "tooltip": "Suggested body text for the email",
-               "fieldName": "contactUsBody"
+               "value": "New Icons refer to map’s zoom-in and zoom-out buttons."
             }
          ]
       },
@@ -600,6 +589,7 @@
       "alt_keys": true,
       "logo": "images/logo.png",
       "logoAltText": "",
+      "contactUsURL": "",
       "color": "#ffffff",
       "hoverColor": "#00A9E6",
       "focusColor": "#FF7700",
@@ -656,6 +646,7 @@
       "lang3code": "",
       "contactUsEmail": "",
       "contactUsSubject": "Enter subject line here",
-      "contactUsBody": "Enter your text here"
+      "contactUsBody": "Enter your text here",
+      "alternateSplashText": ""
    }
 }

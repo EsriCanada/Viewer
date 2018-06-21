@@ -2,6 +2,9 @@ define([
     "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
+
+    "dijit/form/Button",
+
     "dojo/text!application/ContactUs/Templates/ContactUs.html",
     "dojo/i18n!application/nls/resources",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
@@ -12,6 +15,9 @@ define([
     Evented, declare, _lang, has, dom, esriNS,
     _WidgetBase, _TemplatedMixin, on,
     query, registry,
+
+    Button,
+
     ContactUsTemplate,
     i18n,
     domClass, domAttr, domStyle,
@@ -21,9 +27,7 @@ define([
         templateString: ContactUsTemplate,
 
         options: {
-            emailAddress: 'example@email.com',
-            subject: 'Email Subject',
-            body: 'Email Body Text'
+            contactUsURL: ""
         },
 
         constructor: function(options, srcRefNode) {
@@ -31,25 +35,27 @@ define([
             this._i18n = i18n;
             this.domNode = srcRefNode;
 
-            if (this.defaults.emailAddress.isNonEmpty()) {
-                this.defaults.subject = escape(this.defaults.subject);
-                this.defaults.body = escape(this.defaults.body);
+            // if (this.defaults.emailAddress.isNonEmpty()) {
+            //     this.defaults.subject = escape(this.defaults.subject);
+            //     this.defaults.body = escape(this.defaults.body);
 
-                const link = document.createElement("link");
-                link.href = "js/ContactUs/Templates/ContactUs.css";
-                link.type = "text/css";
-                link.rel = "stylesheet";
-                query('head')[0].appendChild(link);
-            }
+            //     const link = document.createElement("link");
+            //     link.href = "js/ContactUs/Templates/ContactUs.css";
+            //     link.type = "text/css";
+            //     link.rel = "stylesheet";
+            //     query('head')[0].appendChild(link);
+            // }
         },
 
         startup: function() {
-            if (!this.defaults.emailAddress.isNonEmpty()) {
+            if (!this.defaults.contactUsURL.isNonEmpty()) {
                 domStyle.set(dojo.byId('contactUsNode'), 'display', 'none');
-            } else {
-
             }
-        }
+        },
+
+        // openContactUsPage: function() {
+        //     window.open(this.defaults.contactUsURL, '_blank').focus();
+        // }
     });
 
     if (has("extend-esri")) {

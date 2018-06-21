@@ -81,6 +81,7 @@ define([
     "application/DirectionsWidget/DirectionsWidget",
 
     "application/LanguageSelect/LanguageSelect",
+    "application/LanguageSelect/LanguageSelectDDB",
     "application/ContactUs/ContactUs",
     "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol",
@@ -145,6 +146,7 @@ define([
     TableOfContents,
     DirectionsWidget,
     LanguageSelect,
+    LanguageSelectDDB,
     ContactUs,
     ShareDialog,
     SimpleMarkerSymbol,
@@ -209,12 +211,18 @@ define([
                 // document ready
                 ready(
                     lang.hitch(this, function() {
-                        var description = this.config.description;
-                        if (!description && this.config.response) {
-                            description =
-                                this.config.response.itemInfo.item
-                                    .description ||
-                                this.config.response.itemInfo.item.snippet;
+                        let description = this.config.alternateSplashText;
+                        if(description) {
+                            description = '<pre class="altSplash" role="alert" aria-atomic="true">'+description+'</pre>';
+                        }
+                        else {
+                            description = this.config.description;
+                            if (!description && this.config.response) {
+                                description =
+                                    this.config.response.itemInfo.item
+                                        .description ||
+                                    this.config.response.itemInfo.item.snippet;
+                            }
                         }
                         if (description) {
                             dojo.byId(
@@ -294,10 +302,22 @@ define([
                 dojo.byId("languageSelectNode")
             ).startup();
 
+            // new LanguageSelect(
+            //     {
+            //         locale: document.documentElement.lang,
+            //         //location: window.location,
+            //         languages: languages,
+
+            //         textColor: this.color,
+
+            //         showLabel: this.config.languageLabel
+            //     },
+            //     dojo.byId("languageSelectNode")
+            // ).startup();
+
             new ContactUs({
-                emailAddress: this.config.contactUsEmail,
-                subject: this.config.contactUsSubject,
-                body: this.config.contactUsBody
+                textColor: this.color,
+                contactUsURL: this.config.contactUsURL
             },
                 dojo.byId("contactUsNode")
             ).startup();
@@ -926,7 +946,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;1</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;1</strong> " +
                             this.config.i18n.skip.tools,
                         style: "left:20%; top:10px;"
                     },
@@ -938,7 +958,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;2</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;2</strong> " +
                             this.config.i18n.skip.search,
                         style: "left:20%; top:50%;"
                     },
@@ -950,7 +970,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;3</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;3</strong> " +
                             this.config.i18n.skip.content,
                         style: "left:20%; top:45%;"
                     },
@@ -962,7 +982,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;4</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;4</strong> " +
                             this.config.i18n.skip.vsplitter,
                         style: "left:5px; top:55%; z-index:1000;"
                     },
@@ -975,7 +995,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;5</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;5</strong> " +
                             this.config.i18n.skip.map,
                         style: "left:10%; top:30%"
                     },
@@ -987,7 +1007,7 @@ define([
                     {
                         class: "goThereHint",
                         innerHTML:
-                            "<b>Alt&nbsp;+&nbsp;6</b> " +
+                            "<strong>Alt&nbsp;+&nbsp;6</strong> " +
                             this.config.i18n.skip.help,
                         style: "left:20%; top:-75%;"
                     },
@@ -1698,7 +1718,7 @@ define([
                             this.config.i18n.instructions +
                             ".html"
                     ], function(instructionsText) {
-                        var instructionsDiv = toolbar.createTool(tool);
+                        const instructionsDiv = toolbar.createTool(tool);
                         domConstruct.create(
                             "div",
                             {
@@ -1710,8 +1730,10 @@ define([
                         );
                     });
 
-                    var instructionsBtn = dom.byId("toolButton_instructions");
-                    domClass.add(instructionsBtn, "panelToolDefault");
+                    const instructionsBtn = dom.byId("toolButton_instructions");
+                    if(instructionsBtn) {
+                        domClass.add(instructionsBtn, "panelToolDefault");
+                    }
                 } else {
                     deferedDetails.then(
                         lang.hitch(this, function(r) {
@@ -2092,36 +2114,36 @@ define([
                             //domAttr.set(legendServiceList, "aria-label", legendServiceLabel.innerHTML);
 
                             for (
-                                var k = 0;
+                                let k = 0;
                                 k < legendServiceList.childNodes.length;
                                 k++
                             ) {
-                                var item = legendServiceList.childNodes[k];
+                                let item = legendServiceList.childNodes[k];
                                 domAttr.set(item, "role", "listitem");
                                 domAttr.set(item, "tabindex", "0");
                             }
                         }
 
-                        var legendLayerImages = node.querySelectorAll(
+                        const legendLayerImages = node.querySelectorAll(
                             ".esriLegendLayer image, .esriLegendLayer img"
                         );
                         if (legendLayerImages) {
                             for (
-                                var iii = 0;
-                                iii < legendLayerImages.length;
-                                iii++
+                                let i = 0;
+                                i < legendLayerImages.length;
+                                i++
                             )
                                 domAttr.set(
-                                    legendLayerImages[iii],
+                                    legendLayerImages[i],
                                     "alt",
                                     i18n.map.symbol
                                 );
                         }
 
-                        var messages = node.querySelectorAll(".esriLegendMsg");
+                        const messages = node.querySelectorAll(".esriLegendMsg");
                         if (messages) {
-                            for (var iiii = 0; iiii < messages.length; iiii++)
-                                domAttr.set(messages[iiii], "tabindex", 0);
+                            for (let i = 0; i < messages.length; i++)
+                                domAttr.set(messages[i], "tabindex", 0);
                         }
                     };
 
@@ -3296,6 +3318,7 @@ define([
             var noResultsMenu = document.querySelector('.searchMenu.noResultsMenu');
             if(noResultsMenu) {
                 domAttr.set(noResultsMenu, 'role', 'alert');
+                domAttr.set(noResultsMenu, 'aria-atomic', 'true');
             }
 
             return search;

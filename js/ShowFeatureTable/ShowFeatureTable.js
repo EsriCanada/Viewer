@@ -167,19 +167,19 @@ define([
 
             domConstruct.create("div", {
                 class:'goThereHint',
-                innerHTML: '<b>Alt&nbsp;+&nbsp;7</b> '+Ri18n.skip.hsplitter,
+                innerHTML: '<strong>Alt&nbsp;+&nbsp;7</strong> '+Ri18n.skip.hsplitter,
                 style:'left:40%; top: 0;'
             }, dom.byId('featureTableNode1'));
 
             domConstruct.create("div", {
                 class:'goThereHint',
-                innerHTML: '<b>Alt&nbsp;+&nbsp;8</b> '+Ri18n.skip.tableHeader,
+                innerHTML: '<strong>Alt&nbsp;+&nbsp;8</strong> '+Ri18n.skip.tableHeader,
                 style:'left:5px; top:40px;'
             }, dom.byId('featureTableNode1'));
 
             domConstruct.create("div", {
                 class:'goThereHint',
-                innerHTML: '<b>Alt&nbsp;+&nbsp;9</b> '+Ri18n.skip.table,
+                innerHTML: '<strong>Alt&nbsp;+&nbsp;9</strong> '+Ri18n.skip.table,
                 style:'left:20%; top:50%;'
             }, dom.byId('featureTableNode1'));
         },

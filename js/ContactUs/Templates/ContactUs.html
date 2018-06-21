@@ -1,3 +1,8 @@
-<div class="emailButton">
-	<a href="mailto:${defaults.emailAddress}?subject=${defaults.subject}&body=${defaults.body}">${_i18n.contactUs}</a>
+<div class="headerButton">
+	<div data-dojo-type="dijit/form/Button" type="button">
+		<span style="color:${defaults.textColor};">${_i18n.contactUs}</span>
+		<script type="dojo/on" data-dojo-event="click" data-dojo-args="evt">
+	        window.open("${defaults.contactUsURL}", '_blank').focus();
+	    </script>
+	</div>
 </div>

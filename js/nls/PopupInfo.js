@@ -2,6 +2,8 @@ define({
     root: ({
         widgets: ({
             "popupInfo" : {
+                "headerNavigation": "Header navigation panel",
+                "footerNavigation": "Footer navigation panel",
                 "Next":"Next",
                 "Prev":"Previous",
                 "Score": "Score:",

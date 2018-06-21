@@ -545,7 +545,13 @@ img {
 #pageBody_details {
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+}
+
+@supports (justify-content: space-evenly) {
+  #pageBody_details {
     justify-content: space-evenly;
+  }
 }
 
 #panelTop {
@@ -1493,7 +1499,7 @@ html, body {
 }
 
 #panelSearch {
-    margin: 2px;
+    margin:2px;
     width:100%;
     position: relative;
     width: calc(100% - 4px);
@@ -2043,4 +2049,49 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
 .arcgisSearch .searchMenu .menuHeader {
     background-color: black;
     color:  white;
+}
+
+.altSplash {
+    font-size: 24px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Raleway', sans-serif;
+    text-align:center;
+}
+
+.headerButton {
+  padding-top: 0px;
+  font-size: 12px;
+}
+
+.headerButton a, .headerButton span {
+    color: white;
+    display:inline-block;
+    text-decoration: none;
+}
+
+.claro .dijitButtonText {
+    padding: 2px 4px;
+}
+
+.headerButton {
+    margin-top: 1px
+}
+
+.headerButton .dijitArrowButtonInner {
+  padding: 0;
+}
+
+@media only screen and (min-width: 720px) {
+  .headerButton {
+    padding-top: 6px;
+    font-size: 16px;
+  }
+
+  .headerButton {
+      margin-top: 1px
+  }
+
+  .claro .dijitButtonText {
+    padding: 4px 8px;
+  }
 }

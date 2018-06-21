@@ -1,6 +1,8 @@
 define({
     widgets: ({
         popupInfo: ({
+            "headerNavigation": "Panneau de navigation de pied de page",
+            "footerNavigation": "Footer navigation panel",
             "Next":"Suivante",
             "Prev":"Précédente",
             "Score":"Marque :",

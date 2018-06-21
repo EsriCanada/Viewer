@@ -2,7 +2,7 @@ define([
     "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
-    "dojo/text!application/LanguageSelect/Templates/LanguageSelect.html",
+    "dojo/text!application/LanguageSelect/Templates/LanguageSelectDDB.html",
     "dojo/i18n!application/nls/LanguageSelect",
     "dijit/form/DropDownButton", "dijit/DropDownMenu", "dijit/MenuItem",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
@@ -18,7 +18,7 @@ define([
         domClass, domAttr, domStyle,
         domConstruct, event, esriLang
     ) {
-    var Widget = declare("esri.dijit.LanguageSelect", [_WidgetBase, _TemplatedMixin, Evented], {
+    var Widget = declare("esri.dijit.LanguageSelectDDB", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: LanguageSelectTemplate,
 
         options: {
@@ -140,7 +140,7 @@ define([
                 label: btnLbl,
                 title: currentHint,
                 dropDown: menu,
-                id: 'languageButton',
+                id: 'languageButton1',
                 role: 'application',
             });
             this.button.startup();
@@ -175,7 +175,7 @@ define([
     });
 
     if (has("extend-esri")) {
-        _lang.setObject("dijit.LanguageSelect", Widget, esriNS);
+        _lang.setObject("dijit.LanguageSelectDDB", Widget, esriNS);
     }
     return Widget;
 });
