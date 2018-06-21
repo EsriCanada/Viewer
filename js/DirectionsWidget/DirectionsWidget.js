@@ -51,9 +51,11 @@ define([
             });
 
             // //default will point to ArcGIS world routing service - else portalUrl
-            this.directions = new Directions({
+
+            const options = {
                 map: this.map,
                 id: this.defaults.id,
+                routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
                 // showSaveButton: true,
 
                 // canModifyStops: false,
@@ -68,7 +70,8 @@ define([
                 showTravelModesOption: false,
 
                 directionsLengthUnits: units.KILOMETERS
-            },this.domNode); //"pageBody_directions");
+            };
+            this.directions = new Directions(options,this.domNode); //"pageBody_directions");
         },
 
         startup: function () {
