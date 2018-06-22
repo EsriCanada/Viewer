@@ -13,3 +13,7 @@
 .simpleDirections .esriStopsButtons {
     display: none !important;
 }
+
+.simpleDirections .esriRouteInfo, .simpleDirections .esriRouteInfo strong {
+    color: black;
+}

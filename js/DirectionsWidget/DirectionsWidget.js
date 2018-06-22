@@ -64,7 +64,8 @@ define([
             if(directionsProxy && directionsProxy.isNonEmpty()) {
                 directionOptions.routeTaskUrl = directionsProxy;
             }
-            this.directions = new Directions(directionOptions,this.domNode); //"pageBody_directions");
+            this.directions = new Directions(directionOptions,
+                domConstruct.create("div",null,this.domNode)); //"pageBody_directions");
         },
 
         startup: function () {

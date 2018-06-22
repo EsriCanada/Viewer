@@ -198,3 +198,9 @@ div[data-tip]:hover::before, div[data-tip]:focus::before{
 .simpleDirections .dojoDndItemOver, .simpleDirections .dojoDndItemAnchor {
     background-color: green;
 }
+
+.simpleDirections .esriRouteZoom:focus {
+    outline-width: 2px;
+    outline-offset: -1px;
+    outline-style: solid;
+}
