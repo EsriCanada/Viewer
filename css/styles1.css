@@ -203,4 +203,6 @@ div[data-tip]:hover::before, div[data-tip]:focus::before{
     outline-width: 2px;
     outline-offset: -1px;
     outline-style: solid;
+    background: white;
+    color: black;
 }
