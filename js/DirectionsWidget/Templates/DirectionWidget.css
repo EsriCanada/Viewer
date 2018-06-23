@@ -29,6 +29,14 @@
 }
 
 .simpleDirections .esriRouteZoom .esriRouteLength, .simpleDirections .esriRouteZoom:focus .esriRouteLength {
-    background: black;
+    background: #434343;
     color: white;
+}
+
+.simpleDirections .esriTrafficLabelLight {
+    color: darkgreen;
+}
+
+.simpleDirections .esriPrintFooter {
+    color: black;
 }
