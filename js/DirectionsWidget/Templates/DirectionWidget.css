@@ -40,3 +40,10 @@
 .simpleDirections .esriPrintFooter {
     color: black;
 }
+
+.simpleDirections .esriRoutesError {
+    padding: 10px;
+    text-align: left;
+    color: darkred;
+    font-size: larger;
+}
