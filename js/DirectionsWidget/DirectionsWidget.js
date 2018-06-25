@@ -113,16 +113,28 @@ define([
                     nodes.forEach(node => domAttr.remove(node, "role"));
 
                     const tables = query('table', ev.target.domNode);
-                    console.log("tables", tables);
+                    // console.log("tables", tables);
                     tables.forEach(table => domAttr.set(table, "role", "presentation"));
 
                     const tbodies = query('tbody[role=menu]', ev.target.domNode);
-                    console.log("tbodies", tbodies);
+                    // console.log("tbodies", tbodies);
                     tbodies.forEach(tbody => domAttr.set(tbody, "role", "list"));
 
                     const trs = query('tr[role=menuitem]', ev.target.domNode);
-                    console.log("trs", trs);
+                    // console.log("trs", trs);
                     trs.forEach(tr => domAttr.set(tr, "role", "listitem"));
+
+                    const routeIcons = query('.esriRouteIcon', ev.target.domNode);
+                    console.log("routeIcons", routeIcons);
+                    // let classes = [];
+                    routeIcons.forEach(routeIcon => {
+                        let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
+                        imgSrc = imgSrc.substring(5, imgSrc.length-2);
+                        domStyle.set(routeIcon, "background", "transparent");
+                        // classes.push(imgSrc);
+                        domConstruct.create("img",{alt:"", src:imgSrc},routeIcon);
+                    });
+                    // console.log("routeIconsClasses", classes);
                 });
 
                 if(this.deferred)

@@ -61,3 +61,8 @@
 {
 	background: transparent;
 }*/
+
+.esriRouteIcon img {
+	position:absolute;
+	display: -webkit-box;
+}
