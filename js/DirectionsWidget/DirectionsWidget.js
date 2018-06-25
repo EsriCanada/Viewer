@@ -3,6 +3,7 @@ define([
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
     "esri/units", "esri/urlUtils", "esri/dijit/Directions",
+    "esri/symbols/PictureMarkerSymbol",
     // "dojo/i18n!application/nls/LanguageSelect",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "dojo/dom-construct", "dojo/_base/event",
@@ -13,6 +14,7 @@ define([
         _WidgetBase, _TemplatedMixin, on,
         query, registry,
         units, urlUtils, Directions,
+        PictureMarkerSymbol,
         // LanguageSelectTemplate, i18n,
         domClass, domAttr, domStyle,
         domConstruct, event, 
@@ -42,6 +44,13 @@ define([
             link.rel = "stylesheet";
             query('head')[0].appendChild(link);
 
+            const fromSymb = new PictureMarkerSymbol("../images/greenPoint.png", 21, 29);
+            fromSymb.setOffset(0, 12);
+            const stopSymb = new PictureMarkerSymbol("../images/bluePoint.png", 21, 29);
+            stopSymb.setOffset(0, 12);
+            const toSymb = new PictureMarkerSymbol("../images/redPoint.png", 21, 29);
+            toSymb.setOffset(0, 12);
+
             const directionOptions = {
                 map: this.map,
                 id: this.defaults.id,
@@ -68,8 +77,9 @@ define([
                 directionsLengthUnits: units.KILOMETERS,
                 maxStops: 2,
 
-                fromSymbol: '../images/redPoint.png',
-                //stopSymbol: <PictureMarkerSymbol> 
+                fromSymbol: fromSymb,
+                stopSymbol: stopSymb,
+                toSymbol: toSymb,
                 textSymbolColor: '#000000',
 
                 //searchOptions: <Object>
