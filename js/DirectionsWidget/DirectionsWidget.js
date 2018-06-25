@@ -3,7 +3,7 @@ define([
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
     "esri/units", "esri/urlUtils", "esri/dijit/Directions",
-    "esri/symbols/PictureMarkerSymbol",
+    "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font",
     // "dojo/i18n!application/nls/LanguageSelect",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "dojo/dom-construct", "dojo/_base/event",
@@ -14,7 +14,7 @@ define([
         _WidgetBase, _TemplatedMixin, on,
         query, registry,
         units, urlUtils, Directions,
-        PictureMarkerSymbol,
+        PictureMarkerSymbol, Font,
         // LanguageSelectTemplate, i18n,
         domClass, domAttr, domStyle,
         domConstruct, event, 
@@ -81,6 +81,7 @@ define([
                 stopSymbol: stopSymb,
                 toSymbol: toSymb,
                 textSymbolColor: '#000000',
+                textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
 
                 //searchOptions: <Object>
                 //segmentInfoTemplate: <InfoTemplate> 
