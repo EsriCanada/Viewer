@@ -53,13 +53,27 @@ define([
                 showBarriersButton: false,
                 showMilesKilometersOption: false,
                 showOptimalRouteOption: false,
-                showReturnToStartOption: false,
-                showReverseStopsButton: false,
                 showSegmentHighlight: false,
                 showTrafficOption: false,
                 showTravelModesOption: false,
 
-                directionsLengthUnits: units.KILOMETERS
+                showActivateButton: false,
+                showClearButton: false,
+                showBarriersButton: false,
+                showReturnToStartOption: false,
+                showReverseStopsButton: false,
+                showSegmentPopup: false,
+                showPrintPage: false,
+
+                directionsLengthUnits: units.KILOMETERS,
+                maxStops: 2,
+
+                fromSymbol: '../images/redPoint.png',
+                //stopSymbol: <PictureMarkerSymbol> 
+                textSymbolColor: '#000000',
+
+                //searchOptions: <Object>
+                //segmentInfoTemplate: <InfoTemplate> 
             };
             if(directionsProxy && directionsProxy.isNonEmpty()) {
                 directionOptions.routeTaskUrl = directionsProxy;
@@ -76,6 +90,29 @@ define([
 
                 domAttr.set(this.directions._dndNode, "role", "presentation");
                 // domAttr.set(this.directions._popupStateNode, "role", "presentation");
+
+                this.directions.on("directions-finish", function(ev){
+                    console.log("directions-finish", ev);
+                    // console.log("directions", ev.result.routeResults[0].directions);
+                    console.log("target", ev.target.directions);
+                    console.log("domNode", ev.target.domNode);
+                    
+                    const nodes = query('[role=presentation]', ev.target.domNode);
+                    // console.log("presentationNodes", nodes);
+                    nodes.forEach(node => domAttr.remove(node, "role"));
+
+                    const tables = query('table', ev.target.domNode);
+                    console.log("tables", tables);
+                    tables.forEach(table => domAttr.set(table, "role", "presentation"));
+
+                    const tbodies = query('tbody[role=menu]', ev.target.domNode);
+                    console.log("tbodies", tbodies);
+                    tbodies.forEach(tbody => domAttr.set(tbody, "role", "list"));
+
+                    const trs = query('tr[role=menuitem]', ev.target.domNode);
+                    console.log("trs", trs);
+                    trs.forEach(tr => domAttr.set(tr, "role", "listitem"));
+                });
 
                 if(this.deferred)
                     this.deferred.resolve(true);

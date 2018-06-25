@@ -47,3 +47,17 @@
     color: darkred;
     font-size: larger;
 }
+
+.simpleDirections .esriStop .esriStopIcon,
+.simpleDirections .esriRouteIconColumn .esriRouteIcon {
+	color: black;
+}
+
+.simpleDirections .esriStopOrigin .esriStopIcon,
+.simpleDirections .esriStopDestination .esriStopIcon,
+.simpleDirections .esriStop .esriStopIcon,
+.esriDMTStopOrigin .esriRouteIcon,
+.esriDMTStopDestination .esriRouteIcon
+ {
+	background: transparent;
+}
