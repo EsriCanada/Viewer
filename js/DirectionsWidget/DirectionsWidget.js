@@ -124,6 +124,9 @@ define([
                     // console.log("trs", trs);
                     trs.forEach(tr => domAttr.set(tr, "role", "listitem"));
 
+                    const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
+                    hiddens.forEach(hidden => domAttr.remove(hidden, 'aria-hidden'));
+
                     const routeIcons = query('.esriRouteIcon', ev.target.domNode);
                     console.log("routeIcons", routeIcons);
                     // let classes = [];
