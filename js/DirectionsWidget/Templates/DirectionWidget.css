@@ -65,3 +65,11 @@
     margin-top: 1px;
     font-size: 12px;
 }
+
+.simpleDirections .esriRouteTextColumn {
+    padding: 8px 5px 0px 0px;
+}
+
+.simpleDirections .esriRouteTextColumnCumulative {
+    padding-top: 4px;
+}

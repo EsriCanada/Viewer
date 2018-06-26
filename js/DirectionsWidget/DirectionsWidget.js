@@ -107,7 +107,7 @@ define([
                     // console.log("directions", ev.result.routeResults[0].directions);
                     // console.log("target", ev.target.directions);
                     // console.log("domNode", ev.target.domNode);
-                    
+
                     const nodes = query('[role=presentation]', ev.target.domNode);
                     // console.log("presentationNodes", nodes);
                     nodes.forEach(function(node) { domAttr.remove(node, "role"); });
@@ -146,14 +146,43 @@ define([
                         routeIcon.innerText = null;
 
                         domStyle.set(routeIcon, "background", "transparent");
-                        const img = domConstruct.create("img",{role:"presentation", src:imgSrc},routeIcon);
+                        const img = domConstruct.create("img",{alt:"", src:imgSrc},routeIcon);
 
                         if(text.isNonEmpty()) {
-                            const span = domConstruct.toDom("<span>"+text+"</span>");
+                            const span = domConstruct.toDom("<span aria-hidden='true'>"+text+"</span>");
                             domConstruct.place(span, img, "after");
                         }
 
                     });
+
+                    const summary = query('.esriResultsSummary', ev.target.domNode);
+                    if(summary && summary.length>0)
+                    {
+                        domAttr.set(summary[0],'aria-live', 'polite');
+                        domAttr.set(summary[0],'aria-atomic', 'true');
+                    }
+
+                    const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
+                    if(esriRoutesErrors && esriRoutesErrors.length>0) {
+                        esriRoutesErrors.forEach(esriRoutesError => {
+                            // domAttr.set(esriRoutesError,'role', 'alert');
+                            domAttr.set(esriRoutesError,'aria-live', 'polite');
+                            domAttr.set(esriRoutesError,'aria-atomic', 'true');
+                        })
+                    }
+
+                    const esriImpedanceCost = query('.esriImpedanceCost', ev.target.domNode);
+                    if(esriImpedanceCost && esriImpedanceCost.length>0) {
+                        const htmin = esriImpedanceCost[0].innerText.split('\n')[0].split(':');
+                        domAttr.set(esriImpedanceCost[0],'aria-label', Number(htmin[0])+' hours and '+Number(htmin[1])+' minutes.')
+
+                    }
+
+                    const esriImpedanceCostHrMin = query('.esriImpedanceCostHrMin', ev.target.domNode);
+                    if(esriImpedanceCostHrMin && esriImpedanceCostHrMin.length>0) {
+                        domAttr.set(esriImpedanceCostHrMin[0],'aria-hidden', 'true');
+                    }
+
                 });
 
                 if(this.deferred)
