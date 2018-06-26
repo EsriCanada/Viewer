@@ -103,14 +103,14 @@ define([
                 // domAttr.set(this.directions._popupStateNode, "role", "presentation");
 
                 this.directions.on("directions-finish", function(ev){
-                    console.log("directions-finish", ev);
+                    // console.log("directions-finish", ev);
                     // console.log("directions", ev.result.routeResults[0].directions);
-                    console.log("target", ev.target.directions);
-                    console.log("domNode", ev.target.domNode);
+                    // console.log("target", ev.target.directions);
+                    // console.log("domNode", ev.target.domNode);
                     
                     const nodes = query('[role=presentation]', ev.target.domNode);
                     // console.log("presentationNodes", nodes);
-                    nodes.forEach(node => domAttr.remove(node, "role"));
+                    nodes.forEach(function(node) { domAttr.remove(node, "role"); });
 
                     const tables = query('table', ev.target.domNode);
                     // console.log("tables", tables);
@@ -128,16 +128,32 @@ define([
                     hiddens.forEach(hidden => domAttr.remove(hidden, 'aria-hidden'));
 
                     const routeIcons = query('.esriRouteIcon', ev.target.domNode);
-                    console.log("routeIcons", routeIcons);
-                    // let classes = [];
+                    // console.log("routeIcons", routeIcons);
+
                     routeIcons.forEach(routeIcon => {
                         let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
-                        imgSrc = imgSrc.substring(5, imgSrc.length-2);
+                        if(imgSrc.includes("esriDMTStopOrigin.png")) {
+                            imgSrc = "../images/greenPoint.png";
+                        }
+                        else if(imgSrc.includes("esriDMTStopDestination.png")) {
+                            imgSrc = "../images/redPoint.png";
+                        }
+                        else {
+                            imgSrc = imgSrc.substring(5, imgSrc.length-2);
+                        }
+
+                        const text = routeIcon.innerText;
+                        routeIcon.innerText = null;
+
                         domStyle.set(routeIcon, "background", "transparent");
-                        // classes.push(imgSrc);
-                        domConstruct.create("img",{alt:"", src:imgSrc},routeIcon);
+                        const img = domConstruct.create("img",{role:"presentation", src:imgSrc},routeIcon);
+
+                        if(text.isNonEmpty()) {
+                            const span = domConstruct.toDom("<span>"+text+"</span>");
+                            domConstruct.place(span, img, "after");
+                        }
+
                     });
-                    // console.log("routeIconsClasses", classes);
                 });
 
                 if(this.deferred)
