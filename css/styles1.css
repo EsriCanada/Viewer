@@ -75,7 +75,7 @@ http://reference.sitepoint.com/css/outline-color
 }
 
 .searchBtn:focus, .searchClear:focus, .searchInput:focus {
-  background-color: rgba(0, 0, 0, 0.7) !important;
+  background-color: rgba(0, 0, 0, 0.7);
 }
 
 .esri-feature-table .esri-feature-table-menu .dijitDropDownButton .dijitButtonNode:hover {
@@ -195,14 +195,21 @@ div[data-tip]:hover::before, div[data-tip]:focus::before{
     border-color: black;
 } */
 
-.simpleDirections .dojoDndItemOver, .simpleDirections .dojoDndItemAnchor {
+/*.simpleDirections .dojoDndItemOver, .simpleDirections .dojoDndItemAnchor {
     background-color: green;
 }
 
-.simpleDirections .esriRouteZoom:focus {
+*/.simpleDirections .esriRouteZoom:focus {
     outline-width: 2px;
     outline-offset: -1px;
     outline-style: solid;
-    background: white;
+    background-color: white;
     color: black;
+}
+
+.simpleDirections .searchInput:focus {
+    outline-width: 2px;
+    outline-offset: -1px;
+    outline-style: solid;
+    background-color: white;
 }

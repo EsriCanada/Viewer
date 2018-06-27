@@ -79,3 +79,23 @@
 .simpleDirections .esriRouteTextColumnCumulative {
     padding-top: 4px;
 }
+
+.simpleDirections .esriStop td {
+    padding-bottom: 0;
+}
+
+.simpleDirections .arcgisSearch .searchExpandContainer
+/*.simpleDirections .arcgisSearch .searchInputGroup */
+{
+    width: calc(100% - 32px);
+}
+
+.simpleDirections .arcgisSearch .searchGroup .searchInput {
+    background-color: white;
+    color: black;
+}
+
+/*.simpleDirections .searchInput:focus {
+    outline: inherit;
+    background-color: white;
+}*/

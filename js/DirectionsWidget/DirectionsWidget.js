@@ -154,7 +154,7 @@ define([
                                 domConstruct.place(span, img, "after");
                             }
                         } catch (ex) {
-                            alert(ex.message);
+                            // alert(ex.message);
                             console.log(ex);
                         }
 
