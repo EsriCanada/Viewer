@@ -152,9 +152,8 @@ define([
     SimpleMarkerSymbol,
     PictureMarkerSymbol,
     Graphic,
-    InfoWindow,
-    urlUtils, 
-    // Directions
+    InfoWindow
+    // urlUtils, Directions
 ) {
     return declare(null, {
         config: {},

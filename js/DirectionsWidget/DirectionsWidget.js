@@ -17,7 +17,7 @@ define([
         PictureMarkerSymbol, Font,
         // LanguageSelectTemplate, i18n,
         domClass, domAttr, domStyle,
-        domConstruct, event, 
+        domConstruct, event 
     ) {
     var Widget = declare("esri.dijit.DirectionWidget", [_WidgetBase, /*_TemplatedMixin,*/ Evented], {
         // templateString: LanguageSelectTemplate,
@@ -114,43 +114,48 @@ define([
 
                     const tables = query('table', ev.target.domNode);
                     // console.log("tables", tables);
-                    tables.forEach(table => domAttr.set(table, "role", "presentation"));
+                    tables.forEach(function(table) { domAttr.set(table, "role", "presentation"); });
 
                     const tbodies = query('tbody[role=menu]', ev.target.domNode);
                     // console.log("tbodies", tbodies);
-                    tbodies.forEach(tbody => domAttr.set(tbody, "role", "list"));
+                    tbodies.forEach(function(tbody) { domAttr.set(tbody, "role", "list"); });
 
                     const trs = query('tr[role=menuitem]', ev.target.domNode);
                     // console.log("trs", trs);
-                    trs.forEach(tr => domAttr.set(tr, "role", "listitem"));
+                    trs.forEach(function(tr) { domAttr.set(tr, "role", "listitem"); });
 
                     const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
-                    hiddens.forEach(hidden => domAttr.remove(hidden, 'aria-hidden'));
+                    hiddens.forEach(function(hidden) { domAttr.remove(hidden, 'aria-hidden'); });
 
                     const routeIcons = query('.esriRouteIcon', ev.target.domNode);
                     // console.log("routeIcons", routeIcons);
 
-                    routeIcons.forEach(routeIcon => {
-                        let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
-                        if(imgSrc.includes("esriDMTStopOrigin.png")) {
-                            imgSrc = "../images/greenPoint.png";
-                        }
-                        else if(imgSrc.includes("esriDMTStopDestination.png")) {
-                            imgSrc = "../images/redPoint.png";
-                        }
-                        else {
-                            imgSrc = imgSrc.substring(5, imgSrc.length-2);
-                        }
+                    routeIcons.forEach(function(routeIcon) {
+                        try {
+                            let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
+                            if(imgSrc.includes("esriDMTStopOrigin.png")) {
+                                imgSrc = "../images/greenPoint.png";
+                            }
+                            else if(imgSrc.includes("esriDMTStopDestination.png")) {
+                                imgSrc = "../images/redPoint.png";
+                            }
+                            else {
+                                imgSrc = imgSrc.substring(5, imgSrc.length-2);
+                            }
 
-                        const text = routeIcon.innerText;
-                        routeIcon.innerText = null;
+                            const text = routeIcon.innerText;
+                            routeIcon.innerText = '';
 
-                        domStyle.set(routeIcon, "background", "transparent");
-                        const img = domConstruct.create("img",{alt:"", src:imgSrc},routeIcon);
+                            domStyle.set(routeIcon, "background", "transparent");
+                            const img = domConstruct.create("img",{alt:"", src:imgSrc},routeIcon);
 
-                        if(text.isNonEmpty()) {
-                            const span = domConstruct.toDom("<span aria-hidden='true'>"+text+"</span>");
-                            domConstruct.place(span, img, "after");
+                            if(text.isNonEmpty()) {
+                                const span = domConstruct.toDom("<span aria-hidden='true'>"+text+"</span>");
+                                domConstruct.place(span, img, "after");
+                            }
+                        } catch (ex) {
+                            alert(ex.message);
+                            console.log(ex);
                         }
 
                     });
@@ -164,7 +169,7 @@ define([
 
                     const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
                     if(esriRoutesErrors && esriRoutesErrors.length>0) {
-                        esriRoutesErrors.forEach(esriRoutesError => {
+                        esriRoutesErrors.forEach(function(esriRoutesError) {
                             // domAttr.set(esriRoutesError,'role', 'alert');
                             domAttr.set(esriRoutesError,'aria-live', 'polite');
                             domAttr.set(esriRoutesError,'aria-atomic', 'true');
@@ -188,6 +193,7 @@ define([
                 if(this.deferred)
                     this.deferred.resolve(true);
             } catch (ex) {
+                console.log('error directions-finish', ex);
                 if(this.deferred)
                     this.deferred.resolve(false);
             }

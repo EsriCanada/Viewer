@@ -55,15 +55,21 @@
 
 .simpleDirections .esriRouteIcon img {
 	position:absolute;
-	display: -webkit-box;
+	display: block;
 }
 
 .simpleDirections .esriRouteIcon span {
     font-weight: bold;
     position: absolute;
-    margin-left: -3px;
+    margin-left: 8px;
     margin-top: 1px;
     font-size: 12px;
+}
+
+@supports (display: -webkit-box) {
+	.simpleDirections .esriRouteIcon span {
+	    margin-left: -3px;
+	}
 }
 
 .simpleDirections .esriRouteTextColumn {
