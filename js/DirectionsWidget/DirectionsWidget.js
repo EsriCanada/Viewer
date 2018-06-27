@@ -4,7 +4,7 @@ define([
     "dojo/query", "dijit/registry",
     "esri/units", "esri/urlUtils", "esri/dijit/Directions",
     "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font",
-    // "dojo/i18n!application/nls/LanguageSelect",
+    "dojo/i18n!application/nls/resources",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "dojo/dom-construct", "dojo/_base/event",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
@@ -15,7 +15,7 @@ define([
         query, registry,
         units, urlUtils, Directions,
         PictureMarkerSymbol, Font,
-        // LanguageSelectTemplate, i18n,
+        i18n,
         domClass, domAttr, domStyle,
         domConstruct, event 
     ) {
@@ -32,7 +32,7 @@ define([
 
         constructor: function (options, srcRefNode) {
             this.defaults = _lang.mixin({}, this.options, options);
-            //this._i18n = i18n;
+            this._i18n = i18n;
             this.domNode = srcRefNode;
             this.map = this.defaults.map;
             this.deferred = this.defaults.deferred;
@@ -179,8 +179,7 @@ define([
                     const esriImpedanceCost = query('.esriImpedanceCost', ev.target.domNode);
                     if(esriImpedanceCost && esriImpedanceCost.length>0) {
                         const htmin = esriImpedanceCost[0].innerText.split('\n')[0].split(':');
-                        domAttr.set(esriImpedanceCost[0],'aria-label', Number(htmin[0])+' hours and '+Number(htmin[1])+' minutes.')
-
+                        domAttr.set(esriImpedanceCost[0],'aria-label', i18n.hrmin.format(Number(htmin[0]), Number(htmin[1])));
                     }
 
                     const esriImpedanceCostHrMin = query('.esriImpedanceCostHrMin', ev.target.domNode);

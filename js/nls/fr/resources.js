@@ -96,6 +96,7 @@ define(
         leftExpand: "Révéler le panneau gauche",
         moreHelp : "Plus d'aide",
         totalCount : "Le compte total : {0}",
-        contactUs: "Contactez nous"
+        contactUs: "Contactez nous",
+        hrmin: '{0} heures et {1} minutes.'
     })
 );
