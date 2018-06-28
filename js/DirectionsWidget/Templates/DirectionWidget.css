@@ -111,7 +111,11 @@
     color: black;
 }
 
-/*.simpleDirections .searchInput:focus {
-    outline: inherit;
-    background-color: white;
-}*/
+.simpleDirections .esriStopsGetDirections,
+.simpleDirections .esriDisabledDirectionsButton,
+.simpleDirections .arcgisSearch .sourceName,
+.simpleDirections  .arcgisSearch .searchButtonText
+ {
+	background: black;
+	color: white;
+}

@@ -111,14 +111,17 @@ define([
                     const esriStopsContainer = query('.esriDirectionsContainer');
                     if(esriStopsContainer && esriStopsContainer.length >0) {
                         new MutationObserver(function(mutations) {
-                            console.log('mutations', mutations);
+                            // console.log('mutations', mutations);
                             mutations.forEach(function(mutation) {
-                                console.log('mutation', mutation);
+                                // console.log('mutation', mutation);
 
                                 try{
-                                    console.log('mutation target', mutation.target);
+                                    const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
+                                    hiddens.forEach(function(hidden) { domAttr.remove(hidden, 'aria-hidden'); });
+
+                                    // console.log('mutation target', mutation.target);
                                     const stopRows = query('tr.esriStop.dojoDndItem');
-                                    console.log('stopRows', stopRows);
+                                    // console.log('stopRows', stopRows);
                                     stopRows.forEach(function(row) {
                                         const stopIcon = query('.esriStopIcon',row);
                                         if(stopIcon && stopIcon.length>0){
