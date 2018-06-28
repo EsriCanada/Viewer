@@ -116,7 +116,7 @@ define([
                                 // console.log('mutation', mutation);
 
                                 try{
-                                    const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
+                                    const hiddens = query('input[type=hidden][aria-hidden]', mutation.target);
                                     hiddens.forEach(function(hidden) { domAttr.remove(hidden, 'aria-hidden'); });
 
                                     // console.log('mutation target', mutation.target);
