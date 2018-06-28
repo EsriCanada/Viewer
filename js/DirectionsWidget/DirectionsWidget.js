@@ -102,11 +102,43 @@ define([
                 directionOptions.routeTaskUrl = directionsProxy;
             }
             this.directions = new Directions(directionOptions,
-                domConstruct.create("div",null,this.domNode)); //"pageBody_directions");
+                domConstruct.create("div", null, this.domNode)); //"pageBody_directions");
+
+            on(
+                this.directions,
+                "load",
+                
+                function() {
+                    this.observer = new MutationObserver(function(mutations) {
+                        console.log('mutations', mutations);
+                        mutations.forEach(function(mutation) {
+                            console.log('mutation', mutation);
+
+                            try{
+                                console.log('mutation target', mutation.target);
+                                const stopIcons = query('.esriStopIcon');
+                                console.log('esriStopIcons', stopIcons);
+                            } catch (ex) {
+                                console.log('mutation error', ex);
+                            }
+                        });
+                    });
+
+                    const esriStopsContainer = query('.esriDirectionsContainer');
+                    if(esriStopsContainer && esriStopsContainer.length >0) {
+                        this.observer.observe(esriStopsContainer[0], {
+                            attributes: true,
+                            childList: false,
+                            characterData: false
+                        });
+                    }
+                }
+            );
         },
 
         startup: function () {
             try {
+
                 this.directions.startup();
 
                 domClass.add(this.domNode, "pageBody");
@@ -205,7 +237,13 @@ define([
                         domAttr.set(esriImpedanceCostHrMin[0],'aria-hidden', 'true');
                     }
 
+                    // const esriStopsContainer = query('.esriDirectionsContainer');
+                    // if(esriStopsContainer && esriStopsContainer.length >0) {
+                    //     this.observer.observe(esriStopsContainer[0], this.observerConfig);
+                    // }
+
                 });
+
 
                 if(this.deferred)
                     this.deferred.resolve(true);
