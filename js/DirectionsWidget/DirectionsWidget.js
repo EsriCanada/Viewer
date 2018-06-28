@@ -51,6 +51,13 @@ define([
             const toSymb = new PictureMarkerSymbol("../images/redPoint.png", 21, 29);
             toSymb.setOffset(0, 12);
 
+            const fromSymbDrag = new PictureMarkerSymbol("../images/greenPointDrag.png", 21, 29);
+            fromSymbDrag.setOffset(0, 12);
+            const stopSymbDrag = new PictureMarkerSymbol("../images/bluePointDrag.png", 21, 29);
+            stopSymbDrag.setOffset(0, 12);
+            const toSymbDrag = new PictureMarkerSymbol("../images/redPointDrag.png", 21, 29);
+            toSymbDrag.setOffset(0, 12);
+
             const directionOptions = {
                 map: this.map,
                 id: this.defaults.id,
@@ -80,6 +87,9 @@ define([
                 fromSymbol: fromSymb,
                 stopSymbol: stopSymb,
                 toSymbol: toSymb,
+                fromSymbolDrag: fromSymbDrag,
+                stopSymbolDrag: stopSymbDrag,
+                toSymbolDrag: toSymbDrag,
                 textSymbolColor: '#000000',
                 textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
 
@@ -101,6 +111,10 @@ define([
 
                 domAttr.set(this.directions._dndNode, "role", "presentation");
                 // domAttr.set(this.directions._popupStateNode, "role", "presentation");
+
+                // this.directions.on("segment-select", function(ev){
+                    
+                // });
 
                 this.directions.on("directions-finish", function(ev){
                     // console.log("directions-finish", ev);
