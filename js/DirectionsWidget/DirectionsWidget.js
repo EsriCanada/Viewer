@@ -64,8 +64,6 @@ define([
                 // routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
                 // showSaveButton: true,
 
-                // canModifyStops: false,
-                dragging: false,
                 showBarriersButton: false,
                 showMilesKilometersOption: false,
                 showOptimalRouteOption: false,
@@ -82,7 +80,11 @@ define([
                 showPrintPage: false,
 
                 directionsLengthUnits: units.KILOMETERS,
-                maxStops: 2,
+
+                dragging: true,
+                // canModifyStops: true,
+                mapClickActive: true,
+                maxStops: 9,
 
                 fromSymbol: fromSymb,
                 stopSymbol: stopSymb,
@@ -153,6 +155,9 @@ define([
                             else if(imgSrc.includes("esriDMTStopDestination.png")) {
                                 imgSrc = "../images/redPoint.png";
                             }
+                            else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
+                                imgSrc = "../images/bluePoint.png";
+                            }
                             else {
                                 imgSrc = imgSrc.substring(5, imgSrc.length-2);
                             }
@@ -184,7 +189,6 @@ define([
                     const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
                     if(esriRoutesErrors && esriRoutesErrors.length>0) {
                         esriRoutesErrors.forEach(function(esriRoutesError) {
-                            // domAttr.set(esriRoutesError,'role', 'alert');
                             domAttr.set(esriRoutesError,'aria-live', 'polite');
                             domAttr.set(esriRoutesError,'aria-atomic', 'true');
                         })
