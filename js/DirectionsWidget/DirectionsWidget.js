@@ -83,8 +83,8 @@ define([
 
                 dragging: true,
                 // canModifyStops: true,
-                mapClickActive: true,
-                maxStops: 9,
+                mapClickActive: false,
+                maxStops: 2,
 
                 fromSymbol: fromSymb,
                 stopSymbol: stopSymb,
@@ -117,8 +117,41 @@ define([
 
                                 try{
                                     console.log('mutation target', mutation.target);
-                                    const stopIcons = query('.esriStopIcon');
-                                    console.log('esriStopIcons', stopIcons);
+                                    const stopRows = query('tr.esriStop.dojoDndItem');
+                                    console.log('stopRows', stopRows);
+                                    stopRows.forEach(function(row) {
+                                        const stopIcon = query('.esriStopIcon',row);
+                                        if(stopIcon && stopIcon.length>0){
+                                            let background = domStyle.getComputedStyle(stopIcon[0]).background;
+                                            if(!background.isNonEmpty()) {
+                                                background = domStyle.getComputedStyle(stopIcon[0]).backgroundImage;
+                                            }
+                                            if(background.includes("Directions") /*&& !background.includes("-100px")*/) {
+                                                const left = background.indexOf('url(\"')+5;
+                                                let imgSrc = background.substring(left, background.indexOf('\")'));
+                                                if(imgSrc.includes("Directions/blueCircle.png")) {
+                                                    imgSrc = "../images/bluePoint.png";
+                                                }
+                                                else if(imgSrc.includes("Directions/greenPoint.png")) {
+                                                    imgSrc = "../images/greenPoint.png";
+                                                }
+                                                else if(imgSrc.includes("Directions/redPoint.png") || imgSrc.includes("esriDMTDepart.png")) {
+                                                    imgSrc = "../images/redPoint.png";
+                                                }
+
+                                                const text = stopIcon[0].innerText;
+                                                stopIcon[0].innerText = '';
+
+                                                // domStyle.set(stopIcon[0], "background", background.replace(/center/, '-100px'));
+                                                const img = domConstruct.create("img",{alt:"", src:imgSrc},stopIcon[0]);
+
+                                                if(text.isNonEmpty()) {
+                                                    const span = domConstruct.toDom("<span aria-hidden='true'>"+text+"</span>");
+                                                    domConstruct.place(span, img, "after");
+                                                }
+                                            }
+                                        }
+                                    })
                                 } catch (ex) {
                                     console.log('mutation error', ex);
                                 }

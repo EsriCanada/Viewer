@@ -53,21 +53,37 @@
 	color: black;
 }
 
-.simpleDirections .esriRouteIcon img {
+.simpleDirections .esriRouteIcon img,
+.simpleDirections .esriStop .esriStopIcon img 
+{
 	position:absolute;
 	display: block;
 }
 
-.simpleDirections .esriRouteIcon span {
+.simpleDirections .esriStop .esriStopIcon img 
+{
+	margin-left: 3px;
+}
+
+.simpleDirections .esriRouteIcon span,
+.simpleDirections .esriStop .esriStopIcon span {
     font-weight: bold;
     position: absolute;
-    margin-left: 8px;
     margin-top: 1px;
     font-size: 12px;
 }
 
+.simpleDirections .esriRouteIcon span {
+    margin-left: 8px;
+}
+
+.simpleDirections .esriStop .esriStopIcon span {
+    margin-left: 10px;
+}
+
 @supports (display: -webkit-box) {
-	.simpleDirections .esriRouteIcon span {
+	.simpleDirections .esriRouteIcon span,
+	.simpleDirections .esriStop .esriStopIcon span {
 	    margin-left: -3px;
 	}
 }
