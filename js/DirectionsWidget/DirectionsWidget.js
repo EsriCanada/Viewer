@@ -107,26 +107,23 @@ define([
             on(
                 this.directions,
                 "load",
-                
                 function() {
-                    this.observer = new MutationObserver(function(mutations) {
-                        console.log('mutations', mutations);
-                        mutations.forEach(function(mutation) {
-                            console.log('mutation', mutation);
-
-                            try{
-                                console.log('mutation target', mutation.target);
-                                const stopIcons = query('.esriStopIcon');
-                                console.log('esriStopIcons', stopIcons);
-                            } catch (ex) {
-                                console.log('mutation error', ex);
-                            }
-                        });
-                    });
-
                     const esriStopsContainer = query('.esriDirectionsContainer');
                     if(esriStopsContainer && esriStopsContainer.length >0) {
-                        this.observer.observe(esriStopsContainer[0], {
+                        new MutationObserver(function(mutations) {
+                            console.log('mutations', mutations);
+                            mutations.forEach(function(mutation) {
+                                console.log('mutation', mutation);
+
+                                try{
+                                    console.log('mutation target', mutation.target);
+                                    const stopIcons = query('.esriStopIcon');
+                                    console.log('esriStopIcons', stopIcons);
+                                } catch (ex) {
+                                    console.log('mutation error', ex);
+                                }
+                            });
+                        }).observe(esriStopsContainer[0], {
                             attributes: true,
                             childList: false,
                             characterData: false
