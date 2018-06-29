@@ -68,7 +68,6 @@ define([
                 // routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
                 // showSaveButton: true,
 
-                showBarriersButton: false,
                 showMilesKilometersOption: false,
                 showOptimalRouteOption: false,
                 showSegmentHighlight: false,
@@ -79,16 +78,16 @@ define([
                 showClearButton: false,
                 showBarriersButton: false,
                 showReturnToStartOption: false,
-                showReverseStopsButton: false,
+                showReverseStopsButton: true,
                 showSegmentPopup: false,
                 showPrintPage: false,
 
                 directionsLengthUnits: units.KILOMETERS,
 
                 dragging: true,
-                // canModifyStops: true,
-                mapClickActive: false,
-                maxStops: 2,
+                canModifyStops: true,
+                // mapClickActive: false,
+                maxStops: 9,
 
                 fromSymbol: fromSymb,
                 stopSymbol: stopSymb,

@@ -14,6 +14,11 @@
     display: none !important;
 }
 
+.simpleDirections .esriStopsReverse,
+.simpleDirections .esriStopReverseColumn {
+	display: none !important;
+}
+
 .simpleDirections .esriRouteInfo, .simpleDirections .esriRouteInfo strong {
     color: black;
 }
@@ -130,3 +135,4 @@
 	height: 18px !important;
     width: 18px !important;
 }
+

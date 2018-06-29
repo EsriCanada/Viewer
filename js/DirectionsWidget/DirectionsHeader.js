@@ -75,8 +75,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.loaded = true;
 
+            on(query('.directionsButton.reverse')[0], 'click', lang.hitch(this, this.reverseDirections));
             on(query('.directionsButton.clear')[0], 'click', lang.hitch(this, this.clearDirections));
             on(query('.directionsButton.print')[0], 'click', lang.hitch(this, this.printDirections));
+            on(query('.directionsButton.stop')[0], 'click', lang.hitch(this, this.addStopsDirections));
 
             var buttons = query(".directionsButton");
             buttons.forEach(lang.hitch(this, function (btn) {
@@ -105,7 +107,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         clearDirections : function(ev) {
-            this.directions.clearDirections();
+            this.directions.reset();//clearDirections();
+        },
+
+        reverseDirections: function() {
+            const reverseButton = query('.esriStopsReverse');
+            if(reverseButton && reverseButton.length>0) {
+                reverseButton[0].click();
+            }
         },
 
         printDirections: function() {
@@ -113,6 +122,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             if(printButton && printButton.length>0) {
                 printButton[0].click();
             }
+        },
+
+        addStopsDirections: function() {
+            this.directions.set("mapClickActive", !this.directions.mapClickActive);
         },
 
     });
