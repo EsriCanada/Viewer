@@ -75,11 +75,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.loaded = true;
 
-            on(query('.directionsButton.reverse')[0], 'click', lang.hitch(this, this.reverseDirections));
-            on(query('.directionsButton.clear')[0], 'click', lang.hitch(this, this.clearDirections));
-            on(query('.directionsButton.print')[0], 'click', lang.hitch(this, this.printDirections));
-            on(query('.directionsButton.stop')[0], 'click', lang.hitch(this, this.addStopsDirections));
-
             var buttons = query(".directionsButton");
             buttons.forEach(lang.hitch(this, function (btn) {
                 on(btn,'keydown', lang.hitch(this, function(ev) {
@@ -89,28 +84,28 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             ev.stopPropagation();
                             ev.preventDefault();
                             break;
-                        case 88: // X
-                        case 67: // C
-                        case 69: // E
-                            this.ToClear();
-                            ev.stopPropagation();
-                            ev.preventDefault();
-                            break;
+                        // case 88: // X
+                        // case 67: // C
+                        // case 69: // E
+                        //     this.ToClear();
+                        //     ev.stopPropagation();
+                        //     ev.preventDefault();
+                        //     break;
                     }
                 }));
             }));
 
         },
 
-        ToClear : function() {
-            query('.directionsButton.clear')[0].focus();
-        },
+        // ToClear : function() {
+        //     query('.directionsButton.clear')[0].focus();
+        // },
 
         clearDirections : function(ev) {
             this.directions.reset();//clearDirections();
         },
 
-        reverseDirections: function() {
+        reverseDirections: function(ev) {
             const reverseButton = query('.esriStopsReverse');
             if(reverseButton && reverseButton.length>0) {
                 reverseButton[0].click();
