@@ -84,6 +84,8 @@ define([
 
                 directionsLengthUnits: units.KILOMETERS,
 
+                optimalRoute: true,
+
                 dragging: true,
                 canModifyStops: true,
                 // mapClickActive: false,
