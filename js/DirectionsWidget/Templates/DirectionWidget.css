@@ -125,3 +125,8 @@
     margin-right: 4px;
     margin-top: 1px;
 }
+
+.directionsHeader img {
+	height: 18px !important;
+    width: 18px !important;
+}

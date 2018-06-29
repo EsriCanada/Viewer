@@ -76,6 +76,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.loaded = true;
 
             on(query('.directionsButton.clear')[0], 'click', lang.hitch(this, this.clearDirections));
+            on(query('.directionsButton.print')[0], 'click', lang.hitch(this, this.printDirections));
 
             var buttons = query(".directionsButton");
             buttons.forEach(lang.hitch(this, function (btn) {
@@ -105,6 +106,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         clearDirections : function(ev) {
             this.directions.clearDirections();
+        },
+
+        printDirections: function() {
+            const printButton = query('.esriResultsPrint');
+            if(printButton && printButton.length>0) {
+                printButton[0].click();
+            }
         },
 
     });
