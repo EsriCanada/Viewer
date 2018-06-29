@@ -75,7 +75,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.loaded = true;
 
-            // on(query('#'+this.directionsHeaderId+' .directionsButton.clear')[0], 'click', lang.hitch(this, this.clearDirections));
+            on(query('.directionsButton.clear')[0], 'click', lang.hitch(this, this.clearDirections));
 
             var buttons = query(".directionsButton");
             buttons.forEach(lang.hitch(this, function (btn) {
@@ -104,7 +104,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         clearDirections : function(ev) {
-            this.directions.clear();
+            this.directions.clearDirections();
         },
 
     });

@@ -114,8 +114,14 @@
 .simpleDirections .esriStopsGetDirections,
 .simpleDirections .esriDisabledDirectionsButton,
 .simpleDirections .arcgisSearch .sourceName,
-.simpleDirections  .arcgisSearch .searchButtonText
- {
+.simpleDirections .arcgisSearch .searchButtonText
+{
 	background: black;
 	color: white;
+}
+
+.directionsHeader {
+	float: right;
+    margin-right: 4px;
+    margin-top: 1px;
 }

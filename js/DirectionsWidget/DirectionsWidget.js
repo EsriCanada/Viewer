@@ -26,6 +26,7 @@ define([
 
         options: {
             map: null,
+            header: 'pageHeader_directions',
             id: "directionsWidget",
             deferred: null,
             proxyUrl: null,
@@ -36,6 +37,7 @@ define([
             this.defaults = _lang.mixin({}, this.options, options);
             this._i18n = i18n;
             this.domNode = srcRefNode;
+            this.headerNode = dom.byId(this.defaults.header);
             this.map = this.defaults.map;
             this.deferred = this.defaults.deferred;
             const directionsProxy = this.defaults.directionsProxy;
