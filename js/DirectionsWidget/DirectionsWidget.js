@@ -3,6 +3,7 @@ define([
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
     "esri/units", "esri/urlUtils", "esri/dijit/Directions",
+    "application/DirectionsWidget/DirectionsHeader",
     "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font",
     "dojo/i18n!application/nls/resources",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
@@ -14,6 +15,7 @@ define([
         _WidgetBase, _TemplatedMixin, on,
         query, registry,
         units, urlUtils, Directions,
+        DirectionHeader,
         PictureMarkerSymbol, Font,
         i18n,
         domClass, domAttr, domStyle,
@@ -170,18 +172,40 @@ define([
         },
 
         startup: function () {
+            if (!this.map) {
+                this.destroy();
+                console.error("DirectionWidget: Map required");
+            }
+
+            if (this.map.loaded) {
+                this._init();
+            } else {
+                on.once(this.map, "load", lang.hitch(this, function () {
+                    this._init();
+                }));
+            } 
+        },
+
+        loaded : false,
+
+        _init : function() {  
+
+            this.directionsHeader = new DirectionHeader({
+                directions: this.directions,
+                header: 'pageHeader_directions',
+                // id: 'directionsHeaderId',
+                iconsColor: 'white', //this.iconsColor,
+            }, domConstruct.create('Div', {}, this.headerNode));
+            this.directionsHeader.startup();        
+
             try {
 
                 this.directions.startup();
+                this.loaded = true; 
 
                 domClass.add(this.domNode, "pageBody");
 
-                domAttr.set(this.directions._dndNode, "role", "presentation");
-                // domAttr.set(this.directions._popupStateNode, "role", "presentation");
-
-                // this.directions.on("segment-select", function(ev){
-                    
-                // });
+                // domAttr.set(this.directions._dndNode, "role", "presentation");
 
                 this.directions.on("directions-finish", function(ev){
                     // console.log("directions-finish", ev);
