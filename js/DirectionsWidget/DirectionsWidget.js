@@ -1,27 +1,26 @@
 define([
     "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
-    "dojo/query", "dijit/registry",
-    "esri/units", "esri/urlUtils", 
+    "dojo/query", 
+    "esri/units",
     "esri/dijit/Directions",
     "application/DirectionsWidget/DirectionsHeader",
     "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font",
     "dojo/i18n!application/nls/resources",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
-    "dojo/dom-construct", "dojo/_base/event",
-    "dojo/NodeList-dom", "dojo/NodeList-traverse"
+    "dojo/dom-construct"
 
     ], function (
-        Evented, declare, _lang, has, dom, esriNS,
+        Evented, declare, lang, has, dom, esriNS,
         _WidgetBase, _TemplatedMixin, on,
-        query, registry,
-        units, urlUtils, 
+        query, 
+        units, 
         Directions,
         DirectionHeader,
         PictureMarkerSymbol, Font,
         i18n,
         domClass, domAttr, domStyle,
-        domConstruct, event 
+        domConstruct
     ) {
     var Widget = declare("esri.dijit.DirectionWidget", [_WidgetBase, /*_TemplatedMixin,*/ Evented], {
         // templateString: LanguageSelectTemplate,
@@ -37,7 +36,7 @@ define([
 
 
         constructor: function (options, srcRefNode) {
-            this.defaults = _lang.mixin({}, this.options, options);
+            this.defaults = lang.mixin({}, this.options, options);
             this._i18n = i18n;
             this.domNode = srcRefNode;
             this.headerNode = dom.byId(this.defaults.header);
@@ -204,7 +203,7 @@ define([
                 header: 'pageHeader_directions',
                 // id: 'directionsHeaderId',
                 iconsColor: 'white', //this.iconsColor,
-                locateCallBack: _lang.hitch(this, function(ev) {
+                locateCallBack: lang.hitch(this, function(ev) {
                     // console.log('locateCallBack', ev, this);
 
                     const stop = [ev.position.coords.longitude, ev.position.coords.latitude];
@@ -330,7 +329,7 @@ define([
     });
 
     if (has("extend-esri")) {
-        _lang.setObject("dijit.DirectionWidget", Widget, esriNS);
+        lang.setObject("dijit.DirectionWidget", Widget, esriNS);
     }
     return Widget;
 });
