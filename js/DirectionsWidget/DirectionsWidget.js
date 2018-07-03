@@ -3,7 +3,6 @@ define([
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
     "dojo/query", "dijit/registry",
     "esri/units", "esri/urlUtils", 
-    'esri/tasks/locator', "esri/geometry/webMercatorUtils",
     "esri/dijit/Directions",
     "application/DirectionsWidget/DirectionsHeader",
     "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font",
@@ -17,7 +16,7 @@ define([
         _WidgetBase, _TemplatedMixin, on,
         query, registry,
         units, urlUtils, 
-        Locator, webMercatorUtils, Directions,
+        Directions,
         DirectionHeader,
         PictureMarkerSymbol, Font,
         i18n,
@@ -34,7 +33,6 @@ define([
             deferred: null,
             proxyUrl: null,
             directionsProxy: null,
-            locatorUrl: "https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer"
         },
 
 
@@ -46,8 +44,6 @@ define([
             this.map = this.defaults.map;
             this.deferred = this.defaults.deferred;
             const directionsProxy = this.defaults.directionsProxy;
-
-            this.locator = new Locator(this.defaults.locatorUrl);
 
             var link = document.createElement("link");
             link.href = "js/DirectionsWidget/Templates/DirectionWidget.css";
@@ -198,17 +194,6 @@ define([
             } 
         },
 
-        postCreate : function() {
-            this.inherited(arguments);
-            if(this.locator) {
-                this.locator.on('location-to-address-complete', _lang.hitch(this, function(evt) {
-                    console.log('locator', evt, evt.address.address.LongLabel);
-                    const stop = evt.address.address.LongLabel;
-                    this.directions.updateStop(stop, 0);
-                }))
-            }
-        },
-
         loaded : false,
 
         _init : function() {  
@@ -220,13 +205,12 @@ define([
                 // id: 'directionsHeaderId',
                 iconsColor: 'white', //this.iconsColor,
                 locateCallBack: _lang.hitch(this, function(ev) {
-                    console.log('locateCallBack', ev, this);
+                    // console.log('locateCallBack', ev, this);
 
-                    this.locator.locationToAddress(
-                        webMercatorUtils.webMercatorToGeographic(ev.graphic.geometry), 100
-                    );
-                    console.log('stops', this.directions.stops);
+                    const stop = [ev.position.coords.longitude, ev.position.coords.latitude];
+                    this.directions.updateStop(stop, 0);
 
+                    // console.log('stops', this.directions.stops);
                 })
             }, domConstruct.create('Div', {}, this.headerNode));
             this.directionsHeader.startup();        
