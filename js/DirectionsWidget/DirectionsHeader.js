@@ -40,10 +40,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             id: 'directionsHeadrId',
             template: DirectionsHeaderTemplate,
             iconsColor: 'black',
+            locateCallBack: null,
         },
 
         constructor: function (options, srcRefNode) {
-            var defaults = lang.mixin({}, this.options, options);
+            const defaults = lang.mixin({}, this.options, options);
             this.map = defaults.map;
             this.domNode = srcRefNode;
             this.widgetsInTemplate = true;
@@ -55,6 +56,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.headerNode = dom.byId(defaults.header);
             this.iconsColor = defaults.iconsColor;
 
+            this.locateCallBack = defaults.locateCallBack;
         },
 
         startup: function () {
@@ -73,7 +75,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             if (has("locate")) {// && isLocationEnabled) {
                 this.locate = new LocateButton({
                     map: this.map,
-                    scale: 2000,
+                    scale: 5000,
+                    highlightLocation: false
                 }, domConstruct.create("div",{},this.locateDivButton));
                 this.locate.startup();
 
@@ -91,7 +94,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     src: 'images/icons_'+this.iconsColor+'/locate.png',
                     alt: locateHint,
                     title: locateHint
-                }, zoomLocateButton);            
+                }, zoomLocateButton);  
+
+                if(this.locateCallBack) {
+                    this.locate.on("locate", this.locateCallBack)
+                }
             }
         },
 
