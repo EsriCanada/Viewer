@@ -106,9 +106,8 @@
 }
 
 .simpleDirections .arcgisSearch .searchExpandContainer
-/*.simpleDirections .arcgisSearch .searchInputGroup */
 {
-    width: calc(100% - 32px);
+    width: calc(100% - 8px);
 }
 
 .simpleDirections .arcgisSearch .searchGroup .searchInput {
@@ -136,3 +135,32 @@
     width: 18px !important;
 }
 
+.simpleDirections .zoomLocateButton {
+	display: none;
+}
+
+.simpleDirections .locateContainer input {
+    height: 18px; 
+    width: 18px; 
+    padding: 0; 
+}
+
+.directionsHeader .locateContainer input{
+	float: none;
+    display: inline-block;
+    margin: 0;
+    padding:0;
+    height: 18px;
+    width: 18px;
+}
+
+.LocateButton .zoomLocateButton:before {
+	content:'';
+	font-size:1px;
+}
+
+.directionsHeader .locateButton {
+    float: none;
+    margin: 0;
+    display: inline-block;
+}

@@ -1,6 +1,6 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
-    "dojo/on",
+    "dojo/on",  "esri/dijit/LocateButton",
     "dojo/Deferred", "dojo/query",
     "dojo/text!application/DirectionsWidget/Templates/DirectionsHeader.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
@@ -9,14 +9,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/string",
     "dojo/i18n!application/nls/PopupInfo",
     "esri/domUtils",
-    "esri/dijit/Popup",
     // "application/ImageToggleButton/ImageToggleButton",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
 
     ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, registry,
-        on,
+        on, LocateButton,
         Deferred, query,
         DirectionsHeaderTemplate,
         dom, domClass, domAttr, domStyle, domConstruct, event,
@@ -24,8 +23,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         ContentPane,
         string,
         i18n,
-        domUtils,
-        Popup// , ImageToggleButton
+        domUtils
     ) {
 
     // ready(function(){
@@ -34,9 +32,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     // });
 
     var Widget = declare("esri.dijit.DirectionsHeader", [_WidgetBase, _TemplatedMixin, Evented], {
-        // templateString: PopupInfoHeaderTemplate,
-
+        
         options: {
+            map: null,
             directions: null,
             header: 'pageHeader_directionsPanel',
             id: 'directionsHeadrId',
@@ -46,6 +44,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         constructor: function (options, srcRefNode) {
             var defaults = lang.mixin({}, this.options, options);
+            this.map = defaults.map;
             this.domNode = srcRefNode;
             this.widgetsInTemplate = true;
 
@@ -55,6 +54,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this._i18n = i18n;
             this.headerNode = dom.byId(defaults.header);
             this.iconsColor = defaults.iconsColor;
+
         },
 
         startup: function () {
@@ -68,6 +68,30 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 on.once(this.directions, "load", lang.hitch(this, function () {
                     this._init();
                 }));
+            }
+
+            if (has("locate")) {// && isLocationEnabled) {
+                this.locate = new LocateButton({
+                    map: this.map,
+                    scale: 2000,
+                }, domConstruct.create("div",{},this.locateDivButton));
+                this.locate.startup();
+
+                var locateButton = dojo.query(".locateContainer", this.locateDivButton)[0];
+                var zoomLocateButton = dojo.query(".zoomLocateButton", this.locateDivButton)[0];
+                //dojo.removeAttr(zoomLocateButton, 'title');
+                // var locateHint = dojo.attr(zoomLocateButton, 'title');
+                dojo.removeAttr(zoomLocateButton, 'role');
+
+                dojo.empty(zoomLocateButton);
+
+                const locateHint = "Start from your location";
+                domConstruct.create("input", {
+                    type: 'image',
+                    src: 'images/icons_'+this.iconsColor+'/locate.png',
+                    alt: locateHint,
+                    title: locateHint
+                }, zoomLocateButton);            
             }
         },
 

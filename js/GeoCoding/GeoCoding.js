@@ -107,6 +107,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         postCreate : function() {
+            this.inherited(arguments);
             if(this.locator) {
 
                 if(this.superNavigator) {

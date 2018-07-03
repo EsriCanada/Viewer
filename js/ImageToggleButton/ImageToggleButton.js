@@ -58,6 +58,7 @@ define([
         },
 
         startup: function() {
+            this.inherited(arguments);
             if(this.defaults.domMessage) {
                 domConstruct.place(this.myMessage, this.defaults.domMessage);
             }

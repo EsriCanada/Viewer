@@ -91,6 +91,8 @@ define([
                 // mapClickActive: false,
                 maxStops: 9,
 
+                // alphabet: false,
+
                 fromSymbol: fromSymb,
                 stopSymbol: stopSymb,
                 toSymbol: toSymb,
@@ -194,6 +196,7 @@ define([
         _init : function() {  
 
             this.directionsHeader = new DirectionHeader({
+                map: this.map,
                 directions: this.directions,
                 header: 'pageHeader_directions',
                 // id: 'directionsHeaderId',
