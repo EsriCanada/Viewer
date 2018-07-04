@@ -159,8 +159,11 @@
 	font-size:1px;
 }
 
-.directionsHeader .locateButton {
+.directionsHeader .locateButton,
+.directionsHeader .addStopsButton {
     float: none;
     margin: 0;
+    padding: 0;
     display: inline-block;
+    line-height: 1px;
 }

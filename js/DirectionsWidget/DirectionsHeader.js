@@ -106,7 +106,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.loaded = true;
 
-            var buttons = query(".directionsButton");
+            const buttons = query(".directionsButton");
             buttons.forEach(lang.hitch(this, function (btn) {
                 on(btn,'keydown', lang.hitch(this, function(ev) {
                     switch(ev.keyCode) {
@@ -126,6 +126,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }));
             }));
 
+            this.directions.on("map-click-active", lang.hitch(this, function(state) {
+                if(state.mapClickActive)
+                    domClass.add(this.addStopsButton, 'activeBg');
+                else
+                    domClass.remove(this.addStopsButton, 'activeBg');
+            }));
         },
 
         // ToClear : function() {
