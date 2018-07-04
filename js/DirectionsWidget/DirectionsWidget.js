@@ -30,6 +30,7 @@ define([
             header: 'pageHeader_directions',
             id: "directionsWidget",
             deferred: null,
+            toolbar: null,
             proxyUrl: null,
             directionsProxy: null,
         },
@@ -41,6 +42,7 @@ define([
             this.domNode = srcRefNode;
             this.headerNode = dom.byId(this.defaults.header);
             this.map = this.defaults.map;
+            this.toolbar = this.defaults.toolbar,
             this.deferred = this.defaults.deferred;
             const directionsProxy = this.defaults.directionsProxy;
 
@@ -184,6 +186,11 @@ define([
                 console.error("DirectionWidget: Map required");
             }
 
+            if (!this.toolbar) {
+                this.destroy();
+                console.error("DirectionWidget: Toolbar required");
+            }
+
             if (this.map.loaded) {
                 this._init();
             } else {
@@ -202,6 +209,7 @@ define([
                 directions: this.directions,
                 header: 'pageHeader_directions',
                 // id: 'directionsHeaderId',
+                toolbar: this.toolbar,
                 iconsColor: 'white', //this.iconsColor,
                 locateCallBack: lang.hitch(this, function(ev) {
                     // console.log('locateCallBack', ev, this);

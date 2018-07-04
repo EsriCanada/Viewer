@@ -36,6 +36,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         options: {
             map: null,
             directions: null,
+            toolbar: null,
             header: 'pageHeader_directionsPanel',
             id: 'directionsHeadrId',
             template: DirectionsHeaderTemplate,
@@ -46,6 +47,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         constructor: function (options, srcRefNode) {
             const defaults = lang.mixin({}, this.options, options);
             this.map = defaults.map;
+            this.toolbar = defaults.toolbar;
             this.domNode = srcRefNode;
             this.widgetsInTemplate = true;
 
@@ -57,6 +59,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.iconsColor = defaults.iconsColor;
 
             this.locateCallBack = defaults.locateCallBack;
+
+            this.mapClickActiveStatus = false;
         },
 
         startup: function () {
@@ -127,11 +131,26 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }));
 
             this.directions.on("map-click-active", lang.hitch(this, function(state) {
-                if(state.mapClickActive)
+                if(this.mapClickActiveStatus = state.mapClickActive) {
                     domClass.add(this.addStopsButton, 'activeBg');
-                else
+                }
+                else {
                     domClass.remove(this.addStopsButton, 'activeBg');
+                }
             }));
+
+            this.toolbar.on('updateTool', lang.hitch(this, function(name) {
+                // console.log('updateTool', name);
+                if(name==='directions') {
+                    this.directions.set("mapClickActive", this.mapClickActiveStatus);
+                } else {
+                    if(this.directions.mapClickActive) {
+                        this.directions.set("mapClickActive", false);
+                        this.mapClickActiveStatus = true;
+                    }
+                }
+            }));
+
         },
 
         // ToClear : function() {
