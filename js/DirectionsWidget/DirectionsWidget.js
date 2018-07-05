@@ -256,7 +256,11 @@ define([
                     const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
                     if(!this._usedSearchIds.includes(searchWidget.id)) {
                         domAttr.set(searchWidget.clearNode, 'title', 'Remove Stop');
-
+                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'assistive');
+                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-atomic', 'true');
+                        domAttr.set(searchWidget.inputNode, 'aria-live', 'polite');
+                        domAttr.set(searchWidget.inputNode, 'aria-atomic', 'true');
+                        // searchWidget.noResultsMenuNode
                         const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
                         domConstruct.empty(closeSpan);
                         domConstruct.create('img', {
