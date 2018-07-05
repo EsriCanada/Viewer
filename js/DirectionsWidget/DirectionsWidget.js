@@ -237,10 +237,10 @@ define([
                     // console.log("target", ev.target.directions);
                     // console.log("domNode", ev.target.domNode);
 
-                    const stopsTr = query('.esriStop.dojoDndItem', ev.target.domNode);
+                    const stopsTr = query('tr.esriStop.dojoDndItem', ev.target.domNode);
                     console.log('stopsTr', stopsTr);
                     stopsTr.forEach(function(stopTr) {
-                        let closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
+                        const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
                         domConstruct.empty(closeSpan);
                         domConstruct.create('img', {
                             src: "images/icons_black/searchClear.png",
@@ -248,7 +248,8 @@ define([
                         }, closeSpan);
                         console.log('closeSpan', closeSpan);
 
-                        const searchDiv = query('.arcgisSearch.esriInnerGeocoder', stopTr)[0];
+                        const searchDiv = query('td.esriStopGeocoderColumn .arcgisSearch', stopTr)[0];//.children[0];
+                        console.log('searchDiv', searchDiv); 
                         if(searchDiv) {
                             const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
                             console.log('searchWidget', searchWidget);
