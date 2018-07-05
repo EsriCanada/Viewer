@@ -167,3 +167,38 @@
     display: inline-block;
     line-height: 1px;
 }
+
+.simpleDirections .arcgisSearch .searchClear,
+.simpleDirections .arcgisSearch .hasValue .searchClear {
+    display: block; 
+    height:28px;
+    width:23px;
+}
+
+.simpleDirections .searchClose:focus, 
+.simpleDirections .searchClose:hover {
+	background-color: white;
+}
+
+.simpleDirections .searchBtn:focus, 
+.simpleDirections .searchClear:focus, 
+.simpleDirections .searchInput:focus {
+    background-color: rgba(100, 100, 100, 0.25);
+}
+
+.simpleDirections .arcgisSearch .searchSpinner {
+	color: black;
+}
+
+.simpleDirections .esri-icon-close:before {
+    content: "";
+}
+
+span.searchIcon.esri-icon-close.searchClose {
+    background-color: rgba(255, 255, 255, 0.75);
+}
+
+span.searchIcon.esri-icon-close.searchClose img {
+	width:10px;
+	height:10px;
+}

@@ -237,6 +237,24 @@ define([
                     // console.log("target", ev.target.directions);
                     // console.log("domNode", ev.target.domNode);
 
+                    const stopsTr = query('.esriStop.dojoDndItem', ev.target.domNode);
+                    console.log('stopsTr', stopsTr);
+                    stopsTr.forEach(function(stopTr) {
+                        let closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
+                        domConstruct.empty(closeSpan);
+                        domConstruct.create('img', {
+                            src: "images/icons_black/searchClear.png",
+                            alt: "clear"
+                        }, closeSpan);
+                        console.log('closeSpan', closeSpan);
+
+                        const searchDiv = query('.arcgisSearch.esriInnerGeocoder', stopTr)[0];
+                        if(searchDiv) {
+                            const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
+                            console.log('searchWidget', searchWidget);
+                        }
+                    });
+
                     const nodes = query('[role=presentation]', ev.target.domNode);
                     // console.log("presentationNodes", nodes);
                     nodes.forEach(function(node) { domAttr.remove(node, "role"); });
