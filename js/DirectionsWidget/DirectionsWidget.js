@@ -231,6 +231,7 @@ define([
 
                 // domAttr.set(this.directions._dndNode, "role", "presentation");
 
+                this.directions.on("load", lang.hitch(this, this._fixStops));
                 this.directions.on("directions-finish", lang.hitch(this, this._fixUi));
 
 
@@ -245,7 +246,19 @@ define([
 
         _usedSearchIds : [],
 
-        _fixUi : function(ev){
+        _fixStops :function(ev) {
+            const nodes = query('[role=presentation]', ev.target.domNode);
+            // console.log("presentationNodes", nodes);
+            nodes.forEach(function(node) { domAttr.remove(node, "role"); });
+
+            const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
+            if(esriRoutesErrors && esriRoutesErrors.length>0) {
+                esriRoutesErrors.forEach(function(esriRoutesError) {
+                    domAttr.set(esriRoutesError,'aria-live', 'polite');
+                    domAttr.set(esriRoutesError,'aria-atomic', 'true');
+                })
+            }
+
             const stopsTr = query('tr.esriStop.dojoDndItem', ev.target.domNode);
             // console.log('stopsTr', stopsTr);
             // const usedSearchIds = this._usedSearchIds;
@@ -256,11 +269,11 @@ define([
                     const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
                     if(!this._usedSearchIds.includes(searchWidget.id)) {
                         domAttr.set(searchWidget.clearNode, 'title', 'Remove Stop');
-                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'assistive');
+                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'polite');
                         domAttr.set(searchWidget.noResultsMenuNode, 'aria-atomic', 'true');
-                        domAttr.set(searchWidget.inputNode, 'aria-live', 'polite');
-                        domAttr.set(searchWidget.inputNode, 'aria-atomic', 'true');
-                        // searchWidget.noResultsMenuNode
+                        // domAttr.set(searchWidget.inputNode, 'aria-live', 'polite');
+                        // domAttr.set(searchWidget.inputNode, 'aria-atomic', 'true');
+                        
                         const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
                         domConstruct.empty(closeSpan);
                         domConstruct.create('img', {
@@ -284,10 +297,10 @@ define([
                     }
                 }
             }));
+        },
 
-            const nodes = query('[role=presentation]', ev.target.domNode);
-            // console.log("presentationNodes", nodes);
-            nodes.forEach(function(node) { domAttr.remove(node, "role"); });
+        _fixUi : function(ev){
+            this._fixStops(ev);
 
             const tables = query('table', ev.target.domNode);
             // console.log("tables", tables);
@@ -345,14 +358,6 @@ define([
             {
                 domAttr.set(summary[0],'aria-live', 'polite');
                 domAttr.set(summary[0],'aria-atomic', 'true');
-            }
-
-            const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
-            if(esriRoutesErrors && esriRoutesErrors.length>0) {
-                esriRoutesErrors.forEach(function(esriRoutesError) {
-                    domAttr.set(esriRoutesError,'aria-live', 'polite');
-                    domAttr.set(esriRoutesError,'aria-atomic', 'true');
-                })
             }
 
             const esriImpedanceCost = query('.esriImpedanceCost', ev.target.domNode);
