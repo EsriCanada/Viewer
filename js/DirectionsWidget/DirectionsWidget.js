@@ -250,20 +250,31 @@ define([
             // console.log('stopsTr', stopsTr);
             // const usedSearchIds = this._usedSearchIds;
             stopsTr.forEach(lang.hitch(this, function(stopTr) {
-                const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
-                domConstruct.empty(closeSpan);
-                domConstruct.create('img', {
-                    src: "images/icons_black/searchClear.png",
-                    alt: "clear"
-                }, closeSpan);
-                // console.log('closeSpan', closeSpan);
-
                 const searchDiv = query('td.esriStopGeocoderColumn .arcgisSearch', stopTr)[0];
                 // console.log('searchDiv', searchDiv); 
                 if(searchDiv) {
                     const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
                     if(!this._usedSearchIds.includes(searchWidget.id)) {
-                        console.log('searchWidget', searchWidget.id);
+                        domAttr.set(searchWidget.clearNode, 'title', 'Remove Stop');
+
+                        const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
+                        domConstruct.empty(closeSpan);
+                        domConstruct.create('img', {
+                            src: "images/icons_black/searchClear.png",
+                            alt: "clear"
+                        }, closeSpan);
+                        // console.log('closeSpan', closeSpan);
+
+                        // console.log('searchWidget', searchWidget.id);
+
+                        const clearAllBtns = query('.esriStopIconRemoveHidden, .esriStopIconRemove', stopTr);
+
+                        if(clearAllBtns && clearAllBtns.length>0) {
+                            searchWidget.on('clear-search', function() {
+                                // console.log('clearSearch', this, clearAllBtns[0]);
+                                clearAllBtns[0].click();
+                            });
+                        }
 
                         this._usedSearchIds.push(searchWidget.id);
                     }

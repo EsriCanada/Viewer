@@ -182,8 +182,12 @@
 
 .simpleDirections .searchBtn:focus, 
 .simpleDirections .searchClear:focus, 
-.simpleDirections .searchInput:focus {
-    background-color: rgba(100, 100, 100, 0.25);
+.simpleDirections .searchInput:focus,
+.simpleDirections .searchBtn:hover, 
+.simpleDirections .searchClear:hover, 
+.simpleDirections .searchInput:hover 
+{
+    background-color: rgba(100, 100, 100, 0.5);
 }
 
 .simpleDirections .arcgisSearch .searchSpinner {
@@ -201,4 +205,8 @@ span.searchIcon.esri-icon-close.searchClose {
 span.searchIcon.esri-icon-close.searchClose img {
 	width:10px;
 	height:10px;
+}
+
+.simpleDirections .esriStopsRemovable .esriStopIconRemoveColumn {
+	display: none;
 }
