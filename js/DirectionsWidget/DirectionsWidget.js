@@ -231,118 +231,7 @@ define([
 
                 // domAttr.set(this.directions._dndNode, "role", "presentation");
 
-                this.directions.on("directions-finish", function(ev){
-                    // console.log("directions-finish", ev);
-                    // console.log("directions", ev.result.routeResults[0].directions);
-                    // console.log("target", ev.target.directions);
-                    // console.log("domNode", ev.target.domNode);
-
-                    const stopsTr = query('tr.esriStop.dojoDndItem', ev.target.domNode);
-                    // console.log('stopsTr', stopsTr);
-                    stopsTr.forEach(function(stopTr) {
-                        const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
-                        domConstruct.empty(closeSpan);
-                        domConstruct.create('img', {
-                            src: "images/icons_black/searchClear.png",
-                            alt: "clear"
-                        }, closeSpan);
-                        // console.log('closeSpan', closeSpan);
-
-                        const searchDiv = query('td.esriStopGeocoderColumn .arcgisSearch', stopTr)[0];
-                        // console.log('searchDiv', searchDiv); 
-                        if(searchDiv) {
-                            const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
-                            console.log('searchWidget', searchWidget);
-                        }
-                    });
-
-                    const nodes = query('[role=presentation]', ev.target.domNode);
-                    // console.log("presentationNodes", nodes);
-                    nodes.forEach(function(node) { domAttr.remove(node, "role"); });
-
-                    const tables = query('table', ev.target.domNode);
-                    // console.log("tables", tables);
-                    tables.forEach(function(table) { domAttr.set(table, "role", "presentation"); });
-
-                    const tbodies = query('tbody[role=menu]', ev.target.domNode);
-                    // console.log("tbodies", tbodies);
-                    tbodies.forEach(function(tbody) { domAttr.set(tbody, "role", "list"); });
-
-                    const trs = query('tr[role=menuitem]', ev.target.domNode);
-                    // console.log("trs", trs);
-                    trs.forEach(function(tr) { domAttr.set(tr, "role", "listitem"); });
-
-                    const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
-                    hiddens.forEach(function(hidden) { domAttr.remove(hidden, 'aria-hidden'); });
-
-                    const routeIcons = query('.esriRouteIcon', ev.target.domNode);
-                    // console.log("routeIcons", routeIcons);
-
-                    routeIcons.forEach(function(routeIcon) {
-                        try {
-                            let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
-                            if(imgSrc.includes("esriDMTStopOrigin.png")) {
-                                imgSrc = "../images/greenPoint.png";
-                            }
-                            else if(imgSrc.includes("esriDMTStopDestination.png")) {
-                                imgSrc = "../images/redPoint.png";
-                            }
-                            else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
-                                imgSrc = "../images/bluePoint.png";
-                            }
-                            else {
-                                imgSrc = imgSrc.substring(5, imgSrc.length-2);
-                            }
-
-                            const text = routeIcon.innerText;
-                            routeIcon.innerText = '';
-
-                            domStyle.set(routeIcon, "background", "transparent");
-                            const img = domConstruct.create("img",{alt:"", src:imgSrc},routeIcon);
-
-                            if(text.isNonEmpty()) {
-                                const span = domConstruct.toDom("<span aria-hidden='true'>"+text+"</span>");
-                                domConstruct.place(span, img, "after");
-                            }
-                        } catch (ex) {
-                            // alert(ex.message);
-                            console.log(ex);
-                        }
-
-                    });
-
-                    const summary = query('.esriResultsSummary', ev.target.domNode);
-                    if(summary && summary.length>0)
-                    {
-                        domAttr.set(summary[0],'aria-live', 'polite');
-                        domAttr.set(summary[0],'aria-atomic', 'true');
-                    }
-
-                    const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
-                    if(esriRoutesErrors && esriRoutesErrors.length>0) {
-                        esriRoutesErrors.forEach(function(esriRoutesError) {
-                            domAttr.set(esriRoutesError,'aria-live', 'polite');
-                            domAttr.set(esriRoutesError,'aria-atomic', 'true');
-                        })
-                    }
-
-                    const esriImpedanceCost = query('.esriImpedanceCost', ev.target.domNode);
-                    if(esriImpedanceCost && esriImpedanceCost.length>0) {
-                        const htmin = esriImpedanceCost[0].innerText.split('\n')[0].split(':');
-                        domAttr.set(esriImpedanceCost[0],'aria-label', i18n.hrmin.format(Number(htmin[0]), Number(htmin[1])));
-                    }
-
-                    const esriImpedanceCostHrMin = query('.esriImpedanceCostHrMin', ev.target.domNode);
-                    if(esriImpedanceCostHrMin && esriImpedanceCostHrMin.length>0) {
-                        domAttr.set(esriImpedanceCostHrMin[0],'aria-hidden', 'true');
-                    }
-
-                    // const esriStopsContainer = query('.esriDirectionsContainer');
-                    // if(esriStopsContainer && esriStopsContainer.length >0) {
-                    //     this.observer.observe(esriStopsContainer[0], this.observerConfig);
-                    // }
-
-                });
+                this.directions.on("directions-finish", lang.hitch(this, this._fixUi));
 
 
                 if(this.deferred)
@@ -353,6 +242,116 @@ define([
                     this.deferred.resolve(false);
             }
         },
+
+        _usedSearchIds : [],
+
+        _fixUi : function(ev){
+            const stopsTr = query('tr.esriStop.dojoDndItem', ev.target.domNode);
+            // console.log('stopsTr', stopsTr);
+            // const usedSearchIds = this._usedSearchIds;
+            stopsTr.forEach(lang.hitch(this, function(stopTr) {
+                const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
+                domConstruct.empty(closeSpan);
+                domConstruct.create('img', {
+                    src: "images/icons_black/searchClear.png",
+                    alt: "clear"
+                }, closeSpan);
+                // console.log('closeSpan', closeSpan);
+
+                const searchDiv = query('td.esriStopGeocoderColumn .arcgisSearch', stopTr)[0];
+                // console.log('searchDiv', searchDiv); 
+                if(searchDiv) {
+                    const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
+                    if(!this._usedSearchIds.includes(searchWidget.id)) {
+                        console.log('searchWidget', searchWidget.id);
+
+                        this._usedSearchIds.push(searchWidget.id);
+                    }
+                }
+            }));
+
+            const nodes = query('[role=presentation]', ev.target.domNode);
+            // console.log("presentationNodes", nodes);
+            nodes.forEach(function(node) { domAttr.remove(node, "role"); });
+
+            const tables = query('table', ev.target.domNode);
+            // console.log("tables", tables);
+            tables.forEach(function(table) { domAttr.set(table, "role", "presentation"); });
+
+            const tbodies = query('tbody[role=menu]', ev.target.domNode);
+            // console.log("tbodies", tbodies);
+            tbodies.forEach(function(tbody) { domAttr.set(tbody, "role", "list"); });
+
+            const trs = query('tr[role=menuitem]', ev.target.domNode);
+            // console.log("trs", trs);
+            trs.forEach(function(tr) { domAttr.set(tr, "role", "listitem"); });
+
+            const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
+            hiddens.forEach(function(hidden) { domAttr.remove(hidden, 'aria-hidden'); });
+
+            const routeIcons = query('.esriRouteIcon', ev.target.domNode);
+            // console.log("routeIcons", routeIcons);
+
+            routeIcons.forEach(function(routeIcon) {
+                try {
+                    let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
+                    if(imgSrc.includes("esriDMTStopOrigin.png")) {
+                        imgSrc = "../images/greenPoint.png";
+                    }
+                    else if(imgSrc.includes("esriDMTStopDestination.png")) {
+                        imgSrc = "../images/redPoint.png";
+                    }
+                    else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
+                        imgSrc = "../images/bluePoint.png";
+                    }
+                    else {
+                        imgSrc = imgSrc.substring(5, imgSrc.length-2);
+                    }
+
+                    const text = routeIcon.innerText;
+                    routeIcon.innerText = '';
+
+                    domStyle.set(routeIcon, "background", "transparent");
+                    const img = domConstruct.create("img",{alt:"", src:imgSrc},routeIcon);
+
+                    if(text.isNonEmpty()) {
+                        const span = domConstruct.toDom("<span aria-hidden='true'>"+text+"</span>");
+                        domConstruct.place(span, img, "after");
+                    }
+                } catch (ex) {
+                    // alert(ex.message);
+                    console.log(ex);
+                }
+
+            });
+
+            const summary = query('.esriResultsSummary', ev.target.domNode);
+            if(summary && summary.length>0)
+            {
+                domAttr.set(summary[0],'aria-live', 'polite');
+                domAttr.set(summary[0],'aria-atomic', 'true');
+            }
+
+            const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
+            if(esriRoutesErrors && esriRoutesErrors.length>0) {
+                esriRoutesErrors.forEach(function(esriRoutesError) {
+                    domAttr.set(esriRoutesError,'aria-live', 'polite');
+                    domAttr.set(esriRoutesError,'aria-atomic', 'true');
+                })
+            }
+
+            const esriImpedanceCost = query('.esriImpedanceCost', ev.target.domNode);
+            if(esriImpedanceCost && esriImpedanceCost.length>0) {
+                const htmin = esriImpedanceCost[0].innerText.split('\n')[0].split(':');
+                domAttr.set(esriImpedanceCost[0],'aria-label', i18n.hrmin.format(Number(htmin[0]), Number(htmin[1])));
+            }
+
+            const esriImpedanceCostHrMin = query('.esriImpedanceCostHrMin', ev.target.domNode);
+            if(esriImpedanceCostHrMin && esriImpedanceCostHrMin.length>0) {
+                domAttr.set(esriImpedanceCostHrMin[0],'aria-hidden', 'true');
+            }
+
+        }
     });
 
     if (has("extend-esri")) {
