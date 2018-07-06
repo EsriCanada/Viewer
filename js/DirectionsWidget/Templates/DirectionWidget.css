@@ -121,7 +121,6 @@
 
 .directionsHeader {
 	float: right;
-    margin-right: 4px;
     margin-top: 1px;
 }
 
@@ -166,9 +165,10 @@
 .simpleDirections .arcgisSearch .searchClear,
 .simpleDirections .arcgisSearch .hasValue .searchClear {
     display: block; 
-    height:28px;
-    width:23px;
-    right: -2px;
+    height:22px;
+    width:22px;
+    right: 2px;
+    top: 5px;
 }
 
 /*.simpleDirections .searchClose:focus, 
@@ -182,20 +182,18 @@
 .simpleDirections .searchClose
 /*.simpleDirections .arcgisSearch.hasValue.searchClear */
 {
-	background-color: rgba(100, 100, 100, 0.25) !important;
-	top: 2px !important;
+	/*background-color: rgba(100, 100, 100, 0.25) !important;*/
+	/*top: 2px !important;*/
 }
 
 .simpleDirections .searchBtn:focus, 
-.simpleDirections .searchClear:focus, 
 /*.simpleDirections .searchInput:focus,*/
 .simpleDirections .searchBtn:hover, 
-.simpleDirections .searchClear:hover, 
 /*.simpleDirections .searchInput:hover,*/
 .simpleDirections .searchClose:focus, 
 .simpleDirections .searchClose:hover 
 {
-    background-color: rgba(100, 100, 100, 0.75) !important;
+    /*background-color: rgba(100, 100, 100, 0.75) !important;*/
     /*background-color: transparent;*/
 }
 
@@ -204,18 +202,26 @@
 }
 
 .simpleDirections .arcgisSearch {
-    width: calc(100% - 8px);
+    margin-right: 2px;
 }
 
 .simpleDirections .esri-icon-close:before {
     content: '';
 }
 
-/*span.searchIcon.esri-icon-close.searchClose {
+/*.simpleDirections span.searchIcon.esri-icon-close.searchClose {
     background-color: rgba(255, 255, 255, 0.75);
 }*/
 
-span.searchIcon.esri-icon-close.searchClose img {
+.simpleDirections .arcgisSearch .searchIcon {
+	height:auto;
+}
+
+.simpleDirections .arcgisSearch .searchGroup .searchInput {
+    width: calc(100% - 34px);
+}
+
+.simpleDirections span.searchIcon.esri-icon-close.searchClose img {
 	width:10px;
 	height:10px;
 }
@@ -224,28 +230,28 @@ span.searchIcon.esri-icon-close.searchClose img {
 	display: none;
 }
 
-.simpleDirections .arcgisSearch .searchGroup .searchInput, 
+/*.simpleDirections .arcgisSearch .searchGroup .searchInput, 
 .dj_rtl .simpleDirections .arcgisSearch .searchGroup .searchInput {
 	border: 1px solid #a0a0a0;
     border-bottom: 1px solid #a0a0a0;
     border-top: 1px solid #a0a0a0 
     border-left: 1px solid #a0a0a0 
     border-right: 1px solid #a0a0a0;
-} 
+} */
 
 .simpleDirections .arcgisSearch .searchGroup .searchInput {
-    padding: 6px 0px 5px 4px;
+    padding: 6px 4px 5px 4px;
 }
 
 .dj_rtl .simpleDirections .arcgisSearch .searchGroup .searchInput {
-    padding: 6px 4px 5px 0px;
+    padding: 6px 4px 5px 4px;
 }
 
 @media only screen and (min-width: 720px) {
 	.simpleDirections .arcgisSearch .searchClose, 
 	.simpleDirections .arcgisSearch .searchSpinner {
 	    /*opacity: 1;*/
-	    padding: 5px 6px;
+	    padding: 6px;
 	}
 }
 

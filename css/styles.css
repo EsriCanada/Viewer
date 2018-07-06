@@ -1554,7 +1554,7 @@ html, body {
     position: absolute;
     width:19px;
     height:19px;
-    line-height: 19px;
+    line-height: 1px;
 }
 
 .arcgisSearch .searchSpinner {

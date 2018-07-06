@@ -71,15 +71,18 @@ http://reference.sitepoint.com/css/outline-color
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#4D000000,endColorstr=#4D000000) !important;
 }
 
-.goThereHint {
-}
+.goThereHint { }
 
 .searchBtn:focus, .searchClear:focus, .searchInput:focus {
-  background-color: rgba(0, 0, 0, 0.7);
+  /*background-color: rgba(0, 0, 0, 0.7);*/
 }
 
-.esri-feature-table .esri-feature-table-menu .dijitDropDownButton .dijitButtonNode:hover {
 }
+.simpleDirections .searchClose:focus { }
+
+.simpleDirections .searchClose:hover { }
+
+.esri-feature-table .esri-feature-table-menu .dijitDropDownButton .dijitButtonNode:hover { }
 
 #mapDiv:focus div.mapFocus {
   z-index:1;
