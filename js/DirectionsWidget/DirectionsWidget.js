@@ -227,6 +227,9 @@ define([
                         if(firstStop && firstStop.length>0) {
                             const searchWidget = dijit.byId(domAttr.get(firstStop[0], 'widgetid'));
                             searchWidget.inputNode.focus();
+                            setTimeout(function () { 
+                                searchWidget.inputNode.select(); 
+                            }, 250);
                         }
                     }
                 })
