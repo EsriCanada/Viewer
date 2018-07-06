@@ -67,7 +67,7 @@ define(
         	"time": "Heure",
         	"print": "Imprimer",
         	"details": "Détails",
-            "directions": "Directions",
+            "directions": "Itinéraires",
         	"share": "Partager",
             "filter": "Filtres",
             "features": "Liste de caractéristiques",

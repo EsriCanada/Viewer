@@ -1374,7 +1374,6 @@ define([
 
         _addDirections: function(tool, toolbar) {
             var deferred = new Deferred();
-
             if (has("directions")) {
                 var directionsDiv = toolbar.createTool(tool);
                 this.directions = new DirectionsWidget({
@@ -1383,12 +1382,11 @@ define([
                     toolbar: toolbar,
                     iconsColor: this.config.icons,
                     directionsProxy: this.config.directionsProxy
-                }, dom.byId("pageBody_directions"));
+                }, directionsDiv);
                 this.directions.startup();
             } else {
                 deferred.resolve(false);
             }
-
             return deferred.promise;
         },
 

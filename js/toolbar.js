@@ -194,8 +194,8 @@ on, mouse, query, Deferred) {
             domClass.add(pageBody, panelClass);
 
             on(this, "updateTool_" + name, lang.hitch(name, function() {
-                // var page = dom.byId('pageBody_'+this);
-                // if(page) page.focus();
+                var page = dom.byId('pageBody_'+this);
+                if(page) page.focus();
                 var focusables = dojo.query('#pageBody_'+this+' [tabindex=0]');
                 if(focusables && focusables.length>0){
                     focusables[0].focus();
