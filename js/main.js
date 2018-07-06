@@ -1381,6 +1381,7 @@ define([
                     map: this.map,
                     deferred: deferred,
                     toolbar: toolbar,
+                    iconsColor: this.config.icons,
                     directionsProxy: this.config.directionsProxy
                 }, dom.byId("pageBody_directions"));
                 this.directions.startup();

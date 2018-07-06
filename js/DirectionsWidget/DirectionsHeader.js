@@ -50,7 +50,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.toolbar = defaults.toolbar;
             this.domNode = srcRefNode;
             this.widgetsInTemplate = true;
-
+            
             this.directions = defaults.directions;
             this.templateString = defaults.template;
             this.directionsHeaderId = defaults.id;

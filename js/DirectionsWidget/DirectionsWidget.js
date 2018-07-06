@@ -33,12 +33,14 @@ define([
             toolbar: null,
             proxyUrl: null,
             directionsProxy: null,
+            iconsColor: 'white',
         },
 
 
         constructor: function (options, srcRefNode) {
             this.defaults = lang.mixin({}, this.options, options);
             this._i18n = i18n;
+            this.iconsColor = this.defaults.iconsColor;
             this.domNode = srcRefNode;
             this.headerNode = dom.byId(this.defaults.header);
             this.map = this.defaults.map;
@@ -210,7 +212,7 @@ define([
                 header: 'pageHeader_directions',
                 // id: 'directionsHeaderId',
                 toolbar: this.toolbar,
-                iconsColor: 'white', //this.iconsColor,
+                iconsColor: this.iconsColor,
                 locateCallBack: lang.hitch(this, function(ev) {
                     // console.log('locateCallBack', ev, this);
 
