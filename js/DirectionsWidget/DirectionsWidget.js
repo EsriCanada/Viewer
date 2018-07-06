@@ -268,6 +268,27 @@ define([
                 })
             }
 
+            const travelModes = query('table.esriTravelModesDDL');
+            if(travelModes && travelModes.length>0) {
+                travelModes.forEach(function(table) {
+                    domAttr.remove(table, 'aria-haspopup');
+                    domAttr.remove(table, 'aria-expanded');
+                    domAttr.remove(table, 'aria-invalid');
+                })
+            }
+
+            const tables = query('table', ev.target.domNode);
+            // console.log("tables", tables);
+            tables.forEach(function(table) { domAttr.set(table, "role", "presentation"); });
+
+            const tbodies = query('tbody[role=menu]', ev.target.domNode);
+            // console.log("tbodies", tbodies);
+            tbodies.forEach(function(tbody) { domAttr.set(tbody, "role", "list"); });
+
+            const trs = query('tr[role=menuitem]', ev.target.domNode);
+            // console.log("trs", trs);
+            trs.forEach(function(tr) { domAttr.set(tr, "role", "listitem"); });
+
             const stopsTr = query('tr.esriStop.dojoDndItem', ev.target.domNode);
             // console.log('stopsTr', stopsTr);
             // const usedSearchIds = this._usedSearchIds;
@@ -310,18 +331,6 @@ define([
 
         _fixUi : function(ev){
             this._fixStops(ev);
-
-            const tables = query('table', ev.target.domNode);
-            // console.log("tables", tables);
-            tables.forEach(function(table) { domAttr.set(table, "role", "presentation"); });
-
-            const tbodies = query('tbody[role=menu]', ev.target.domNode);
-            // console.log("tbodies", tbodies);
-            tbodies.forEach(function(tbody) { domAttr.set(tbody, "role", "list"); });
-
-            const trs = query('tr[role=menuitem]', ev.target.domNode);
-            // console.log("trs", trs);
-            trs.forEach(function(tr) { domAttr.set(tr, "role", "listitem"); });
 
             const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
             hiddens.forEach(function(hidden) { domAttr.remove(hidden, 'aria-hidden'); });
