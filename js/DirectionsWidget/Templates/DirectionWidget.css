@@ -25,9 +25,7 @@
 
 .simpleDirections .esriRouteLength {
     top: 0; 
-/*    padding: 0;
-    border-radius: 0;
-*/}
+}
 
 .simpleDirections .esriRouteZoom:focus .esriRouteInfo, .simpleDirections .esriRouteZoom:focus .esriRouteInfo strong {
     color: black;
@@ -171,34 +169,9 @@
     top: 5px;
 }
 
-/*.simpleDirections .searchClose:focus, 
-.simpleDirections .searchClose:hover {
-	background-color: white;
-}*/
-
-.simpleDirections .searchBtn, 
-.simpleDirections .searchClear, 
-/*.simpleDirections .searchInput,*/
-.simpleDirections .searchClose
-/*.simpleDirections .arcgisSearch.hasValue.searchClear */
-{
-	/*background-color: rgba(100, 100, 100, 0.25) !important;*/
-	/*top: 2px !important;*/
-}
-
-.simpleDirections .searchBtn:focus, 
-/*.simpleDirections .searchInput:focus,*/
-.simpleDirections .searchBtn:hover, 
-/*.simpleDirections .searchInput:hover,*/
-.simpleDirections .searchClose:focus, 
-.simpleDirections .searchClose:hover 
-{
-    /*background-color: rgba(100, 100, 100, 0.75) !important;*/
-    /*background-color: transparent;*/
-}
-
 .simpleDirections .arcgisSearch .searchGroup {
 	color: black;
+	border-bottom: 1px solid #a0a0a0;
 }
 
 .simpleDirections .arcgisSearch {
@@ -208,10 +181,6 @@
 .simpleDirections .esri-icon-close:before {
     content: '';
 }
-
-/*.simpleDirections span.searchIcon.esri-icon-close.searchClose {
-    background-color: rgba(255, 255, 255, 0.75);
-}*/
 
 .simpleDirections .arcgisSearch .searchIcon {
 	height:auto;
@@ -230,14 +199,11 @@
 	display: none;
 }
 
-/*.simpleDirections .arcgisSearch .searchGroup .searchInput, 
+.simpleDirections .arcgisSearch .searchGroup .searchInput, 
 .dj_rtl .simpleDirections .arcgisSearch .searchGroup .searchInput {
-	border: 1px solid #a0a0a0;
-    border-bottom: 1px solid #a0a0a0;
-    border-top: 1px solid #a0a0a0 
-    border-left: 1px solid #a0a0a0 
-    border-right: 1px solid #a0a0a0;
-} */
+	border: 0px solid #a0a0a0;
+    border-bottom: 0px solid #a0a0a0;
+} 
 
 .simpleDirections .arcgisSearch .searchGroup .searchInput {
     padding: 6px 4px 5px 4px;
