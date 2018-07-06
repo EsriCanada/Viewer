@@ -328,10 +328,26 @@ define([
                             });
                         }
 
+                        domAttr.set(this.directions._dndNode, 'tabindex', 0);
+                        
+                        const dojoDndHandles = query('.dojoDndHandle', stopTr);
+                        dojoDndHandles.forEach(function(dojoDndHandle) {
+                            domAttr.set(dojoDndHandle, 'tabindex', 0);
+                            domAttr.set(dojoDndHandle, 'title', 'Use keys or drag to move up or down.');
+                            domConstruct.empty(dojoDndHandle);
+                            domConstruct.create('img', {
+                                src : '../images/upDown.9.png',
+                                alt : 'up/down',
+                                class: 'upDownHandle'
+                            }, dojoDndHandle);
+                            on(dojoDndHandle, 'click', function(ev) { ev.target.focus(); });
+                        });
+
                         this._usedSearchIds.push(searchWidget.id);
                     }
                 }
             }));
+
         },
 
         _fixUi : function(ev){

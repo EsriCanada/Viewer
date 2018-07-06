@@ -221,3 +221,18 @@
 	}
 }
 
+.dojoDndHandle img.upDownHandle {
+	opacity:0.1;
+	pointer-events: none;
+}
+
+.dojoDndHandle:focus img.upDownHandle,
+.simpleDirections .esriStop .esriStopDnDHandle img.upDownHandle
+ {
+	opacity:1;
+}
+
+.simpleDirections .esriStop .esriStopDnDHandle {
+    background: none;
+}
+
