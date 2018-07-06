@@ -105,11 +105,6 @@
     padding-bottom: 0;
 }
 
-.simpleDirections .arcgisSearch .searchExpandContainer
-{
-    width: calc(100% - 8px);
-}
-
 .simpleDirections .arcgisSearch .searchGroup .searchInput {
     background-color: white;
     color: black;
@@ -173,34 +168,52 @@
     display: block; 
     height:28px;
     width:23px;
+    right: -2px;
 }
 
-.simpleDirections .searchClose:focus, 
+/*.simpleDirections .searchClose:focus, 
 .simpleDirections .searchClose:hover {
 	background-color: white;
+}*/
+
+.simpleDirections .searchBtn, 
+.simpleDirections .searchClear, 
+/*.simpleDirections .searchInput,*/
+.simpleDirections .searchClose
+/*.simpleDirections .arcgisSearch.hasValue.searchClear */
+{
+	background-color: rgba(100, 100, 100, 0.25) !important;
+	top: 2px !important;
 }
 
 .simpleDirections .searchBtn:focus, 
 .simpleDirections .searchClear:focus, 
-.simpleDirections .searchInput:focus,
+/*.simpleDirections .searchInput:focus,*/
 .simpleDirections .searchBtn:hover, 
 .simpleDirections .searchClear:hover, 
-.simpleDirections .searchInput:hover 
+/*.simpleDirections .searchInput:hover,*/
+.simpleDirections .searchClose:focus, 
+.simpleDirections .searchClose:hover 
 {
-    background-color: rgba(100, 100, 100, 0.5);
+    background-color: rgba(100, 100, 100, 0.75) !important;
+    /*background-color: transparent;*/
 }
 
-.simpleDirections .arcgisSearch .searchSpinner {
+.simpleDirections .arcgisSearch .searchGroup {
 	color: black;
 }
 
-.simpleDirections .esri-icon-close:before {
-    content: "";
+.simpleDirections .arcgisSearch {
+    width: calc(100% - 8px);
 }
 
-span.searchIcon.esri-icon-close.searchClose {
-    background-color: rgba(255, 255, 255, 0.75);
+.simpleDirections .esri-icon-close:before {
+    content: '';
 }
+
+/*span.searchIcon.esri-icon-close.searchClose {
+    background-color: rgba(255, 255, 255, 0.75);
+}*/
 
 span.searchIcon.esri-icon-close.searchClose img {
 	width:10px;
@@ -210,3 +223,29 @@ span.searchIcon.esri-icon-close.searchClose img {
 .simpleDirections .esriStopsRemovable .esriStopIconRemoveColumn {
 	display: none;
 }
+
+.simpleDirections .arcgisSearch .searchGroup .searchInput, 
+.dj_rtl .simpleDirections .arcgisSearch .searchGroup .searchInput {
+	border: 1px solid #a0a0a0;
+    border-bottom: 1px solid #a0a0a0;
+    border-top: 1px solid #a0a0a0 
+    border-left: 1px solid #a0a0a0 
+    border-right: 1px solid #a0a0a0;
+} 
+
+.simpleDirections .arcgisSearch .searchGroup .searchInput {
+    padding: 6px 0px 5px 4px;
+}
+
+.dj_rtl .simpleDirections .arcgisSearch .searchGroup .searchInput {
+    padding: 6px 4px 5px 0px;
+}
+
+@media only screen and (min-width: 720px) {
+	.simpleDirections .arcgisSearch .searchClose, 
+	.simpleDirections .arcgisSearch .searchSpinner {
+	    /*opacity: 1;*/
+	    padding: 5px 6px;
+	}
+}
+
