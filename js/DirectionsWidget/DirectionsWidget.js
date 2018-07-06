@@ -218,6 +218,15 @@ define([
                     this.directions.updateStop(stop, 0);
 
                     // console.log('stops', this.directions.stops);
+
+                    const stopsTr = query('tr.esriStop.dojoDndItem', this.directions._dndNode);
+                    if(stopsTr && stopsTr.length>0) {
+                        const firstStop = query('td.esriStopGeocoderColumn .arcgisSearch', stopsTr[0]);
+                        if(firstStop && firstStop.length>0) {
+                            const searchWidget = dijit.byId(domAttr.get(firstStop[0], 'widgetid'));
+                            searchWidget.inputNode.focus();
+                        }
+                    }
                 })
             }, domConstruct.create('Div', {}, this.headerNode));
             this.directionsHeader.startup();        
