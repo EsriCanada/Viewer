@@ -306,8 +306,6 @@ define([
                         domAttr.set(searchWidget.clearNode, 'title', 'Remove Stop');
                         domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'polite');
                         domAttr.set(searchWidget.noResultsMenuNode, 'aria-atomic', 'true');
-                        // domAttr.set(searchWidget.inputNode, 'aria-live', 'polite');
-                        // domAttr.set(searchWidget.inputNode, 'aria-atomic', 'true');
                         
                         const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
                         domConstruct.empty(closeSpan);
@@ -316,7 +314,6 @@ define([
                             alt: "clear"
                         }, closeSpan);
                         // console.log('closeSpan', closeSpan);
-
                         // console.log('searchWidget', searchWidget.id);
 
                         const clearAllBtns = query('.esriStopIconRemoveHidden, .esriStopIconRemove', stopTr);
@@ -329,11 +326,12 @@ define([
                         }
 
                         domAttr.set(this.directions._dndNode, 'tabindex', 0);
-                        
-                        const dojoDndHandles = query('.dojoDndHandle', stopTr);
-                        dojoDndHandles.forEach(function(dojoDndHandle) {
+
+                        const dojoDndHandles = query('.dojoDndHandle.esriStopDnDHandleHidden, .dojoDndHandle.esriStopDnDHandle', stopTr);
+                        dojoDndHandles.forEach(lang.hitch(this, function(dojoDndHandle) {
                             domAttr.set(dojoDndHandle, 'tabindex', 0);
                             domAttr.set(dojoDndHandle, 'title', 'Use keys or drag to move up or down.');
+                            domAttr.set(dojoDndHandle, 'role', 'application');
                             domConstruct.empty(dojoDndHandle);
                             domConstruct.create('img', {
                                 src : '../images/upDown.9.png',
@@ -341,8 +339,52 @@ define([
                                 class: 'upDownHandle'
                             }, dojoDndHandle);
                             on(dojoDndHandle, 'click', function(ev) { ev.target.focus(); });
-                        });
-
+                            on(dojoDndHandle, 'keyup', lang.hitch(this, function(ev) { 
+                                const stopsNo = query('.esriStopIcon.dojoDndHandle span', stopTr);
+                                if(stopsNo && stopsNo.length>0) {
+                                    const indexA = Number(stopsNo[0].innerText)-1;
+                                    console.log(indexA, stopTr, ev); 
+                                    switch(ev.key) {
+                                        case "ArrowUp" :
+                                            if(indexA>0) {
+                                                const indexB = indexA-1;
+                                                const stopA = this.directions.stops[indexA];
+                                                const stopB = this.directions.stops[indexB];
+                                                this.directions.updateStop(stopA, indexB);
+                                                this.directions.updateStop(stopB, indexA);
+                                            }
+                                            break;
+                                        case "ArrowDown" :
+                                            if(indexA<this.directions.stops.length-2) {
+                                                const indexB = indexA+1;
+                                                const stopA = this.directions.stops[indexA];
+                                                const stopB = this.directions.stops[indexB];
+                                                this.directions.updateStop(stopA, indexB);
+                                                this.directions.updateStop(stopB, indexA);
+                                            }
+                                            break;
+                                        // case "Home" :
+                                        //     if(indexA>0) {
+                                        //         const indexB = 0;
+                                        //         const stopA = this.directions.stops[indexA];
+                                        //         const stopB = this.directions.stops[indexB];
+                                        //         this.directions.updateStop(stopA, indexB);
+                                        //         this.directions.updateStop(stopB, indexA);
+                                        //     }
+                                        //     break;
+                                        // case "End" :
+                                        //     if(indexA<this.directions.stops.length-2) {
+                                        //         const indexB = this.directions.stops.length-1;
+                                        //         const stopA = this.directions.stops[indexA];
+                                        //         const stopB = this.directions.stops[indexB];
+                                        //         this.directions.updateStop(stopA, indexB);
+                                        //         this.directions.updateStop(stopB, indexA);
+                                        //     }
+                                        //     break;
+                                    }
+                                }
+                            }));
+                        }));
                         this._usedSearchIds.push(searchWidget.id);
                     }
                 }
