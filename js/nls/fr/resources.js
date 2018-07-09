@@ -97,6 +97,5 @@ define(
         moreHelp : "Plus d'aide",
         totalCount : "Le compte total : {0}",
         contactUs: "Contactez nous",
-        hrmin: '{0} heures et {1} minutes.'
     })
 );

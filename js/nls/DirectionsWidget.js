@@ -3,7 +3,7 @@ define({
         widgets: ({
             directionsWidget: ({
                 headerNavigation: "Directions Controls",
-                reverse: "Reverse",
+                reverse: "Reverse Directions",
                 addStops: "Add/Modify Stops",
                 barriere: "Add/Remove Barriere",
                 print: "Print Directions",
@@ -12,6 +12,8 @@ define({
 
                 removeStop: "Remove Stop",
                 dragUpDown: 'Use keys or drag to move up or down.',
+
+                hrmin: '{0} hours and {1} minutes.'
             })
         })
     }),

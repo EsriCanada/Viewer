@@ -98,7 +98,6 @@ define({
         moreHelp : "More Help",
         totalCount : "Total Count: {0}",
         contactUs: "Contact Us",
-        hrmin: '{0} hours and {1} minutes.'
     }),
 "ar": 1,
 "cs": 1,

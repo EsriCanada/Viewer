@@ -429,7 +429,7 @@ define([
             const esriImpedanceCost = query('.esriImpedanceCost', ev.target.domNode);
             if(esriImpedanceCost && esriImpedanceCost.length>0) {
                 const htmin = esriImpedanceCost[0].innerText.split('\n')[0].split(':');
-                domAttr.set(esriImpedanceCost[0],'aria-label', i18n.hrmin.format(Number(htmin[0]), Number(htmin[1])));
+                domAttr.set(esriImpedanceCost[0],'aria-label', i18n.widgets.directionsWidget.hrmin.format(Number(htmin[0]), Number(htmin[1])));
             }
 
             const esriImpedanceCostHrMin = query('.esriImpedanceCostHrMin', ev.target.domNode);
