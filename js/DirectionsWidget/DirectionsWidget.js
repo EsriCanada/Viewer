@@ -90,7 +90,7 @@ define([
 
                 directionsLengthUnits: units.KILOMETERS,
 
-                optimalRoute: true,
+                optimalRoute: false,
 
                 dragging: true,
                 canModifyStops: true,
@@ -358,14 +358,32 @@ define([
                                                 indexB = indexA+1;
                                             }
                                             break;
+                                        // case "Home" :
+                                        //     if(indexA>0) {
+                                        //         indexB = 0;
+                                        //     }
+                                        //     break;
+                                        // case "End" :
+                                        //     if(indexA<this.directions.stops.length-1) {
+                                        //         indexB = this.directions.stops.length-1;
+                                        //     }
+                                        //     break;
                                     }
                                     if(indexB>=0) {
-                                        const stopA = this.directions.stops[indexA];
-                                        const stopB = this.directions.stops[indexB];
-                                        this.directions.updateStop(stopA, indexB);
-                                        this.directions.updateStop(stopB, indexA);
-                                        // const newHandle = query('.esriStopIcon.dojoDndHandle').find(function(h) { return h.innerText==indexB;});
-                                        // if(newHandle) newHandle.focus();
+                                        const stops = this.directions.stops.slice(0);
+                                        stops[indexA] = stops.splice(indexB, 1, stops[indexA])[0];
+                                        
+                                        // const signal = this.directions.on('directions-finish', lang.hitch(this, function(results) {
+                                        //     signal.remove();
+
+                                        //     const t = query('.esriStop.dojoDndItem', this._dndNode).find(function(t1) {
+                                        //         return query('.esriStopIcon.dojoDndHandle', t1)[0].innerText==indexA;
+                                        //     });
+                                        //     if(t) {
+                                        //         query('td.dojoDndHandle', t)[0].focus();
+                                        //     }
+                                        // }));
+                                        this.directions.updateStops(stops).then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
                                     }
                                 }
                             }));
