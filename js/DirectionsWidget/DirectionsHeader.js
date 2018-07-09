@@ -7,7 +7,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/parser", "dojo/ready",
     "dijit/layout/ContentPane",
     "dojo/string",
-    "dojo/i18n!application/nls/PopupInfo",
+    "dojo/i18n!application/nls/DirectionsWidget",
     "esri/domUtils",
     // "application/ImageToggleButton/ImageToggleButton",
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
@@ -92,7 +92,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 domAttr.remove(this.locate._locateNode, 'tabindex');
                 dojo.empty(zoomLocateButton);
 
-                const locateHint = "Start from your location";
+                const locateHint = i18n.widgets.directionsWidget.locator;
                 domConstruct.create("input", {
                     type: 'image',
                     src: 'images/icons_'+this.iconsColor+'/locate.png',

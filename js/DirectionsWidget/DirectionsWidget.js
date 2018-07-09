@@ -6,7 +6,7 @@ define([
     "esri/dijit/Directions",
     "application/DirectionsWidget/DirectionsHeader",
     "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font",
-    "dojo/i18n!application/nls/resources",
+    "dojo/i18n!application/nls/DirectionsWidget",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "dojo/dom-construct"
 
@@ -169,7 +169,7 @@ define([
                                         }
                                     })
                                 } catch (ex) {
-                                    console.log('mutation error', ex);
+                                    console.log('Directions Widget Mutation Error', ex);
                                 }
                             });
                         }).observe(esriStopsContainer[0], {
@@ -303,7 +303,7 @@ define([
                 if(searchDiv) {
                     const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
                     if(!this._usedSearchIds.includes(searchWidget.id)) {
-                        domAttr.set(searchWidget.clearNode, 'title', 'Remove Stop');
+                        domAttr.set(searchWidget.clearNode, 'title', i18n.widgets.directionsWidget.removeStop);
                         domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'polite');
                         domAttr.set(searchWidget.noResultsMenuNode, 'aria-atomic', 'true');
                         
@@ -330,57 +330,42 @@ define([
                         const dojoDndHandles = query('.dojoDndHandle.esriStopDnDHandleHidden, .dojoDndHandle.esriStopDnDHandle', stopTr);
                         dojoDndHandles.forEach(lang.hitch(this, function(dojoDndHandle) {
                             domAttr.set(dojoDndHandle, 'tabindex', 0);
-                            domAttr.set(dojoDndHandle, 'title', 'Use keys or drag to move up or down.');
+                            domAttr.set(dojoDndHandle, 'title', i18n.widgets.directionsWidget.dragUpDown);
                             domAttr.set(dojoDndHandle, 'role', 'application');
                             domConstruct.empty(dojoDndHandle);
                             domConstruct.create('img', {
-                                src : '../images/upDown.9.png',
+                                src : '../images/upDown.18.png',
                                 alt : 'up/down',
                                 class: 'upDownHandle'
                             }, dojoDndHandle);
+                            
                             on(dojoDndHandle, 'click', function(ev) { ev.target.focus(); });
+
                             on(dojoDndHandle, 'keyup', lang.hitch(this, function(ev) { 
                                 const stopsNo = query('.esriStopIcon.dojoDndHandle span', stopTr);
                                 if(stopsNo && stopsNo.length>0) {
                                     const indexA = Number(stopsNo[0].innerText)-1;
-                                    console.log(indexA, stopTr, ev); 
+                                    let indexB = -1;
+                                    // console.log(indexA, stopTr, ev); 
                                     switch(ev.key) {
                                         case "ArrowUp" :
                                             if(indexA>0) {
-                                                const indexB = indexA-1;
-                                                const stopA = this.directions.stops[indexA];
-                                                const stopB = this.directions.stops[indexB];
-                                                this.directions.updateStop(stopA, indexB);
-                                                this.directions.updateStop(stopB, indexA);
+                                                indexB = indexA-1;
                                             }
                                             break;
                                         case "ArrowDown" :
-                                            if(indexA<this.directions.stops.length-2) {
-                                                const indexB = indexA+1;
-                                                const stopA = this.directions.stops[indexA];
-                                                const stopB = this.directions.stops[indexB];
-                                                this.directions.updateStop(stopA, indexB);
-                                                this.directions.updateStop(stopB, indexA);
+                                            if(indexA<this.directions.stops.length-1) {
+                                                indexB = indexA+1;
                                             }
                                             break;
-                                        // case "Home" :
-                                        //     if(indexA>0) {
-                                        //         const indexB = 0;
-                                        //         const stopA = this.directions.stops[indexA];
-                                        //         const stopB = this.directions.stops[indexB];
-                                        //         this.directions.updateStop(stopA, indexB);
-                                        //         this.directions.updateStop(stopB, indexA);
-                                        //     }
-                                        //     break;
-                                        // case "End" :
-                                        //     if(indexA<this.directions.stops.length-2) {
-                                        //         const indexB = this.directions.stops.length-1;
-                                        //         const stopA = this.directions.stops[indexA];
-                                        //         const stopB = this.directions.stops[indexB];
-                                        //         this.directions.updateStop(stopA, indexB);
-                                        //         this.directions.updateStop(stopB, indexA);
-                                        //     }
-                                        //     break;
+                                    }
+                                    if(indexB>=0) {
+                                        const stopA = this.directions.stops[indexA];
+                                        const stopB = this.directions.stops[indexB];
+                                        this.directions.updateStop(stopA, indexB);
+                                        this.directions.updateStop(stopB, indexA);
+                                        // const newHandle = query('.esriStopIcon.dojoDndHandle').find(function(h) { return h.innerText==indexB;});
+                                        // if(newHandle) newHandle.focus();
                                     }
                                 }
                             }));
