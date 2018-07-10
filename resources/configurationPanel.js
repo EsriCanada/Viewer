@@ -101,7 +101,7 @@
             },
             {
                "type": "paragraph",
-               "value": "New Icons refer to map’s zoom-in and zoom-out buttons."
+               "value": "New Icons refer to map's zoom-in and zoom-out buttons."
             }
          ]
       },
@@ -276,27 +276,28 @@
                "label": "Extended Navigation Tool Bar",
                "type": "boolean",
                "fieldName": "navigation"
-            },
-            {
-               "type": "paragraph",
-               "value": "The Directions widget makes it easy to calculate directions between two or more input locations. <br/>The resulting directions are displayed with detailed turn-by-turn instructions."
-            },
+            }
+         ]
+      },
+      {
+         "category": "Directions Settings",
+         "fields": [
             {
                "label": "Directions",
                "type": "boolean",
                "fieldName": "tool_directions"
             },
-            {
-               "type": "paragraph",
-               "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions. <br/>This is a subscription based service available through ArcGIS Online."
-            },
+               {
+                  "type": "paragraph",
+                  "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions.<br/>This is a subscription based service available through ArcGIS Online.<br/>You may use a Proxy to avoid the login dialog."
+               },
             {
                "label": "Directions Proxy:",
                "placeHolder": "",
                "fieldName": "directionsProxy",
                "type": "string",
                "tooltip": "Leave it blank for none"
-            },
+            }
          ]
       },
       {
@@ -660,5 +661,9 @@
       "lang3shortName": "",
       "lang3name": "",
       "lang3code": "",
+      "contactUsEmail": "",
+      "contactUsSubject": "Enter subject line here",
+      "contactUsBody": "Enter your text here",
+      "alternateSplashText": "!"
    }
 }
