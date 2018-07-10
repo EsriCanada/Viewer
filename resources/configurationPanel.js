@@ -238,18 +238,6 @@
                "fieldName": "tool_infoPanel"
             },
             {
-               "label": "Directions",
-               "type": "boolean",
-               "fieldName": "tool_directions"
-            },
-            {
-               "label": "Directions Proxy:",
-               "placeHolder": "",
-               "fieldName": "directionsProxy",
-               "type": "string",
-               "tooltip": "Leave it blank for none"
-            },
-            {
                "label": "Reverse Geocode",
                "type": "boolean",
                "fieldName": "tool_GeoCoding"
@@ -433,6 +421,31 @@
                "fieldName": "tool_print_legend",
                "label": "Add Legend to Output"
             }
+         ]
+      },
+      {
+         "category": "Directions Settings",
+         "fields": [
+            {
+               "type": "paragraph",
+               "value": "The Directions widget makes it easy to calculate directions between two or more input locations. The resulting directions are displayed with detailed turn-by-turn instructions."
+            },
+            {
+               "label": "Directions",
+               "type": "boolean",
+               "fieldName": "tool_directions"
+            },
+            {
+               "type": "paragraph",
+               "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions. This is a subscription based service available through ArcGIS Online."
+            },
+            {
+               "label": "Directions Proxy:",
+               "placeHolder": "",
+               "fieldName": "directionsProxy",
+               "type": "string",
+               "tooltip": "Leave it blank for none"
+            },
          ]
       },
       {
