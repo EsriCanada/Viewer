@@ -287,16 +287,40 @@
                "type": "boolean",
                "fieldName": "tool_directions"
             },
-               {
-                  "type": "paragraph",
-                  "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions.<br/>This is a subscription based service available through ArcGIS Online.<br/>You may use a Proxy to avoid the login dialog."
-               },
+            {
+               "type": "paragraph",
+               "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions.<br/>This is a subscription based service available through ArcGIS Online.<br/>You may use a Proxy to avoid the login dialog."
+            },
             {
                "label": "Directions Proxy:",
                "placeHolder": "",
                "fieldName": "directionsProxy",
                "type": "string",
                "tooltip": "Leave it blank for none"
+            },
+            {
+               "type": "paragraph",
+               "value": "Options:"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_locator",
+               "label": "Locator"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_stops",
+               "label": "Add/Modify Stops"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_barriers",
+               "label": "Add/Delete Barriers"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_print",
+               "label": "Print Directions"
             }
          ]
       },
@@ -664,6 +688,10 @@
       "contactUsEmail": "",
       "contactUsSubject": "Enter subject line here",
       "contactUsBody": "Enter your text here",
-      "alternateSplashText": "!"
+      "alternateSplashText": "",
+      "directions_locator": false,
+      "directions_stops": false,
+      "directions_barriers": false,
+      "directions_print": false
    }
 }
