@@ -34,6 +34,12 @@ define([
             proxyUrl: null,
             directionsProxy: null,
             iconsColor: 'white',
+            options: {
+                locator: false,
+                stops: false,
+                barriers: false,
+                print: false
+            }
         },
 
 
@@ -44,8 +50,9 @@ define([
             this.domNode = srcRefNode;
             this.headerNode = dom.byId(this.defaults.header);
             this.map = this.defaults.map;
-            this.toolbar = this.defaults.toolbar,
+            this.toolbar = this.defaults.toolbar;
             this.deferred = this.defaults.deferred;
+            this.options = this.defaults.options;
             const directionsProxy = this.defaults.directionsProxy;
 
             var link = document.createElement("link");
@@ -209,6 +216,7 @@ define([
             this.directionsHeader = new DirectionHeader({
                 map: this.map,
                 directions: this.directions,
+                options: this.options,
                 header: 'pageHeader_directions',
                 // id: 'directionsHeaderId',
                 toolbar: this.toolbar,

@@ -42,6 +42,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             template: DirectionsHeaderTemplate,
             iconsColor: 'black',
             locateCallBack: null,
+            options: {
+                locator: true,
+                stops: true,
+                barriers: true,
+                print: true
+            }
         },
 
         constructor: function (options, srcRefNode) {
@@ -57,7 +63,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this._i18n = i18n;
             this.headerNode = dom.byId(defaults.header);
             this.iconsColor = defaults.iconsColor;
-
+            this.options = defaults.options;
+            
             this.locateCallBack = defaults.locateCallBack;
 
             this.mapClickActiveStatus = false;
@@ -76,7 +83,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }));
             }
 
-            if (has("locate")) {// && isLocationEnabled) {
+            if(this.options.locator && has("locate")) {// && isLocationEnabled) {
                 this.locate = new LocateButton({
                     map: this.map,
                     scale: 5000,
@@ -103,6 +110,20 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 if(this.locateCallBack) {
                     this.locate.on("locate", this.locateCallBack)
                 }
+            } else {
+                domClass.add(this.locateDivButton, 'hide');
+            }
+
+            if(!this.options.stops) {
+                domClass.add(this.addStopsButton, 'hide');
+            }
+
+            if(!this.options.barriers) {
+                domClass.add(this.barriers, 'hide');
+            }
+
+            if(!this.options.print) {
+                domClass.add(this.print, 'hide');
             }
         },
 

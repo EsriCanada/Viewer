@@ -236,3 +236,7 @@
     background: none;
 }
 
+.simpleDirections .hide,
+.directionsHeader .hide  {
+    display: none;
+}
