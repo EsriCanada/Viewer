@@ -179,6 +179,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.directions.set("mapClickActive", !this.directions.mapClickActive);
         },
 
+        barriersDirections: function() {
+            this.directions._lineBarrierButtonNode.click();
+        },
+
     });
     if (has("extend-esri")) {
         lang.setObject("dijit.DirectionsHeader", Widget, esriNS);
