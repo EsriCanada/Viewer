@@ -368,32 +368,40 @@ define([
                                                 indexB = indexA+1;
                                             }
                                             break;
-                                        // case "Home" :
-                                        //     if(indexA>0) {
-                                        //         indexB = 0;
-                                        //     }
-                                        //     break;
-                                        // case "End" :
-                                        //     if(indexA<this.directions.stops.length-1) {
-                                        //         indexB = this.directions.stops.length-1;
-                                        //     }
-                                        //     break;
+                                        case "Home" :
+                                            if(indexA>0) {
+                                                indexB = 0;
+                                            }
+                                            break;
+                                        case "End" :
+                                            if(indexA<this.directions.stops.length-1) {
+                                                indexB = this.directions.stops.length-1;
+                                            }
+                                            break;
                                     }
                                     if(indexB>=0) {
-                                        const stops = this.directions.stops.slice(0);
-                                        stops[indexA] = stops.splice(indexB, 1, stops[indexA])[0];
+                                        // const stopA = this.directions.stops[indexA];
+                                        // this.directions.removeStop(indexA, 1).then(lang.hitch(this, function(ev) {
+                                        //     this.directions.addStop(stopA, indexB);
+                                        // }));
+
+                                        let stops = Array.from(this.directions.stops);
+                                        const stopA = stops.splice(indexA, 1)[0];
+                                        stops.splice(indexB, 0, stopA);
                                         
                                         // const signal = this.directions.on('directions-finish', lang.hitch(this, function(results) {
                                         //     signal.remove();
 
-                                        //     const t = query('.esriStop.dojoDndItem', this._dndNode).find(function(t1) {
-                                        //         return query('.esriStopIcon.dojoDndHandle', t1)[0].innerText==indexA;
-                                        //     });
-                                        //     if(t) {
-                                        //         query('td.dojoDndHandle', t)[0].focus();
-                                        //     }
+                                        //     this.directions._dndNode.focus();
+
+                                        //     // const t = query('.esriStop.dojoDndItem', this._dndNode).find(function(t1) {
+                                        //     //     return query('.esriStopIcon.dojoDndHandle', t1)[0].innerText==indexA;
+                                        //     // });
+                                        //     // if(t) {
+                                        //     //     query('td.dojoDndHandle', t)[0].focus();
+                                        //     // }
                                         // }));
-                                        this.directions.updateStops(stops).then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
+                                        this.directions.updateStops(stops);//.then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
                                     }
                                 }
                             }));
