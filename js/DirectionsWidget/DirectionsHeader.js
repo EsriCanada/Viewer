@@ -143,11 +143,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 // console.log('updateTool', name);
                 if(name==='directions') {
                     this.directions.set("mapClickActive", this.mapClickActiveStatus);
+                    this.directions.map.setInfoWindowOnClick(false);
                 } else {
                     if(this.directions.mapClickActive) {
                         this.directions.set("mapClickActive", false);
                         this.mapClickActiveStatus = true;
                     }
+                    this.directions.map.setInfoWindowOnClick(true);
                 }
             }));
 

@@ -243,6 +243,8 @@ define([
 
                 domClass.add(this.domNode, "pageBody");
 
+                // this.map.setInfoWindowOnClick(false);
+
                 // domAttr.set(this.directions._dndNode, "role", "presentation");
 
                 this.directions.on("load", lang.hitch(this, this._fixStops));
