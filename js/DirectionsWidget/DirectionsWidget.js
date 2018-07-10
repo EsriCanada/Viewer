@@ -401,7 +401,19 @@ define([
                                         //     //     query('td.dojoDndHandle', t)[0].focus();
                                         //     // }
                                         // }));
-                                        this.directions.updateStops(stops);//.then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
+                                        
+                                        // this.directions.updateStops(stops);//.then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
+                                        this.directions.removeStops().then(lang.hitch(this, function () {
+                                            const lenFix = stops.length;
+                                            this.directions.addStops(stops).then(lang.hitch(this, function () {
+                                                if(lenFix !== this.directions.stops.length) {
+                                                    this.directions.addStop(stops[stops.length-1]);
+                                                }
+                                                this.directions._dndNode.focus();
+                                            }));
+                                        }), lang.hitch(this, function (err) {
+                                            console.error(err);
+                                        }));
                                     }
                                 }
                             }));
