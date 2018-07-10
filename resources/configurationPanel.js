@@ -276,7 +276,27 @@
                "label": "Extended Navigation Tool Bar",
                "type": "boolean",
                "fieldName": "navigation"
-            }
+            },
+            {
+               "type": "paragraph",
+               "value": "The Directions widget makes it easy to calculate directions between two or more input locations. <br/>The resulting directions are displayed with detailed turn-by-turn instructions."
+            },
+            {
+               "label": "Directions",
+               "type": "boolean",
+               "fieldName": "tool_directions"
+            },
+            {
+               "type": "paragraph",
+               "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions. <br/>This is a subscription based service available through ArcGIS Online."
+            },
+            {
+               "label": "Directions Proxy:",
+               "placeHolder": "",
+               "fieldName": "directionsProxy",
+               "type": "string",
+               "tooltip": "Leave it blank for none"
+            },
          ]
       },
       {
@@ -421,31 +441,6 @@
                "fieldName": "tool_print_legend",
                "label": "Add Legend to Output"
             }
-         ]
-      },
-      {
-         "category": "Directions Settings",
-         "fields": [
-            {
-               "type": "paragraph",
-               "value": "The Directions widget makes it easy to calculate directions between two or more input locations. The resulting directions are displayed with detailed turn-by-turn instructions."
-            },
-            {
-               "label": "Directions",
-               "type": "boolean",
-               "fieldName": "tool_directions"
-            },
-            {
-               "type": "paragraph",
-               "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions. This is a subscription based service available through ArcGIS Online."
-            },
-            {
-               "label": "Directions Proxy:",
-               "placeHolder": "",
-               "fieldName": "directionsProxy",
-               "type": "string",
-               "tooltip": "Leave it blank for none"
-            },
          ]
       },
       {
@@ -665,9 +660,5 @@
       "lang3shortName": "",
       "lang3name": "",
       "lang3code": "",
-      "contactUsEmail": "",
-      "contactUsSubject": "Enter subject line here",
-      "contactUsBody": "Enter your text here",
-      "alternateSplashText": ""
    }
 }
