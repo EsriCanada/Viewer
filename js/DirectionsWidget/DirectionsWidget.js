@@ -357,29 +357,30 @@ define([
                                     const indexA = Number(stopsNo[0].innerText)-1;
                                     let indexB = -1;
                                     // console.log(indexA, stopTr, ev); 
-                                    switch(ev.key) {
-                                        case "ArrowUp" :
+                                    switch(ev.keyCode) {
+                                        case 38 : // "ArrowUp"
                                             if(indexA>0) {
                                                 indexB = indexA-1;
                                             }
                                             break;
-                                        case "ArrowDown" :
+                                        case 40 : // "ArrowDown"
                                             if(indexA<this.directions.stops.length-1) {
                                                 indexB = indexA+1;
                                             }
                                             break;
-                                        case "Home" :
+                                        case 36 : // "Home"
                                             if(indexA>0) {
                                                 indexB = 0;
                                             }
                                             break;
-                                        case "End" :
+                                        case 35 : // "End"
                                             if(indexA<this.directions.stops.length-1) {
                                                 indexB = this.directions.stops.length-1;
                                             }
                                             break;
                                     }
                                     if(indexB>=0) {
+                                        this.directions.set('autoSolve', false);
                                         // const stopA = this.directions.stops[indexA];
                                         // this.directions.removeStop(indexA, 1).then(lang.hitch(this, function(ev) {
                                         //     this.directions.addStop(stopA, indexB);
@@ -403,17 +404,29 @@ define([
                                         // }));
                                         
                                         // this.directions.updateStops(stops);//.then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
+                                        this.directions.set('autoSolve', false);
                                         this.directions.removeStops().then(lang.hitch(this, function () {
                                             const lenFix = stops.length;
-                                            this.directions.addStops(stops).then(lang.hitch(this, function () {
-                                                if(lenFix !== this.directions.stops.length) {
-                                                    this.directions.addStop(stops[stops.length-1]);
+                                            this.directions.addStops(stops, 0).then(lang.hitch(this, function () {
+                                                const actualLen = this.directions.stops.length;
+                                                if(lenFix > actualLen) {
+                                                    const restStops = stops.splice(actualLen);
+                                                    this.directions.addStops(restStops, actualLen).then(
+                                                        lang.hitch(this, function () {
+                                                            this.directions.set('autoSolve', true);
+                                                            this.directions._dndNode.focus();
+                                                        })
+                                                    );
                                                 }
-                                                this.directions._dndNode.focus();
+                                                else {
+                                                    this.directions.set('autoSolve', true);
+                                                    this.directions._dndNode.focus();
+                                                }
                                             }));
-                                        }), lang.hitch(this, function (err) {
+                                        }), 
+                                        function (err) {
                                             console.error(err);
-                                        }));
+                                        });
                                     }
                                 }
                             }));
