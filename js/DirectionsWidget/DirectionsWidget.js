@@ -83,7 +83,7 @@ define([
 
                 showMilesKilometersOption: false,
                 showOptimalRouteOption: false,
-                showSegmentHighlight: false,
+                showSegmentHighlight: true,
                 showTrafficOption: false,
                 showTravelModesOption: false,
 
