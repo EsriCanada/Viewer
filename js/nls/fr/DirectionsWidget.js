@@ -8,6 +8,7 @@ define({
             print: "Imprimer les directions",
             clear: "Effacer les directions",
             locator: "Commencez depuis votre position",
+            optimize: "Optimiser l'itinéraire",
 
             removeStop: "Supprimer l'arrêt",
             dragUpDown: "Utilisez les touches ou faites glisser pour déplacer vers le haut ou vers le bas.",

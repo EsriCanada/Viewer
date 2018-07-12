@@ -9,6 +9,7 @@ define({
                 print: "Print Directions",
                 clear: "Clear Directions",
                 locator: "Start from your location",
+                optimize: "Optimize route",
 
                 removeStop: "Remove Stop",
                 dragUpDown: 'Use keys or drag to move up or down.',

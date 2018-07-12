@@ -238,6 +238,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // this.directions.set("barrierToolActive", !this.directions.barrierToolActive);
         },
 
+        optimizeDirections : function() {
+
+        },
+
     });
     if (has("extend-esri")) {
         lang.setObject("dijit.DirectionsHeader", Widget, esriNS);
