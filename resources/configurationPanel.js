@@ -305,7 +305,7 @@
             {
                "type": "boolean",
                "fieldName": "directions_locator",
-               "label": "Locator"
+               "label": "My Location"
             },
             {
                "type": "boolean",
@@ -316,6 +316,11 @@
                "type": "boolean",
                "fieldName": "directions_barriers",
                "label": "Add/Delete Barriers"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_optimize",
+               "label": "Optimize Route"
             },
             {
                "type": "boolean",
@@ -692,6 +697,7 @@
       "directions_locator": false,
       "directions_stops": false,
       "directions_barriers": false,
-      "directions_print": false
+      "directions_print": false,
+      "directions_optimize": false
    }
 }

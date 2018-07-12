@@ -38,6 +38,7 @@ define([
                 locator: false,
                 stops: false,
                 barriers: false,
+                optimize: false,
                 print: false
             }
         },

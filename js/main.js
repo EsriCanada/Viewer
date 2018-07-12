@@ -1386,6 +1386,7 @@ define([
                         locator: this.config.directions_locator,
                         stops: this.config.directions_stops,
                         barriers: this.config.directions_barriers,
+                        optimize: this.config.directions_optimize,
                         print: this.config.directions_print
                     }
                 }, directionsDiv);
