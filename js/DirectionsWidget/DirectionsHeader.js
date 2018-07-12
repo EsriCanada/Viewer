@@ -239,7 +239,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         optimizeDirections : function() {
-
+            this.directions.set('optimalRoute', true);
+            domClass.add(this.optimizeButton, 'activeBg');
+            this.directions.getDirections().then(lang.hitch(this, function() {
+                this.directions.set('optimalRoute', false);
+                this.directions.getDirections().then(lang.hitch(this, function() {
+                    domClass.remove(this.optimizeButton, 'activeBg');
+                }));
+            }));
         },
 
     });
