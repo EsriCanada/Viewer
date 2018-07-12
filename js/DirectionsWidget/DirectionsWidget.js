@@ -337,10 +337,11 @@ define([
 
                         domAttr.set(this.directions._dndNode, 'tabindex', 0);
 
-                        const dojoDndHandles = query('.dojoDndHandle.esriStopDnDHandleHidden, .dojoDndHandle.esriStopDnDHandle', stopTr);
+                        const dojoDndHandles = query('.dojoDndHandle.esriStopDnDHandleHidden', stopTr);
                         dojoDndHandles.forEach(lang.hitch(this, function(dojoDndHandle) {
                             domAttr.set(dojoDndHandle, 'tabindex', 0);
-                            domAttr.set(dojoDndHandle, 'title', i18n.widgets.directionsWidget.dragUpDown);
+                            domAttr.set(dojoDndHandle, 'aria-label', i18n.widgets.directionsWidget.dragUpDown);
+                            domAttr.set(dojoDndHandle, 'data-tip', i18n.widgets.directionsWidget.dragUpDown);
                             domAttr.set(dojoDndHandle, 'role', 'application');
                             domConstruct.empty(dojoDndHandle);
                             domConstruct.create('img', {

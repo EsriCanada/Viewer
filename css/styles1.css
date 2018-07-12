@@ -114,6 +114,7 @@ http://reference.sitepoint.com/css/outline-color
   color:black;
 }
 
+*[data-tip]:after,
 div[data-tip]:after {
     font-size: 14px;
     font-family: 'Raleway', sans-serif;
@@ -123,7 +124,7 @@ div[data-tip]:after {
     border-radius: 5px;
     padding: 2px 8px;
     left:0;
-    max-width: 200px;
+    /*max-width: 200px;*/
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
