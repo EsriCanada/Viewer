@@ -152,7 +152,8 @@
 }
 
 .directionsHeader .locateButton,
-.directionsHeader .addStopsButton {
+.directionsHeader .addStopsButton,
+.directionsHeader .addBarriersButton {
     float: none;
     margin: 0;
     padding: 0;

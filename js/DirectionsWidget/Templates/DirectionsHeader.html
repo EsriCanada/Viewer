@@ -9,7 +9,9 @@
 			<img src="images/icons_${iconsColor}/AddStop.png" alt="Stops" aria-label="${_i18n.widgets.directionsWidget.addStops}" title="${_i18n.widgets.directionsWidget.addStops}" tabindex=0  class="directionsButton stop" role="button" data-dojo-attach-event="click: addStopsDirections"/>
 		</div>
 
-		<img src="images/icons_${iconsColor}/Barriere.png" data-dojo-attach-point="barriers" alt="Barriere" aria-label="${_i18n.widgets.directionsWidget.barriere}" title="${_i18n.widgets.directionsWidget.barriere}" tabindex=0  class="directionsButton barriere" role="button" data-dojo-attach-event="click: barriersDirections"/>
+		<div data-dojo-attach-point="addBarriersButton" class="directionsHeader addBarriersButton">
+			<img src="images/icons_${iconsColor}/Barriere.png" data-dojo-attach-point="barriers" alt="Barriers" aria-label="${_i18n.widgets.directionsWidget.barriere}" title="${_i18n.widgets.directionsWidget.barriere}" tabindex=0  class="directionsButton barriere" role="button" data-dojo-attach-event="click: barriersDirections"/>
+		</div>
 
 		<img src="images/icons_${iconsColor}/print.png" data-dojo-attach-point="print" alt="Print" aria-label="${_i18n.widgets.directionsWidget.print}" title="${_i18n.widgets.directionsWidget.print}" tabindex=0 class="directionsButton print" role="button" data-dojo-attach-event="click: printDirections"/>
 

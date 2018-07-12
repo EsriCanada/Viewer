@@ -68,6 +68,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.locateCallBack = defaults.locateCallBack;
 
             this.mapClickActiveStatus = false;
+            this.barriersToolActiveStatus = false;
         },
 
         startup: function () {
@@ -112,18 +113,22 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }
             } else {
                 domClass.add(this.locateDivButton, 'hide');
+                domAttr.set(this.locateDivButton, 'aria-hidden', true);
             }
 
             if(!this.options.stops) {
                 domClass.add(this.addStopsButton, 'hide');
+                domAttr.set(this.addStopsButton, 'aria-hidden', true);
             }
 
             if(!this.options.barriers) {
-                domClass.add(this.barriers, 'hide');
+                domClass.add(this.addBarriersButton, 'hide');
+                domAttr.set(this.addBarriersButton, 'aria-hidden', true);
             }
 
             if(!this.options.print) {
                 domClass.add(this.print, 'hide');
+                domAttr.set(this.print, 'aria-hidden', true);
             }
         },
 
@@ -154,9 +159,28 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.directions.on("map-click-active", lang.hitch(this, function(state) {
                 if(this.mapClickActiveStatus = state.mapClickActive) {
                     domClass.add(this.addStopsButton, 'activeBg');
+                    // this.directions.set('barrierToolActive', false);
+                    if(this.barriersToolActiveStatus) {
+                        this.barriersDirections();
+                        // this.addStopsDirections();
+                    }
                 }
                 else {
                     domClass.remove(this.addStopsButton, 'activeBg');
+                }
+            }));
+
+            this.directions.on("barrier-tool-active", lang.hitch(this, function(state) {
+                if(this.barriersToolActiveStatus = state.barrierToolActive) {
+                    domClass.add(this.addBarriersButton, 'activeBg');
+                    const tip = query('.esriMapTooltip', this.map.domNode);
+                    if(tip) {
+                        domAttr.set(tip[0], 'aria-live', 'polite');
+                        // domAttr.set(tip[0], 'aria-atomic', false);
+                    }
+                }
+                else {
+                    domClass.remove(this.addBarriersButton, 'activeBg');
                 }
             }));
 
@@ -164,11 +188,18 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 // console.log('updateTool', name);
                 if(name==='directions') {
                     this.directions.set("mapClickActive", this.mapClickActiveStatus);
+                    if(this.barriersToolActiveStatus) {
+                        this.barriersDirections();
+                    }
                     this.directions.map.setInfoWindowOnClick(false);
                 } else {
                     if(this.directions.mapClickActive) {
                         this.directions.set("mapClickActive", false);
                         this.mapClickActiveStatus = true;
+                    }
+                    if(this.directions.barrierToolActive) {
+                        this.barriersDirections();
+                        this.barriersToolActiveStatus = true;
                     }
                     this.directions.map.setInfoWindowOnClick(true);
                 }
@@ -204,6 +235,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         barriersDirections: function() {
             this.directions._lineBarrierButtonNode.click();
+            // this.directions.set("barrierToolActive", !this.directions.barrierToolActive);
         },
 
     });
