@@ -61,11 +61,11 @@ define([
             link.rel = "stylesheet";
             query('head')[0].appendChild(link);
 
-            const fromSymb = new PictureMarkerSymbol("../images/greenPoint.png", 21, 29);
+            const fromSymb = new PictureMarkerSymbol("../images/greenPoint1.png", 21, 29);
             fromSymb.setOffset(0, 12);
             const stopSymb = new PictureMarkerSymbol("../images/bluePoint.png", 21, 29);
             stopSymb.setOffset(0, 12);
-            const toSymb = new PictureMarkerSymbol("../images/redPoint.png", 21, 29);
+            const toSymb = new PictureMarkerSymbol("../images/redPoint1.png", 21, 29);
             toSymb.setOffset(0, 12);
 
             const fromSymbDrag = new PictureMarkerSymbol("../images/greenPointDrag.png", 21, 29);
@@ -156,10 +156,10 @@ define([
                                                     imgSrc = "../images/bluePoint.png";
                                                 }
                                                 else if(imgSrc.includes("Directions/greenPoint.png")) {
-                                                    imgSrc = "../images/greenPoint.png";
+                                                    imgSrc = "../images/greenPoint1.png";
                                                 }
                                                 else if(imgSrc.includes("Directions/redPoint.png") || imgSrc.includes("esriDMTDepart.png")) {
-                                                    imgSrc = "../images/redPoint.png";
+                                                    imgSrc = "../images/redPoint1.png";
                                                 }
 
                                                 const text = stopIcon[0].innerText;
@@ -451,10 +451,10 @@ define([
                 try {
                     let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
                     if(imgSrc.includes("esriDMTStopOrigin.png")) {
-                        imgSrc = "../images/greenPoint.png";
+                        imgSrc = "../images/greenPoint1.png";
                     }
                     else if(imgSrc.includes("esriDMTStopDestination.png")) {
-                        imgSrc = "../images/redPoint.png";
+                        imgSrc = "../images/redPoint1.png";
                     }
                     else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
                         imgSrc = "../images/bluePoint.png";
