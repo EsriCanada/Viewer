@@ -152,8 +152,7 @@
 }
 
 .directionsHeader .locateButton,
-.directionsHeader .addStopsButton,
-.directionsHeader .addBarriersButton {
+.directionsHeader .toggleButton {
     float: none;
     margin: 0;
     padding: 0;
