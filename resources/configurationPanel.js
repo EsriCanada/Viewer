@@ -326,6 +326,26 @@
                "type": "boolean",
                "fieldName": "directions_print",
                "label": "Print Directions"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_symbols",
+               "label": "Enhanced Symbols"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_dragging",
+               "label": "Allow Dragging"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_stopOrder",
+               "label": "Change Stop Order"
+            },
+            {
+               "type": "boolean",
+               "fieldName": "directions_popup",
+               "label": "Segment Popup"
             }
          ]
       },
@@ -698,6 +718,10 @@
       "directions_stops": false,
       "directions_barriers": false,
       "directions_print": false,
-      "directions_optimize": false
+      "directions_optimize": false,
+      "directions_symbols": false,
+      "directions_dragging": false,
+      "directions_stopOrder": false,
+      "directions_popup": false
    }
 }
