@@ -92,28 +92,19 @@ define([
                 showBarriersButton: false,
                 showReturnToStartOption: false,
                 showReverseStopsButton: true,
-                showSegmentPopup: false,
+                showSegmentPopup: this.options.segmentPopup,
                 showPrintPage: false,
 
                 directionsLengthUnits: units.KILOMETERS,
 
                 optimalRoute: false,
 
-                dragging: true,
+                dragging: this.options.allowDragging,
                 canModifyStops: true,
                 // mapClickActive: false,
                 maxStops: 9,
 
                 // alphabet: false,
-
-                // fromSymbol: fromSymb,
-                // stopSymbol: stopSymb,
-                // toSymbol: toSymb,
-                // fromSymbolDrag: fromSymbDrag,
-                // stopSymbolDrag: stopSymbDrag,
-                // toSymbolDrag: toSymbDrag,
-                // textSymbolColor: '#000000',
-                // textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
 
                 //searchOptions: <Object>
                 //segmentInfoTemplate: <InfoTemplate> 
@@ -355,98 +346,107 @@ define([
 
                         const dojoDndHandles = query('.dojoDndHandle.esriStopDnDHandleHidden', stopTr);
                         dojoDndHandles.forEach(lang.hitch(this, function(dojoDndHandle) {
-                            domAttr.set(dojoDndHandle, 'tabindex', 0);
-                            domAttr.set(dojoDndHandle, 'aria-label', i18n.widgets.directionsWidget.dragUpDown);
-                            domAttr.set(dojoDndHandle, 'data-tip', i18n.widgets.directionsWidget.dragUpDown);
-                            domAttr.set(dojoDndHandle, 'role', 'application');
-                            domConstruct.empty(dojoDndHandle);
-                            domConstruct.create('img', {
-                                src : '../images/upDown.18.png',
-                                alt : 'up/down',
-                                class: 'upDownHandle'
-                            }, dojoDndHandle);
-                            
-                            on(dojoDndHandle, 'click', function(ev) { ev.target.focus(); });
-
-                            on(dojoDndHandle, 'keyup', lang.hitch(this, function(ev) { 
-                                const stopsNo = query('.esriStopIcon.dojoDndHandle span', stopTr);
-                                if(stopsNo && stopsNo.length>0) {
-                                    const indexA = Number(stopsNo[0].innerText)-1;
-                                    let indexB = -1;
-                                    // console.log(indexA, stopTr, ev); 
-                                    switch(ev.keyCode) {
-                                        case 38 : // "ArrowUp"
-                                            if(indexA>0) {
-                                                indexB = indexA-1;
-                                            }
-                                            break;
-                                        case 40 : // "ArrowDown"
-                                            if(indexA<this.directions.stops.length-1) {
-                                                indexB = indexA+1;
-                                            }
-                                            break;
-                                        case 36 : // "Home"
-                                            if(indexA>0) {
-                                                indexB = 0;
-                                            }
-                                            break;
-                                        case 35 : // "End"
-                                            if(indexA<this.directions.stops.length-1) {
-                                                indexB = this.directions.stops.length-1;
-                                            }
-                                            break;
-                                    }
-                                    if(indexB>=0) {
-                                        this.directions.set('autoSolve', false);
-                                        // const stopA = this.directions.stops[indexA];
-                                        // this.directions.removeStop(indexA, 1).then(lang.hitch(this, function(ev) {
-                                        //     this.directions.addStop(stopA, indexB);
-                                        // }));
-
-                                        let stops = Array.from(this.directions.stops);
-                                        const stopA = stops.splice(indexA, 1)[0];
-                                        stops.splice(indexB, 0, stopA);
-                                        
-                                        // const signal = this.directions.on('directions-finish', lang.hitch(this, function(results) {
-                                        //     signal.remove();
-
-                                        //     this.directions._dndNode.focus();
-
-                                        //     // const t = query('.esriStop.dojoDndItem', this._dndNode).find(function(t1) {
-                                        //     //     return query('.esriStopIcon.dojoDndHandle', t1)[0].innerText==indexA;
-                                        //     // });
-                                        //     // if(t) {
-                                        //     //     query('td.dojoDndHandle', t)[0].focus();
-                                        //     // }
-                                        // }));
-                                        
-                                        // this.directions.updateStops(stops);//.then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
-                                        this.directions.set('autoSolve', false);
-                                        this.directions.removeStops().then(lang.hitch(this, function () {
-                                            const lenFix = stops.length;
-                                            this.directions.addStops(stops, 0).then(lang.hitch(this, function () {
-                                                const actualLen = this.directions.stops.length;
-                                                if(lenFix > actualLen) {
-                                                    const restStops = stops.splice(actualLen);
-                                                    this.directions.addStops(restStops, actualLen).then(
-                                                        lang.hitch(this, function () {
-                                                            this.directions.set('autoSolve', true);
-                                                            this.directions._dndNode.focus();
-                                                        })
-                                                    );
-                                                }
-                                                else {
-                                                    this.directions.set('autoSolve', true);
-                                                    this.directions._dndNode.focus();
-                                                }
-                                            }));
-                                        }), 
-                                        function (err) {
-                                            console.error(err);
-                                        });
-                                    }
+                            if(!this.options.changeStopOrder) {
+                                domStyle.set(dojoDndHandle, 'display', 'none');
+                                const iconCell = query('.esriStopIconColumn .esriStopIcon.dojoDndHandle', stopTr);
+                                if(iconCell && iconCell.length>0) {
+                                    domClass.remove(iconCell[0], 'dojoDndHandle');
                                 }
-                            }));
+                            }
+                            else {
+                                domAttr.set(dojoDndHandle, 'tabindex', 0);
+                                domAttr.set(dojoDndHandle, 'aria-label', i18n.widgets.directionsWidget.dragUpDown);
+                                domAttr.set(dojoDndHandle, 'data-tip', i18n.widgets.directionsWidget.dragUpDown);
+                                domAttr.set(dojoDndHandle, 'role', 'application');
+                                domConstruct.empty(dojoDndHandle);
+                                domConstruct.create('img', {
+                                    src : '../images/upDown.18.png',
+                                    alt : 'up/down',
+                                    class: 'upDownHandle'
+                                }, dojoDndHandle);
+                                
+                                on(dojoDndHandle, 'click', function(ev) { ev.target.focus(); });
+
+                                on(dojoDndHandle, 'keyup', lang.hitch(this, function(ev) { 
+                                    const stopsNo = query('.esriStopIcon.dojoDndHandle span', stopTr);
+                                    if(stopsNo && stopsNo.length>0) {
+                                        const indexA = Number(stopsNo[0].innerText)-1;
+                                        let indexB = -1;
+                                        // console.log(indexA, stopTr, ev); 
+                                        switch(ev.keyCode) {
+                                            case 38 : // "ArrowUp"
+                                                if(indexA>0) {
+                                                    indexB = indexA-1;
+                                                }
+                                                break;
+                                            case 40 : // "ArrowDown"
+                                                if(indexA<this.directions.stops.length-1) {
+                                                    indexB = indexA+1;
+                                                }
+                                                break;
+                                            case 36 : // "Home"
+                                                if(indexA>0) {
+                                                    indexB = 0;
+                                                }
+                                                break;
+                                            case 35 : // "End"
+                                                if(indexA<this.directions.stops.length-1) {
+                                                    indexB = this.directions.stops.length-1;
+                                                }
+                                                break;
+                                        }
+                                        if(indexB>=0) {
+                                            this.directions.set('autoSolve', false);
+                                            // const stopA = this.directions.stops[indexA];
+                                            // this.directions.removeStop(indexA, 1).then(lang.hitch(this, function(ev) {
+                                            //     this.directions.addStop(stopA, indexB);
+                                            // }));
+
+                                            let stops = Array.from(this.directions.stops);
+                                            const stopA = stops.splice(indexA, 1)[0];
+                                            stops.splice(indexB, 0, stopA);
+                                            
+                                            // const signal = this.directions.on('directions-finish', lang.hitch(this, function(results) {
+                                            //     signal.remove();
+
+                                            //     this.directions._dndNode.focus();
+
+                                            //     // const t = query('.esriStop.dojoDndItem', this._dndNode).find(function(t1) {
+                                            //     //     return query('.esriStopIcon.dojoDndHandle', t1)[0].innerText==indexA;
+                                            //     // });
+                                            //     // if(t) {
+                                            //     //     query('td.dojoDndHandle', t)[0].focus();
+                                            //     // }
+                                            // }));
+                                            
+                                            // this.directions.updateStops(stops);//.then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
+                                            this.directions.set('autoSolve', false);
+                                            this.directions.removeStops().then(lang.hitch(this, function () {
+                                                const lenFix = stops.length;
+                                                this.directions.addStops(stops, 0).then(lang.hitch(this, function () {
+                                                    const actualLen = this.directions.stops.length;
+                                                    if(lenFix > actualLen) {
+                                                        const restStops = stops.splice(actualLen);
+                                                        this.directions.addStops(restStops, actualLen).then(
+                                                            lang.hitch(this, function () {
+                                                                this.directions.set('autoSolve', true);
+                                                                this.directions._dndNode.focus();
+                                                            })
+                                                        );
+                                                    }
+                                                    else {
+                                                        this.directions.set('autoSolve', true);
+                                                        this.directions._dndNode.focus();
+                                                    }
+                                                }));
+                                            }), 
+                                            function (err) {
+                                                console.error(err);
+                                            });
+                                        }
+                                    }
+                                }));
+                            }
                         }));
                         this._usedSearchIds.push(searchWidget.id);
                     }
