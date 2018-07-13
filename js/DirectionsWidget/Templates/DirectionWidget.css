@@ -1,33 +1,20 @@
-.simpleDirections .esriStopsAddDestination {
-    display: none !important;
-}
-
-.simpleDirections .esriStopsOptionsButton {
-    display: none !important;
-}
-
-.simpleDirections .esriStopsGetDirectionsContainer {
-    display: none !important;
-}
-
-.simpleDirections .esriStopsButtons {
-    display: none !important;
-}
-
+.simpleDirections .esriStopsAddDestination,
+.simpleDirections .esriStopsOptionsButton,
+.simpleDirections .esriStopsGetDirectionsContainer,
 .simpleDirections .esriStopsReverse,
 .simpleDirections .esriStopReverseColumn {
 	display: none !important;
-}
-
-.simpleDirections .esriRouteInfo, .simpleDirections .esriRouteInfo strong {
-    color: black;
 }
 
 .simpleDirections .esriRouteLength {
     top: 0; 
 }
 
-.simpleDirections .esriRouteZoom:focus .esriRouteInfo, .simpleDirections .esriRouteZoom:focus .esriRouteInfo strong {
+.simpleDirections .esriPrintFooter,
+.simpleDirections .esriRouteInfo, .simpleDirections .esriRouteInfo strong,
+.simpleDirections .esriRouteZoom:focus .esriRouteInfo, .simpleDirections .esriRouteZoom:focus .esriRouteInfo strong,
+.simpleDirections .esriStop .esriStopIcon,
+.simpleDirections .esriRouteIconColumn .esriRouteIcon {
     color: black;
 }
 
@@ -36,24 +23,15 @@
     color: white;
 }
 
-.simpleDirections .esriTrafficLabelLight {
+/*.simpleDirections .esriTrafficLabelLight {
     color: darkgreen;
 }
-
-.simpleDirections .esriPrintFooter {
-    color: black;
-}
-
+*/
 .simpleDirections .esriRoutesError {
     padding: 10px;
     text-align: left;
     color: darkred;
     font-size: larger;
-}
-
-.simpleDirections .esriStop .esriStopIcon,
-.simpleDirections .esriRouteIconColumn .esriRouteIcon {
-	color: black;
 }
 
 .simpleDirections .esriRouteIcon img,
