@@ -76,11 +76,10 @@ define([
             const toSymbDrag = new PictureMarkerSymbol("../images/redPointDrag.png", 21, 29);
             toSymbDrag.setOffset(0, 12);
 
-            const directionOptions = {
+            let directionOptions = {
                 map: this.map,
                 id: this.defaults.id,
                 // routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
-                // showSaveButton: true,
 
                 showMilesKilometersOption: false,
                 showOptimalRouteOption: false,
@@ -107,33 +106,48 @@ define([
 
                 // alphabet: false,
 
-                fromSymbol: fromSymb,
-                stopSymbol: stopSymb,
-                toSymbol: toSymb,
-                fromSymbolDrag: fromSymbDrag,
-                stopSymbolDrag: stopSymbDrag,
-                toSymbolDrag: toSymbDrag,
-                textSymbolColor: '#000000',
-                textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
+                // fromSymbol: fromSymb,
+                // stopSymbol: stopSymb,
+                // toSymbol: toSymb,
+                // fromSymbolDrag: fromSymbDrag,
+                // stopSymbolDrag: stopSymbDrag,
+                // toSymbolDrag: toSymbDrag,
+                // textSymbolColor: '#000000',
+                // textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
 
                 //searchOptions: <Object>
                 //segmentInfoTemplate: <InfoTemplate> 
             };
+
+            if(this.options.enhancedSymbols) {
+                directionOptions = Object.assign( {
+                    fromSymbol: fromSymb,
+                    stopSymbol: stopSymb,
+                    toSymbol: toSymb,
+                    fromSymbolDrag: fromSymbDrag,
+                    stopSymbolDrag: stopSymbDrag,
+                    toSymbolDrag: toSymbDrag,
+                    textSymbolColor: '#000000',
+                    textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
+                }, directionOptions);
+            }
+
             if(directionsProxy && directionsProxy.isNonEmpty()) {
                 directionOptions.routeTaskUrl = directionsProxy;
             }
+
             this.directions = new Directions(directionOptions,
                 domConstruct.create("div", null, this.domNode)); //"pageBody_directions");
 
             on(
                 this.directions,
                 "load",
-                function() {
+                lang.hitch(this, function() {
                     const esriStopsContainer = query('.esriDirectionsContainer');
                     if(esriStopsContainer && esriStopsContainer.length >0) {
-                        new MutationObserver(function(mutations) {
+                        new MutationObserver(lang.hitch(this, function(mutations) {
                             // console.log('mutations', mutations);
-                            mutations.forEach(function(mutation) {
+                            mutations.forEach(lang.hitch(this, function(mutation) {
                                 // console.log('mutation', mutation);
 
                                 try{
@@ -143,26 +157,27 @@ define([
                                     // console.log('mutation target', mutation.target);
                                     const stopRows = query('tr.esriStop.dojoDndItem');
                                     // console.log('stopRows', stopRows);
-                                    stopRows.forEach(function(row) {
+                                    stopRows.forEach(lang.hitch(this, function(row) {
                                         const stopIcon = query('.esriStopIcon',row);
                                         if(stopIcon && stopIcon.length>0){
                                             let background = domStyle.getComputedStyle(stopIcon[0]).background;
                                             if(!background.isNonEmpty()) {
                                                 background = domStyle.getComputedStyle(stopIcon[0]).backgroundImage;
                                             }
-                                            if(background.includes("Directions") /*&& !background.includes("-100px")*/) {
+                                            if(background.includes("Directions")) {
                                                 const left = background.indexOf('url(\"')+5;
                                                 let imgSrc = background.substring(left, background.indexOf('\")'));
-                                                if(imgSrc.includes("Directions/blueCircle.png")) {
-                                                    imgSrc = "../images/bluePoint.png";
+                                                if(this.options.enhancedSymbols) {
+                                                    if(imgSrc.includes("Directions/blueCircle.png")) {
+                                                        imgSrc = "../images/bluePoint.png";
+                                                    }
+                                                    else if(imgSrc.includes("Directions/greenPoint.png")) {
+                                                        imgSrc = "../images/greenPoint1.png";
+                                                    }
+                                                    else if(imgSrc.includes("Directions/redPoint.png") || imgSrc.includes("esriDMTDepart.png")) {
+                                                        imgSrc = "../images/redPoint1.png";
+                                                    }
                                                 }
-                                                else if(imgSrc.includes("Directions/greenPoint.png")) {
-                                                    imgSrc = "../images/greenPoint1.png";
-                                                }
-                                                else if(imgSrc.includes("Directions/redPoint.png") || imgSrc.includes("esriDMTDepart.png")) {
-                                                    imgSrc = "../images/redPoint1.png";
-                                                }
-
                                                 const text = stopIcon[0].innerText;
                                                 stopIcon[0].innerText = '';
 
@@ -175,18 +190,18 @@ define([
                                                 }
                                             }
                                         }
-                                    })
+                                    }))
                                 } catch (ex) {
                                     console.log('Directions Widget Mutation Error', ex);
                                 }
-                            });
-                        }).observe(esriStopsContainer[0], {
+                            }));
+                        })).observe(esriStopsContainer[0], {
                             attributes: true,
                             childList: false,
                             characterData: false
                         });
                     }
-                }
+                })
             );
         },
 
@@ -449,21 +464,22 @@ define([
             const routeIcons = query('.esriRouteIcon', ev.target.domNode);
             // console.log("routeIcons", routeIcons);
 
-            routeIcons.forEach(function(routeIcon) {
+            routeIcons.forEach(lang.hitch(this, function(routeIcon) {
                 try {
                     let imgSrc = domStyle.getComputedStyle(routeIcon).backgroundImage;
-                    if(imgSrc.includes("esriDMTStopOrigin.png")) {
-                        imgSrc = "../images/greenPoint1.png";
+                    imgSrc = imgSrc.substring(5, imgSrc.length-2);
+                    if(this.options.enhancedSymbols) {
+                        if(imgSrc.includes("esriDMTStopOrigin.png")) {
+                            imgSrc = "../images/greenPoint1.png";
+                        }
+                        else if(imgSrc.includes("esriDMTStopDestination.png")) {
+                            imgSrc = "../images/redPoint1.png";
+                        }
+                        else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
+                            imgSrc = "../images/bluePoint.png";
+                        }
                     }
-                    else if(imgSrc.includes("esriDMTStopDestination.png")) {
-                        imgSrc = "../images/redPoint1.png";
-                    }
-                    else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
-                        imgSrc = "../images/bluePoint.png";
-                    }
-                    else {
-                        imgSrc = imgSrc.substring(5, imgSrc.length-2);
-                    }
+                    
 
                     const text = routeIcon.innerText;
                     routeIcon.innerText = '';
@@ -480,7 +496,7 @@ define([
                     console.log(ex);
                 }
 
-            });
+            }));
 
             const summary = query('.esriResultsSummary', ev.target.domNode);
             if(summary && summary.length>0)

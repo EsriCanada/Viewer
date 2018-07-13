@@ -1387,7 +1387,11 @@ define([
                         stops: this.config.directions_stops,
                         barriers: this.config.directions_barriers,
                         optimize: this.config.directions_optimize,
-                        print: this.config.directions_print
+                        print: this.config.directions_print,
+                        enhancedSymbols: this.config.directions_symbols,
+                        allowDragging: this.config.directions_dragging,
+                        changeStopOrder: this.config.directions_stopOrder,
+                        segmentPopup: this.config.directions_popup
                     }
                 }, directionsDiv);
                 this.directions.startup();
