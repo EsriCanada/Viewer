@@ -387,7 +387,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.popupInfoHeader.startup();
 
             this.displayPopupContent = lang.hitch(this, function (feature) {
-                // if(this.toolbar.IsToolSelected('geoCoding')) return;
+                if(this.toolbar.IsToolSelected('geoCoding')) return;
+                if(this.toolbar.IsToolSelected('directions')) return;
 
                 this.toolbar.OpenTool('infoPanel');
                 if (feature) {
