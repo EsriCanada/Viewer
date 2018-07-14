@@ -60,8 +60,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // emptyMessage: i18n.widgets.geoCoding.noAddress,
         },
 
-        locator : null,
-
         constructor: function (options, srcRefNode) {
             var defaults = lang.mixin({}, this.options, options);
             this.domNode = srcRefNode;
@@ -83,45 +81,32 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 rel : "stylesheet",
             }, document.head);
 
-            this.locator = new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
-        },
+            const locator = new Locator("https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer");
 
-        startup: function () {
-            if (!this.map) {
-                this.destroy();
-                console.error("Map required");
-                // return;
-            }
-            if (!this.toolbar) {
-                this.destroy();
-                console.error("Toolbar required");
-                return;
-            }
-            if (this.map.loaded) {
-                this._init();
-            } else {
-                on.once(this.map, "load", lang.hitch(this, function () {
-                    this._init();
-                }));
-            }
-        },
-
-        postCreate : function() {
-            this.inherited(arguments);
-            if(this.locator) {
+            if(locator) {
 
                 if(this.superNavigator) {
-                    on(this.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
+                    const mapKeyEvent = on.pausable(this.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
                         // console.log('mapClick', evt);
                         if(!this.toolbar.IsToolSelected('geoCoding')) return;
                         // this.clearSearchGraphics();
-                        this.locator.locationToAddress(
+                        locator.locationToAddress(
                             webMercatorUtils.webMercatorToGeographic(evt.mapPoint), 100
                         );
                     }));
+                    mapKeyEvent.pause();
+
+                    this.toolbar.on('updateTool', lang.hitch(this, function(name) {
+                        // console.log('updateTool', name);
+                        if(name==='geoCoding') {
+                            mapKeyEvent.resume();
+                        } else {
+                            mapKeyEvent.pause();
+                        }
+                    }))
                 }
 
-                this.locator.on('location-to-address-complete', lang.hitch(this, function(evt) {
+                locator.on('location-to-address-complete', lang.hitch(this, function(evt) {
                     // console.log('locator', evt);
                     this.clearSearchGraphics();
                     if (evt.address.address) {
@@ -149,7 +134,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
                 }));
 
-                this.locator.on('error', lang.hitch(this, function(evt) {
+                locator.on('error', lang.hitch(this, function(evt) {
                     console.log('locator error', evt);
                     this.clearSearchGraphics();
                     this.contentPanel.set("content",
@@ -164,9 +149,30 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 this.map.on("click", lang.hitch(this, function(evt) {
                     if(!this.toolbar.IsToolSelected('geoCoding')) return;
 
-                    this.locator.locationToAddress(
+                    locator.locationToAddress(
                         webMercatorUtils.webMercatorToGeographic(evt.mapPoint), 100
                     );
+                }));
+            }
+
+        },
+
+        startup: function () {
+            if (!this.map) {
+                this.destroy();
+                console.error("Map required");
+                // return;
+            }
+            if (!this.toolbar) {
+                this.destroy();
+                console.error("Toolbar required");
+                return;
+            }
+            if (this.map.loaded) {
+                this._init();
+            } else {
+                on.once(this.map, "load", lang.hitch(this, function () {
+                    this._init();
                 }));
             }
         },
