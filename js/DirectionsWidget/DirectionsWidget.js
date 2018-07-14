@@ -196,9 +196,8 @@ define([
                 })
             );
 
-            let mapKeyEvent = null;
             if(this.defaults.superNavigator) {
-                mapKeyEvent = on.pausable(this.defaults.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
+                const mapKeyEvent = on.pausable(this.defaults.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
                     if(!this.toolbar.IsToolSelected('directions')) return;
                     // console.log('directions -> mapClick', evt);
                     if(this.directions.mapClickActive) {
