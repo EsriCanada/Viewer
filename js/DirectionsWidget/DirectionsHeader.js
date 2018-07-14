@@ -170,6 +170,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         this.barriersDirections();
                         // this.addStopsDirections();
                     }
+                    this.map.container.focus();
                 }
                 else {
                     domClass.remove(this.addStopsButton, 'activeBg');

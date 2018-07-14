@@ -675,11 +675,13 @@ define([
                     ];
 
                     var deferredDetails = new Deferred();
+                    this.deferredKeyboardNavigation = new Deferred();
                     for (var i = 0; i < this.config.tools.length; i++) {
                         switch (this.config.tools[i].name) {
                             case "mapKeyboardNavigation":
-                                if (has("mapKeyboardNavigation"))
-                                    this._addMapKeyboardNavigation(toolbar);
+                                toolList.push(
+                                    this._addMapKeyboardNavigation(toolbar, this.deferredKeyboardNavigation)
+                                );
                                 break;
                             case "details":
                                 toolList.push(
@@ -1359,42 +1361,55 @@ define([
             return deferred.promise;
         },
 
-        _addMapKeyboardNavigation: function(toolbar) {
-            this.superNav = new SuperNavigator({
-                map: this.map,
-                toolBar: toolbar,
-                cursorColor: "black",
-                selectionColor: this.config.mapSelectionColor,
-                cursorFocusColor: this.config.focusColor,
-                operationalLayers: this.config.response.itemInfo.itemData
-                    .operationalLayers
-            });
-            this.superNav.startup();
+        _addMapKeyboardNavigation: function(toolbar, deferred) {
+            // var deferred = new Deferred();
+            if (has("mapKeyboardNavigation")) {
+                this.superNav = new SuperNavigator({
+                    map: this.map,
+                    toolBar: toolbar,
+                    cursorColor: "black",
+                    selectionColor: this.config.mapSelectionColor,
+                    cursorFocusColor: this.config.focusColor,
+                    operationalLayers: this.config.response.itemInfo.itemData
+                        .operationalLayers
+                });
+                this.superNav.startup();
+                deferred.resolve(true);
+            } else {
+                deferred.resolve(false);
+            }
+            return deferred.promise;
         },
 
         _addDirections: function(tool, toolbar) {
             var deferred = new Deferred();
             if (has("directions")) {
                 var directionsDiv = toolbar.createTool(tool);
-                this.directions = new DirectionsWidget({
-                    map: this.map,
-                    deferred: deferred,
-                    toolbar: toolbar,
-                    iconsColor: this.config.icons,
-                    directionsProxy: this.config.directionsProxy,
-                    options: {
-                        locator: this.config.directions_locator,
-                        stops: this.config.directions_stops,
-                        barriers: this.config.directions_barriers,
-                        optimize: this.config.directions_optimize,
-                        print: this.config.directions_print,
-                        enhancedSymbols: this.config.directions_symbols,
-                        allowDragging: this.config.directions_dragging,
-                        changeStopOrder: this.config.directions_stopOrder,
-                        segmentPopup: this.config.directions_popup
-                    }
-                }, directionsDiv);
-                this.directions.startup();
+
+                this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
+                    this.directions = new DirectionsWidget({
+                        map: this.map,
+                        deferred: deferred,
+                        toolbar: toolbar,
+                        iconsColor: this.config.icons,
+                        directionsProxy: this.config.directionsProxy,
+                        options: {
+                            locator: this.config.directions_locator,
+                            stops: this.config.directions_stops,
+                            barriers: this.config.directions_barriers,
+                            optimize: this.config.directions_optimize,
+                            print: this.config.directions_print,
+                            enhancedSymbols: this.config.directions_symbols,
+                            allowDragging: this.config.directions_dragging,
+                            changeStopOrder: this.config.directions_stopOrder,
+                            segmentPopup: this.config.directions_popup
+                        },
+                        superNavigator: this.superNav,
+                    }, directionsDiv);
+                    this.directions.startup();
+                    deferred.resolve(true);
+                }))
+
             } else {
                 deferred.resolve(false);
             }

@@ -2,7 +2,8 @@
 .simpleDirections .esriStopsOptionsButton,
 .simpleDirections .esriStopsGetDirectionsContainer,
 .simpleDirections .esriStopsReverse,
-.simpleDirections .esriStopReverseColumn {
+.simpleDirections .esriStopReverseColumn,
+.simpleDirections .startTimeMenuButton {
 	display: none !important;
 }
 

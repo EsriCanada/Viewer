@@ -40,7 +40,8 @@ define([
                 barriers: false,
                 optimize: false,
                 print: false
-            }
+            },
+            superNavigator : null,
         },
 
 
@@ -194,6 +195,27 @@ define([
                     }
                 })
             );
+
+            let mapKeyEvent = null;
+            if(this.defaults.superNavigator) {
+                mapKeyEvent = on.pausable(this.defaults.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
+                    if(!this.toolbar.IsToolSelected('directions')) return;
+                    // console.log('directions -> mapClick', evt);
+                    if(this.directions.mapClickActive) {
+                        this.directions.addStop(evt.mapPoint);
+                    }
+                }));
+                mapKeyEvent.pause();
+
+                this.toolbar.on('updateTool', lang.hitch(this, function(name) {
+                    // console.log('updateTool', name);
+                    if(name==='directions') {
+                        mapKeyEvent.resume();
+                    } else {
+                        mapKeyEvent.pause();
+                    }
+                }))
+            }
         },
 
         startup: function () {
@@ -215,6 +237,17 @@ define([
                 }));
             } 
         },
+
+        // postCreate : function() {
+        //     this.inherited(arguments);
+        
+        //     if(this.defaults.superNavigator) {
+        //         on(this.defaults.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
+        //             if(!this.toolbar.IsToolSelected('directions')) return;
+        //             console.log('directions -> mapClick', evt);
+        //         }));
+        //     }
+        // },
 
         loaded : false,
 
