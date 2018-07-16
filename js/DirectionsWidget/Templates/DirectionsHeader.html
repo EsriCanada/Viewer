@@ -1,7 +1,7 @@
 <div class="directionsHeader" id="${directionsHeaderId}">
 	<div id="directionsControls" aria-label="${_i18n.widgets.directionsWidget.headerNavigation}">
 
-		<div data-dojo-attach-point="locateDivButton" class="locateButton directionsButton"></div>
+		<div data-dojo-attach-point="locateDivButton" class="locateButton directionsButton" data-dojo-attach-event="click: locateStarts"></div>
 
 		<input type="image" src="images/icons_${iconsColor}/Reverse.png" alt="Reverse" aria-label="${_i18n.widgets.directionsWidget.reverse}" title="${_i18n.widgets.directionsWidget.reverse}" class="directionsButton reverse" data-dojo-attach-event="click: reverseDirections"/>
 

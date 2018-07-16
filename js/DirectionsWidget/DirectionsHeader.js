@@ -110,7 +110,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }, zoomLocateButton);  
 
                 if(this.locateCallBack) {
-                    this.locate.on("locate", this.locateCallBack)
+                    this.locate.on("locate", lang.hitch(this, function(ev) {
+                        this.locateCallBack(ev);
+                        domClass.remove(this.locateDivButton, 'activeBg');
+                    }));
                 }
             } else {
                 domClass.add(this.locateDivButton, 'hide');
@@ -141,26 +144,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         _init: function () {
 
             this.loaded = true;
-
-            // const buttons = query(".directionsButton");
-            // buttons.forEach(lang.hitch(this, function (btn) {
-            //     on(btn,'keydown', lang.hitch(this, function(ev) {
-            //         switch(ev.keyCode) {
-            //             case 13:
-            //                 btn.click();
-            //                 ev.stopPropagation();
-            //                 ev.preventDefault();
-            //                 break;
-            //             // case 88: // X
-            //             // case 67: // C
-            //             // case 69: // E
-            //             //     this.ToClear();
-            //             //     ev.stopPropagation();
-            //             //     ev.preventDefault();
-            //             //     break;
-            //         }
-            //     }));
-            // }));
 
             this.directions.on("map-click-active", lang.hitch(this, function(state) {
                 if(this.mapClickActiveStatus = state.mapClickActive) {
@@ -214,9 +197,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         },
 
-        // ToClear : function() {
-        //     query('.directionsButton.clear')[0].focus();
-        // },
+        locateStarts: function() {
+            domClass.add(this.locateDivButton, 'activeBg');
+        },
 
         clearDirections : function(ev) {
             this.directions.reset();//clearDirections();
