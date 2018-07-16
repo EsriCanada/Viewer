@@ -101,7 +101,8 @@
     margin-top: 1px;
 }
 
-.directionsHeader img {
+.directionsHeader img,
+.directionsHeader input[type="image"] {
 	height: 18px !important;
     width: 18px !important;
 }
@@ -130,8 +131,7 @@
 	font-size:1px;
 }
 
-.directionsHeader .locateButton,
-.directionsHeader .toggleButton {
+.directionsHeader .locateButton {
     float: none;
     margin: 0;
     padding: 0;

@@ -6,7 +6,8 @@ button:hover, .navBtn:hover,
 .panelToolActive:hover,
 .esriMeasurement .esriToggleButton .dijitButtonNode:hover,
 .panelTool:hover, /*.esriBookmarkItem:hover,*/
-.esriSimpleSliderDecrementButton:hover, .esriSimpleSliderHomeButton:hover, .esriSimpleSliderIncrementButton:hover
+.esriSimpleSliderDecrementButton:hover, .esriSimpleSliderHomeButton:hover, .esriSimpleSliderIncrementButton:hover,
+.directionsButton:hover
 {
   background-color: rgba(255, 255, 255, 0.5) !important;
 }

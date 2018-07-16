@@ -1,24 +1,18 @@
 <div class="directionsHeader" id="${directionsHeaderId}">
 	<div id="directionsControls" aria-label="${_i18n.widgets.directionsWidget.headerNavigation}">
 
-		<div data-dojo-attach-point="locateDivButton" class="directionsHeader locateButton"></div>
+		<div data-dojo-attach-point="locateDivButton" class="locateButton directionsButton"></div>
 
-		<img src="images/icons_${iconsColor}/Reverse.png" alt="Reverse" aria-label="${_i18n.widgets.directionsWidget.reverse}" title="${_i18n.widgets.directionsWidget.reverse}" tabindex=0  class="directionsButton reverse" role="button" data-dojo-attach-event="click: reverseDirections"/>
+		<input type="image" src="images/icons_${iconsColor}/Reverse.png" alt="Reverse" aria-label="${_i18n.widgets.directionsWidget.reverse}" title="${_i18n.widgets.directionsWidget.reverse}" class="directionsButton reverse" data-dojo-attach-event="click: reverseDirections"/>
 
-		<div data-dojo-attach-point="addStopsButton" class="directionsHeader toggleButton">
-			<img src="images/icons_${iconsColor}/AddStop.png" alt="Stops" aria-label="${_i18n.widgets.directionsWidget.addStops}" title="${_i18n.widgets.directionsWidget.addStops}" tabindex=0  class="directionsButton stop" role="button" data-dojo-attach-event="click: addStopsDirections"/>
-		</div>
+		<input type="image" src="images/icons_${iconsColor}/AddStop.png" alt="Stops" data-dojo-attach-point="addStopsButton" aria-label="${_i18n.widgets.directionsWidget.addStops}" title="${_i18n.widgets.directionsWidget.addStops}"  class="directionsButton stop" data-dojo-attach-event="click: addStopsDirections"/>
 
-		<div data-dojo-attach-point="addBarriersButton" class="directionsHeader toggleButton">
-			<img src="images/icons_${iconsColor}/Barriere.png" data-dojo-attach-point="barriers" alt="Barriers" aria-label="${_i18n.widgets.directionsWidget.barriere}" title="${_i18n.widgets.directionsWidget.barriere}" tabindex=0  class="directionsButton barriere" role="button" data-dojo-attach-event="click: barriersDirections"/>
-		</div>
+		<input type="image" src="images/icons_${iconsColor}/Barriere.png" data-dojo-attach-point="barriers" alt="Barriers" aria-label="${_i18n.widgets.directionsWidget.barriere}" title="${_i18n.widgets.directionsWidget.barriere}" class="directionsButton barriere" data-dojo-attach-event="click: barriersDirections"/>
 
-		<div data-dojo-attach-point="optimizeButton" class="directionsHeader toggleButton">
-			<img src="images/icons_${iconsColor}/optimize1.png" data-dojo-attach-point="optimize" alt="optimize" aria-label="${_i18n.widgets.directionsWidget.optimize}" title="${_i18n.widgets.directionsWidget.optimize}" tabindex=0  class="directionsButton optimize" role="button" data-dojo-attach-event="click: optimizeDirections"/>
-		</div>
+		<input type="image" src="images/icons_${iconsColor}/optimize1.png" data-dojo-attach-point="optimize" alt="optimize" aria-label="${_i18n.widgets.directionsWidget.optimize}" title="${_i18n.widgets.directionsWidget.optimize}" class="directionsButton optimize"data-dojo-attach-event="click: optimizeDirections"/>
 
-		<img src="images/icons_${iconsColor}/print.png" data-dojo-attach-point="print" alt="Print" aria-label="${_i18n.widgets.directionsWidget.print}" title="${_i18n.widgets.directionsWidget.print}" tabindex=0 class="directionsButton print" role="button" data-dojo-attach-event="click: printDirections"/>
+		<input type="image" src="images/icons_${iconsColor}/print.png" data-dojo-attach-point="print" alt="Print" aria-label="${_i18n.widgets.directionsWidget.print}" title="${_i18n.widgets.directionsWidget.print}" class="directionsButton print" data-dojo-attach-event="click: printDirections"/>
 
-		<img src="images/icons_${iconsColor}/searchClear.png" alt="Clear" aria-label="${_i18n.widgets.directionsWidget.clear}" title="${_i18n.widgets.directionsWidget.clear}" tabindex=0 class="directionsButton clear" role="button" data-dojo-attach-event="click: clearDirections"/>
+		<input type="image" src="images/icons_${iconsColor}/searchClear.png" alt="Clear" aria-label="${_i18n.widgets.directionsWidget.clear}" title="${_i18n.widgets.directionsWidget.clear}" class="directionsButton" data-dojo-attach-event="click: clearDirections"/>
 	</div>
 </div>

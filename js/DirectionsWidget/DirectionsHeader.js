@@ -142,25 +142,25 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.loaded = true;
 
-            const buttons = query(".directionsButton");
-            buttons.forEach(lang.hitch(this, function (btn) {
-                on(btn,'keydown', lang.hitch(this, function(ev) {
-                    switch(ev.keyCode) {
-                        case 13:
-                            btn.click();
-                            ev.stopPropagation();
-                            ev.preventDefault();
-                            break;
-                        // case 88: // X
-                        // case 67: // C
-                        // case 69: // E
-                        //     this.ToClear();
-                        //     ev.stopPropagation();
-                        //     ev.preventDefault();
-                        //     break;
-                    }
-                }));
-            }));
+            // const buttons = query(".directionsButton");
+            // buttons.forEach(lang.hitch(this, function (btn) {
+            //     on(btn,'keydown', lang.hitch(this, function(ev) {
+            //         switch(ev.keyCode) {
+            //             case 13:
+            //                 btn.click();
+            //                 ev.stopPropagation();
+            //                 ev.preventDefault();
+            //                 break;
+            //             // case 88: // X
+            //             // case 67: // C
+            //             // case 69: // E
+            //             //     this.ToClear();
+            //             //     ev.stopPropagation();
+            //             //     ev.preventDefault();
+            //             //     break;
+            //         }
+            //     }));
+            // }));
 
             this.directions.on("map-click-active", lang.hitch(this, function(state) {
                 if(this.mapClickActiveStatus = state.mapClickActive) {
@@ -179,7 +179,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.directions.on("barrier-tool-active", lang.hitch(this, function(state) {
                 if(this.barriersToolActiveStatus = state.barrierToolActive) {
-                    domClass.add(this.addBarriersButton, 'activeBg');
+                    domClass.add(this.barriers, 'activeBg');
                     const tip = query('.esriMapTooltip', this.map.domNode);
                     if(tip) {
                         domAttr.set(tip[0], 'aria-live', 'polite');
@@ -187,7 +187,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
                 }
                 else {
-                    domClass.remove(this.addBarriersButton, 'activeBg');
+                    domClass.remove(this.barriers, 'activeBg');
                 }
             }));
 
@@ -247,11 +247,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         optimizeDirections : function() {
             this.directions.set('optimalRoute', true);
-            domClass.add(this.optimizeButton, 'activeBg');
+            domClass.add(this.optimize, 'activeBg');
             this.directions.getDirections().then(lang.hitch(this, function() {
                 this.directions.set('optimalRoute', false);
                 this.directions.getDirections().then(lang.hitch(this, function() {
-                    domClass.remove(this.optimizeButton, 'activeBg');
+                    domClass.remove(this.optimize, 'activeBg');
                 }));
             }));
         },
