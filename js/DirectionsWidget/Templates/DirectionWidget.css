@@ -103,8 +103,16 @@
 
 .directionsHeader img,
 .directionsHeader input[type="image"] {
-	height: 18px !important;
-    width: 18px !important;
+    height: 12px !important;
+    width: 12px !important;
+}
+
+@media only screen and (min-width: 720px) {
+    .directionsHeader img,
+    .directionsHeader input[type="image"] {
+        height: 18px !important;
+        width: 18px !important;
+    }
 }
 
 .simpleDirections .zoomLocateButton {
