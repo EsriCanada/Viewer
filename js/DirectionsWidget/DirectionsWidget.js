@@ -23,7 +23,6 @@ define([
         domConstruct
     ) {
     var Widget = declare("esri.dijit.DirectionWidget", [_WidgetBase, /*_TemplatedMixin,*/ Evented], {
-        // templateString: LanguageSelectTemplate,
 
         options: {
             map: null,
@@ -43,7 +42,6 @@ define([
             },
             superNavigator : null,
         },
-
 
         constructor: function (options, srcRefNode) {
             this.defaults = lang.mixin({}, this.options, options);
@@ -80,7 +78,6 @@ define([
             let directionOptions = {
                 map: this.map,
                 id: this.defaults.id,
-                // routeTaskUrl: "https://utility.arcgis.com/usrsvcs/appservices/MZT52TUz01K4y8Li/rest/services/World/Route/NAServer/Route_World",
 
                 showMilesKilometersOption: false,
                 showOptimalRouteOption: false,
@@ -102,10 +99,7 @@ define([
 
                 dragging: this.options.allowDragging,
                 canModifyStops: true,
-                // mapClickActive: false,
                 maxStops: 9,
-
-                // alphabet: false,
 
                 //searchOptions: <Object>
                 //segmentInfoTemplate: <InfoTemplate> 
@@ -199,7 +193,6 @@ define([
             if(this.defaults.superNavigator) {
                 const mapKeyEvent = on.pausable(this.defaults.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
                     if(!this.toolbar.IsToolSelected('directions')) return;
-                    // console.log('directions -> mapClick', evt);
                     if(this.directions.mapClickActive) {
                         this.directions.addStop(evt.mapPoint);
                     }
@@ -207,7 +200,6 @@ define([
                 mapKeyEvent.pause();
 
                 this.toolbar.on('updateTool', lang.hitch(this, function(name) {
-                    // console.log('updateTool', name);
                     if(name==='directions') {
                         mapKeyEvent.resume();
                     } else {
@@ -236,17 +228,6 @@ define([
                 }));
             } 
         },
-
-        // postCreate : function() {
-        //     this.inherited(arguments);
-        
-        //     if(this.defaults.superNavigator) {
-        //         on(this.defaults.superNavigator, 'mapClick', lang.hitch(this, function(evt) {
-        //             if(!this.toolbar.IsToolSelected('directions')) return;
-        //             console.log('directions -> mapClick', evt);
-        //         }));
-        //     }
-        // },
 
         loaded : false,
 
@@ -296,7 +277,6 @@ define([
 
                 this.directions.on("load", lang.hitch(this, this._fixStops));
                 this.directions.on("directions-finish", lang.hitch(this, this._fixUi));
-
 
                 if(this.deferred)
                     this.deferred.resolve(true);
@@ -429,29 +409,10 @@ define([
                                         }
                                         if(indexB>=0) {
                                             this.directions.set('autoSolve', false);
-                                            // const stopA = this.directions.stops[indexA];
-                                            // this.directions.removeStop(indexA, 1).then(lang.hitch(this, function(ev) {
-                                            //     this.directions.addStop(stopA, indexB);
-                                            // }));
-
                                             let stops = Array.from(this.directions.stops);
                                             const stopA = stops.splice(indexA, 1)[0];
                                             stops.splice(indexB, 0, stopA);
                                             
-                                            // const signal = this.directions.on('directions-finish', lang.hitch(this, function(results) {
-                                            //     signal.remove();
-
-                                            //     this.directions._dndNode.focus();
-
-                                            //     // const t = query('.esriStop.dojoDndItem', this._dndNode).find(function(t1) {
-                                            //     //     return query('.esriStopIcon.dojoDndHandle', t1)[0].innerText==indexA;
-                                            //     // });
-                                            //     // if(t) {
-                                            //     //     query('td.dojoDndHandle', t)[0].focus();
-                                            //     // }
-                                            // }));
-                                            
-                                            // this.directions.updateStops(stops);//.then(lang.hitch(this, function() {this.directions._dndNode.focus();}));
                                             this.directions.set('autoSolve', false);
                                             this.directions.removeStops().then(lang.hitch(this, function () {
                                                 const lenFix = stops.length;
@@ -524,7 +485,6 @@ define([
                         domConstruct.place(span, img, "after");
                     }
                 } catch (ex) {
-                    // alert(ex.message);
                     console.log(ex);
                 }
 
