@@ -114,13 +114,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }
 
             if(!this.options.barriers) {
-                domClass.add(this.addBarriersButton, 'hide');
-                domAttr.set(this.addBarriersButton, 'aria-hidden', true);
+                domClass.add(this.barriers, 'hide');
+                domAttr.set(this.barriers, 'aria-hidden', true);
             }
 
             if(!this.options.optimize) {
-                domClass.add(this.optimizeButton, 'hide');
-                domAttr.set(this.optimizeButton, 'aria-hidden', true);
+                domClass.add(this.optimize, 'hide');
+                domAttr.set(this.optimize, 'aria-hidden', true);
             }
 
             if(!this.options.print) {
