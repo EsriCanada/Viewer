@@ -95,8 +95,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 const locateButton = dojo.query(".locateContainer", this.locateDivButton)[0];
                 const zoomLocateButton = dojo.query(".zoomLocateButton", this.locateDivButton)[0];
-                //dojo.removeAttr(zoomLocateButton, 'title');
-                // var locateHint = dojo.attr(zoomLocateButton, 'title');
                 domAttr.remove(zoomLocateButton, 'role');
                 domAttr.remove(this.locate._locateNode, 'tabindex');
                 dojo.empty(zoomLocateButton);
