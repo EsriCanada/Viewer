@@ -1,29 +1,20 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dijit/registry",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
     "dojo/on",  "esri/dijit/LocateButton",
-    "dojo/Deferred", "dojo/query",
+    "dojo/query",
     "dojo/text!application/DirectionsWidget/Templates/DirectionsHeader.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
-    "dojo/parser", "dojo/ready",
-    "dijit/layout/ContentPane",
-    "dojo/string",
-    "dojo/i18n!application/nls/DirectionsWidget",
-    "esri/domUtils",
-    // "application/ImageToggleButton/ImageToggleButton",
-    "dojo/NodeList-dom", "dojo/NodeList-traverse"
-
+    // "dojo/parser", "dojo/ready",
+    "dojo/i18n!application/nls/DirectionsWidget"
     ], function (
         Evented, declare, lang, has, esriNS,
-        _WidgetBase, _TemplatedMixin, registry,
+        _WidgetBase, _TemplatedMixin, 
         on, LocateButton,
-        Deferred, query,
+        query,
         DirectionsHeaderTemplate,
         dom, domClass, domAttr, domStyle, domConstruct, event,
-        parser, ready,
-        ContentPane,
-        string,
-        i18n,
-        domUtils
+        // parser, ready,
+        i18n
     ) {
 
     // ready(function(){
@@ -93,8 +84,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 }, domConstruct.create("div",{},this.locateDivButton));
                 this.locate.startup();
 
-                const locateButton = dojo.query(".locateContainer", this.locateDivButton)[0];
-                const zoomLocateButton = dojo.query(".zoomLocateButton", this.locateDivButton)[0];
+                const zoomLocateButton = this.locate._locateNode;
                 domAttr.remove(zoomLocateButton, 'role');
                 domAttr.remove(this.locate._locateNode, 'tabindex');
                 dojo.empty(zoomLocateButton);
@@ -211,10 +201,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         printDirections: function() {
-            const printButton = query('.esriResultsPrint');
-            if(printButton && printButton.length>0) {
-                printButton[0].click();
-            }
+            this.directions._printButton.click();
         },
 
         addStopsDirections: function() {

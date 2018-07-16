@@ -3,7 +3,9 @@
 .simpleDirections .esriStopsGetDirectionsContainer,
 .simpleDirections .esriStopsReverse,
 .simpleDirections .esriStopReverseColumn,
-.simpleDirections .startTimeMenuButton {
+.simpleDirections .startTimeMenuButton,
+.simpleDirections .zoomLocateButton,
+.simpleDirections .esriStopsRemovable .esriStopIconRemoveColumn {
 	display: none !important;
 }
 
@@ -24,10 +26,6 @@
     color: white;
 }
 
-/*.simpleDirections .esriTrafficLabelLight {
-    color: darkgreen;
-}
-*/
 .simpleDirections .esriRoutesError {
     padding: 10px;
     text-align: left;
@@ -115,10 +113,6 @@
     }
 }
 
-.simpleDirections .zoomLocateButton {
-	display: none;
-}
-
 .simpleDirections .locateContainer input {
     height: 18px; 
     width: 18px; 
@@ -180,10 +174,6 @@
 .simpleDirections span.searchIcon.esri-icon-close.searchClose img {
 	width:10px;
 	height:10px;
-}
-
-.simpleDirections .esriStopsRemovable .esriStopIconRemoveColumn {
-	display: none;
 }
 
 .simpleDirections .arcgisSearch .searchGroup .searchInput, 
