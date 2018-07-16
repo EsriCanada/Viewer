@@ -714,14 +714,14 @@
       "contactUsSubject": "Enter subject line here",
       "contactUsBody": "Enter your text here",
       "alternateSplashText": "",
-      "directions_locator": false,
-      "directions_stops": false,
+      "directions_locator": true,
+      "directions_stops": true,
       "directions_barriers": false,
       "directions_print": false,
-      "directions_optimize": false,
-      "directions_symbols": false,
-      "directions_dragging": false,
-      "directions_stopOrder": false,
+      "directions_optimize": true,
+      "directions_symbols": true,
+      "directions_dragging": true,
+      "directions_stopOrder": true,
       "directions_popup": false
    }
 }
