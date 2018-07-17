@@ -1,0 +1,192 @@
+.pDirections .esriRouteIconColumn {
+	width:21px;
+	padding:10px;
+	vertical-align:top;
+	border-bottom:1px solid #8b8b8b;
+}
+
+.pDirections .esriRouteTextColumn {
+	padding:10px 5px 10px 0;
+	vertical-align:top;
+	border-bottom:1px solid #8b8b8b;
+}
+
+.dj_rtl .pDirections .esriRouteTextColumn {
+	padding:10px 0 10px 5px;
+}
+
+.pDirections .esriRouteIconColumn .esriRouteIcon {
+	display:inline-block;
+	font-family:Arial,Helvetica,sans-serif;
+	height:21px;
+	width:21px;
+	margin:0;
+	line-height:21px;
+	vertical-align:middle;
+	font-size:11px;
+	text-align:center;
+	color:#fff;
+	background-repeat:no-repeat;
+	background-position:left top;
+}
+
+.pDirections .esriDMTStopLast .esriRouteIconColumn,.pDirections .esriDMTStopLast .esriRouteTextColumn {
+	border-bottom:0;
+}
+
+.pDirections .esriPrintPage {
+	padding:30px 0;
+	margin:20px auto;
+	font-family:arial,sans-serif;
+	font-size:13px;
+}
+
+.pDirections .esriPrintBar {
+	width:100%;
+	position:fixed;
+	left:0;
+	top:0;
+	z-index:6;
+	height:50px;
+	background:#fafafa;
+	border-bottom:1px solid #000;
+}
+
+.dj_rtl .pDirections .esriPrintBar {
+	left:inherit;
+	right:0;
+}
+
+.pDirections .esriPrintButton,.pDirections .esriCloseButton {
+	color:#444;
+	font-family:Verdana,Helvetica,sans-serif;
+	font-size:12px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:1px solid #8b8b8b;
+	box-shadow:none;
+	-webkit-box-shadow:none;
+	background:#F2F2F2;
+/* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNWU1ZTUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background:-moz-linear-gradient(top,#F2F2F2 0%,#D1D1D1 100%);
+/* FF3.6+ */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#F2F2F2),color-stop(100%,#D1D1D1));
+/* Chrome,Safari4+ */
+	background:-webkit-linear-gradient(top,#F2F2F2 0%,#D1D1D1 100%);
+/* Chrome10+,Safari5.1+ */
+	background:-o-linear-gradient(top,#F2F2F2 0%,#D1D1D1 100%);
+/* Opera 11.10+ */
+	background:-ms-linear-gradient(top,#F2F2F2 0%,#D1D1D1 100%);
+/* IE10+ */
+	background:linear-gradient(to bottom,#F2F2F2 0%,#D1D1D1 100%);
+/* W3C */
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#F2F2F2',endColorstr='#D1D1D1',GradientType=0);
+/* IE6-8 */
+	margin:10px 20px;
+	font-size:11px;
+	line-height:16px;
+	display:block;
+	padding:5px 10px;
+	outline:0;
+	text-decoration:none;
+	cursor:pointer;
+	font-weight:400;
+	white-space:nowrap;
+	text-decoration:none;
+	float:right;
+}
+
+.dj_rtl .pDirections .esriPrintButton,.dj_rtl .pDirections .esriCloseButton {
+	float:left;
+}
+
+.pDirections .esriPrintButton:hover,.pDirections .esriPrintButton:focus,.pDirections .esriCloseButton:hover,.pDirections .esriCloseButton:focus {
+	background:#E5E6E6;
+/* Old browsers */
+/* IE9 SVG, needs conditional override of 'filter' to 'none' */
+	background:url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiA/Pgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgdmlld0JveD0iMCAwIDEgMSIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSI+CiAgPGxpbmVhckdyYWRpZW50IGlkPSJncmFkLXVjZ2ctZ2VuZXJhdGVkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iMCUiIHgyPSIwJSIgeTI9IjEwMCUiPgogICAgPHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZmZmZiIgc3RvcC1vcGFjaXR5PSIxIi8+CiAgICA8c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlNWU1ZTUiIHN0b3Atb3BhY2l0eT0iMSIvPgogIDwvbGluZWFyR3JhZGllbnQ+CiAgPHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEiIGhlaWdodD0iMSIgZmlsbD0idXJsKCNncmFkLXVjZ2ctZ2VuZXJhdGVkKSIgLz4KPC9zdmc+);
+	background:-moz-linear-gradient(top,#E5E6E6 0%,#A0A1A1 100%);
+/* FF3.6+ */
+	background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,#E5E6E6),color-stop(100%,#A0A1A1));
+/* Chrome,Safari4+ */
+	background:-webkit-linear-gradient(top,#E5E6E6 0%,#A0A1A1 100%);
+/* Chrome10+,Safari5.1+ */
+	background:-o-linear-gradient(top,#E5E6E6 0%,#A0A1A1 100%);
+/* Opera 11.10+ */
+	background:-ms-linear-gradient(top,#E5E6E6 0%,#A0A1A1 100%);
+/* IE10+ */
+	background:linear-gradient(to bottom,#E5E6E6 0%,#A0A1A1 100%);
+/* W3C */
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#E5E6E6',endColorstr='#A0A1A1',GradientType=0);
+/* IE6-8 */
+}
+
+.pDirections .esriPrintMain {
+	background:#FFF;
+	border:solid 1px #000;
+	margin:0 auto;
+	padding:20px;
+	width:720px;
+}
+
+.pDirections .esriPrintHeader {
+	display:block;
+	margin-bottom:5px;
+}
+
+.pDirections .esriPrintName {
+	font-weight:700;
+	font-size:120%;
+	margin:10px 0 5px;
+}
+
+.pDirections .esriPrintStopLabel {
+	color:#000;
+	display:inline-block;
+	font-size:11px;
+	width:21px;
+	height:21px;
+	line-height:21px;
+	border:1px solid #000;
+	text-align:center;
+	border-radius:50%;
+}
+
+.pDirections .esriPrintLength {
+	font-weight:700;
+	margin:0 0 10px;
+}
+
+.pDirections #print_area {
+	margin:0 0 10px;
+	max-width:100%;
+	min-width:20%;
+}
+
+.pDirections #print_helper {
+	display:none;
+}
+
+.pDirections .esriPrintDirections {
+	margin:0;
+}
+
+.pDirections .esriPrintDirections table {
+	border-collapse:collapse;
+	margin:0;
+	padding:0;
+	border:0;
+	width:100%;
+}
+
+.esriClear {
+	clear:both;
+	display:block;
+	overflow:hidden;
+	visibility:hidden;
+	width:0;
+	height:0;
+}

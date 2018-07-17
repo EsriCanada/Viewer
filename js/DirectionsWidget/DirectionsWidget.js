@@ -103,6 +103,7 @@ define([
 
                 //searchOptions: <Object>
                 //segmentInfoTemplate: <InfoTemplate> 
+                printPage: "../js/DirectionsPrintPage/index.html"
             };
 
             if(this.options.enhancedSymbols) {

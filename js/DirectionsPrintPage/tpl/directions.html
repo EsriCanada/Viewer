@@ -1,0 +1,40 @@
+<div class="esriPrintBar">
+    <div id="closeButton" class="esriCloseButton" title="Close">Close</div>
+    <div id="printButton" class="esriPrintButton" title="Print">Print</div>
+</div>
+<div class="esriPrintMain">
+    <div class="esriPrintHeader">
+        <img class="esriPrintLogo" src="https://www.arcgis.com/about/graphics/logo-esri.png" />
+        {{^error}}
+            <div class="esriPrintName">{{routeName}}</div>
+            <div class="esriPrintLength">{{fullTime}} &middot; {{fullDistance}}</div>
+            <div id="print_helper"></div>
+            <textarea id="print_area" class="esriPrintNotes" placeholder="Enter notes here"></textarea>
+        {{/error}}
+        <div class="clear"></div>
+    </div>
+    <div class="esriPrintDirections">
+        {{#error}}
+            <p>No directions to display.</p>
+        {{/error}}
+        {{^error}}
+        <table>
+            <tbody>
+            {{#features}}
+            <tr {{#lastColumn}}class="esriDMTStopLast"{{/lastColumn}}>
+                <td class="esriRouteIconColumn">{{#maneuver}}<img src="{{maneuver}}" />{{/maneuver}}
+                    {{^maneuver}}<div class="esriPrintStopLabel">{{letter}}</div>{{/maneuver}}
+                </td>
+                <td class="esriRouteTextColumn">
+                    <div>{{#attributes.step}}<strong>{{attributes.step}}.</strong>{{/attributes.step}} {{attributes.text}}</div>
+                </td>
+                <td class="esriRouteTextColumn" width="10%">
+                     <div class="esriRouteLength">{{distance}}</div>
+                </td>
+            </tr>
+            {{/features}}
+            </tbody>
+        </table>
+        {{/error}}
+    </div>
+</div>
