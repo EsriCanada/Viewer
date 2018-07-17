@@ -3,8 +3,9 @@ require([
     "dojo/on",
     "dojo/number",
     "modules/mustache",
-    "dojo/text!template/directions"
+    "dojo/text!template/directions.html"
 ], function(dom, on, number, Mustache, dirTemplate) {
+    debugger;
     var directions, output;
     try {
         directions = window.opener.directions;
@@ -26,7 +27,7 @@ require([
         directions.letterIndex = 0;
         directions.maneuver = function() {
             if (this.attributes.maneuverType) {
-                var imagePath = 'http://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/dijit/images/Directions/maneuvers/';
+                var imagePath = 'https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/dijit/images/Directions/maneuvers/';
                 var imageType = '.png';
                 if (this.attributes.maneuverType === 'esriDMTStop' || this.attributes.maneuverType === 'esriDMTDepart') {
                     return false;
