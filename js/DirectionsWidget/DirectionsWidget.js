@@ -123,7 +123,7 @@ define([
                 directionOptions.routeTaskUrl = directionsProxy;
             }
 
-            this.directions = new Directions(directionOptions,
+            window.directionDijit = this.directions = new Directions(directionOptions,
                 domConstruct.create("div", null, this.domNode)); //"pageBody_directions");
 
             on(

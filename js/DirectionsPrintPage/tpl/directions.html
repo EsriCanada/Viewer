@@ -8,6 +8,7 @@
         {{^error}}
             <div class="esriPrintName">{{routeName}}</div>
             <div class="esriPrintLength">{{fullTime}} &middot; {{fullDistance}}</div>
+            <div id="divMap" class="esriPrintMap esriPrintWait"></div>
             <div id="print_helper"></div>
             <textarea id="print_area" class="esriPrintNotes" placeholder="Enter notes here"></textarea>
         {{/error}}
@@ -18,7 +19,7 @@
             <p>No directions to display.</p>
         {{/error}}
         {{^error}}
-        <table>
+        <table role="presentation">
             <tbody>
             {{#features}}
             <tr {{#lastColumn}}class="esriDMTStopLast"{{/lastColumn}}>

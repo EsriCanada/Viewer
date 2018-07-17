@@ -1,15 +1,21 @@
 require([
     "dojo/dom",
     "dojo/on",
+    'dojo/_base/lang',
+    'dojo/dom-class',
+    'dojo/dom-style',
+    'dojo/dom-construct',
     "dojo/number",
     "modules/mustache",
     "dojo/text!template/directions.html"
-], function(dom, on, number, Mustache, dirTemplate) {
-    debugger;
-    var directions, output;
+], function(dom, on, lang, domClass, domStyle, domConstruct, number, Mustache, dirTemplate) {
+    var directions, directionsWidget, output;
     try {
         directions = window.opener.directions;
-    } catch (err) {
+        directionsWidget = window.opener.directionDijit;
+        // console.log(directions, directionsWidget);
+    } 
+    catch (err) {
         directions = {
             error: true
         };
@@ -24,20 +30,34 @@ require([
         on(dom.byId('directions'), '#printButton:click', function() {
             window.print();
         });
+        
+        directionsWidget.zoomToFullRoute().then(lang.hitch(this,function(){
+          directionsWidget._printService.execute(directionsWidget._printParams,lang.hitch(this,function(result){
+            var mapNode = document.getElementById("divMap");
+            domClass.remove(mapNode,'esriPrintWait');
+            domClass.add(mapNode,'esriPageBreak');
+            domConstruct.create("img",{src:result.url,"class":"esriPrintMapImg"},mapNode);
+          }),lang.hitch(this,function(error){
+            var mapNode = document.getElementById("divMap");
+            domClass.remove(mapNode,"esriPrintWait");
+            console.log("Error while calling the print service: ",error);
+          }));
+        }));
+
         directions.letterIndex = 0;
+        const imagePath = 'https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/dijit/images/Directions/maneuvers/';
+        const imageType = '.png';
         directions.maneuver = function() {
             if (this.attributes.maneuverType) {
-                var imagePath = 'https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/dijit/images/Directions/maneuvers/';
-                var imageType = '.png';
-                if (this.attributes.maneuverType === 'esriDMTStop' || this.attributes.maneuverType === 'esriDMTDepart') {
-                    return false;
-                }
+                // if (this.attributes.maneuverType === 'esriDMTStop' || this.attributes.maneuverType === 'esriDMTDepart') {
+                //     return false;
+                // }
                 return imagePath + this.attributes.maneuverType + imageType;
             }
             return false;
         };
         directions.letter = function() {
-            var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var alphabet = "123456789";
             var letter = false;
             if (!directions.letterIndex) {
                 directions.letterIndex = 0;
@@ -72,7 +92,7 @@ require([
             if (d === 0) {
                 return "";
             }
-            return number.format(d) + " " + "mi";
+            return number.format(d) + " " + "km";
         };
         directions.fullTime = function() {
             var time = this.totalTime;
@@ -108,10 +128,12 @@ require([
             if (d === 0) {
                 return "";
             }
-            return number.format(d) + " " + "mi";
+            return number.format(d) + " " + "km";
         };
         output = Mustache.render(dirTemplate, directions);
     }
+
+    console.log('directions', directions);
     var node = dom.byId('directions');
     if (node) {
         node.innerHTML = output;
