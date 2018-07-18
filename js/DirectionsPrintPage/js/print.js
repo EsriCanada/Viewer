@@ -51,7 +51,9 @@ require([
 
           }),lang.hitch(this,function(error){
             const mapNode = document.getElementById("divMap");
-            domClass.remove(mapNode,"esriPrintWait");
+            if(mapNode) {
+                domClass.remove(mapNode,"esriPrintWait");
+            }
             console.log("Error while calling the print service: ",error);
           }));
         }));

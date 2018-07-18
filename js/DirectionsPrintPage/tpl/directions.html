@@ -2,7 +2,7 @@
 
 .esriResultsSummary {
     line-height: 18px;
-    color: #444;
+    color: black;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -72,16 +72,16 @@
             <p>No directions to display.</p>
         {{/error}}
         {{^error}}
-        <table role="presentation">
+        <table role="list">
             <tbody>
             {{#features}}
-            <tr {{#lastColumn}}class="esriDMTStopLast"{{/lastColumn}}>
+            <tr role="listItem" {{#lastColumn}}class="esriDMTStopLast"{{/lastColumn}}>
                 <td class="esriRouteIconColumn">
                     {{#maneuver}}
                     <div>
                         <img src="{{maneuver}}" alt="maneuver"/>
                         {{#attributes.hasLabel}}
-                        <div class="esriPrintStopLabel">{{letter}}</div>
+                        <div class="esriPrintStopLabel" aria-hidden="true">{{letter}}</div>
                         {{/attributes.hasLabel}}
                     </div>
                     {{/maneuver}}

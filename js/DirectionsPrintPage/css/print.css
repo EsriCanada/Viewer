@@ -91,3 +91,9 @@
     position: absolute;
     margin-top: -33px;
 }
+
+.pDirections .esriPrintNotes {
+	width:100%;
+	background: #ebebeb;
+	border: 1px solid black ;
+}
