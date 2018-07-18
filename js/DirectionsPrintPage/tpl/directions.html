@@ -76,8 +76,15 @@
             <tbody>
             {{#features}}
             <tr {{#lastColumn}}class="esriDMTStopLast"{{/lastColumn}}>
-                <td class="esriRouteIconColumn">{{#maneuver}}<img src="{{maneuver}}" />{{/maneuver}}
-                    {{^maneuver}}<div class="esriPrintStopLabel">{{letter}}</div>{{/maneuver}}
+                <td class="esriRouteIconColumn">
+                    {{#maneuver}}
+                    <div>
+                        <img src="{{maneuver}}" alt="maneuver"/>
+                        {{#attributes.hasLabel}}
+                        <div class="esriPrintStopLabel">{{letter}}</div>
+                        {{/attributes.hasLabel}}
+                    </div>
+                    {{/maneuver}}
                 </td>
                 <td class="esriRouteTextColumn">
                     <div>{{#attributes.step}}<strong>{{attributes.step}}.</strong>{{/attributes.step}} {{attributes.text}}</div>

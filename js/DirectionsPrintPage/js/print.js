@@ -64,6 +64,7 @@ require([
 
                 if (this.attributes.maneuverType === 'esriDMTDepart' ||
                     this.attributes.maneuverType === 'esriDMTStop') {
+                    this.attributes.hasLabel = true;
                     if (this.attributes.step === 1) {
                         return window.imagesPath+"/greenPoint.png";
                     }
@@ -72,7 +73,7 @@ require([
                     }
                     return window.imagesPath+"/bluePoint.png";
                 }
-
+                this.attributes.hasLabel = false;
                 return imagePath + this.attributes.maneuverType + imageType;
             }
             return false;
