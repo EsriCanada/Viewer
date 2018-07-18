@@ -346,6 +346,12 @@
                "type": "boolean",
                "fieldName": "directions_popup",
                "label": "Segment Popup"
+            },
+            {
+               "label": "<strong>Images URL:</strong>",
+               "fieldName": "directions_imagesURL",
+               "type": "string",
+               "tooltip": "Leave blank for default in application"
             }
          ]
       },
@@ -722,6 +728,7 @@
       "directions_symbols": true,
       "directions_dragging": true,
       "directions_stopOrder": true,
-      "directions_popup": false
+      "directions_popup": false,
+      "directions_imagesURL": ""
    }
 }

@@ -1402,7 +1402,8 @@ define([
                             enhancedSymbols: this.config.directions_symbols,
                             allowDragging: this.config.directions_dragging,
                             changeStopOrder: this.config.directions_stopOrder,
-                            segmentPopup: this.config.directions_popup
+                            segmentPopup: this.config.directions_popup,
+                            imagesURL: this.config.directions_imagesURL
                         },
                         superNavigator: this.superNav,
                     }, directionsDiv);

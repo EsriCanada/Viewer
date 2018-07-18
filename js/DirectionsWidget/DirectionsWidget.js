@@ -38,7 +38,13 @@ define([
                 stops: false,
                 barriers: false,
                 optimize: false,
-                print: false
+                print: false,
+
+                enhancedSymbols: true,
+                allowDragging: true,
+                changeStopOrder: true,
+                segmentPopup: false,
+                imagesURL: ''
             },
             superNavigator : null,
         },
@@ -61,6 +67,7 @@ define([
             link.rel = "stylesheet";
             query('head')[0].appendChild(link);
 
+<<<<<<< DirectionsPrintPage
             const fromSymb = new PictureMarkerSymbol("../images/greenPoint.png", 21, 29);
             fromSymb.setOffset(0, 12);
             const stopSymb = new PictureMarkerSymbol(locationPath+"/images/bluePoint.png", 21, 29);
@@ -74,6 +81,15 @@ define([
             stopSymbDrag.setOffset(0, 12);
             const toSymbDrag = new PictureMarkerSymbol(locationPath+"/images/redPointDrag.png", 21, 29);
             toSymbDrag.setOffset(0, 12);
+=======
+            if(this.defaults.options.imagesURL.isNonEmpty()) {
+                this.imagesPath = this.defaults.options.imagesURL;
+            } else {
+                const pathRegex = new RegExp(/\/[^\/]+$/);
+                const locationPath = location.protocol+'//'+location.host+location.pathname.replace(pathRegex, '');
+                this.imagesPath = locationPath+"/images";
+            }
+>>>>>>> Configurable Images Url
 
             let directionOptions = {
                 map: this.map,
@@ -107,6 +123,20 @@ define([
             };
 
             if(this.options.enhancedSymbols) {
+                const fromSymb = new PictureMarkerSymbol(this.imagesPath+"/greenPoint.png", 21, 29);
+                fromSymb.setOffset(0, 12);
+                const stopSymb = new PictureMarkerSymbol(this.imagesPath+"/bluePoint.png", 21, 29);
+                stopSymb.setOffset(0, 12);
+                const toSymb = new PictureMarkerSymbol(this.imagesPath+"/redPoint.png", 21, 29);
+                toSymb.setOffset(0, 12);
+
+                const fromSymbDrag = new PictureMarkerSymbol(this.imagesPath+"/greenPointDrag.png", 21, 29);
+                fromSymbDrag.setOffset(0, 12);
+                const stopSymbDrag = new PictureMarkerSymbol(this.imagesPath+"/bluePointDrag.png", 21, 29);
+                stopSymbDrag.setOffset(0, 12);
+                const toSymbDrag = new PictureMarkerSymbol(this.imagesPath+"/redPointDrag.png", 21, 29);
+                toSymbDrag.setOffset(0, 12);
+
                 directionOptions = Object.assign( {
                     fromSymbol: fromSymb,
                     stopSymbol: stopSymb,
@@ -156,13 +186,13 @@ define([
                                                 let imgSrc = background.substring(left, background.indexOf('\")'));
                                                 if(this.options.enhancedSymbols) {
                                                     if(imgSrc.includes("Directions/blueCircle.png")) {
-                                                        imgSrc = "../images/bluePoint.png";
+                                                        imgSrc = this.imagesPath+"/bluePoint.png";
                                                     }
                                                     else if(imgSrc.includes("Directions/greenPoint.png")) {
-                                                        imgSrc = "../images/greenPoint1.png";
+                                                        imgSrc = this.imagesPath+"/greenPoint.png";
                                                     }
                                                     else if(imgSrc.includes("Directions/redPoint.png") || imgSrc.includes("esriDMTDepart.png")) {
-                                                        imgSrc = "../images/redPoint1.png";
+                                                        imgSrc = this.imagesPath+"/redPoint.png";
                                                     }
                                                 }
                                                 const text = stopIcon[0].innerText;
@@ -464,13 +494,13 @@ define([
                     imgSrc = imgSrc.substring(5, imgSrc.length-2);
                     if(this.options.enhancedSymbols) {
                         if(imgSrc.includes("esriDMTStopOrigin.png")) {
-                            imgSrc = "../images/greenPoint1.png";
+                            imgSrc = this.imagesPath+"/greenPoint.png";
                         }
                         else if(imgSrc.includes("esriDMTStopDestination.png")) {
-                            imgSrc = "../images/redPoint1.png";
+                            imgSrc = this.imagesPath+"/redPoint.png";
                         }
                         else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
-                            imgSrc = "../images/bluePoint.png";
+                            imgSrc = this.imagesPath+"/bluePoint.png";
                         }
                     }
                     
