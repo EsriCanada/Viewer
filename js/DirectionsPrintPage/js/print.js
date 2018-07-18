@@ -22,6 +22,8 @@ require([
         };
     }
     if (directions && directionsWidget) {
+        window.imagesPath = directionsWidget.imagesPath;
+
         on(dom.byId('directions'), '#print_area:keyup', function() {
             dom.byId('print_helper').innerHTML = this.value;
         });
@@ -59,8 +61,11 @@ require([
         const imageType = '.png';
         directions.maneuver = function() {
             if (this.attributes.maneuverType) {
-                if (this.attributes.maneuverType === 'esriDMTStop' || this.attributes.maneuverType === 'esriDMTDepart') {
-                    return false;
+                if (this.attributes.maneuverType === 'esriDMTDepart') {
+                    return window.imagesPath+"/greenPoint.png";
+                }
+                if (this.attributes.maneuverType === 'esriDMTStop') {
+                    return window.imagesPath+"/redPoint.png";
                 }
                 return imagePath + this.attributes.maneuverType + imageType;
             }

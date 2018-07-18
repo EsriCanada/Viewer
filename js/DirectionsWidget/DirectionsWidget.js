@@ -140,6 +140,8 @@ define([
             window.directionDijit = this.directions = new Directions(directionOptions,
                 domConstruct.create("div", null, this.domNode)); //"pageBody_directions");
 
+            window.directionDijit.imagesPath = this.imagesPath;
+            
             on(
                 this.directions,
                 "load",
