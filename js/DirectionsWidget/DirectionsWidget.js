@@ -67,21 +67,6 @@ define([
             link.rel = "stylesheet";
             query('head')[0].appendChild(link);
 
-<<<<<<< DirectionsPrintPage
-            const fromSymb = new PictureMarkerSymbol("../images/greenPoint.png", 21, 29);
-            fromSymb.setOffset(0, 12);
-            const stopSymb = new PictureMarkerSymbol(locationPath+"/images/bluePoint.png", 21, 29);
-            stopSymb.setOffset(0, 12);
-            const toSymb = new PictureMarkerSymbol("../images/redPoint.png", 21, 29);
-            toSymb.setOffset(0, 12);
-
-            const fromSymbDrag = new PictureMarkerSymbol(locationPath+"/images/greenPointDrag.png", 21, 29);
-            fromSymbDrag.setOffset(0, 12);
-            const stopSymbDrag = new PictureMarkerSymbol(locationPath+"/images/bluePointDrag.png", 21, 29);
-            stopSymbDrag.setOffset(0, 12);
-            const toSymbDrag = new PictureMarkerSymbol(locationPath+"/images/redPointDrag.png", 21, 29);
-            toSymbDrag.setOffset(0, 12);
-=======
             if(this.defaults.options.imagesURL.isNonEmpty()) {
                 this.imagesPath = this.defaults.options.imagesURL;
             } else {
@@ -89,7 +74,6 @@ define([
                 const locationPath = location.protocol+'//'+location.host+location.pathname.replace(pathRegex, '');
                 this.imagesPath = locationPath+"/images";
             }
->>>>>>> Configurable Images Url
 
             let directionOptions = {
                 map: this.map,
