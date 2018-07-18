@@ -61,14 +61,11 @@ define([
             link.rel = "stylesheet";
             query('head')[0].appendChild(link);
 
-            const pathRegex = new RegExp(/\/[^\/]+$/);
-            const locationPath = location.protocol+'//'+location.host+location.pathname.replace(pathRegex, '');
-
-            const fromSymb = new PictureMarkerSymbol(locationPath+"/images/greenPoint.png", 21, 29);
+            const fromSymb = new PictureMarkerSymbol("../images/greenPoint.png", 21, 29);
             fromSymb.setOffset(0, 12);
             const stopSymb = new PictureMarkerSymbol(locationPath+"/images/bluePoint.png", 21, 29);
             stopSymb.setOffset(0, 12);
-            const toSymb = new PictureMarkerSymbol(locationPath+"/images/redPoint.png", 21, 29);
+            const toSymb = new PictureMarkerSymbol("../images/redPoint.png", 21, 29);
             toSymb.setOffset(0, 12);
 
             const fromSymbDrag = new PictureMarkerSymbol(locationPath+"/images/greenPointDrag.png", 21, 29);
