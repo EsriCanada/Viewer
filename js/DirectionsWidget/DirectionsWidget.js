@@ -61,18 +61,21 @@ define([
             link.rel = "stylesheet";
             query('head')[0].appendChild(link);
 
-            const fromSymb = new PictureMarkerSymbol("../images/greenPoint1.png", 21, 29);
+            const pathRegex = new RegExp(/\/[^\/]+$/);
+            const locationPath = location.protocol+'//'+location.host+location.pathname.replace(pathRegex, '');
+
+            const fromSymb = new PictureMarkerSymbol(locationPath+"/images/greenPoint.png", 21, 29);
             fromSymb.setOffset(0, 12);
-            const stopSymb = new PictureMarkerSymbol("../images/bluePoint.png", 21, 29);
+            const stopSymb = new PictureMarkerSymbol(locationPath+"/images/bluePoint.png", 21, 29);
             stopSymb.setOffset(0, 12);
-            const toSymb = new PictureMarkerSymbol("../images/redPoint1.png", 21, 29);
+            const toSymb = new PictureMarkerSymbol(locationPath+"/images/redPoint.png", 21, 29);
             toSymb.setOffset(0, 12);
 
-            const fromSymbDrag = new PictureMarkerSymbol("../images/greenPointDrag.png", 21, 29);
+            const fromSymbDrag = new PictureMarkerSymbol(locationPath+"/images/greenPointDrag.png", 21, 29);
             fromSymbDrag.setOffset(0, 12);
-            const stopSymbDrag = new PictureMarkerSymbol("../images/bluePointDrag.png", 21, 29);
+            const stopSymbDrag = new PictureMarkerSymbol(locationPath+"/images/bluePointDrag.png", 21, 29);
             stopSymbDrag.setOffset(0, 12);
-            const toSymbDrag = new PictureMarkerSymbol("../images/redPointDrag.png", 21, 29);
+            const toSymbDrag = new PictureMarkerSymbol(locationPath+"/images/redPointDrag.png", 21, 29);
             toSymbDrag.setOffset(0, 12);
 
             let directionOptions = {
