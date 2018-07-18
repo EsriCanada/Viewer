@@ -2,7 +2,7 @@ require([
     "dojo/dom",
     "dojo/on",
     'dojo/_base/lang',
-    "dojo/query", 
+    "dojo/query",
     'dojo/dom-class',
     'dojo/dom-style',
     'dojo/dom-construct',
@@ -15,8 +15,7 @@ require([
         directions = window.opener.directions;
         directionsWidget = window.opener.directionDijit;
         // console.log(directions, directionsWidget);
-    } 
-    catch (err) {
+    } catch (err) {
         directions = {
             error: true
         };
@@ -33,29 +32,33 @@ require([
         on(dom.byId('directions'), '#printButton:click', function() {
             window.print();
         });
-        
-        directionsWidget.zoomToFullRoute().then(lang.hitch(this,function(){
-          directionsWidget._printService.execute(directionsWidget._printParams,lang.hitch(this,function(result){
-            const mapNode = document.getElementById("divMap");
-            domClass.remove(mapNode,'esriPrintWait');
-            domClass.add(mapNode,'esriPageBreak');
-            domConstruct.create("img",{src:result.url,"class":"esriPrintMapImg"},mapNode);
 
-            const resultsNode = directionsWidget._resultsNode;
-            if(resultsNode) {
-                const summary = query('.esriResultsSummary', resultsNode);
-                if(summary && summary.length>0) {
-                    dojo.place(summary[0].outerHTML, document.getElementById('dirSummary'));
+        directionsWidget.zoomToFullRoute().then(lang.hitch(this, function() {
+            directionsWidget._printService.execute(directionsWidget._printParams, lang.hitch(this, function(result) {
+                const mapNode = document.getElementById("divMap");
+                domClass.remove(mapNode, 'esriPrintWait');
+                domClass.add(mapNode, 'esriPageBreak');
+                domConstruct.create("img", {
+                    src: result.url,
+                    class: "esriPrintMapImg",
+                    alt: "map"
+                }, mapNode);
+
+                const resultsNode = directionsWidget._resultsNode;
+                if (resultsNode) {
+                    const summary = query('.esriResultsSummary', resultsNode);
+                    if (summary && summary.length > 0) {
+                        dojo.place(summary[0].outerHTML, document.getElementById('dirSummary'));
+                    }
                 }
-            }
 
-          }),lang.hitch(this,function(error){
-            const mapNode = document.getElementById("divMap");
-            if(mapNode) {
-                domClass.remove(mapNode,"esriPrintWait");
-            }
-            console.log("Error while calling the print service: ",error);
-          }));
+            }), lang.hitch(this, function(error) {
+                const mapNode = document.getElementById("divMap");
+                if (mapNode) {
+                    domClass.remove(mapNode, "esriPrintWait");
+                }
+                console.log("Error while calling the print service: ", error);
+            }));
         }));
 
         directions.letterIndex = 0;
@@ -68,12 +71,12 @@ require([
                     this.attributes.maneuverType === 'esriDMTStop') {
                     this.attributes.hasLabel = true;
                     if (this.attributes.step === 1) {
-                        return window.imagesPath+"/greenPoint.png";
+                        return window.imagesPath + "/greenPoint.png";
                     }
-                    if(this.attributes.step === directions.features.length) {
-                        return window.imagesPath+"/redPoint.png";
+                    if (this.attributes.step === directions.features.length) {
+                        return window.imagesPath + "/redPoint.png";
                     }
-                    return window.imagesPath+"/bluePoint.png";
+                    return window.imagesPath + "/bluePoint.png";
                 }
                 this.attributes.hasLabel = false;
                 return imagePath + this.attributes.maneuverType + imageType;
