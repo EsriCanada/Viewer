@@ -1,3 +1,56 @@
+<style>
+
+.esriResultsSummary {
+    line-height: 18px;
+    color: #444;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
+    background: #ebebeb;
+    cursor: pointer;
+    padding: 0 5px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    font-family: Arial;
+}
+
+.esriImpedanceCost {
+    font-size: 1.75em;
+    font-weight: bold;
+    line-height: 30px;
+    padding: 10px 0;
+    text-align: center;
+}
+
+.esriTrafficLabel {
+    font-weight: bold;
+}
+
+.esriTrafficLabelHidden {
+    display: none;
+}
+
+.esriImpedanceCostHrMin {
+    display: flex;
+    font-size: 0.5em;
+    line-height: 18px;
+    justify-content: space-around;
+    display: -ms-flexbox;
+    -ms-flex-align: center;
+    -ms-flex-pack: center;
+    direction: ltr;
+    white-space: nowrap;
+}
+
+.esriImpedanceCostHr, 
+.esriImpedanceCostMin {
+    display: inline\9;
+    margin-left: 3px;
+    margin-right: 3px;
+    unicode-bidi: embed;
+}
+</style>
 <div class="esriPrintBar">
     <div id="closeButton" class="esriCloseButton" title="Close">Close</div>
     <div id="printButton" class="esriPrintButton" title="Print">Print</div>
@@ -7,7 +60,7 @@
         <img class="esriPrintLogo" src="https://www.arcgis.com/about/graphics/logo-esri.png" />
         {{^error}}
             <div class="esriPrintName">{{routeName}}</div>
-            <div class="esriPrintLength">{{fullTime}} &middot; {{fullDistance}}</div>
+            <div id="dirSummary"></div>
             <div id="divMap" class="esriPrintMap esriPrintWait"></div>
             <div id="print_helper"></div>
             <textarea id="print_area" class="esriPrintNotes" placeholder="Enter notes here"></textarea>

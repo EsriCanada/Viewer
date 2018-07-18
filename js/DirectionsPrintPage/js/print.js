@@ -2,13 +2,14 @@ require([
     "dojo/dom",
     "dojo/on",
     'dojo/_base/lang',
+    "dojo/query", 
     'dojo/dom-class',
     'dojo/dom-style',
     'dojo/dom-construct',
     "dojo/number",
     "modules/mustache",
     "dojo/text!template/directions.html"
-], function(dom, on, lang, domClass, domStyle, domConstruct, number, Mustache, dirTemplate) {
+], function(dom, on, lang, query, domClass, domStyle, domConstruct, number, Mustache, dirTemplate) {
     var directions, directionsWidget, output;
     try {
         directions = window.opener.directions;
@@ -20,7 +21,7 @@ require([
             error: true
         };
     }
-    if (directions) {
+    if (directions && directionsWidget) {
         on(dom.byId('directions'), '#print_area:keyup', function() {
             dom.byId('print_helper').innerHTML = this.value;
         });
@@ -33,12 +34,21 @@ require([
         
         directionsWidget.zoomToFullRoute().then(lang.hitch(this,function(){
           directionsWidget._printService.execute(directionsWidget._printParams,lang.hitch(this,function(result){
-            var mapNode = document.getElementById("divMap");
+            const mapNode = document.getElementById("divMap");
             domClass.remove(mapNode,'esriPrintWait');
             domClass.add(mapNode,'esriPageBreak');
             domConstruct.create("img",{src:result.url,"class":"esriPrintMapImg"},mapNode);
+
+            const resultsNode = directionsWidget._resultsNode;
+            if(resultsNode) {
+                const summary = query('.esriResultsSummary', resultsNode);
+                if(summary && summary.length>0) {
+                    dojo.place(summary[0].outerHTML, document.getElementById('dirSummary'));
+                }
+            }
+
           }),lang.hitch(this,function(error){
-            var mapNode = document.getElementById("divMap");
+            const mapNode = document.getElementById("divMap");
             domClass.remove(mapNode,"esriPrintWait");
             console.log("Error while calling the print service: ",error);
           }));
@@ -49,15 +59,15 @@ require([
         const imageType = '.png';
         directions.maneuver = function() {
             if (this.attributes.maneuverType) {
-                // if (this.attributes.maneuverType === 'esriDMTStop' || this.attributes.maneuverType === 'esriDMTDepart') {
-                //     return false;
-                // }
+                if (this.attributes.maneuverType === 'esriDMTStop' || this.attributes.maneuverType === 'esriDMTDepart') {
+                    return false;
+                }
                 return imagePath + this.attributes.maneuverType + imageType;
             }
             return false;
         };
         directions.letter = function() {
-            var alphabet = "123456789";
+            const alphabet = "123456789";
             var letter = false;
             if (!directions.letterIndex) {
                 directions.letterIndex = 0;
@@ -82,49 +92,10 @@ require([
             return letter;
         };
         directions.lastColumn = function() {
-            if (this.attributes.step === directions.features.length) {
-                return true;
-            }
-            return false;
+            return (this.attributes.step === directions.features.length);
         };
         directions.distance = function() {
             var d = Math.round(this.attributes.length * 100) / 100;
-            if (d === 0) {
-                return "";
-            }
-            return number.format(d) + " " + "km";
-        };
-        directions.fullTime = function() {
-            var time = this.totalTime;
-            var hr, min, str = '';
-            var rounded = Math.round(time);
-            // calculate hours
-            hr = Math.floor(rounded / 60);
-            // calculate minutes
-            min = Math.floor(rounded % 60);
-            if (hr) {
-                str += hr + ' ';
-                if (hr > 1) {
-                    str += "hours";
-                } else {
-                    str += "hour";
-                }
-            }
-            if (hr && min) {
-                str += ' ';
-            }
-            if (min) {
-                str += min + ' ';
-                if (min > 1) {
-                    str += "minutes";
-                } else {
-                    str += "minute";
-                }
-            }
-            return str;
-        };
-        directions.fullDistance = function() {
-            var d = Math.round(this.totalLength * 100) / 100;
             if (d === 0) {
                 return "";
             }
