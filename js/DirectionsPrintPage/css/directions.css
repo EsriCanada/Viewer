@@ -190,3 +190,22 @@
 	width:0;
 	height:0;
 }
+
+.pDirections .esriPrintWait {
+    background-position: center center;
+    background-image: url(../../../images/reload2.gif);
+    background-repeat: no-repeat;
+    height:200px;
+}
+
+.pDirections .esriPrintMap {
+    text-align: center;
+}
+.pDirections .esriPrintMapImg {
+    border: 1px solid #AAAAAA;
+    box-shadow: 2px 2px 5px #AAAAAA;
+}
+
+.pDirections .esriPrintNotes {
+	width:100%;
+}
