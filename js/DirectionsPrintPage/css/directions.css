@@ -48,8 +48,6 @@
 	top:0;
 	z-index:6;
 	height:50px;
-	background:#fafafa;
-	border-bottom:1px solid #000;
 }
 
 .dj_rtl .pDirections .esriPrintBar {
@@ -130,6 +128,7 @@
 	margin:0 auto;
 	padding:20px;
 	width:720px;
+	box-shadow: 2px 2px 5px #AAAAAA;
 }
 
 .pDirections .esriPrintHeader {
@@ -204,7 +203,7 @@
 }
 .pDirections .esriPrintMapImg {
     border: 1px solid #AAAAAA;
-    box-shadow: 2px 2px 5px #AAAAAA;
+    /*box-shadow: 2px 2px 5px #AAAAAA;*/
 }
 
 .pDirections .esriPrintNotes {

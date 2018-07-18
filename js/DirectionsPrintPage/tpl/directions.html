@@ -45,25 +45,27 @@
 
 .esriImpedanceCostHr, 
 .esriImpedanceCostMin {
-    display: inline\9;
+    display: inline;
     margin-left: 3px;
     margin-right: 3px;
     unicode-bidi: embed;
 }
 </style>
 <div class="esriPrintBar">
-    <div id="closeButton" class="esriCloseButton" title="Close">Close</div>
-    <div id="printButton" class="esriPrintButton" title="Print">Print</div>
+    <input type="button" id="closeButton" class="esriCloseButton" value="Close">
+    <input type="button" id="printButton" class="esriPrintButton" value="Print">
 </div>
 <div class="esriPrintMain">
     <div class="esriPrintHeader">
-        <img class="esriPrintLogo" src="https://www.arcgis.com/about/graphics/logo-esri.png" />
+        <img class="esriPrintLogo" src="https://www.arcgis.com/about/graphics/logo-esri.png" alt="logo"/>
         {{^error}}
             <div class="esriPrintName">{{routeName}}</div>
             <div id="dirSummary"></div>
             <div id="divMap" class="esriPrintMap esriPrintWait"></div>
             <div id="print_helper"></div>
-            <textarea id="print_area" class="esriPrintNotes" placeholder="Enter notes here"></textarea>
+            <label>
+                <textarea id="print_area" class="esriPrintNotes" placeholder="Enter notes here"></textarea>
+            </label>
         {{/error}}
         <div class="clear"></div>
     </div>
@@ -72,10 +74,10 @@
             <p>No directions to display.</p>
         {{/error}}
         {{^error}}
-        <table role="list">
+        <table role="presentation">
             <tbody>
             {{#features}}
-            <tr role="listItem" {{#lastColumn}}class="esriDMTStopLast"{{/lastColumn}}>
+            <tr {{#lastColumn}}class="esriDMTStopLast"{{/lastColumn}}>
                 <td class="esriRouteIconColumn">
                     {{#maneuver}}
                     <div>
