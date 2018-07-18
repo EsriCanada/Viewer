@@ -61,12 +61,18 @@ require([
         const imageType = '.png';
         directions.maneuver = function() {
             if (this.attributes.maneuverType) {
-                if (this.attributes.maneuverType === 'esriDMTDepart') {
-                    return window.imagesPath+"/greenPoint.png";
+
+                if (this.attributes.maneuverType === 'esriDMTDepart' ||
+                    this.attributes.maneuverType === 'esriDMTStop') {
+                    if (this.attributes.step === 1) {
+                        return window.imagesPath+"/greenPoint.png";
+                    }
+                    if(this.attributes.step === directions.features.length) {
+                        return window.imagesPath+"/redPoint.png";
+                    }
+                    return window.imagesPath+"/bluePoint.png";
                 }
-                if (this.attributes.maneuverType === 'esriDMTStop') {
-                    return window.imagesPath+"/redPoint.png";
-                }
+
                 return imagePath + this.attributes.maneuverType + imageType;
             }
             return false;
