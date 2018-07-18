@@ -217,3 +217,7 @@
 .directionsHeader .hide  {
     display: none;
 }
+
+.simpleDirections .esriTrafficLabelLight {
+    color: darkgreen;
+}
