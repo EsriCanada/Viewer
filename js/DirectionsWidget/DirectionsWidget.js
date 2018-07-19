@@ -314,7 +314,7 @@ define([
             const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
             if(esriRoutesErrors && esriRoutesErrors.length>0) {
                 esriRoutesErrors.forEach(function(esriRoutesError) {
-                    domAttr.set(esriRoutesError,'aria-live', 'polite');
+                    domAttr.set(esriRoutesError,'aria-live', 'rude');
                     domAttr.set(esriRoutesError,'aria-atomic', 'true');
                 })
             }
