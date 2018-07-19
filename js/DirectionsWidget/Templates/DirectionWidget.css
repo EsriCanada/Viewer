@@ -221,3 +221,7 @@
 .simpleDirections .esriTrafficLabelLight {
     color: darkgreen;
 }
+
+.simpleDirections .esriTrafficLabelHeavy {
+    color: darkred;
+}

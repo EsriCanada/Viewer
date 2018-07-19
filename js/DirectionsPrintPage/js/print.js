@@ -121,7 +121,7 @@ require([
         output = Mustache.render(dirTemplate, directions);
     }
 
-    console.log('directions', directions);
+    // console.log('directions', directions);
     var node = dom.byId('directions');
     if (node) {
         node.innerHTML = output;
