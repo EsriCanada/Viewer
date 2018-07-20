@@ -113,6 +113,8 @@ define([
                 stopSymb.setOffset(0, 12);
                 const toSymb = new PictureMarkerSymbol(this.imagesPath+"/redPoint.png", 21, 29);
                 toSymb.setOffset(0, 12);
+                const unSymb = new PictureMarkerSymbol(this.imagesPath+"/grayCircle.png", 21, 29);
+                unSymb.setOffset(0, 12);
 
                 const fromSymbDrag = new PictureMarkerSymbol(this.imagesPath+"/greenPointDrag.png", 21, 29);
                 fromSymbDrag.setOffset(0, 12);
@@ -120,14 +122,18 @@ define([
                 stopSymbDrag.setOffset(0, 12);
                 const toSymbDrag = new PictureMarkerSymbol(this.imagesPath+"/redPointDrag.png", 21, 29);
                 toSymbDrag.setOffset(0, 12);
+                const unSymbDrag = new PictureMarkerSymbol(this.imagesPath+"/grayCircleDrag.png", 21, 29);
+                unSymbDrag.setOffset(0, 12);
 
                 directionOptions = Object.assign( {
                     fromSymbol: fromSymb,
                     stopSymbol: stopSymb,
                     toSymbol: toSymb,
+                    unreachedSymbol: unSymb,
                     fromSymbolDrag: fromSymbDrag,
                     stopSymbolDrag: stopSymbDrag,
                     toSymbolDrag: toSymbDrag,
+                    unreachedSymbolDrag: unSymbDrag,
                     textSymbolColor: '#000000',
                     textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
                 }, directionOptions);
@@ -180,6 +186,10 @@ define([
                                                     else if(imgSrc.includes("Directions/redPoint.png") || imgSrc.includes("esriDMTDepart.png")) {
                                                         imgSrc = this.imagesPath+"/redPoint.png";
                                                     }
+                                                    else if(imgSrc.includes("Directions/grayCircle.png") || imgSrc.includes("esriDMTDepart.png")) {
+                                                        imgSrc = this.imagesPath+"/grayCircle.png";
+                                                    }
+
                                                 }
                                                 const text = stopIcon[0].innerText;
                                                 stopIcon[0].innerText = '';
@@ -488,6 +498,7 @@ define([
                         else if(imgSrc.includes("esriDMTStop.png") || imgSrc.includes("esriDMTDepart.png")) {
                             imgSrc = this.imagesPath+"/bluePoint.png";
                         }
+                        // grayCircle
                     }
                     
 
