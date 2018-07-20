@@ -328,6 +328,12 @@
                "label": "Print Directions"
             },
             {
+               "label": "<strong>Custom Print Page:</strong>",
+               "fieldName": "directions_printPageURL",
+               "type": "string",
+               "tooltip": "Leave blank for no custom page"
+            },
+            {
                "type": "boolean",
                "fieldName": "directions_symbols",
                "label": "Enhanced Symbols"
@@ -346,6 +352,12 @@
                "type": "boolean",
                "fieldName": "directions_popup",
                "label": "Segment Popup"
+            },
+            {
+               "label": "<strong>Images URL:</strong>",
+               "fieldName": "directions_imagesURL",
+               "type": "string",
+               "tooltip": "Leave blank when the application Images folder is reachable by Print Server."
             }
          ]
       },
@@ -722,6 +734,8 @@
       "directions_symbols": true,
       "directions_dragging": true,
       "directions_stopOrder": true,
-      "directions_popup": false
+      "directions_popup": false,
+      "directions_imagesURL": "",
+      "directions_printPageURL": "../js/DirectionsPrintPage/index.html"
    }
 }

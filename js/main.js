@@ -1403,7 +1403,8 @@ define([
                             allowDragging: this.config.directions_dragging,
                             changeStopOrder: this.config.directions_stopOrder,
                             segmentPopup: this.config.directions_popup,
-                            imagesURL: this.config.directions_imagesURL
+                            imagesURL: this.config.directions_imagesURL,
+                            printPage: this.config.directions_printPageURL
                         },
                         superNavigator: this.superNav,
                     }, directionsDiv);

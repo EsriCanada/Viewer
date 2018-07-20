@@ -44,7 +44,8 @@ define([
                 allowDragging: true,
                 changeStopOrder: true,
                 segmentPopup: false,
-                imagesURL: ''
+                imagesURL: '',
+                printPage: ''
             },
             superNavigator : null,
         },
@@ -103,8 +104,12 @@ define([
 
                 //searchOptions: <Object>
                 //segmentInfoTemplate: <InfoTemplate> 
-                printPage: "../js/DirectionsPrintPage/index.html"
+                // printPage: "../js/DirectionsPrintPage/index.html"
             };
+
+            if(this.options.printPage.isNonEmpty()) {
+                directionOptions.printPage = this.options.printPage;
+            }
 
             if(this.options.enhancedSymbols) {
                 const fromSymb = new PictureMarkerSymbol(this.imagesPath+"/greenPoint.png", 21, 29);
