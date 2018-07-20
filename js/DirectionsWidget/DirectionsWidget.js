@@ -476,6 +476,7 @@ define([
         },
 
         _fixUi : function(ev){
+            this.directions.zoomToFullRoute();
             this._fixStops(ev);
 
             const hiddens = query('input[type=hidden][aria-hidden]', ev.target.domNode);
