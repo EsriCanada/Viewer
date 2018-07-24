@@ -119,10 +119,12 @@ require([
             }
             return number.format(d) + " " + "km";
         };
-        directions.Print=i18n.widgets.directionsWidget.print;
-        directions.Close=i18n.widgets.directionsWidget.close;
-        directions.Notes=i18n.widgets.directionsWidget.notes;
-        output = Mustache.render(dirTemplate, directions);
+        const partials = {
+            Print: i18n.widgets.directionsWidget.print,
+            Close: i18n.widgets.directionsWidget.close,
+            Notes: i18n.widgets.directionsWidget.notes
+        }
+        output = Mustache.render(dirTemplate, directions, partials);
     }
 
     // console.log('directions', directions);
