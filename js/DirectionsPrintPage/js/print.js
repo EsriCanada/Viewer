@@ -112,13 +112,6 @@ require([
         directions.lastColumn = function() {
             return (this.attributes.step === directions.features.length);
         };
-        directions.distance = function() {
-            var d = Math.round(this.attributes.length * 100) / 100;
-            if (d === 0) {
-                return "";
-            }
-            return number.format(d) + " " + "km";
-        };
         const partials = {
             Print: i18n.widgets.directionsWidget.print,
             Close: i18n.widgets.directionsWidget.close,
