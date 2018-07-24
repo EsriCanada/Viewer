@@ -14,7 +14,11 @@ define({
                 removeStop: "Remove Stop",
                 dragUpDown: 'Use keys or drag to move up or down.',
 
-                hrmin: '{0} hours and {1} minutes.'
+                hrmin: '{0} hours and {1} minutes.',
+
+                print: "Print",
+                close: "Close",
+                notes: "Enter notes here"
             })
         })
     }),

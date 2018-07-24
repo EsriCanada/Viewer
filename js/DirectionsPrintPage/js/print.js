@@ -8,8 +8,9 @@ require([
     'dojo/dom-construct',
     "dojo/number",
     "modules/mustache",
+    "dojo/i18n!application/nls/DirectionsWidget",
     "dojo/text!template/directions.html"
-], function(dom, on, lang, query, domClass, domStyle, domConstruct, number, Mustache, dirTemplate) {
+], function(dom, on, lang, query, domClass, domStyle, domConstruct, number, Mustache, i18n, dirTemplate) {
     var directions, directionsWidget, output;
     try {
         directions = window.opener.directions;
@@ -118,6 +119,9 @@ require([
             }
             return number.format(d) + " " + "km";
         };
+        directions.Print=i18n.widgets.directionsWidget.print;
+        directions.Close=i18n.widgets.directionsWidget.close;
+        directions.Notes=i18n.widgets.directionsWidget.notes;
         output = Mustache.render(dirTemplate, directions);
     }
 

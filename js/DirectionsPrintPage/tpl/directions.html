@@ -60,8 +60,8 @@
 }
 </style>
 <div class="esriPrintBar">
-    <input type="button" id="closeButton" class="esriCloseButton" value="Close">
-    <input type="button" id="printButton" class="esriPrintButton" value="Print">
+    <input type="button" id="closeButton" class="esriCloseButton" value="{{Close}}">
+    <input type="button" id="printButton" class="esriPrintButton" value="{{Print}}">
 </div>
 <div class="esriPrintMain">
     <div class="esriPrintHeader">
@@ -72,7 +72,7 @@
             <div id="divMap" class="esriPrintMap esriPrintWait"></div>
             <div id="print_helper"></div>
             <label>
-                <textarea id="print_area" class="esriPrintNotes" placeholder="Enter notes here" aria-label="Enter notes here"></textarea>
+                <textarea id="print_area" class="esriPrintNotes" placeholder="{{Notes}}" aria-label="{{Notes}}"></textarea>
             </label>
         {{/error}}
         <div class="clear"></div>

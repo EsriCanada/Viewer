@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="en" dir="" class="pDirections">
+<html  lang="en-us" dir="" class="pDirections">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=9,IE=8,IE=7,chrome=IE8" />
@@ -14,13 +14,29 @@
 <body class="esriPrintPage">
     <div id="directions"></div>
     <script>
+        var locale = /locale=([a-z][a-z]-[a-z][a-z])/gi.exec(window.location.search);
+
+        if(locale && locale.length === 2) {
+            locale = locale[1];
+        } else {
+            locale = navigator.language.toLowerCase(); //'en-us';
+            if(locale==="en") {
+                locale="en-us";
+            }
+        }
+        document.documentElement.lang = locale;
         // host path regular expression
         var pathRegex = new RegExp(/\/[^\/]+$/);
         var locationPath = location.protocol+'//'+location.host+location.pathname.replace(pathRegex, '');
         // Dojo Config
         var dojoConfig = {
+            locale: locale,
             parseOnLoad: true,
             packages: [
+            {
+                name: "application",
+                location: locationPath + '../../../js'
+            }, 
             {
                 name: "modules",
                 location: locationPath + '/js'
