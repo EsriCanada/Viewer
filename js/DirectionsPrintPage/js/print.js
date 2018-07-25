@@ -49,7 +49,7 @@ require([
                 if (resultsNode) {
                     var summary = query('.esriResultsSummary', resultsNode);
                     if (summary && summary.length > 0) {
-                        dojo.place(summary[0].outerHTML, document.getElementById('dirSummary'));
+                        domConstruct.place(summary[0].outerHTML, document.getElementById('dirSummary'));
                     }
                 }
 
