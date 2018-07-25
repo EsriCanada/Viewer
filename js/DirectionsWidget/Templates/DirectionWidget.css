@@ -183,11 +183,19 @@
 } 
 
 .simpleDirections .arcgisSearch .searchGroup .searchInput {
-    padding: 6px 4px 5px 4px;
+    padding: 6px 4px 3px 7px;
 }
 
 .dj_rtl .simpleDirections .arcgisSearch .searchGroup .searchInput {
     padding: 6px 4px 5px 4px;
+}
+
+.simpleDirections .arcgisSearch .searchClose, 
+.simpleDirections .arcgisSearch .searchSpinner {
+    /*opacity: 1;*/
+    padding: 3px;
+    width: auto;
+    right:0;
 }
 
 @media only screen and (min-width: 720px) {
@@ -196,6 +204,10 @@
 	    /*opacity: 1;*/
 	    padding: 6px;
 	}
+
+    .simpleDirections .arcgisSearch .searchGroup .searchInput {
+        padding: 6px 4px 3px 0px;
+    }
 }
 
 .dojoDndHandle img.upDownHandle {
