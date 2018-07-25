@@ -133,36 +133,6 @@
 	margin-top: 8px;
 }
 
-.pDirections .esriPrintHeader {
-	display:block;
-	margin-bottom:5px;
-}
-
-.pDirections .esriPrintName {
-	font-weight:700;
-	font-size:120%;
-	margin:10px 0 5px;
-	font-family:arial,sans-serif;
-}
-
-.pDirections .esriPrintStopLabel {
-    color: black;
-    /*display: inline-block;*/
-    font-size: 11px;
-    font-weight: bold;
-    width: 21px;
-    height: 21px;
-    line-height: 21px;
-    text-align: center;
-    /*position: absolute;*/
-    margin-top: -31px;
-}
-
-.pDirections .esriPrintLength {
-	font-weight:700;
-	margin:0 0 10px;
-}
-
 .pDirections #print_area {
 	margin:0 0 10px;
 	max-width:100%;
@@ -171,20 +141,6 @@
 
 .pDirections #print_helper {
 	display:none;
-}
-
-.pDirections .esriPrintDirections {
-	margin:0;
-	font-family:arial,sans-serif;
-	font-size:13px;
-}
-
-.pDirections .esriPrintDirections table {
-	border-collapse:collapse;
-	margin:0;
-	padding:0;
-	border:0;
-	width:100%;
 }
 
 .esriClear {
@@ -201,17 +157,5 @@
     background-image: url(../../../images/reload4.gif);
     background-repeat: no-repeat;
     height:200px;
-}
-
-.pDirections .esriPrintMap {
-    text-align: center;
-}
-.pDirections .esriPrintMapImg {
-    border: 1px solid #AAAAAA;
-    /*box-shadow: 2px 2px 5px #AAAAAA;*/
-}
-
-.pDirections .esriPrintNotes {
-	width:100%;
 }
 

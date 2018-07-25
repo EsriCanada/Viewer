@@ -24,7 +24,7 @@
 
 .pDirections .esriRouteIcon {
 	font-family:Arial,Helvetica,sans-serif;
-	display:inline-block;
+	/*display:inline-block;*/
 	height:21px;
 	width:21px;
 	margin:0;
@@ -51,17 +51,6 @@
 	display:none;
 }
 
-.pDirections .esriPrintName {
-	font-weight:700;
-	font-size:120%;
-	margin-bottom:.5em;
-}
-
-.pDirections .esriPrintLength {
-	font-weight:700;
-	margin-bottom:.5em;
-}
-
 .pDirections #print_area {
 	display:none;
 }
@@ -78,22 +67,3 @@
     text-align: center;
 }
 
-.pDirections .esriPrintStopLabel {
-    color: black;
-    display: inline-block;
-    font-size: 11px;
-    font-weight: bold;
-    font-family: Arial;
-    width: 21px;
-    height: 21px;
-    line-height: 21px;
-    text-align: center;
-    position: absolute;
-    margin-top: -33px;
-}
-
-.pDirections .esriPrintNotes {
-	width:100%;
-	background: #ebebeb;
-	border: 1px solid black ;
-}
