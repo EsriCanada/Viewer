@@ -1,7 +1,7 @@
 define([
     "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
-    "dojo/query", 
+    "dojo/query",
     "esri/units",
     "esri/dijit/Directions",
     "application/DirectionsWidget/DirectionsHeader",
@@ -13,8 +13,8 @@ define([
     ], function (
         Evented, declare, lang, has, dom, esriNS,
         _WidgetBase, _TemplatedMixin, on,
-        query, 
-        units, 
+        query,
+        units,
         Directions,
         DirectionHeader,
         PictureMarkerSymbol, Font,
@@ -364,16 +364,34 @@ define([
                 if(searchDiv) {
                     const searchWidget = dijit.byId(domAttr.get(searchDiv, 'widgetid'));
                     if(!this._usedSearchIds.includes(searchWidget.id)) {
-                        domAttr.set(searchWidget.clearNode, 'title', i18n.widgets.directionsWidget.removeStop);
-                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'polite');
+                        // domAttr.set(searchWidget.clearNode, 'title', i18n.widgets.directionsWidget.removeStop);
+                        domAttr.remove(searchWidget.clearNode, 'tabindex');
+                        domAttr.remove(searchWidget.clearNode, 'class');
+                        domAttr.remove(searchWidget.clearNode, 'role');
+                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'rude');
                         domAttr.set(searchWidget.noResultsMenuNode, 'aria-atomic', 'true');
                         
                         const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
+                        domAttr.remove(closeSpan, 'aria-hidden');
                         domConstruct.empty(closeSpan);
-                        domConstruct.create('img', {
+                        const removeStopBtn = domConstruct.create('input', {
+                            type: "image",
                             src: "images/icons_black/searchClear.png",
-                            alt: "clear"
+                            alt: "clear",
+                            title: i18n.widgets.directionsWidget.removeStop,
+                            'aria-label': i18n.widgets.directionsWidget.removeStop,
+                            'aria-hidden': 'true'
                         }, closeSpan);
+                        domAttr.remove(searchWidget.clearNode, 'title');
+
+                        on(removeStopBtn, 'focus', function(ev) { 
+                            domAttr.set(ev.target, 'aria-hidden', 'false');
+                        });
+
+                        on(removeStopBtn, 'blur', function(ev) { 
+                            domAttr.set(ev.target, 'aria-hidden', 'true');
+                        });
+
                         // console.log('closeSpan', closeSpan);
                         // console.log('searchWidget', searchWidget.id);
 
@@ -400,15 +418,25 @@ define([
                             else {
                                 domAttr.set(dojoDndHandle, 'tabindex', 0);
                                 domAttr.set(dojoDndHandle, 'aria-label', i18n.widgets.directionsWidget.dragUpDown);
+                                domAttr.set(dojoDndHandle, 'aria-hidden', 'true');
                                 domAttr.set(dojoDndHandle, 'data-tip', i18n.widgets.directionsWidget.dragUpDown);
                                 domAttr.set(dojoDndHandle, 'role', 'application');
                                 domConstruct.empty(dojoDndHandle);
                                 domConstruct.create('img', {
                                     src : '../images/upDown.18.png',
                                     alt : 'up/down',
-                                    class: 'upDownHandle'
+                                    class: 'upDownHandle',
+                                    'aria-hidden': 'true'
                                 }, dojoDndHandle);
-                                
+
+                                on(dojoDndHandle, 'focus', function(ev) { 
+                                    domAttr.set(ev.target, 'aria-hidden', 'false');
+                                });
+
+                                on(dojoDndHandle, 'blur', function(ev) { 
+                                    domAttr.set(ev.target, 'aria-hidden', 'true');
+                                });
+
                                 on(dojoDndHandle, 'click', function(ev) { ev.target.focus(); });
 
                                 on(dojoDndHandle, 'keyup', lang.hitch(this, function(ev) { 
@@ -527,8 +555,9 @@ define([
             const summary = query('.esriResultsSummary', ev.target.domNode);
             if(summary && summary.length>0)
             {
-                domAttr.set(summary[0],'aria-live', 'polite');
-                domAttr.set(summary[0],'aria-atomic', 'true');
+                // domAttr.set(summary[0],'aria-live', 'rude');
+                // domAttr.set(summary[0],'aria-atomic', 'true');
+                domAttr.set(summary[0],'role', 'alert');
             }
 
             const esriImpedanceCost = query('.esriImpedanceCost', ev.target.domNode);
