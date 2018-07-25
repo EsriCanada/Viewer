@@ -14,38 +14,41 @@
 <body class="esriPrintPage">
     <div id="directions"></div>
     <script>
-        var locale = /locale=([a-z][a-z]-[a-z][a-z])/gi.exec(window.location.search);
+var locale = /locale=([a-z][a-z]-[a-z][a-z])/gi.exec(window.location.search);
 
-        if(locale && locale.length === 2) {
-            locale = locale[1];
-        } else {
-            locale = navigator.language.toLowerCase(); //'en-us';
-            if(locale==="en") {
-                locale="en-us";
-            }
+if (locale && locale.length === 2) {
+    locale = locale[1];
+} else {
+    locale = navigator.language; //'en-us';
+    if (!locale || locale === "en") {
+        locale = "en-us";
+    }
+}
+locale = locale.toLowerCase();
+
+document.documentElement.lang = locale;
+// host path regular expression
+var pathRegex = new RegExp(/\/[^\/]+$/);
+var locationPath = location.protocol+'//'+location.host+location.pathname.replace(pathRegex, '');
+// Dojo Config
+var dojoConfig = {
+    locale: locale,
+    parseOnLoad: true,
+    packages: [
+        {
+            name: "application",
+            location: locationPath + '../../../js'
+        },
+        {
+            name: "modules",
+            location: locationPath + '/js'
+        },
+        {
+            name: "template",
+            location: locationPath + '/tpl'
         }
-        document.documentElement.lang = locale;
-        // host path regular expression
-        var pathRegex = new RegExp(/\/[^\/]+$/);
-        var locationPath = location.protocol+'//'+location.host+location.pathname.replace(pathRegex, '');
-        // Dojo Config
-        var dojoConfig = {
-            locale: locale,
-            parseOnLoad: true,
-            packages: [
-            {
-                name: "application",
-                location: locationPath + '../../../js'
-            }, 
-            {
-                name: "modules",
-                location: locationPath + '/js'
-            },
-            {
-                name: "template",
-                location: locationPath + '/tpl'
-            }]
-        };
+    ]
+};
     </script>
     <script src="https://serverapi.arcgisonline.com/jsapi/arcgis/3.5" type="text/javascript"></script>
     <script src="js/print.js" type="text/javascript"></script>

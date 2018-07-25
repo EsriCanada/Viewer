@@ -36,7 +36,7 @@ require([
 
         directionsWidget.zoomToFullRoute().then(lang.hitch(this, function() {
             directionsWidget._printService.execute(directionsWidget._printParams, lang.hitch(this, function(result) {
-                const mapNode = document.getElementById("divMap");
+                var mapNode = document.getElementById("divMap");
                 domClass.remove(mapNode, 'esriPrintWait');
                 domClass.add(mapNode, 'esriPageBreak');
                 domConstruct.create("img", {
@@ -45,16 +45,16 @@ require([
                     alt: "map"
                 }, mapNode);
 
-                const resultsNode = directionsWidget._resultsNode;
+                var resultsNode = directionsWidget._resultsNode;
                 if (resultsNode) {
-                    const summary = query('.esriResultsSummary', resultsNode);
+                    var summary = query('.esriResultsSummary', resultsNode);
                     if (summary && summary.length > 0) {
                         dojo.place(summary[0].outerHTML, document.getElementById('dirSummary'));
                     }
                 }
 
             }), lang.hitch(this, function(error) {
-                const mapNode = document.getElementById("divMap");
+                var mapNode = document.getElementById("divMap");
                 if (mapNode) {
                     domClass.remove(mapNode, "esriPrintWait");
                 }
@@ -63,8 +63,8 @@ require([
         }));
 
         directions.letterIndex = 0;
-        const imagePath = 'https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/dijit/images/Directions/maneuvers/';
-        const imageType = '.png';
+        var imagePath = 'https://serverapi.arcgisonline.com/jsapi/arcgis/3.5/js/esri/dijit/images/Directions/maneuvers/';
+        var imageType = '.png';
         directions.maneuver = function() {
             if (this.attributes.maneuverType) {
 
@@ -85,7 +85,7 @@ require([
             return false;
         };
         directions.letter = function() {
-            const alphabet = "123456789";
+            var alphabet = "123456789";
             var letter = false;
             if (!directions.letterIndex) {
                 directions.letterIndex = 0;
@@ -112,7 +112,7 @@ require([
         directions.lastColumn = function() {
             return (this.attributes.step === directions.features.length);
         };
-        const partials = {
+        var partials = {
             Print: i18n.widgets.directionsWidget.print,
             Close: i18n.widgets.directionsWidget.close,
             Notes: i18n.widgets.directionsWidget.notes
