@@ -2099,3 +2099,7 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
     padding: 4px 8px;
   }
 }
+
+.esri-feature-table-menu .esri-feature-table-menu-item {
+    color: white;
+}

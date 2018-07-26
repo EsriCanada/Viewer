@@ -464,7 +464,7 @@ define([
             }
 
             var featureTableTools = domConstruct.create('div', {
-                class:'esri-feature-table-menu-item',
+                // class:'esri-feature-table-menu-item',
                 id: 'featureTableTools',
             });
             domConstruct.place(featureTableTools, tableTitle, 'before');
