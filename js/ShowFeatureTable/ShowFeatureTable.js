@@ -349,6 +349,15 @@ define([
 
             this.myFeatureTable.startup();
 
+            const dijitMenuItemIconCells = query('.dijitMenuItemIconCell:not(role="presentation")');
+            if (dijitMenuItemIconCells && dijitMenuItemIconCells.length > 0) {
+                dijitMenuItemIconCells.forEach(function(dijitMenuItemIconCell) {
+                    let th = dijitMenuItemIconCell.outerHTML;
+                    th = th.replace('<td', '<th').replace('</td>', '</th>');
+                    dijitMenuItemIconCell.outerHTML = th;
+                })
+            }
+
             var hidderToggle = query('.ui-icon.dgrid-hider-toggle')[0];
             if(hidderToggle) {
                 domClass.remove(hidderToggle, 'ui-icon');
