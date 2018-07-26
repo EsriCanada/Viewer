@@ -5,7 +5,7 @@ define([
     "esri/units",
     "esri/dijit/Directions",
     "application/DirectionsWidget/DirectionsHeader",
-    "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font",
+    "esri/symbols/PictureMarkerSymbol", "esri/symbols/Font", "esri/Color",
     "dojo/i18n!application/nls/DirectionsWidget",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style",
     "dojo/dom-construct"
@@ -17,7 +17,7 @@ define([
         units,
         Directions,
         DirectionHeader,
-        PictureMarkerSymbol, Font,
+        PictureMarkerSymbol, Font, Color,
         i18n,
         domClass, domAttr, domStyle,
         domConstruct
@@ -139,7 +139,7 @@ define([
                     stopSymbolDrag: stopSymbDrag,
                     toSymbolDrag: toSymbDrag,
                     unreachedSymbolDrag: unSymbDrag,
-                    textSymbolColor: '#000000',
+                    textSymbolColor: new Color('#000000'),
                     textSymbolFont: new Font("10pt", null, null, Font.WEIGHT_BOLD, "Arial, Helvetica, sans-serif"),
                 }, directionOptions);
             }
