@@ -329,7 +329,7 @@ define([
             const esriRoutesErrors = query('[data-dojo-attach-point=_msgNode]', ev.target.domNode);
             if(esriRoutesErrors && esriRoutesErrors.length>0) {
                 esriRoutesErrors.forEach(function(esriRoutesError) {
-                    domAttr.set(esriRoutesError,'aria-live', 'rude');
+                    domAttr.set(esriRoutesError,'aria-live', 'polite');
                     domAttr.set(esriRoutesError,'aria-atomic', 'true');
                 })
             }
@@ -368,7 +368,7 @@ define([
                         domAttr.remove(searchWidget.clearNode, 'tabindex');
                         domAttr.remove(searchWidget.clearNode, 'class');
                         domAttr.remove(searchWidget.clearNode, 'role');
-                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'rude');
+                        domAttr.set(searchWidget.noResultsMenuNode, 'aria-live', 'polite');
                         domAttr.set(searchWidget.noResultsMenuNode, 'aria-atomic', 'true');
                         
                         const closeSpan = query('span.searchIcon.esri-icon-close.searchClose', stopTr)[0];
@@ -555,7 +555,7 @@ define([
             const summary = query('.esriResultsSummary', ev.target.domNode);
             if(summary && summary.length>0)
             {
-                // domAttr.set(summary[0],'aria-live', 'rude');
+                // domAttr.set(summary[0],'aria-live', 'polite');
                 // domAttr.set(summary[0],'aria-atomic', 'true');
                 domAttr.set(summary[0],'role', 'alert');
             }
