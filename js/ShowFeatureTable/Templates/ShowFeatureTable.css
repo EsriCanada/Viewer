@@ -165,3 +165,8 @@ div#featureTableContainer {
     text-decoration: line-through;
     pointer-events: none;
 }
+
+button.esri-feature-table-column-header-title {
+    border-width: 0;
+    background: transparent;
+}

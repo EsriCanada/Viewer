@@ -711,6 +711,19 @@ define([
 
             on(this.myFeatureTable, "refresh", lang.hitch(this, function(evt){
                 this._removeAllGraphics(['ftMarker']);
+                const headersCells = query('th.dgrid-sortable', this.myFeatureTable.domNode);
+                // console.log("refresh", headersCells);
+
+                headersCells.forEach(lang.hitch(this, function(th) {
+                    const headerContainer = query('div.esri-feature-table-column-header-title', th);
+                    if(headerContainer && headerContainer.length>0) {
+                        // domAttr.set(headerContainer[0], 'tabindex', 0);
+                        let html = headerContainer[0].outerHTML;
+                        headerContainer[0].outerHTML = html
+                            .replace(/^<div /, '<button ')
+                            .replace(/<\/div>$/, '</button>');
+                    }
+                }));
             }));
 
             // on(this.myFeatureTable, "column-resize", lang.hitch(this, function(evt){
