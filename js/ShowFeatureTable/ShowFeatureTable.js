@@ -714,21 +714,28 @@ define([
 
                 const header = query('.dgrid-header', this.myFeatureTable.domNode);
                 if(header && header.length>0) {
-                    const dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
-                    if(dgridCells && dgridCells.length>0) {
+                    const linkContent = query('.dgrid-header-link-content', this.myFeatureTable.domNode);
+                    if(!linkContent || linkContent.length === 0) {
+                        const dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
+                        if(dgridCells && dgridCells.length>0) {
+                            domAttr.set(dgridCells[0], 'id', 'firstGridCell');
 
-                        domAttr.set(dgridCells[0], 'id', 'firstGridCell');
-
-                        const linkContent = query('.dgrid-header-link-content', this.myFeatureTable.domNode);
-                        if(!linkContent || linkContent.length === 0) {
-                            domConstruct.create('a', {
+                            const a = domConstruct.create('a', {
                                 class: 'dgrid-header-link-content',
-                                innerHTML: 'Skip to content',
+                                innerHTML: i18n.widgets.showFeatureTable.SkipToContent,
                                 tabindex: 0,
                                 role: 'navigation',
-                                href: '#firstGridCell'
+                                href: '#firstGridCell',
+                                'aria-hidden': 'true'
                             }, header[0], 'before');
-                        }
+                            on(a, 'focus', function() {
+                                domAttr.remove(a, 'aria-hidden');
+                                domStyle.set(a, 'z-index', 1);
+                            });
+                            on(a, 'blur', function() {
+                                domAttr.set(a, 'aria-hidden', 'true');
+                                domStyle.set(a, 'z-index');
+                            });                        }
                     }
                 }
                 const headersCells = query('th.dgrid-sortable', this.myFeatureTable.domNode);

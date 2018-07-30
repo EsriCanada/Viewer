@@ -176,13 +176,12 @@ button.esri-feature-table-column-header-title {
 
 .dgrid-header-link-content {
     position: absolute;
-    z-index: 1;
+    /*z-index: 1;*/
     background-color: white;
     padding: 4px 16px;
-    opacity: 0.1; 
     left: 4px;
     top: 1px;
-    display: inline-block;
+    opacity: 0; 
 }
 
 .dgrid-header-link-content:focus {
