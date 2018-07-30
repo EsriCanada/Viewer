@@ -712,7 +712,7 @@ define([
             on(this.myFeatureTable, "refresh", lang.hitch(this, function(evt){
                 this._removeAllGraphics(['ftMarker']);
 
-                const header = query('.dgrid-header', this.myFeatureTable.domNode);
+                const header = query('.dgrid-grid', this.myFeatureTable.domNode);
                 if(header && header.length>0) {
                     const linkContent = query('.dgrid-header-link-content', this.myFeatureTable.domNode);
                     if(!linkContent || linkContent.length === 0) {
@@ -742,14 +742,23 @@ define([
                 // console.log("refresh", headersCells);
 
                 headersCells.forEach(lang.hitch(this, function(th) {
+
+                    const classes = domAttr.get(th, 'class');
+                    const id = /(dgrid-column-([0-9]+))/gm.exec(classes)[0];
+                    const labelId = id+'-title';
+
                     const headerContainer = query('div.esri-feature-table-column-header-title', th);
                     if(headerContainer && headerContainer.length>0) {
-                        // domAttr.set(headerContainer[0], 'tabindex', 0);
+                        domAttr.set(headerContainer[0], 'id', labelId);
                         let html = headerContainer[0].outerHTML;
                         headerContainer[0].outerHTML = html
                             .replace(/^<div /, '<button ')
                             .replace(/<\/div>$/, '</button>');
                     }
+                    const colCells = query('.'+id+'[role="gridcell"], .'+id+'[role="gridcell"] div', this.myFeatureTable.domNode);
+                    colCells.forEach(function(cell) {
+                        domAttr.set(cell, 'aria-describedby', labelId);
+                    })
                 }));
             }));
 
