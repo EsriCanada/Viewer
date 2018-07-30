@@ -711,6 +711,26 @@ define([
 
             on(this.myFeatureTable, "refresh", lang.hitch(this, function(evt){
                 this._removeAllGraphics(['ftMarker']);
+
+                const header = query('.dgrid-header', this.myFeatureTable.domNode);
+                if(header && header.length>0) {
+                    const dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
+                    if(dgridCells && dgridCells.length>0) {
+
+                        domAttr.set(dgridCells[0], 'id', 'firstGridCell');
+
+                        const linkContent = query('.dgrid-header-link-content', this.myFeatureTable.domNode);
+                        if(!linkContent || linkContent.length === 0) {
+                            domConstruct.create('a', {
+                                class: 'dgrid-header-link-content',
+                                innerHTML: 'Skip to content',
+                                tabindex: 0,
+                                role: 'navigation',
+                                href: '#firstGridCell'
+                            }, header[0], 'before');
+                        }
+                    }
+                }
                 const headersCells = query('th.dgrid-sortable', this.myFeatureTable.domNode);
                 // console.log("refresh", headersCells);
 

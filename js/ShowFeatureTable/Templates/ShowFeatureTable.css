@@ -173,3 +173,18 @@ button.esri-feature-table-column-header-title {
     max-width: 80%;
     text-align: left;
 }
+
+.dgrid-header-link-content {
+    position: absolute;
+    z-index: 1;
+    background-color: white;
+    padding: 4px 16px;
+    opacity: 0.1; 
+    left: 4px;
+    top: 1px;
+    display: inline-block;
+}
+
+.dgrid-header-link-content:focus {
+    opacity: 0.9; 
+}
