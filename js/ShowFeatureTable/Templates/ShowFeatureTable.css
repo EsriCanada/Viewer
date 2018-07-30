@@ -169,4 +169,7 @@ div#featureTableContainer {
 button.esri-feature-table-column-header-title {
     border-width: 0;
     background: transparent;
+    font-weight: bold;
+    max-width: 80%;
+    text-align: left;
 }
