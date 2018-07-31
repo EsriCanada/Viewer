@@ -187,3 +187,7 @@ button.esri-feature-table-column-header-title {
 .dgrid-header-link-content:focus {
     opacity: 0.9; 
 }
+
+#btnSelectOnRectangle_lbl,  #btnSelectOnMapOrView_lbl {
+    margin: 0 !important;
+}
