@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 define([
     "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang",
     "esri/arcgis/utils", "dojo/has", "dojo/dom","esri/kernel",
@@ -15,11 +16,10 @@ define([
     "dijit/layout/ContentPane", "dijit/layout/BorderContainer",
     "dijit/form/DropDownButton", "dijit/DropDownMenu", "dijit/MenuItem", "dijit/MenuSeparator",
     "dojo/dom-construct", "dojo/_base/event",
-    // "esri/symbols/SimpleMarkerSymbol",
     "esri/symbols/PictureMarkerSymbol",
     "esri/symbols/CartographicLineSymbol",
     "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol",
-    "esri/graphic", "esri/Color", "esri/graphicsUtils",
+    "esri/graphic", "esri/Color", 
     "dojo/NodeList-dom", "dojo/NodeList-traverse"
 
     ], function (
@@ -37,13 +37,12 @@ define([
         ContentPane, BorderContainer,
         DropDownButton, DropDownMenu, MenuItem, MenuSeparator,
         domConstruct, event,
-        // SimpleMarkerSymbol,
         PictureMarkerSymbol,
         CartographicLineSymbol,
         SimpleFillSymbol, SimpleLineSymbol,
-        Graphic, Color, graphicsUtils
+        Graphic, Color
     ) {
-    var Widget = declare("esri.dijit.ShowFeatureTable", [
+        var Widget = declare("esri.dijit.ShowFeatureTable", [
         _LayoutWidget,
         Evented], {
 
@@ -355,7 +354,7 @@ define([
                     let th = dijitMenuItemIconCell.outerHTML;
                     th = th.replace('<td', '<th').replace('</td>', '</th>');
                     dijitMenuItemIconCell.outerHTML = th;
-                })
+                });
             }
 
             var hidderToggle = query('.ui-icon.dgrid-hider-toggle')[0];
@@ -758,7 +757,7 @@ define([
                     const colCells = query('.'+id+'[role="gridcell"], .'+id+'[role="gridcell"] div', this.myFeatureTable.domNode);
                     colCells.forEach(function(cell) {
                         domAttr.set(cell, 'aria-describedby', labelId);
-                    })
+                    });
                 }));
             }));
 

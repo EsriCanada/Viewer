@@ -65,7 +65,7 @@ define([
         },
 
         postCreate : function() {
-            domAttr.set(this.myLabel,'aria-label',this.myInput.checked?this.defaults.titleSelected:this.defaults.titleUnselected)
+            domAttr.set(this.myLabel,'aria-label',this.myInput.checked?this.defaults.titleSelected:this.defaults.titleUnselected);
 
             on(this.myLabel, 'keypress', lang.hitch(this, this._keyDown));
 
