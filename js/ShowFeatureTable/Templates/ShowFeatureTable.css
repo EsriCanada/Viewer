@@ -191,3 +191,7 @@ button.esri-feature-table-column-header-title {
 #btnSelectOnRectangle_lbl,  #btnSelectOnMapOrView_lbl {
     margin: 0 !important;
 }
+
+.esri-feature-table .esri-attachments-link, .esri-feature-table .esri-related-records-link {
+    color: black;
+}
