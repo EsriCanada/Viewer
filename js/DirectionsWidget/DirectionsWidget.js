@@ -208,7 +208,7 @@ define([
                                                 }
                                             }
                                         }
-                                    }))
+                                    }));
                                 } catch (ex) {
                                     console.log('Directions Widget Mutation Error', ex);
                                 }
@@ -237,7 +237,7 @@ define([
                     } else {
                         mapKeyEvent.pause();
                     }
-                }))
+                }));
             }
         },
 
@@ -331,7 +331,7 @@ define([
                 esriRoutesErrors.forEach(function(esriRoutesError) {
                     domAttr.set(esriRoutesError,'aria-live', 'polite');
                     domAttr.set(esriRoutesError,'aria-atomic', 'true');
-                })
+                });
             }
 
             const travelModes = query('table.esriTravelModesDDL');
@@ -340,7 +340,7 @@ define([
                     domAttr.remove(table, 'aria-haspopup');
                     domAttr.remove(table, 'aria-expanded');
                     domAttr.remove(table, 'aria-invalid');
-                })
+                });
             }
 
             const tables = query('table', ev.target.domNode);
