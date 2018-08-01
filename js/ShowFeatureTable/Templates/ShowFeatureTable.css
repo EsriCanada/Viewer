@@ -110,23 +110,23 @@
 
 #featureTableEndTools {
     float:right;
-    padding: 2px 0;
+    padding: 2px;
 }
 
-#featureTableEndTools img {
+#featureTableEndTools input[type="image"] {
     vertical-align: text-bottom;
-    opacity: 0.25;
-    margin-left: 4px;
-    width: 20px;
-    height: 20px;
+    /*opacity: 0.25;*/
+    padding: 6px;
+    width: 14px;    
+    height: 14px;
 }
+
+/*#featureTableEndTools input[type="image"]:hover {
+    opacity: 1;
+}*/
 
 .esri-feature-table-menu-options {
     padding-right: 0;
-}
-
-#featureTableEndTools img:hover {
-    opacity: 1;
 }
 
 .esri-feature-table .dijitArrowButtonInner {
@@ -194,4 +194,8 @@ button.esri-feature-table-column-header-title {
 
 .esri-feature-table .esri-attachments-link, .esri-feature-table .esri-related-records-link {
     color: black;
+}
+
+.esri-feature-table-button {
+    padding: 0 6px;
 }

@@ -435,9 +435,7 @@ define([
 
                 this._addArrowCarrets();
 
-                // tableTitle = query('.esri-feature-table-title')[0];
-                // domStyle.set(tableTitle,'display', 'none');
-                var titleNodeObserver = new MutationObserver(lang.hitch(this, function(mutations) {
+                new MutationObserver(lang.hitch(this, function(mutations) {
                     // console.log(mutations);
                     mutations.forEach(lang.hitch(this, function(mutation) {
                         // console.log(mutation);
@@ -463,8 +461,7 @@ define([
                             }
                         }
                     }));
-                }));
-                titleNodeObserver.observe(tableTitle, {
+                })).observe(tableTitle, {
                     attributes: false,
                     childList: true,
                     characterData: true
@@ -482,10 +479,12 @@ define([
             var featureTableEndTools = domConstruct.create('div', {
                 class:'esri-feature-table-menu-item',
                 id: 'featureTableEndTools',
-            }, optionsMenu);
+            }, //optionsMenu);
+            tableTitle, 'after');
 
-            var closeBtn = domConstruct.create('img', {
-                src: 'images/close.png',
+            var closeBtn = domConstruct.create('input', {
+                type: 'image',
+                src: 'images/icons_white/searchClear.png',
                 id: 'featureTableCloseBtn',
                 alt: '',
                 title: i18n.widgets.showFeatureTable.close,
@@ -618,13 +617,13 @@ define([
                 style:'width:30px; height:30px;'
             }, query('.esri-feature-table-menu-item.esri-feature-table-loading-indicator')[0]);
 
-            var typeLabels = query('.esri-feature-table-column-header-type');
+            const typeLabels = query('.esri-feature-table-column-header-type');
             if(typeLabels && typeLabels.length>0) {
                 //evt.toElement.innerText = i18n.widgets.showFeatureTable.showTypes;
                 typeLabels.forEach( function(label) { domStyle.set(label, 'display', 'none');});
             }
 
-            var dgridRowTable = query('.dgrid-row-table');
+            const dgridRowTable = query('.dgrid-row-table');
             if(dgridRowTable && dgridRowTable.length>0) {
                 dgridRowTable.forEach(function(table) {
                     domAttr.remove(table, 'role');
@@ -835,7 +834,7 @@ define([
                     if(arrowButton && arrowButton.innerHTML === '') {
                         domConstruct.create('img', {
                             // role: 'presentation',
-                            src: 'images/icons_black/carret-down.32.png',
+                            src: 'images/icons_white/carret-down.32.png',
                             alt: 'carret-down'
                         }, arrowButton);
                     }

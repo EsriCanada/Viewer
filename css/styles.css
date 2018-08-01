@@ -2100,6 +2100,3 @@ input[type="image"][alt]:hover:after, input[type="image"][alt]:focus:after {
   }
 }
 
-.esri-feature-table-menu .esri-feature-table-menu-item {
-    color: white;
-}
