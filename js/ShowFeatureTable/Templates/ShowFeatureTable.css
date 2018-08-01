@@ -179,16 +179,22 @@ button.esri-feature-table-column-header-title {
     /*z-index: 1;*/
     background-color: white;
     padding: 4px 16px;
-    left: 4px;
-    top: 1px;
+    left: -1px;
+    top: -1px;
     opacity: 0; 
+    width: 1px;
+    height: 1px;
 }
 
 .dgrid-header-link-content:focus {
-    opacity: 0.9; 
+    left: 4px;
+    top: 1px;
+    opacity: 1;
+    width: auto; 
+    height: auto;
 }
 
-#btnSelectOnRectangle_lbl,  #btnSelectOnMapOrView_lbl {
+#btnSelectOnRectangle_lbl, #btnSelectOnRegion_lbl, #btnSelectOnView_lbl {
     margin: 0 !important;
 }
 

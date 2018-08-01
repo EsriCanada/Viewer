@@ -229,7 +229,7 @@ define([
 
         SelectOnRectangle:null,
         // SelectOnRegion:null,
-        SelectOnMapOrView:null,
+        SelectOnView:null,
 
         loadTable: function(myFeatureLayer){
             var outFields = [];
@@ -571,8 +571,8 @@ define([
 
             // -----------------------------------------------
 
-            this.SelectOnMapOrView = new ImageToggleButton({
-                id:'btnSelectOnMapOrView',
+            this.SelectOnView = new ImageToggleButton({
+                id:'btnSelectOnView',
                 // type:'radio',
                 group:'selectOn',
                 imgSelected: 'images/icons_white/ByView.36.png',
@@ -580,17 +580,17 @@ define([
                 // titleUnselected: i18n.widgets.showFeatureTable.listFromView,
                 // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
             }, domConstruct.create('div', {}, featureTableTools));
-            this.SelectOnMapOrView.startup();
-            domAttr.set(this.SelectOnMapOrView.domNode, 'title', i18n.widgets.showFeatureTable.listFromView);
-            domAttr.set(this.SelectOnMapOrView.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromView);
+            this.SelectOnView.startup();
+            domAttr.set(this.SelectOnView.domNode, 'title', i18n.widgets.showFeatureTable.listFromView);
+            domAttr.set(this.SelectOnView.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromView);
 
-            on(this.SelectOnMapOrView, 'change', lang.hitch(this, function(ev) {
+            on(this.SelectOnView, 'change', lang.hitch(this, function(ev) {
                 if(this._rectangleGr) {
                     this.map.graphics.remove(this._rectangleGr);
                     this.myFeatureTable.clearFilter();
                 }
 
-                if(this.SelectOnMapOrView.isChecked()) {
+                if(this.SelectOnView.isChecked()) {
                     if(this.draw) {
                         _endDraw();
                     }
@@ -685,7 +685,7 @@ define([
                         gr.name = 'ftMarker';
                         this.map.graphics.add(gr);
 
-                        // if(!this.SelectOnMapOrView.isCheckedAny()) {
+                        // if(!this.SelectOnView.isCheckedAny()) {
                         //     var grs = array.filter(this.map.graphics.graphics, function(gr){
                         //         return gr.name && gr.name === 'ftMarker';
                         //     });
@@ -708,7 +708,7 @@ define([
                     }));
                 }));
 
-                // if(!this.SelectOnMapOrView.isCheckedAny()) {
+                // if(!this.SelectOnView.isCheckedAny()) {
                 //     var grs = array.filter(this.map.graphics.graphics, function(gr){ return gr.name && gr.name === 'ftMarker'; });
                 //     if(grs && grs.length>=2) {
                 //         var extent = (this, graphicsUtils.graphicsExtent(grs)).expand(1.5);
