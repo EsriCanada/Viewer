@@ -524,44 +524,49 @@ define([
                 }
             }));
 
-            // this.SelectOnRegion = new ImageToggleButton({
-            //     id:'btnSelectOnRegion',
-            //     // type:'radio',
-            //     group:'selectOn',
-            //     imgSelected: 'images/ListRegion.Selected.png',
-            //     imgUnselected: 'images/ListRegion.Unselected.png',
-            //     titleUnselected: i18n.widgets.showFeatureTable.listFromPolygon,
-            //     titleSelected: i18n.widgets.showFeatureTable.listFromMap,
-            //     domMessage: this.map.container,
-            // }, domConstruct.create('div', {}, featureTableTools));
-            // this.SelectOnRegion.startup();
+            // -----------------------------------------------
 
-            // on(this.SelectOnRegion, 'change', lang.hitch(this, function(ev) {
-            //     if(this._rectangleGr) {
-            //         this.map.graphics.remove(this._rectangleGr);
-            //         this.myFeatureTable.clearFilter();
-            //     }
-            //     if(this._selectSignal)
-            //         this._selectSignal.remove();
+            this.SelectOnRegion = new ImageToggleButton({
+                id:'btnSelectOnRegion',
+                // type:'radio',
+                group:'selectOn',
+                imgSelected: 'images/icons_white/ListRegion.png',
+                imgUnselected: 'images/icons_black/ListRegion.png',
+                // titleUnselected: i18n.widgets.showFeatureTable.listFromPolygon,
+                // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
+                domMessage: this.map.container,
+            }, domConstruct.create('div', {}, featureTableTools));
+            this.SelectOnRegion.startup();
+            domAttr.set(this.SelectOnRegion.domNode, 'title', i18n.widgets.showFeatureTable.listFromPolygon);
 
-            //     if(this.SelectOnRegion.isChecked()) {
-            //         if(this.draw) {
-            //             _endDraw();
-            //         }
+            on(this.SelectOnRegion, 'change', lang.hitch(this, function(ev) {
+                if(this._rectangleGr) {
+                    this.map.graphics.remove(this._rectangleGr);
+                    this.myFeatureTable.clearFilter();
+                }
+                if(this._selectSignal)
+                    this._selectSignal.remove();
 
-            //         var feature = this.map.infoWindow.getSelectedFeature();
-            //         if(!feature || feature.geometry.type==='point') {
-            //             this.SelectOnRegion.ShowMessage(i18n.widgets.showFeatureTable.selectOnRegion, 'error');
-            //             this.SelectOnRegion.Check(false);
-            //         }
-            //         else {
-            //             this.map.infoWindow.hide();
-            //             this.map.infoWindow.clearFeatures();
+                if(this.SelectOnRegion.isChecked()) {
+                    if(this.draw) {
+                        _endDraw();
+                    }
 
-            //             this._setSelectSymbol(feature.geometry);
-            //         }
-            //     }
-            // }));
+                    var feature = this.map.infoWindow.getSelectedFeature();
+                    if(!feature || feature.geometry.type==='point') {
+                        this.SelectOnRegion.ShowMessage(i18n.widgets.showFeatureTable.selectOnRegion, 'error');
+                        this.SelectOnRegion.Check(false);
+                    }
+                    else {
+                        this.map.infoWindow.hide();
+                        this.map.infoWindow.clearFeatures();
+
+                        this._setSelectSymbol(feature.geometry);
+                    }
+                }
+            }));
+
+            // -----------------------------------------------
 
             this.SelectOnMapOrView = new ImageToggleButton({
                 id:'btnSelectOnMapOrView',
@@ -639,8 +644,8 @@ define([
 
                 evt.rows.forEach(lang.hitch(this, function(row) {
 
-                    var objectIdFieldName = this.layer.layerObject.objectIdField;
-                    q = new Query();
+                    const objectIdFieldName = this.layer.layerObject.objectIdField;
+                    const q = new Query();
                     q.where = objectIdFieldName+"="+row.id;
                     q.outFields = [objectIdFieldName];
                     q.returnGeometry = true;
@@ -852,8 +857,8 @@ define([
         _selectSignal: null,
 
         _selectViewIds: function(geometry) {
-            var objectIdFieldName = this.layer.layerObject.objectIdField;
-            q = new Query();
+            const objectIdFieldName = this.layer.layerObject.objectIdField;
+            const q = new Query();
             q.outFields = [objectIdFieldName];
             q.geometry = geometry ? geometry : this.map.extent;
             var exp=this.layer.layerObject.getDefinitionExpression() || null;
