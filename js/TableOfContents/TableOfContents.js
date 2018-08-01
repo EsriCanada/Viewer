@@ -171,7 +171,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         tabindex: -1,
                     }, titleDiv);
 
-                    titleCheckbox = domConstruct.create("input",
+                    var titleCheckbox = domConstruct.create("input",
                     {
                         id: "layer_ck_"+i,
                         className: titleCheckBoxClass,
