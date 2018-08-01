@@ -4,7 +4,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/query",
     "dojo/text!application/DirectionsWidget/Templates/DirectionsHeader.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
-    // "dojo/parser", "dojo/ready",
     "dojo/i18n!application/nls/DirectionsWidget"
     ], function (
         Evented, declare, lang, has, esriNS,
@@ -13,16 +12,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         query,
         DirectionsHeaderTemplate,
         dom, domClass, domAttr, domStyle, domConstruct, event,
-        // parser, ready,
         i18n
     ) {
 
-    // ready(function(){
-    //     // Call the parser manually so it runs after our widget is defined, and page has finished loading
-    //     parser.parse();
-    // });
-
-    var Widget = declare("esri.dijit.DirectionsHeader", [_WidgetBase, _TemplatedMixin, Evented], {
+        var Widget = declare("esri.dijit.DirectionsHeader", [_WidgetBase, _TemplatedMixin, Evented], {
         
         options: {
             map: null,

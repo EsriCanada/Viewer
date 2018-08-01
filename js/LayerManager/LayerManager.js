@@ -20,8 +20,7 @@ define(["dojo/Evented", "dojo/_base/declare",
         array,
         LabelLayer
     ) {
-    'use strict';
-    const Widget = declare("esri.dijit.LayerManager", [_WidgetBase, _TemplatedMixin, Evented], {
+        const Widget = declare("esri.dijit.LayerManager", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: dijitTemplate,
 
         options: {
@@ -722,7 +721,7 @@ define(["dojo/Evented", "dojo/_base/declare",
 
         _atachSpaceKey: function(onButton, clickButton) {
             on(onButton, 'keyup', lang.hitch(clickButton, function(event){
-                if(event.keyCode=='32')
+                if(event.keyCode==='32')
                     this.click();
             }));
         },

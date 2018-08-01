@@ -47,8 +47,8 @@
 
 .LayerManager .toc-settings {
   	float: right;
-    margin-right: 4px;
-    margin-top: -2px;
+    /*margin-right: 4px;
+    margin-top: -2px;*/
 }
 
 .LayerManager .toc-settings img{
