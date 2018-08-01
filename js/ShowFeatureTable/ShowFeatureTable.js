@@ -90,7 +90,7 @@ define([
             }, document.head);
 
             //if(options.animatedMarker) {
-                this.pointMarker = new esri.symbol.PictureMarkerSymbol({
+                this.pointMarker = new PictureMarkerSymbol({
                     "angle": 0,
                     "xoffset": 0,
                     "yoffset": 0,
@@ -734,17 +734,21 @@ define([
                             // 'aria-hidden': 'true'
                         }, header[0], 'before');
                         on(a, 'click', lang.hitch(this, function() {
-                            const dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
-                            if(dgridCells && dgridCells.length>0) {
-                                // dgridCells.forEach(function(cell) {
-                                for(var cell of dgridCells) {
-                                    if(window.getComputedStyle(cell, null).getPropertyValue("display") != "none") {
-                                        // console.log(cell);
-                                        domAttr.set(cell, 'tabindex', 0);
-                                        cell.focus();
-                                        break;
+                            let dgridCells = query('.dgrid-content .dgrid-cell[tabindex="0"]', this.myFeatureTable.domNode);
+                            if(dgridCells && dgridCells.length>0 && window.getComputedStyle(dgridCells[0], null).getPropertyValue("display") !== "none") {
+                                dgridCells[0].focus();
+                            }
+                            else {
+                                dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
+                                if(dgridCells && dgridCells.length>0) {
+                                    for(let cell of dgridCells) {
+                                        if(window.getComputedStyle(cell, null).getPropertyValue("display") !== "none") {
+                                            domAttr.set(cell, 'tabindex', 0);
+                                            cell.focus();
+                                            break;
+                                        }
                                     }
-                                };
+                                }
                             }
                         }));
                         on(a, 'focus', function() {
