@@ -51,7 +51,12 @@ define([
         options: {
             map: null,
             layers: null,
-            OnDisplay: function(show) { alert('FeatureTable '+show); }
+            OnDisplay: function(show) { alert('FeatureTable '+show); },
+            filterTools: {
+                rectangle: true,
+                polygon: false,
+                view: true
+            }
         },
 
         _getShowAttr: function() {
@@ -82,6 +87,7 @@ define([
             this.domNode = srcRefNode;
             this.containerNode = srcRefNode;
             this.OnDisplay = defaults.OnDisplay;
+            this.filterTools = defaults.filterTools;
 
             dojo.create("link", {
                 href : "js/ShowFeatureTable/Templates/ShowFeatureTable.css",
@@ -495,116 +501,121 @@ define([
             }, featureTableEndTools);
             on(closeBtn, 'click', lang.hitch(this, function(ev) { this.emit("destroy", {}); }));
 
-            this.SelectOnRectangle = new ImageToggleButton({
-                id:'btnSelectOnRectangle',
-                // type:'radio',
-                group:'selectOn',
-                imgSelected: 'images/icons_white/ByRectangle.36.png',
-                imgUnselected: 'images/icons_black/ByRectangle.36.png',
-                // titleUnselected: i18n.widgets.showFeatureTable.listFromRectangle,
-                // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
-                autoCloseMessage: false,
-                domMessage: dojo.byId('mapDiv_root'),
-            }, domConstruct.create('div', {}, featureTableTools));
-            this.SelectOnRectangle.startup();
-            domAttr.set(this.SelectOnRectangle.domNode, 'title', i18n.widgets.showFeatureTable.listFromRectangle);
-            domAttr.set(this.SelectOnRectangle.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromRectangle);
+            if(this.filterTools.rectangle) {
+                this.SelectOnRectangle = new ImageToggleButton({
+                    id:'btnSelectOnRectangle',
+                    // type:'radio',
+                    group:'selectOn',
+                    imgSelected: 'images/icons_white/ByRectangle.36.png',
+                    imgUnselected: 'images/icons_black/ByRectangle.36.png',
+                    // titleUnselected: i18n.widgets.showFeatureTable.listFromRectangle,
+                    // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
+                    autoCloseMessage: false,
+                    domMessage: dojo.byId('mapDiv_root'),
+                }, domConstruct.create('div', {}, featureTableTools));
+                this.SelectOnRectangle.startup();
+                domAttr.set(this.SelectOnRectangle.domNode, 'title', i18n.widgets.showFeatureTable.listFromRectangle);
+                domAttr.set(this.SelectOnRectangle.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromRectangle);
 
-            on(this.SelectOnRectangle, 'change', lang.hitch(this, function(ev) {
-                if(this._rectangleGr) {
-                    this.map.graphics.remove(this._rectangleGr);
-                    this.myFeatureTable.clearFilter();
-                }
-                if(this._selectSignal)
-                    this._selectSignal.remove();
+                on(this.SelectOnRectangle, 'change', lang.hitch(this, function(ev) {
+                    if(this._rectangleGr) {
+                        this.map.graphics.remove(this._rectangleGr);
+                        this.myFeatureTable.clearFilter();
+                    }
+                    if(this._selectSignal)
+                        this._selectSignal.remove();
 
-                if(this.SelectOnRectangle.isChecked()) {
-                    this.draw = new Draw(this.map);
-                    this.draw.activate(Draw.EXTENT, {
-                        showTooltips: false,
-                    });
-                    this.map.setMapCursor("url(images/Select.cur),auto");
-                    this.map.hideZoomSlider();
-                    this.SelectOnRectangle.ShowMessage(i18n.widgets.showFeatureTable.selectOnRectangle, 'warning');
-                    this.draw.on("draw-end", _endDraw);
-                }
-            }));
+                    if(this.SelectOnRectangle.isChecked()) {
+                        this.draw = new Draw(this.map);
+                        this.draw.activate(Draw.EXTENT, {
+                            showTooltips: false,
+                        });
+                        this.map.setMapCursor("url(images/Select.cur),auto");
+                        this.map.hideZoomSlider();
+                        this.SelectOnRectangle.ShowMessage(i18n.widgets.showFeatureTable.selectOnRectangle, 'warning');
+                        this.draw.on("draw-end", _endDraw);
+                    }
+                }));
+            }
 
             // -----------------------------------------------
 
-            this.SelectOnRegion = new ImageToggleButton({
-                id:'btnSelectOnRegion',
-                // type:'radio',
-                group:'selectOn',
-                imgSelected: 'images/icons_white/ByPolygon.36.png',
-                imgUnselected: 'images/icons_black/ByPolygon.36.png',
-                // titleUnselected: i18n.widgets.showFeatureTable.listFromPolygon,
-                // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
-                domMessage: this.map.container,
-            }, domConstruct.create('div', {}, featureTableTools));
-            this.SelectOnRegion.startup();
-            domAttr.set(this.SelectOnRegion.domNode, 'title', i18n.widgets.showFeatureTable.listFromPolygon);
-            domAttr.set(this.SelectOnRegion.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromPolygon);
+            if(this.filterTools.polygon) {
+                this.SelectOnRegion = new ImageToggleButton({
+                    id:'btnSelectOnRegion',
+                    // type:'radio',
+                    group:'selectOn',
+                    imgSelected: 'images/icons_white/ByPolygon.36.png',
+                    imgUnselected: 'images/icons_black/ByPolygon.36.png',
+                    // titleUnselected: i18n.widgets.showFeatureTable.listFromPolygon,
+                    // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
+                    domMessage: this.map.container,
+                }, domConstruct.create('div', {}, featureTableTools));
+                this.SelectOnRegion.startup();
+                domAttr.set(this.SelectOnRegion.domNode, 'title', i18n.widgets.showFeatureTable.listFromPolygon);
+                domAttr.set(this.SelectOnRegion.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromPolygon);
 
-            on(this.SelectOnRegion, 'change', lang.hitch(this, function(ev) {
-                if(this._rectangleGr) {
-                    this.map.graphics.remove(this._rectangleGr);
-                    this.myFeatureTable.clearFilter();
-                }
-                if(this._selectSignal)
-                    this._selectSignal.remove();
-
-                if(this.SelectOnRegion.isChecked()) {
-                    if(this.draw) {
-                        _endDraw();
+                on(this.SelectOnRegion, 'change', lang.hitch(this, function(ev) {
+                    if(this._rectangleGr) {
+                        this.map.graphics.remove(this._rectangleGr);
+                        this.myFeatureTable.clearFilter();
                     }
+                    if(this._selectSignal)
+                        this._selectSignal.remove();
 
-                    var feature = this.map.infoWindow.getSelectedFeature();
-                    if(!feature || feature.geometry.type==='point') {
-                        this.SelectOnRegion.ShowMessage(i18n.widgets.showFeatureTable.selectOnRegion, 'error');
-                        this.SelectOnRegion.Check(false);
+                    if(this.SelectOnRegion.isChecked()) {
+                        if(this.draw) {
+                            _endDraw();
+                        }
+
+                        var feature = this.map.infoWindow.getSelectedFeature();
+                        if(!feature || feature.geometry.type==='point') {
+                            this.SelectOnRegion.ShowMessage(i18n.widgets.showFeatureTable.selectOnRegion, 'error');
+                            this.SelectOnRegion.Check(false);
+                        }
+                        else {
+                            this.map.infoWindow.hide();
+                            this.map.infoWindow.clearFeatures();
+
+                            this._setSelectSymbol(feature.geometry);
+                        }
                     }
-                    else {
-                        this.map.infoWindow.hide();
-                        this.map.infoWindow.clearFeatures();
-
-                        this._setSelectSymbol(feature.geometry);
-                    }
-                }
-            }));
-
+                }));
+            }
             // -----------------------------------------------
 
-            this.SelectOnView = new ImageToggleButton({
-                id:'btnSelectOnView',
-                // type:'radio',
-                group:'selectOn',
-                imgSelected: 'images/icons_white/ByView.36.png',
-                imgUnselected: 'images/icons_black/ByView.36.png',
-                // titleUnselected: i18n.widgets.showFeatureTable.listFromView,
-                // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
-            }, domConstruct.create('div', {}, featureTableTools));
-            this.SelectOnView.startup();
-            domAttr.set(this.SelectOnView.domNode, 'title', i18n.widgets.showFeatureTable.listFromView);
-            domAttr.set(this.SelectOnView.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromView);
+            if(this.filterTools.view) {
+                this.SelectOnView = new ImageToggleButton({
+                    id:'btnSelectOnView',
+                    // type:'radio',
+                    group:'selectOn',
+                    imgSelected: 'images/icons_white/ByView.36.png',
+                    imgUnselected: 'images/icons_black/ByView.36.png',
+                    // titleUnselected: i18n.widgets.showFeatureTable.listFromView,
+                    // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
+                }, domConstruct.create('div', {}, featureTableTools));
+                this.SelectOnView.startup();
+                domAttr.set(this.SelectOnView.domNode, 'title', i18n.widgets.showFeatureTable.listFromView);
+                domAttr.set(this.SelectOnView.domNode, 'aria-label', i18n.widgets.showFeatureTable.listFromView);
 
-            on(this.SelectOnView, 'change', lang.hitch(this, function(ev) {
-                if(this._rectangleGr) {
-                    this.map.graphics.remove(this._rectangleGr);
-                    this.myFeatureTable.clearFilter();
-                }
-
-                if(this.SelectOnView.isChecked()) {
-                    if(this.draw) {
-                        _endDraw();
+                on(this.SelectOnView, 'change', lang.hitch(this, function(ev) {
+                    if(this._rectangleGr) {
+                        this.map.graphics.remove(this._rectangleGr);
+                        this.myFeatureTable.clearFilter();
                     }
-                    this._selectViewIds();
-                    this._selectSignal = on(this.map, "extent-change",
-                        lang.hitch(this, function() {this._selectViewIds();}));
-                } else {
-                    this._selectSignal.remove();
-                }
-            }));
+
+                    if(this.SelectOnView.isChecked()) {
+                        if(this.draw) {
+                            _endDraw();
+                        }
+                        this._selectViewIds();
+                        this._selectSignal = on(this.map, "extent-change",
+                            lang.hitch(this, function() {this._selectViewIds();}));
+                    } else {
+                        this._selectSignal.remove();
+                    }
+                }));
+            }
 
             // this.showRegionButton();
 

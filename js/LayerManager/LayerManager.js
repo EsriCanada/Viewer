@@ -905,7 +905,12 @@ define(["dojo/Evented", "dojo/_base/declare",
                 const ft = new ShowFeatureTable({
                     map: this.map,
                     layers: this.layers,
-                    OnDisplay: this.defaults.OnDisplay
+                    OnDisplay: this.defaults.OnDisplay,
+                    filterTools: {
+                        rectangle: true,
+                        polygon: true,
+                        view: true
+                    }
                 }, this.defaults.mapNode);
                 ft.startup();
                 this.featureTable = ft;

@@ -495,8 +495,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 var ft = this.featureTable = new ShowFeatureTable({
                     map: this.map,
                     layers: this.layers,
-                    OnDisplay: this.defaults.OnDisplay
-                }, dojo.byId('mapPlace'));
+                    OnDisplay: this.defaults.OnDisplay,
+                    filterTools: {
+                        rectangle: true,
+                        polygon: true,
+                        view: true
+                    }
+                  }, dojo.byId('mapPlace'));
                 ft.startup();
                 on(ft, "destroy", lang.hitch(this, function(evy) {
                     this._forceClose();
