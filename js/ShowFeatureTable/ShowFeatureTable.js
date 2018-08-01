@@ -373,23 +373,28 @@ define([
 
             if(this.layers && this.layers.length > 1)
             {
-                var menu = new DropDownMenu({ style: "display: none;"});
-                this.layers.forEach(lang.hitch(this, function(layer){
+                const menu = new DropDownMenu({ 
+                    style: "display: none;",
+                    onItemClick: lang.hitch(this, function(menuItem, ev) {
+                        if(domClass.contains(menuItem.domNode, 'layerMenuItem')) {
+                            this.emit("change", { layerId: menuItem["data-layerid"] });
+                        } else {
+                            this.emit("destroy", {});
+                        }
+                    })
+                });
+                const layers = this.layers.slice(0).reverse();
+                layers.forEach(lang.hitch(this, function(layer){
                     if(layer && layer.layerObject) {
-                        var menuItem1 = new MenuItem({
+                        const menuItemLayer = new MenuItem({
+                            class: 'layerMenuItem',
                             label: layer.title,
                             'data-layerid': layer.id,
                         });
                         if(!layer.layerObject.visible) {
-                            domClass.add(menuItem1.domNode, 'menuItemDisabled');
+                            domClass.add(menuItemLayer.domNode, 'menuItemDisabled');
                         }
-
-                        on(menuItem1.domNode, 'click', lang.hitch(this, function(ev){
-                            //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev);
-                            this.emit("change", { layerId: ev.target.parentElement.dataset.layerid });
-                        }));
-                        //menu.addChild(menuItem1);
-                        domConstruct.place(menuItem1.domNode, menu.domNode, 0);
+                        menu.addChild(menuItemLayer);
 
                         on(layer.layerObject, "visibility-change", lang.hitch(this, function (evt) {
                             var layerId = evt.target.id;
@@ -410,17 +415,15 @@ define([
                     }
                 }));
 
-                var menuItem2 = new MenuSeparator();
-                domConstruct.place(menuItem2.domNode, menu.domNode);
+                var menuItemSeparator = new MenuSeparator();
+                menu.addChild(menuItemSeparator);
 
-                var menuItem3 = new MenuItem({
+
+                var menuItemClose = new MenuItem({
                     label: i18n.widgets.showFeatureTable.close,
                 });
-                on(menuItem3.domNode, 'click', lang.hitch(this, function(ev){
-                        //console.log(layer.title, ev.target.parentElement.dataset.layerid, ev);
-                        this.emit("destroy", {});
-                    }));
-                domConstruct.place(menuItem3.domNode, menu.domNode);
+                menu.addChild(menuItemClose);
+
                 menu.startup();
 
                 var button = new DropDownButton({
@@ -428,10 +431,11 @@ define([
                     name: "progButton",
                     dropDown: menu,
                     id: "progButton",
-                    role: 'application'
+                    role: 'application',
                 });
 
                 button.startup();
+
 
                 this._addArrowCarrets();
 
