@@ -495,14 +495,15 @@ define([
                 id:'btnSelectOnRectangle',
                 // type:'radio',
                 group:'selectOn',
-                imgSelected: 'images/ListRectangle.Selected.png',
-                imgUnselected: 'images/ListRectangle.Unselected.png',
-                titleUnselected: i18n.widgets.showFeatureTable.listFromRectangle,
-                titleSelected: i18n.widgets.showFeatureTable.listFromMap,
+                imgSelected: 'images/icons_white/ByRectangle.36.png',
+                imgUnselected: 'images/icons_black/ByRectangle.36.png',
+                // titleUnselected: i18n.widgets.showFeatureTable.listFromRectangle,
+                // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
                 autoCloseMessage: false,
                 domMessage: dojo.byId('mapDiv_root'),
             }, domConstruct.create('div', {}, featureTableTools));
             this.SelectOnRectangle.startup();
+            domAttr.set(this.SelectOnRectangle.domNode, 'title', i18n.widgets.showFeatureTable.listFromRectangle);
 
             on(this.SelectOnRectangle, 'change', lang.hitch(this, function(ev) {
                 if(this._rectangleGr) {
@@ -530,8 +531,8 @@ define([
                 id:'btnSelectOnRegion',
                 // type:'radio',
                 group:'selectOn',
-                imgSelected: 'images/icons_white/ListRegion.png',
-                imgUnselected: 'images/icons_black/ListRegion.png',
+                imgSelected: 'images/icons_white/ByPolygon.36.png',
+                imgUnselected: 'images/icons_black/ByPolygon.36.png',
                 // titleUnselected: i18n.widgets.showFeatureTable.listFromPolygon,
                 // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
                 domMessage: this.map.container,
@@ -572,12 +573,13 @@ define([
                 id:'btnSelectOnMapOrView',
                 // type:'radio',
                 group:'selectOn',
-                imgSelected: 'images/ListExtent.Selected.png',
-                imgUnselected: 'images/ListExtent.Unselected.png',
-                titleUnselected: i18n.widgets.showFeatureTable.listFromView,
-                titleSelected: i18n.widgets.showFeatureTable.listFromMap,
+                imgSelected: 'images/icons_white/ByView.36.png',
+                imgUnselected: 'images/icons_black/ByView.36.png',
+                // titleUnselected: i18n.widgets.showFeatureTable.listFromView,
+                // titleSelected: i18n.widgets.showFeatureTable.listFromMap,
             }, domConstruct.create('div', {}, featureTableTools));
             this.SelectOnMapOrView.startup();
+            domAttr.set(this.SelectOnMapOrView.domNode, 'title', i18n.widgets.showFeatureTable.listFromView);
 
             on(this.SelectOnMapOrView, 'change', lang.hitch(this, function(ev) {
                 if(this._rectangleGr) {
