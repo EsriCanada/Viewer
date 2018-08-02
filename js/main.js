@@ -924,7 +924,8 @@ define([
                             break;
                         case "0":
                             if (event.altKey) {
-                                skipSkip();
+                                // skipSkip();
+                                dom.byId("skip-tools").focus();
                             }
                             break;
                         default:
@@ -1101,9 +1102,9 @@ define([
             );
             dojo.html.set(dom.byId("searchLabel"), this.config.i18n.search);
 
-            const skipSkip = function() {
-                dom.byId("skip-tools").focus();
-            };
+            // const skipSkip = function() {
+            //     dom.byId("skip-tools").focus();
+            // };
 
             const skipToMap = lang.hitch(this, function() {
                 this.map.container.focus();
@@ -1775,7 +1776,7 @@ define([
                                         this.config.i18n.moreHelp +
                                         "</a>";
 
-                                var instructionsDiv = domConstruct.create(
+                                this.instructionsDiv = domConstruct.create(
                                     "div",
                                     {
                                         id: "instructionsDiv",
@@ -1801,19 +1802,18 @@ define([
             return deferred.promise;
         },
 
-        _adjustDetails: function() {
+        _adjustDetails: lang.hitch(this, function() {
             try {
                 const pageBody = dojo.byId("pageBody_details");
                 const detailDiv = dojo.byId("detailDiv");
                 detailDiv.style.maxHeight =
                     pageBody.clientHeight -
-                    instructionsDiv.clientHeight -
-                    30 +
-                    "px";
+                    this.instructionsDiv.clientHeight -
+                    30 + "px";
             } catch (e) {
                 /* ignore instructionDiv not defined error: will come defined next time! */
             }
-        },
+        }),
 
         _addEditor: function(tool, toolbar) {
             //Add the editor widget to the toolbar if the web map contains editable layers
@@ -3530,15 +3530,15 @@ define([
                             })
                         );
 
-                        var mapScroll = function(event) {
-                            var focusElement = document.querySelector(":focus");
+                        const mapScroll = function(event) {
+                            const focusElement = document.querySelector(":focus");
                             if (!focusElement || focusElement !== mapDiv)
                                 return;
                             // console.log(event.keyCode);
 
-                            var _mapScroll = lang.hitch(this, function(x, y) {
-                                var dx = x * this.stepX;
-                                var dy = y * this.stepY;
+                            const _mapScroll = lang.hitch(this, function(x, y) {
+                                const dx = x * this.stepX;
+                                const dy = y * this.stepY;
                                 if (!this.superNav || !event.shiftKey) {
                                     // var extent = this.map.extent;
                                     // var delta = (extent.ymax-extent.ymin) / 50;
@@ -3604,7 +3604,7 @@ define([
                             }
                         };
 
-                        var mapScrollPausable = on.pausable(
+                        const mapScrollPausable = on.pausable(
                             mapDiv,
                             "keydown",
                             lang.hitch(this, mapScroll)
