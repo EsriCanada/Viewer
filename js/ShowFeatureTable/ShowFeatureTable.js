@@ -238,36 +238,36 @@ define([
         SelectOnView:null,
 
         loadTable: function(myFeatureLayer){
-            var outFields = [];
-            var fieldInfos = [];
-            var fieldsMap = [];
+            const outFields = [];
+            const fieldInfos = [];
+            let fieldsMap = [];
             if(myFeatureLayer.layerObject.infoTemplate)
                 fieldsMap = myFeatureLayer.layerObject.infoTemplate._fieldsMap;
             else {
-                var fields = myFeatureLayer.layerObject.fields;
-                for(var field in fields) {
+                const fields = myFeatureLayer.layerObject.fields;
+                for(let field in fields) {
                     fieldsMap.push(
-                        {
-                            fieldName: fields[field].name,
-                            label: fields[field].alias,
-                            isEditable: fields[field].editable,
-                            tooltip: "",
-                            visible: true
-                        });
+                    {
+                        fieldName: fields[field].name,
+                        label: fields[field].alias,
+                        isEditable: fields[field].editable,
+                        tooltip: "",
+                        visible: true
+                    });
                 }
             }
-            for(var p in fieldsMap) {
+            for(let p in fieldsMap) {
                 if(fieldsMap.hasOwnProperty(p) && fieldsMap[p].visible)
                 {
-                    var pField = fieldsMap[p];
+                    const pField = fieldsMap[p];
                     outFields.push(pField.fieldName);
 
-                    var fieldInfo = {
+                    const fieldInfo = {
                         name : pField.fieldName,
                         alias: pField.label,
                     };
                     if(pField.hasOwnProperty('format') && pField.format) {
-                        var format = pField.format;
+                        const format = pField.format;
                         if(format.hasOwnProperty('dateFormat')) {
                             fieldInfo.dateOptions= {
                                 datePattern: i18n.widgets.showFeatureTable.datePattern,
@@ -322,10 +322,10 @@ define([
                         label: i18n.widgets.showFeatureTable.showTypes,
                         callback: lang.hitch(this, function(evt){
                             // console.log(" Callback evt: ", evt);
-                            var typeLabels = query('.esri-feature-table-column-header-type');
+                            const typeLabels = query('.esri-feature-table-column-header-type');
                             if(typeLabels && typeLabels.length>0) {
-                                var show = domStyle.get(typeLabels[0], 'display') === 'none';
-                                var l = evt.toElement.innerText;
+                                const show = domStyle.get(typeLabels[0], 'display') === 'none';
+                                const l = evt.toElement.innerText;
                                 if(show) {
                                     typeLabels.forEach( function(label) { domStyle.set(label, 'display', '');});
                                     evt.toElement.innerText = i18n.widgets.showFeatureTable.hideTypes;
@@ -372,8 +372,6 @@ define([
                     src:'images/icons_black/Columns.32.png',
                 }, hidderToggle);
             }
-
-            //this._addArrowCarrets();
 
             var tableTitle = query('.esri-feature-table-title')[0];
 
@@ -442,9 +440,6 @@ define([
 
                 button.startup();
 
-
-                this._addArrowCarrets();
-
                 new MutationObserver(lang.hitch(this, function(mutations) {
                     // console.log(mutations);
                     mutations.forEach(lang.hitch(this, function(mutation) {
@@ -500,6 +495,18 @@ define([
                 title: i18n.widgets.showFeatureTable.close,
             }, featureTableEndTools);
             on(closeBtn, 'click', lang.hitch(this, function(ev) { this.emit("destroy", {}); }));
+
+            const _endDraw = lang.hitch(this, function(evt) {
+                this.SelectOnRectangle.HideMessage();
+                this.map.setMapCursor("default");
+
+                this.draw.deactivate();
+                this.map.showZoomSlider();
+
+                if(evt && evt.geometry) {
+                    this._setSelectSymbol(evt.geometry);
+                }
+            });
 
             if(this.filterTools.rectangle) {
                 this.SelectOnRectangle = new ImageToggleButton({
@@ -618,18 +625,6 @@ define([
             }
 
             // this.showRegionButton();
-
-            var _endDraw = lang.hitch(this, function(evt) {
-                this.SelectOnRectangle.HideMessage();
-                this.map.setMapCursor("default");
-
-                this.draw.deactivate();
-                this.map.showZoomSlider();
-
-                if(evt && evt.geometry) {
-                    this._setSelectSymbol(evt.geometry);
-                }
-            });
 
             this.set('show', true);
             this.OnDisplay(true);
@@ -868,20 +863,22 @@ define([
             // console.log('f',f);
         },
 
-        _addArrowCarrets: function() {
-            var arrowButtons = query('.esri-feature-table .dijitArrowButtonInner');
-            if(arrowButtons) {
-                arrowButtons.forEach(function(arrowButton) {
-                    if(arrowButton && arrowButton.innerHTML === '') {
-                        domConstruct.create('img', {
-                            // role: 'presentation',
-                            src: 'images/icons_white/carret-down.32.png',
-                            alt: 'carret-down'
-                        }, arrowButton);
-                    }
-                });
-            }
-        },
+        _addArrowCarrets: function() { 
+            var arrowButtons = query('.esri-feature-table .dijitArrowButtonInner'); 
+            if(arrowButtons) { 
+                arrowButtons.forEach(function(arrowButton) { 
+                    if(arrowButton && arrowButton.innerHTML === '') { 
+                        domConstruct.create('img', { 
+                            // role: 'presentation', 
+                            src: 'images/icons_white/carret-down.32.png', 
+                            alt: 'down',
+                            'aria-hidden': true
+                        }, arrowButton); 
+                    } 
+                }); 
+            } 
+        }, 
+
         _removeAllGraphics: function(names) {
             this.map.graphics.graphics.forEach(lang.hitch(this, function(gr) {
                 if(gr.name && names.contains(gr.name)) { //(gr.name === 'ftMarker' || gr.name === 'rectView')) {

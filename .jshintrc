@@ -19,11 +19,8 @@
     "dojo"          : true,
 
     "predef"        : [  
-        "isIE11"
-        // Custom globals.
-        //"exampleVar",
-        //"anotherCoolGlobal",
-        //"iLoveDouglas"
+        "isIE11",
+        "_gaq"
     ],
 
 

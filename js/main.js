@@ -2704,7 +2704,7 @@ define([
                 ], lang.hitch(this, function(esriRequest, PrintTemplate) {
                     if (!esriRequest && !PrintTemplate) {
                         //Use the default print templates
-                        var templates = [
+                        const templates = [
                             {
                                 layout: "Letter ANSI A Landscape",
                                 layoutOptions: layoutOptions,
@@ -2768,10 +2768,10 @@ define([
                             print,
                             "print-start",
                             lang.hitch(this, function(ev) {
-                                var printError = dojo.byId("printError");
+                                const printError = dojo.byId("printError");
                                 if (printError) printError.innerHTML = "";
 
-                                var loading_print = dojo.byId("loading_print");
+                                const loading_print = dojo.byId("loading_print");
                                 domClass.replace(
                                     loading_print,
                                     "showLoading",
@@ -2785,7 +2785,7 @@ define([
                             "print-complete",
                             lang.hitch(this, function(ev) {
                                 this._addPrintArrowButton();
-                                var loading_print = dojo.byId("loading_print");
+                                const loading_print = dojo.byId("loading_print");
                                 domClass.replace(
                                     loading_print,
                                     "hideLoading",
@@ -2915,15 +2915,13 @@ define([
         },
 
         _addPrintArrowButton: function() {
-            var arrowButton = dojo.query(
-                ".PrintDialog .dijitArrowButtonInner"
-            )[0];
+            var arrowButton = dojo.query('.PrintDialog .dijitArrowButtonInner')[0];
             domConstruct.create(
                 "img",
                 {
-                    // role: 'presentation',
                     src: "images/icons_black/carret-down.32.png",
-                    alt: "carret-down"
+                    alt: "down",
+                    'aria-hidden': 'true'
                 },
                 arrowButton
             );
