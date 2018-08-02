@@ -756,7 +756,8 @@ define([
                             else {
                                 dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
                                 if(dgridCells && dgridCells.length>0) {
-                                    for(let cell of dgridCells) {
+                                    for(let i = 0; i < dgridCells.length; i++) {
+                                        const cell = dgridCells[i];
                                         if(window.getComputedStyle(cell, null).getPropertyValue("display") !== "none") {
                                             domAttr.set(cell, 'tabindex', 0);
                                             cell.focus();
