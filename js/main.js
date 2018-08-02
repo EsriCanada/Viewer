@@ -1182,8 +1182,8 @@ define([
             this.collapseLeftPanelButton.focus();
             this.showLefPanelArea(false);
 
-            if(!width) {
-                var leftPanel = dojo.byId("leftPanel");
+            if(!width || width === -1) {
+                const leftPanel = dojo.byId("leftPanel");
                 width = window.getComputedStyle(leftPanel)[
                     "min-width"
                 ];
