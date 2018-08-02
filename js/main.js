@@ -183,17 +183,17 @@ define([
                 this.config = config;
                 this.color = this.setColor(this.config.color);
                 this.hoverColor =
-                    typeof this.config.hoverColor == "undefined"
-                        ? this.setColor("#000000", 0.4)
-                        : this.setColor(this.config.hoverColor, 0.9);
+                    typeof this.config.hoverColor === "undefined" ? 
+                        this.setColor("#000000", 0.4) :
+                        this.setColor(this.config.hoverColor, 0.9);
                 this.focusColor =
-                    typeof this.config.focusColor == "undefined"
-                        ? this.setColor("#1f1f1f", 0.4)
-                        : this.setColor(this.config.focusColor, 0.9);
+                    typeof this.config.focusColor === "undefined" ?
+                        this.setColor("#1f1f1f", 0.4) :
+                        this.setColor(this.config.focusColor, 0.9);
                 this.activeColor =
-                    typeof this.config.activeColor == "undefined"
-                        ? this.focusColor
-                        : this.setColor(this.config.activeColor, 0.9);
+                    typeof this.config.activeColor === "undefined" ?
+                        this.focusColor :
+                        this.setColor(this.config.activeColor, 0.9);
                 this.theme = this.setColor(this.config.theme);
 
                 if (config.useGoogleAnalytics) {
@@ -397,31 +397,31 @@ define([
         },
 
         _initPopup: function(node) {
-            images = node.querySelectorAll("img");
-            for (var i = 0; i < images.length; i++) {
+            const images = node.querySelectorAll("img");
+            for (let i = 0; i < images.length; i++) {
                 if (!dojo.getAttr(images[i], "alt")) {
                     dojo.setAttr(images[i], "alt", "");
                 }
             }
 
             dojo.setAttr(node, "role", "dialog");
-            header = node.querySelector(".header");
+            const header = node.querySelector(".header");
             if (header) {
                 dojo.setAttr(node, "tabindex", 0);
                 node.blur();
-                label = header.innerHTML;
-                title = node.querySelector(".title");
-                if (title && title.innerHTML != "&nbsp;") {
+                let label = header.innerHTML;
+                const title = node.querySelector(".title");
+                if (title && title.innerHTML !== "&nbsp;") {
                     label = title.innerHTML + ": " + label;
                 }
                 dojo.setAttr(node, "aria-label", label);
                 node.focus();
             }
 
-            attrNames = node.querySelectorAll(".attrName");
+            const attrNames = node.querySelectorAll(".attrName");
             if (attrNames) {
-                for (i = 0; i < attrNames.length; i++) {
-                    attrName = attrNames[i];
+                for (let i = 0; i < attrNames.length; i++) {
+                    const attrName = attrNames[i];
 
                     dojo.create(
                         "th",
@@ -435,11 +435,11 @@ define([
                         "first"
                     );
 
-                    attrValues = attrName.parentNode.querySelectorAll(
+                    const attrValues = attrName.parentNode.querySelectorAll(
                         ".attrValue"
                     );
                     if (attrValues) {
-                        for (j = 0; j < attrValues.length; j++) {
+                        for (let j = 0; j < attrValues.length; j++) {
                             var attrValue = attrValues[j];
                             dojo.setAttr(attrValue, "headers", "h_" + i);
                         }
@@ -448,9 +448,9 @@ define([
                 }
             }
 
-            zoom = node.querySelector(".zoomTo");
+            const zoom = node.querySelector(".zoomTo");
             if (zoom) {
-                hint = "Zoom to";
+                const hint = "Zoom to";
                 dojo.setAttr(zoom, "aria-label", hint);
                 dojo.setAttr(zoom, "title", hint);
                 //dojo.setAttr(zoom.parentNode, "data-title", hint);
@@ -1101,11 +1101,11 @@ define([
             );
             dojo.html.set(dom.byId("searchLabel"), this.config.i18n.search);
 
-            skipSkip = function() {
+            const skipSkip = function() {
                 dom.byId("skip-tools").focus();
             };
 
-            skipToMap = lang.hitch(this, function() {
+            const skipToMap = lang.hitch(this, function() {
                 this.map.container.focus();
             });
 
@@ -1268,10 +1268,7 @@ define([
                     var i = -1;
                     var visible = false;
                     while (++i < 10 && !visible) {
-                        visible =
-                            window
-                                .getComputedStyle(cells[i], null)
-                                .getPropertyValue("display") != "none";
+                        visible = "none" !== window.getComputedStyle(cells[i], null).getPropertyValue("display");
                         if (visible) {
                             // domClass.add(cells[i], "dgrid-focus");
                             dojo.setAttr(cells[i], "tabindex", 0);
@@ -1312,7 +1309,7 @@ define([
                 var layers = this.config.response.itemInfo.itemData
                     .operationalLayers;
 
-                featureList = new FeatureList(
+                const featureList = new FeatureList(
                     {
                         map: this.map,
                         layers: layers,
@@ -1341,11 +1338,11 @@ define([
         navDeferred: null,
 
         _addNavigation: function(tool, oldNaviagationToolBar, deferred) {
-            var navToolBar = domConstruct.create("div", {
+            const navToolBar = domConstruct.create("div", {
                 id: "newNaviagationToolBar"
             });
 
-            nav = new NavToolBar(
+            const nav = new NavToolBar(
                 {
                     map: this.map,
                     navToolBar: oldNaviagationToolBar,
@@ -1410,7 +1407,7 @@ define([
                     }, directionsDiv);
                     this.directions.startup();
                     deferred.resolve(true);
-                }))
+                }));
 
             } else {
                 deferred.resolve(false);
@@ -1427,7 +1424,7 @@ define([
                 var layers = this.config.response.itemInfo.itemData
                     .operationalLayers;
 
-                filter = new Filters(
+                const filter = new Filters(
                     {
                         map: this.map,
                         layers: layers,
@@ -1475,7 +1472,7 @@ define([
                     try {
                         if(isIE11) {
                             basemap.basemaps.some(function(b, i) {
-                                if (b.title==bm.title) {
+                                if (b.title === bm.title) {
                                     bmIndex = i;
                                     return true;
                                 }
@@ -1483,7 +1480,7 @@ define([
                         }
                         else {
                             bmIndex = basemap.basemaps.findIndex(function(b) {
-                                return b.title==bm.title;
+                                return b.title === bm.title;
                             });
                         }
                         if(bmIndex<0)
@@ -1614,7 +1611,7 @@ define([
                                     aNode.click();
                                 } else if (ev.key === "Tab" && !ev.shiftKey) {
                                     if (
-                                        node.nextElementSibling.nodeName != "BR"
+                                        node.nextElementSibling.nodeName !== "BR"
                                     ) {
                                         node.nextElementSibling.focus();
                                     } else {
@@ -1660,11 +1657,11 @@ define([
                         domConstruct.create("div", {}, bookmarkDiv)
                     );
 
-                    items = bookmarks.bookmarkDomNode.querySelectorAll(
+                    const items = bookmarks.bookmarkDomNode.querySelectorAll(
                         ".esriBookmarkItem"
                     );
                     if (items && items.length > 0) {
-                        itemsTable =
+                        const itemsTable =
                             items[0].parentNode.parentNode.parentNode
                                 .parentNode;
                         var header = document.createElement("tr");
@@ -1676,10 +1673,10 @@ define([
                         );
                         domAttr.set(itemsTable, "role", "list");
 
-                        for (i = 0; i < items.length; i++) {
-                            var item = items[i];
+                        for (let i = 0; i < items.length; i++) {
+                            const item = items[i];
                             // domAttr.set(item, 'tabindex', 0);
-                            var label = item.querySelector(
+                            const label = item.querySelector(
                                 ".esriBookmarkLabel"
                             );
                             // domAttr.remove(label, 'tabindex');
@@ -1746,7 +1743,7 @@ define([
                             this.config.i18n.instructions +
                             ".html"
                     ], function(instructionsText) {
-                        const instructionsDiv = toolbar.createTool(tool);
+                        var instructionsDiv = toolbar.createTool(tool);
                         domConstruct.create(
                             "div",
                             {
@@ -1806,8 +1803,8 @@ define([
 
         _adjustDetails: function() {
             try {
-                var pageBody = dojo.byId("pageBody_details");
-                var detailDiv = dojo.byId("detailDiv");
+                const pageBody = dojo.byId("pageBody_details");
+                const detailDiv = dojo.byId("detailDiv");
                 detailDiv.style.maxHeight =
                     pageBody.clientHeight -
                     instructionsDiv.clientHeight -
@@ -1964,9 +1961,9 @@ define([
                 deferred.resolve(false);
             } else {
                 if (has("layers")) {
-                    panelClass = "";
+                    let panelClass = "";
 
-                    var layersDivDesc = toolbar.createTool(
+                    const layersDivDesc = toolbar.createTool(
                         tool,
                         "",
                         "reload1.gif",
@@ -2003,7 +2000,7 @@ define([
                 deferred.resolve(false);
             } else {
                 if (has("layerManager")) {
-                    panelClass = "";
+                    let panelClass = "";
 
                     var layersDivDesc = toolbar.createTool(
                         tool,
@@ -2101,9 +2098,7 @@ define([
                                 var tabindex =
                                     service &&
                                     (!service.style ||
-                                        service.style.display !== "none")
-                                        ? 0
-                                        : -1;
+                                        service.style.display !== "none") ? 0 : -1;
 
                                 if (legendServiceLabel.nodeName !== "H2") {
                                     var h2 = domConstruct.create("h2", {
@@ -2230,7 +2225,7 @@ define([
                     "followTheMapMode"
                 );
 
-                popupInfo = new PopupInfo(
+                const popupInfo = new PopupInfo(
                     {
                         map: this.map,
                         toolbar: toolbar,
@@ -2256,11 +2251,11 @@ define([
 
         _addGeoCoding: function(tool, toolbar) {
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
-            var deferred = new Deferred();
+            const deferred = new Deferred();
             if (has("geoCoding")) {
-                var geoCodingDiv = toolbar.createTool(tool, "");
+                const geoCodingDiv = toolbar.createTool(tool, "");
 
-                geoCoding = new GeoCoding(
+                const geoCoding = new GeoCoding(
                     {
                         map: this.map,
                         toolbar: toolbar,
@@ -2295,7 +2290,7 @@ define([
                             "keypress",
                             lang.hitch(this, function(ev) {
                                 // console.log(ev);
-                                if (ev.keyCode == 13) {
+                                if (ev.keyCode === 13) {
                                     ev.target.click();
                                 }
                             })
@@ -2318,13 +2313,9 @@ define([
             if (has("measure")) {
                 var measureDiv = toolbar.createTool(tool);
                 var areaUnit =
-                    this.config.units === "metric"
-                        ? "esriSquareKilometers"
-                        : "esriSquareMiles";
+                    this.config.units === "metric" ? "esriSquareKilometers" : "esriSquareMiles";
                 var lengthUnit =
-                    this.config.units === "metric"
-                        ? "esriKilometers"
-                        : "esriMiles";
+                    this.config.units === "metric" ? "esriKilometers" : "esriMiles";
 
                 var measure = new Measurement(
                     {
@@ -2337,7 +2328,7 @@ define([
 
                 measure.startup();
 
-                dijitButtonNodes = measureDiv.querySelectorAll(
+                const dijitButtonNodes = measureDiv.querySelectorAll(
                     ".dijitButtonNode"
                 );
                 array.forEach(dijitButtonNodes, function(node) {
@@ -2355,12 +2346,12 @@ define([
                 var esriMeasurementTableHeaders = esriMeasurementResultTable.querySelectorAll(
                     ".esriMeasurementTableHeader"
                 );
-                for (i = 0; i < esriMeasurementTableHeaders.length; i++) {
-                    esriMeasurementTableHeader = esriMeasurementTableHeaders[i];
+                for (let i = 0; i < esriMeasurementTableHeaders.length; i++) {
+                    const esriMeasurementTableHeader = esriMeasurementTableHeaders[i];
                     //alert(esriMeasurementTableHeader.innerHTML);
-                    var newHeader = document.createElement("th");
+                    const newHeader = document.createElement("th");
                     newHeader.innerHTML = esriMeasurementTableHeader.innerHTML;
-                    colspan = esriMeasurementTableHeader.getAttribute(
+                    const colspan = esriMeasurementTableHeader.getAttribute(
                         "colspan"
                     );
                     if (colspan) {
@@ -2376,21 +2367,21 @@ define([
                 var AccessAuditMarkers = esriMeasurementResultTable.querySelectorAll(
                     "img"
                 );
-                for (i = 0; i < AccessAuditMarkers.length; i++) {
+                for (let i = 0; i < AccessAuditMarkers.length; i++) {
                     AccessAuditMarkers[i].setAttribute("Alt", "");
                 }
 
-                areaIconNode = measureDiv.querySelector(".areaIcon");
+                const areaIconNode = measureDiv.querySelector(".areaIcon");
                 domClass.remove(areaIconNode, "areaIcon");
                 areaIconNode.innerHTML =
                     '<img src="images/area_measure.png" alt="Area Button"/>';
 
-                distanceIconNode = measureDiv.querySelector(".distanceIcon");
+                const distanceIconNode = measureDiv.querySelector(".distanceIcon");
                 domClass.remove(distanceIconNode, "distanceIcon");
                 distanceIconNode.innerHTML =
                     '<img src="images/dist_measure.png" alt="Distance Button"/>';
 
-                locationIconNode = measureDiv.querySelector(".locationIcon");
+                const locationIconNode = measureDiv.querySelector(".locationIcon");
                 domClass.remove(locationIconNode, "locationIcon");
                 locationIconNode.innerHTML =
                     '<img src="images/dist_point.png" alt="Location Button"/>';
@@ -2452,7 +2443,7 @@ define([
 
             ovMap.startup();
 
-            ovwHighlight = div.querySelector(".ovwHighlight");
+            const ovwHighlight = div.querySelector(".ovwHighlight");
             dojo.setAttr(ovwHighlight, "tabindex", 0);
             dojo.setAttr(ovwHighlight, "title", i18n.map.overviewTip);
 
@@ -3122,9 +3113,7 @@ define([
 
             //add configured search layers to the search widget
             var configuredSearchLayers =
-                this.config.searchLayers instanceof Array
-                    ? this.config.searchLayers
-                    : JSON.parse(this.config.searchLayers);
+                this.config.searchLayers instanceof Array ? this.config.searchLayers : JSON.parse(this.config.searchLayers);
             configuredSearchLayers.forEach(
                 lang.hitch(this, function(layer) {
                     var mapLayer = this.map.getLayer(layer.id);
@@ -3183,7 +3172,7 @@ define([
                                 array.some(
                                     layer.layerObject.layerInfos,
                                     function(info) {
-                                        if (info.id == searchLayer.subLayer) {
+                                        if (info.id === searchLayer.subLayer) {
                                             name +=
                                                 " - " +
                                                 layer.layerObject.layerInfos[
@@ -3413,7 +3402,7 @@ define([
                 for (var ii = 0; ii < styleCss.cssRules.length; ii++) {
                     var rule = styleCss.cssRules[ii];
                     if (
-                        typeof rule.selectorText != "undefined" &&
+                        typeof rule.selectorText !== "undefined" &&
                         rule.selectorText !== null
                     ) {
                         const rgbaColor = function(color) {
@@ -3793,7 +3782,7 @@ define([
 
                         on(this.map, "extent-change", function() {
                             var imgs = this.container.querySelectorAll("img");
-                            for (i = 0; i < imgs.length; i++)
+                            for (let i = 0; i < imgs.length; i++)
                                 domAttr.set(imgs[i], "alt", "");
                         });
 
@@ -3822,7 +3811,7 @@ define([
                 onButton,
                 "keyup",
                 lang.hitch(clickButton, function(event) {
-                    if (event.keyCode == "13") this.click();
+                    if (event.keyCode === "13") this.click();
                 })
             );
         }
