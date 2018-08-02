@@ -1809,7 +1809,7 @@ define([
                 detailDiv.style.maxHeight =
                     pageBody.clientHeight -
                     this.instructionsDiv.clientHeight -
-                    30 + "px";
+                    40 + "px";
             } catch (e) {
                 /* ignore instructionDiv not defined error: will come defined next time! */
             }

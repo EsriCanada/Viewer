@@ -1396,7 +1396,7 @@ html, body {
     overflow-y: auto;
     color: black;
     width: calc(100% - 20px);
-    padding: 10px 10px 0 10px;
+    padding: 10px;
 }
 
 .detailFull {
