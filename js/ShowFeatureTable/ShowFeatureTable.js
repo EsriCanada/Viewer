@@ -237,6 +237,65 @@ define([
         // SelectOnRegion:null,
         SelectOnView:null,
 
+        _getLayersMenu : function() {
+            if(this.layers && this.layers.length > 1) {
+                const menu = new DropDownMenu({ 
+                    style: "display: none;",
+                    onItemClick: lang.hitch(this, function(menuItem, ev) {
+                        if(domClass.contains(menuItem.domNode, 'layerMenuItem')) {
+                            this.emit("change", { layerId: menuItem["data-layerid"] });
+                        } else {
+                            this.emit("destroy", {});
+                        }
+                    })
+                });
+                const layers = this.layers.slice(0).reverse();
+                layers.forEach(lang.hitch(this, function(layer){
+                    if(layer && layer.layerObject) {
+                        const menuItemLayer = new MenuItem({
+                            class: 'layerMenuItem',
+                            label: layer.title,
+                            'data-layerid': layer.id,
+                        });
+                        if(!layer.layerObject.visible) {
+                            domClass.add(menuItemLayer.domNode, 'menuItemDisabled');
+                        }
+                        menu.addChild(menuItemLayer);
+
+                        on(layer.layerObject, "visibility-change", lang.hitch(this, function (evt) {
+                            var layerId = evt.target.id;
+                            if(layerId === this.layer.layerObject.id) {
+                                this.emit("destroy", {});
+                            }
+                            var menuItem = query('.dijitMenuItem[data-layerId='+layerId+']');
+
+                            if(menuItem && menuItem.length>0) {
+                                menuItem = menuItem[0];
+                                if(evt.visible) {
+                                    domClass.remove(menuItem, 'menuItemDisabled');
+                                } else {
+                                    domClass.add(menuItem, 'menuItemDisabled');
+                                }
+                            }
+                        }));
+                    }
+                }));
+
+                var menuItemSeparator = new MenuSeparator();
+                menu.addChild(menuItemSeparator);
+
+                var menuItemClose = new MenuItem({
+                    label: i18n.widgets.showFeatureTable.close,
+                });
+                menu.addChild(menuItemClose);
+
+                menu.startup();
+
+                return menu;
+            }
+            return null;
+        },
+
         loadTable: function(myFeatureLayer){
             const outFields = [];
             const fieldInfos = [];
@@ -373,111 +432,59 @@ define([
                 }, hidderToggle);
             }
 
-            var tableTitle = query('.esri-feature-table-title')[0];
+            const tableTitle = query('.esri-feature-table-title')[0];
 
-            if(this.layers && this.layers.length > 1)
-            {
-                const menu = new DropDownMenu({ 
-                    style: "display: none;",
-                    onItemClick: lang.hitch(this, function(menuItem, ev) {
-                        if(domClass.contains(menuItem.domNode, 'layerMenuItem')) {
-                            this.emit("change", { layerId: menuItem["data-layerid"] });
-                        } else {
-                            this.emit("destroy", {});
-                        }
-                    })
-                });
-                const layers = this.layers.slice(0).reverse();
-                layers.forEach(lang.hitch(this, function(layer){
-                    if(layer && layer.layerObject) {
-                        const menuItemLayer = new MenuItem({
-                            class: 'layerMenuItem',
-                            label: layer.title,
-                            'data-layerid': layer.id,
-                        });
-                        if(!layer.layerObject.visible) {
-                            domClass.add(menuItemLayer.domNode, 'menuItemDisabled');
-                        }
-                        menu.addChild(menuItemLayer);
+            const featureTableTools = domConstruct.create('div', {
+                // class:'esri-feature-table-menu-item',
+                id: 'featureTableTools',
+            }, tableTitle, 'before');
 
-                        on(layer.layerObject, "visibility-change", lang.hitch(this, function (evt) {
-                            var layerId = evt.target.id;
-                            if(layerId === this.layer.layerObject.id) {
-                                this.emit("destroy", {});
-                            }
-                            var menuItem = query('.dijitMenuItem[data-layerId='+layerId+']');
+            if(!dijit.byId('progButton')) {
 
-                            if(menuItem && menuItem.length>0) {
-                                menuItem = menuItem[0];
-                                if(evt.visible) {
-                                    domClass.remove(menuItem, 'menuItemDisabled');
-                                } else {
-                                    domClass.add(menuItem, 'menuItemDisabled');
+                const menu = this._getLayersMenu();
+                if(menu) {
+
+                    const title = domConstruct.create('div', {
+                        class: 'esri-feature-table-menu-item esri-feature-table-title',
+                    }, tableTitle, 'before');
+
+                    const button = new DropDownButton({
+                        label: '',
+                        name: "progButton",
+                        dropDown: menu,
+                        id: "progButton",
+                        role: 'application',
+                    }, title);
+
+                    button.startup();
+
+                    const observer = new MutationObserver(lang.hitch(this, function(mutations) {
+                        // console.log('mutations', mutations);
+                        mutations.forEach(lang.hitch(this, function(mutation) {
+                            // console.log('mutation', mutation, mutation.target);
+                            if((isIE11() && mutation.type === "characterData") || (isChrome() && mutation.type === 'childList')) {
+                                const data = isIE11() ? mutation.target.data : mutation.target.innerHTML;
+                                const pattern = /(.*)(\s\(.*\))/;
+                                const matches = data.match(pattern);
+                                domStyle.set(tableTitle, 'display', 'none');
+
+                                if(matches && matches.length === 3) {
+                                    const label = this.layer.title + matches[2];
+                                    button.containerNode.innerHTML = label;
+
+                                    this._addArrowCarrets();
                                 }
                             }
                         }));
-                    }
-                }));
-
-                var menuItemSeparator = new MenuSeparator();
-                menu.addChild(menuItemSeparator);
-
-
-                var menuItemClose = new MenuItem({
-                    label: i18n.widgets.showFeatureTable.close,
-                });
-                menu.addChild(menuItemClose);
-
-                menu.startup();
-
-                var button = new DropDownButton({
-                    label: 'label',
-                    name: "progButton",
-                    dropDown: menu,
-                    id: "progButton",
-                    role: 'application',
-                });
-
-                button.startup();
-
-                new MutationObserver(lang.hitch(this, function(mutations) {
-                    // console.log(mutations);
-                    mutations.forEach(lang.hitch(this, function(mutation) {
-                        // console.log(mutation);
-                        var target = mutation.target.childNodes[0];
-                        if(target.toString() === "[object Text]") {
-                            var pattern = /(.*)(\s\(.*\))/;
-                            var matches = target.nodeValue.match(pattern);
-                            // console.log(matches);
-                            if(matches && matches.length === 3) {
-                                var label = this.layer.title + matches[2];
-                                var title = domConstruct.create('div', {
-                                    //innerHTML: label,
-                                    class: 'esri-feature-table-menu-item esri-feature-table-title titleDivDiv',
-                                });
-
-                                title.appendChild(button.domNode);
-                                query('#progButton_label', title)[0].innerText = label;
-
-                                query(".titleDivDiv").forEach(domConstruct.destroy);
-                                domConstruct.place(title, tableTitle, 'before');
-                                domStyle.set(tableTitle, 'display', 'none');
-                                this._addArrowCarrets();
-                            }
-                        }
                     }));
-                })).observe(tableTitle, {
-                    attributes: false,
-                    childList: true,
-                    characterData: true
-                });
+                    observer.observe(tableTitle, {
+                        attributes: false,
+                        childList: true,
+                        characterData: true,
+                        subtree: true
+                    });
+                }
             }
-
-            var featureTableTools = domConstruct.create('div', {
-                // class:'esri-feature-table-menu-item',
-                id: 'featureTableTools',
-            });
-            domConstruct.place(featureTableTools, tableTitle, 'before');
 
             var optionsMenu = query('.esri-feature-table-menu-item.esri-feature-table-menu-options')[0];
 
