@@ -832,11 +832,12 @@ define([
         },
 
         showRegionButton: function() {
-            if(!this.layers) return;
-            if(!this.SelectOnRegion) return;
+            if(!this.layers || !this.filterTools.polygon || !this.SelectOnRegion) return;
             // if(this.SelectOnRegion.isChecked()) return;
             const regionLayersExist = this.layers.filter(function(l){
-                return l.visibility /* && l.layerObject.visibleAtMapScale*/ && l.layerObject.geometryType === "esriGeometryPolygon";
+                return l.visibility && 
+                    //l.layerObject.visibleAtMapScale &&
+                    (l.layerObject.geometryType === "esriGeometryPolygon");
             }).length > 0;
             if(!regionLayersExist) {
                 this.SelectOnRegion.Check(false);
