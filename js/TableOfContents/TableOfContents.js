@@ -500,7 +500,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         rectangle: true,
                         polygon: true,
                         view: true
-                    }
+                    }, 
+                    manager: this
                   }, dojo.byId('mapPlace'));
                 ft.startup();
                 on(ft, "destroy", lang.hitch(this, function(evy) {

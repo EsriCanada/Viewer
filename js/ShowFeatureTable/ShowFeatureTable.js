@@ -56,7 +56,8 @@ define([
                 rectangle: true,
                 polygon: false,
                 view: true
-            }
+            }, 
+            manager: null
         },
 
         _getShowAttr: function() {
@@ -195,6 +196,11 @@ define([
             on(this.map, 'extent-change', lang.hitch(this, function() {
                 this.showRegionButton();
             }));
+            if(this.manager) {
+                on(this.manager, 'toggle', lang.hitch(this, function() {
+                    this.showRegionButton();
+                }))
+            }
         },
 
         layout:function() {

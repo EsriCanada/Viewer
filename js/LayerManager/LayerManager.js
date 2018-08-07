@@ -910,7 +910,8 @@ define(["dojo/Evented", "dojo/_base/declare",
                         rectangle: true,
                         polygon: true,
                         view: true
-                    }
+                    }, 
+                    manager: this
                 }, this.defaults.mapNode);
                 ft.startup();
                 this.featureTable = ft;
