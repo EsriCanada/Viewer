@@ -192,9 +192,9 @@ define([
         postCreate: function() {
             this.inherited(arguments);
             this.set('show', false);
-            // on(this.map, 'extent-change', lang.hitch(this, function() {
-            //     this.showRegionButton();
-            // }));
+            on(this.map, 'extent-change', lang.hitch(this, function() {
+                this.showRegionButton();
+            }));
         },
 
         layout:function() {
@@ -234,7 +234,7 @@ define([
         draw:null,
 
         SelectOnRectangle:null,
-        // SelectOnRegion:null,
+        SelectOnRegion:null,
         SelectOnView:null,
 
         _getLayersMenu : function() {
@@ -631,7 +631,7 @@ define([
                 }));
             }
 
-            // this.showRegionButton();
+            this.showRegionButton();
 
             this.set('show', true);
             this.OnDisplay(true);
@@ -831,16 +831,18 @@ define([
             });
         },
 
-        // showRegionButton: function() {
-        //     if(!this.layers || !this.SelectOnRegion || this.SelectOnRegion.isChecked()) return;
-        //     var regionLayersExist = this.layers.filter(function(l){
-        //         return l.visibility && l.layerObject.visibleAtMapScale && l.layerObject.geometryType === "esriGeometryPolygon";
-        //     }).length > 0;
-        //     if(!regionLayersExist) {
-        //         this.SelectOnRegion.Check(false);
-        //     }
-        //     domStyle.set(this.SelectOnRegion.domNode, 'display', regionLayersExist?'inline-block':'none');
-        // },
+        showRegionButton: function() {
+            if(!this.layers) return;
+            if(!this.SelectOnRegion) return;
+            // if(this.SelectOnRegion.isChecked()) return;
+            const regionLayersExist = this.layers.filter(function(l){
+                return l.visibility /* && l.layerObject.visibleAtMapScale*/ && l.layerObject.geometryType === "esriGeometryPolygon";
+            }).length > 0;
+            if(!regionLayersExist) {
+                this.SelectOnRegion.Check(false);
+            }
+            domStyle.set(this.SelectOnRegion.domNode, 'display', regionLayersExist?'inline-block':'none');
+        },
 
         _setSelectSymbol : function(shape) {
             var symbol = new SimpleLineSymbol()
