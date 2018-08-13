@@ -39,27 +39,103 @@ self.addEventListener('install', function(event) {
 
   var urlsToPrefetch = [
     './index.html',
+    './js/LayerManager/Templates/LayerManager.html',
+    './js/NavToolBar/Templates/NavToolBar.html',
+    './js/PopupInfo/Templates/PopupInfo.html',
+    './js/FeatureList/Templates/FeatureList.html',
+    './js/ImageToggleButton/Templates/ImageToggleButton.html',
+    './js/FeatureList/Templates/FeatureListTemplate.html',
+    './js/GeoCoding/Templates/GeoCodingHeader.html',
+    './js/TableOfContents/Templates/TableOfContents.html',
+    './js/GeoCoding/Templates/GeoCoding.html',
+    './js/GeoCoding/Templates/GeoAddressTooltip.html',
+    './js/Filters/Templates/Filters.html',
+    './js/Filters/Templates/FilterTab.html',
+    './js/Filters/Templates/FilterItem.html',
+    './js/Filters/Templates/FilterString.html',
+    './js/Filters/Templates/FilterDate.html',
+    './js/Filters/Templates/FilterNumber.html',
+    './js/LanguageSelect/Templates/LanguageSelect.html',
+    './js/LanguageSelect/Templates/LanguageSelectDDB.html',
+    './js/ContactUs/Templates/ContactUs.html',
+    './js/PopupInfo/Templates/PopupInfoHeader.html',
+    './js/DirectionsWidget/Templates/DirectionsHeader.html',
+
+
     './js/main.js',
     './js/template.js',
     './js/ShareDialog.js',
     './js/utils.js',
     './js/toolbar.js',
     './js/has-config.js',
+    './js/LayerManager/LayerManager.js',
+    './js/SuperNavigator/SuperNavigator.js',
+    './js/NavToolBar/NavToolBar.js',
+    './js/PopupInfo/PopupInfo.js',
+    './js/GeoCoding/GeoCoding.js',
+    './js/GeoCoding/GeoAddressTooltip.js',
+    './js/ImageToggleButton/ImageToggleButton.js',
+    './js/FeatureList/FeatureList.js',
+    './js/Filters/Filters.js',
+    './js/Filters/FilterTab.js',
+    './js/Filters/FilterItem.js',
+    './js/Filters/FilterString.js',
+    './js/Filters/FilterDate.js',
+    './js/Filters/FilterNumber.js',
+    './js/TableOfContents/TableOfContents.js',
+    './js/DirectionsWidget/DirectionsWidget.js',
+    './js/DirectionsWidget/DirectionsHeader.js',
+    './js/LanguageSelect/LanguageSelect.js',
+    './js/LanguageSelect/LanguageSelectDDB.js',
+    './js/ContactUs/ContactUs.js',
+    './js/ShowFeatureTable/ShowFeatureTable.js',
+    './js/ShowBasemapGallery/ShowBasemapGallery.js',
+    './js/PopupInfo/PopupInfoHeader.js',
+    '.js/GeoCoding/GeoCodingHeader.js',
+
 
     './config/defaults.js/',
-    './config/templateConfig.js/',
+    './config/templateConfig.js',
 
 
     './css/styles.css',
     './css/styles1.css',
+    './css/filters.css',
+    './css/tabs.css',
+    './js/LanguageSelect/Templates/LanguageSelect.css',
+    './js/LayerManager/Templates/Slider.css',
+    './js/LayerManager/Templates/LayerManager.css',
+    './js/ImageToggleButton/Templates/ImageToggleButton.css',
+    './js/ShowBasemapGallery/Templates/ShowBasemapGallery.css',
+    './js/ShowFeatureTable/Templates/ShowFeatureTable.css',
+    './js/DirectionsWidget/Templates/DirectionWidget.css',
+    './js/PopupInfo/Templates/popupInfo.css',
+    './js/GeoCoding/Templates/geoCoding.css',
+    './js/FeatureList/Templates/FeatureList.css',
 
+    './images/reload1.gif',
     './images/reload3.gif',
+    './images/flag.ca.22.png',
+    './images/flag.qc.22.png',
+    './images/logo.png',
+    './images/downArrow.png',
+    './images/searchClear.png',
+    './images/searchZoom.png',
+    './images/Table.png',
+    './images/followTheMapMode.png',
+    './images/featureSelected.png',
+    './images/someFilters.png',
+    './images/area_measure.png',
+    './images/dist_measure.png',
+    './images/dist_point.png',
+
+    './images/icons_white/infoPanel.png',
 
   ];
 
   // All of these logging statements should be visible via the "Inspect" interface
   // for the relevant SW accessed via chrome://serviceworker-internals
-  console.log('Handling install event. Resources to prefetch:', urlsToPrefetch);
+  // console.log('Handling install event. Resources to prefetch:', urlsToPrefetch);
 
   event.waitUntil(
     caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
@@ -132,14 +208,14 @@ self.addEventListener('activate', function(event) {
 });
 
 self.addEventListener('fetch', function(event) {
-  console.log('Handling fetch event for', event.request.url);
+  // console.log('Handling fetch event for', event.request.url);
 
   event.respondWith(
     // caches.match() will look for a cache entry in all of the caches available to the service worker.
     // It's an alternative to first opening a specific named cache and then matching on that.
     caches.match(event.request).then(function(response) {
       if (response) {
-        console.log('Found response in cache:', response);
+        // console.log('Found response in cache:', response);
 
         return response;
       }
