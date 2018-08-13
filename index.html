@@ -6,11 +6,28 @@
 	<!-- Define the versions of IE that will be used to render the page. See Microsoft documentation for details. Optional. -->
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta charset="utf-8">
+
+	<script>
+		if('serviceWorker' in navigator) {
+	    	window.addEventListener('load', function() {
+	        	navigator.serviceWorker.register('./WCAG-BasicViewer.sw.js').then(function(registration) {
+		            	console.log('ServiceWorker registration successful with scope: ', registration.scope);
+			        }, function(err) {
+			            console.log('ServiceWorker registration failed: ', err);
+			        }
+			    );
+		    });
+		} else {
+			console.log('This browser does not support serviceWorkers');
+		}
+	</script>
+
 	<!-- Responsive -->
 	<meta name="keywords" content="accessibility">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="mobile-web-app-capable" content="no">
 	<meta name="apple-mobile-web-app-capable" content="no">
+    <link rel="manifest" href="./manifest.json">
 	<!-- <meta name="apple-mobile-web-app-status-bar-style" content="default"> -->
 	<!-- End Responsive -->
 	<!-- Use protocol relative urls that way if the browser is viewing the page via HTTPS the js/css file will be requested using the HTTPS protocol -->
