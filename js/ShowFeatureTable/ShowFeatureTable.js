@@ -838,6 +838,8 @@ define([
         },
 
         showRegionButton: function() {
+            if(!this.SelectOnRegion.domNode) return;
+            
             if(!this.layers || !this.filterTools.polygon || !this.SelectOnRegion) return;
             // if(this.SelectOnRegion.isChecked()) return;
             const regionLayersExist = this.layers.filter(function(l){
