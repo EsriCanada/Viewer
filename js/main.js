@@ -76,7 +76,7 @@ define([
     "application/ImageToggleButton/ImageToggleButton",
     "application/FeatureList/FeatureList",
     "application/Filters/Filters",
-    "application/DirectionsWidget/DirectionsWidget",
+    // "application/DirectionsWidget/DirectionsWidget",
 
     "application/LanguageSelect/LanguageSelect",
     "application/ContactUs/ContactUs",
@@ -140,7 +140,7 @@ define([
     ImageToggleButton,
     FeatureList,
     Filters,
-    DirectionsWidget,
+    // DirectionsWidget,
     LanguageSelect,
     ContactUs,
     ShareDialog,
@@ -1382,28 +1382,31 @@ define([
                 var directionsDiv = toolbar.createTool(tool);
 
                 this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
-                    this.directions = new DirectionsWidget({
-                        map: this.map,
-                        deferred: deferred,
-                        toolbar: toolbar,
-                        iconsColor: this.config.icons,
-                        directionsProxy: this.config.directionsProxy,
-                        options: {
-                            locator: this.config.directions_locator,
-                            stops: this.config.directions_stops,
-                            barriers: this.config.directions_barriers,
-                            optimize: this.config.directions_optimize,
-                            print: this.config.directions_print,
-                            enhancedSymbols: this.config.directions_symbols,
-                            allowDragging: this.config.directions_dragging,
-                            changeStopOrder: this.config.directions_stopOrder,
-                            segmentPopup: this.config.directions_popup,
-                            imagesURL: this.config.directions_imagesURL,
-                            printPage: this.config.directions_printPageURL
-                        },
-                        superNavigator: this.superNav,
-                    }, directionsDiv);
-                    this.directions.startup();
+                    
+                    require(["application/DirectionsWidget/DirectionsWidget"], lang.hitch(this, function(DirectionsWidget) {
+                        this.directions = new DirectionsWidget({
+                            map: this.map,
+                            deferred: deferred,
+                            toolbar: toolbar,
+                            iconsColor: this.config.icons,
+                            directionsProxy: this.config.directionsProxy,
+                            options: {
+                                locator: this.config.directions_locator,
+                                stops: this.config.directions_stops,
+                                barriers: this.config.directions_barriers,
+                                optimize: this.config.directions_optimize,
+                                print: this.config.directions_print,
+                                enhancedSymbols: this.config.directions_symbols,
+                                allowDragging: this.config.directions_dragging,
+                                changeStopOrder: this.config.directions_stopOrder,
+                                segmentPopup: this.config.directions_popup,
+                                imagesURL: this.config.directions_imagesURL,
+                                printPage: this.config.directions_printPageURL
+                            },
+                            superNavigator: this.superNav,
+                        }, directionsDiv);
+                        this.directions.startup();
+                    }));
                     deferred.resolve(true);
                 }));
 
