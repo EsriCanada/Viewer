@@ -69,19 +69,16 @@ define([
     "esri/layers/FeatureLayer",
     "esri/geometry/ScreenPoint",
 
-    // "application/LayerManager/LayerManager",
     "application/NavToolBar/NavToolBar",
-    "application/SuperNavigator/SuperNavigator",
+    // "application/SuperNavigator/SuperNavigator",
     "application/PopupInfo/PopupInfo",
     "application/GeoCoding/GeoCoding",
     "application/ImageToggleButton/ImageToggleButton",
     "application/FeatureList/FeatureList",
     "application/Filters/Filters",
-    // "application/TableOfContents/TableOfContents",
     "application/DirectionsWidget/DirectionsWidget",
 
     "application/LanguageSelect/LanguageSelect",
-    "application/LanguageSelect/LanguageSelectDDB",
     "application/ContactUs/ContactUs",
     "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol",
@@ -137,16 +134,14 @@ define([
     ScreenPoint,
     // LayerManager,
     NavToolBar,
-    SuperNavigator,
+    // SuperNavigator,
     PopupInfo,
     GeoCoding,
     ImageToggleButton,
     FeatureList,
     Filters,
-    // TableOfContents,
     DirectionsWidget,
     LanguageSelect,
-    LanguageSelectDDB,
     ContactUs,
     ShareDialog,
     SimpleMarkerSymbol,
@@ -1362,16 +1357,18 @@ define([
         _addMapKeyboardNavigation: function(toolbar, deferred) {
             // var deferred = new Deferred();
             if (has("mapKeyboardNavigation")) {
-                this.superNav = new SuperNavigator({
-                    map: this.map,
-                    toolBar: toolbar,
-                    cursorColor: "black",
-                    selectionColor: this.config.mapSelectionColor,
-                    cursorFocusColor: this.config.focusColor,
-                    operationalLayers: this.config.response.itemInfo.itemData
-                        .operationalLayers
-                });
-                this.superNav.startup();
+                require(["application/SuperNavigator/SuperNavigator"], lang.hitch(this, function(SuperNavigator) {
+                    this.superNav = new SuperNavigator({
+                        map: this.map,
+                        toolBar: toolbar,
+                        cursorColor: "black",
+                        selectionColor: this.config.mapSelectionColor,
+                        cursorFocusColor: this.config.focusColor,
+                        operationalLayers: this.config.response.itemInfo.itemData
+                            .operationalLayers
+                    });
+                    this.superNav.startup();
+                }));
                 deferred.resolve(true);
             } else {
                 deferred.resolve(false);

@@ -158,6 +158,8 @@ self.addEventListener('install', function(event) {
     './images/upDown.18.png',
     './images/genericThumbMap.png',
     './images/error.png',
+    './images/Flag/Azure.48.png',
+    
 
     './images/icons_white/infoPanel.png',
     './images/icons_white/directions.png',
