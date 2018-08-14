@@ -265,7 +265,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         clearFeatures : function(ev) {
             this.superNavigator.followTheMapMode(false);
             this.setTotal(0);
-            popupInfo.clear();
+            this.popupInfo.clear();
         },
 
         toMap : function(ev) {

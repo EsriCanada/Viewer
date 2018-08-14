@@ -383,6 +383,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 superNavigator : this.superNavigator,
                 emptyMessage: this.emptyMessage,
                 iconsColor: this.iconsColor,
+                popupInfo: this,
             }, domConstruct.create('Div', {}, this.headerNode));
             this.popupInfoHeader.startup();
 
