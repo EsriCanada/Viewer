@@ -2,7 +2,8 @@ define(["dojo/Evented", "dojo/_base/declare",
     "dojo/_base/lang", "dojo/dom",
     "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on", "dojo/Deferred",
-    "esri/dijit/Legend", "application/ShowFeatureTable/ShowFeatureTable",
+    "esri/dijit/Legend", 
+    // "application/ShowFeatureTable/ShowFeatureTable",
     "application/ShowBasemapGallery/ShowBasemapGallery",
     "application/ImageToggleButton/ImageToggleButton",
     "dojo/i18n!application/nls/LayerManager",
@@ -14,7 +15,9 @@ define(["dojo/Evented", "dojo/_base/declare",
     ], function (
         Evented, declare, lang, dom, has, esriNS,
         _WidgetBase, _TemplatedMixin, on, Deferred,
-        Legend, ShowFeatureTable, ShowBasemapGallery, ImageToggleButton,
+        Legend, 
+        // ShowFeatureTable, 
+        ShowBasemapGallery, ImageToggleButton,
         i18n, i18n_app, dijitTemplate,
         domClass, domAttr, domStyle, domConstruct, event,
         array,
@@ -902,32 +905,34 @@ define(["dojo/Evented", "dojo/_base/declare",
             this._createList();
 
             if(this.defaults.hasFeatureTable) {
-                const ft = new ShowFeatureTable({
-                    map: this.map,
-                    layers: this.layers,
-                    OnDisplay: this.defaults.OnDisplay,
-                    filterTools: {
-                        rectangle: true,
-                        polygon: true,
-                        view: true
-                    }, 
-                    manager: this
-                }, this.defaults.mapNode);
-                ft.startup();
-                this.featureTable = ft;
-                on(ft, "destroy", lang.hitch(this, function(evt) {
-                    const checkedBtns = dojo.query('.LayerManager .cbShowTable input:checked');
-                    array.forEach(checkedBtns, function(checkedBtn) {
-                        checkedBtn.click();
-                    });
-                }));
-                on(ft, "change", lang.hitch(this, function(evt) {
-                    this._forceClose();
-                    this._loadTableByLayerId(evt.layerId);
-                }));
+                require(["application/ShowFeatureTable/ShowFeatureTable"], lang.hitch(this, function(ShowFeatureTable) {
+                    const ft = new ShowFeatureTable({
+                        map: this.map,
+                        layers: this.layers,
+                        OnDisplay: this.defaults.OnDisplay,
+                        filterTools: {
+                            rectangle: true,
+                            polygon: true,
+                            view: true
+                        }, 
+                        manager: this
+                    }, this.defaults.mapNode);
+                    ft.startup();
+                    this.featureTable = ft;
+                    on(ft, "destroy", lang.hitch(this, function(evt) {
+                        const checkedBtns = dojo.query('.LayerManager .cbShowTable input:checked');
+                        array.forEach(checkedBtns, function(checkedBtn) {
+                            checkedBtn.click();
+                        });
+                    }));
+                    on(ft, "change", lang.hitch(this, function(evt) {
+                        this._forceClose();
+                        this._loadTableByLayerId(evt.layerId);
+                    }));
 
-                on(ft, "destroied", lang.hitch(this, function(evt) {
-                    this.showBadge(false);
+                    on(ft, "destroied", lang.hitch(this, function(evt) {
+                        this.showBadge(false);
+                    }));
                 }));
             }
 

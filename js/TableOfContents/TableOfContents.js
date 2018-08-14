@@ -10,7 +10,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, on,
-        ShowFeatureTable, ImageToggleButton,
+        ShowFeatureTable, 
+        ImageToggleButton,
         i18n, dijitTemplate,
         domClass, domAttr, domStyle, domConstruct, event,
         array,
@@ -492,28 +493,30 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this._createList();
 
             if(has('featureTable')) {
-                var ft = this.featureTable = new ShowFeatureTable({
-                    map: this.map,
-                    layers: this.layers,
-                    OnDisplay: this.defaults.OnDisplay,
-                    filterTools: {
-                        rectangle: true,
-                        polygon: true,
-                        view: true
-                    }, 
-                    manager: this
-                  }, dojo.byId('mapPlace'));
-                ft.startup();
-                on(ft, "destroy", lang.hitch(this, function(evy) {
-                    this._forceClose();
-                }));
-                on(ft, "change", lang.hitch(this, function(evt) {
-                    this._forceClose();
-                    this._loadTableByLayerId(evt.layerId);
-                }));
+                require(["application/ShowFeatureTable/ShowFeatureTable"], lang.hitch(this, function(ShowFeatureTable) {
+                    const ft = this.featureTable = new ShowFeatureTable({
+                        map: this.map,
+                        layers: this.layers,
+                        OnDisplay: this.defaults.OnDisplay,
+                        filterTools: {
+                            rectangle: true,
+                            polygon: true,
+                            view: true
+                        }, 
+                        manager: this
+                      }, dojo.byId('mapPlace'));
+                    ft.startup();
+                    on(ft, "destroy", lang.hitch(this, function(evy) {
+                        this._forceClose();
+                    }));
+                    on(ft, "change", lang.hitch(this, function(evt) {
+                        this._forceClose();
+                        this._loadTableByLayerId(evt.layerId);
+                    }));
 
-                on(ft, "destroied", lang.hitch(this, function(evt) {
-                    this.showBadge(false);
+                    on(ft, "destroied", lang.hitch(this, function(evt) {
+                        this.showBadge(false);
+                    }));
                 }));
             }
 

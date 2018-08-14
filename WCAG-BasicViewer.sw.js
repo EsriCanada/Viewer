@@ -138,6 +138,7 @@ self.addEventListener('install', function(event) {
         './js/PopupInfo/Templates/popupInfo.css',
         './js/GeoCoding/Templates/geoCoding.css',
         './js/FeatureList/Templates/FeatureList.css',
+        './js/TableOfContents/Templates/TableOfContents.css',
 
         './images/reload1.gif',
         './images/reload3.gif',
@@ -160,7 +161,6 @@ self.addEventListener('install', function(event) {
         './images/error.png',
         './images/Flag/Azure.48.png',
         './images/Flag/Pink.48.png',
-
 
         './images/icons_white/infoPanel.png',
         './images/icons_white/directions.png',
@@ -204,6 +204,9 @@ self.addEventListener('install', function(event) {
         './images/icons_white/ByRectangle.36.png',
         './images/icons_white/ByPolygon.36.png',
         './images/icons_white/ByView.36.png',
+        './images/icons_white/layers.png',
+        './images/icons_white/legend.png',
+        './images/icons_white/basemap.png',
 
         './images/icons_black/infoPanel.png',
         './images/icons_black/directions.png',
@@ -250,6 +253,9 @@ self.addEventListener('install', function(event) {
         './images/icons_black/ByPolygon.36.png',
         './images/icons_black/ByView.36.png',
         './images/icons_black/Columns.32.png',
+        './images/icons_black/layers.png',
+        './images/icons_black/legend.png',
+        './images/icons_black/basemap.png',
 
         './images/grayCircle.png',
         './images/grayCircleDrag.png',
