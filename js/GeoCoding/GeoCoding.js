@@ -18,7 +18,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     // "esri/dijit/Popup",
     "application/GeoCoding/GeoCodingHeader",
     "application/SuperNavigator/SuperNavigator",
-    "dojo/NodeList-dom", "dojo/NodeList-traverse"
+    // "dojo/NodeList-dom", "dojo/NodeList-traverse"
 
     ], function (
         Evented, declare, lang, has, esriNS,
@@ -40,10 +40,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         GeoCodingHeader, SuperNavigator
     ) {
 
-    ready(function(){
-        // Call the parser manually so it runs after our widget is defined, and page has finished loading
-        parser.parse();
-    });
+    // ready(function(){
+    //     // Call the parser manually so it runs after our widget is defined, and page has finished loading
+    //     parser.parse();
+    // });
 
     var Widget = declare("esri.dijit.GeoCoding", [_WidgetBase, _TemplatedMixin, Evented], {
         // defaults

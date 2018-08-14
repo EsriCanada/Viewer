@@ -6,9 +6,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/text!application/GeoCoding/Templates/GeoAddressTooltip.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct",
     "esri/geometry/Point",
-    "dojo/parser", "dojo/ready",
     "dojo/i18n!application/nls/PopupInfo",
-    "dojo/parser", "dojo/ready"
+    // "dojo/parser", "dojo/ready"
 ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin,
@@ -18,14 +17,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         GeoAddressTooltip,
         dom, domClass, domAttr, domStyle, domConstruct,
         Point,
-        parser, ready,
-        i18n
+        i18n,
+        // parser, ready,
     ) {
 
-    ready(function(){
-        // Call the parser manually so it runs after our widget is defined, and page has finished loading
-        parser.parse();
-    });
+    // ready(function(){
+    //     // Call the parser manually so it runs after our widget is defined, and page has finished loading
+    //     parser.parse();
+    // });
 
     var Widget = declare("esri.dijit.GeoAddressTooltip", [_WidgetBase, _TemplatedMixin, Evented], {
         // defaults
@@ -112,10 +111,17 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             // this.mapDiv = this.map.container;
 
-            lang.hitch(this, this.getMapBounds);
-            this.map.on('resize', lang.hitch(this, this.getMapBounds));
+            // this.getMapBounds();
+            // lang.hitch(this, this.getMapBounds);
+            // this.map.on('resize', lang.hitch(this, this.getMapBounds));
 		},
 
+        postCreate : function() {
+            this.getMapBounds();
+            lang.hitch(this, this.getMapBounds);
+            this.map.on('resize', lang.hitch(this, this.getMapBounds));
+        },
+        
 		getMapBounds: function(){
             this.mapH = this.map.container.clientHeight;
 			this.mapW = this.map.container.clientWidth;

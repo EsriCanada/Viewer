@@ -72,7 +72,7 @@ define([
     "application/NavToolBar/NavToolBar",
     // "application/SuperNavigator/SuperNavigator",
     "application/PopupInfo/PopupInfo",
-    "application/GeoCoding/GeoCoding",
+    // "application/GeoCoding/GeoCoding",
     "application/ImageToggleButton/ImageToggleButton",
     "application/FeatureList/FeatureList",
     "application/Filters/Filters",
@@ -136,7 +136,7 @@ define([
     NavToolBar,
     // SuperNavigator,
     PopupInfo,
-    GeoCoding,
+    // GeoCoding,
     ImageToggleButton,
     FeatureList,
     Filters,
@@ -1368,8 +1368,8 @@ define([
                             .operationalLayers
                     });
                     this.superNav.startup();
+                    deferred.resolve(true);
                 }));
-                deferred.resolve(true);
             } else {
                 deferred.resolve(false);
             }
@@ -1382,7 +1382,6 @@ define([
                 var directionsDiv = toolbar.createTool(tool);
 
                 this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
-                    
                     require(["application/DirectionsWidget/DirectionsWidget"], lang.hitch(this, function(DirectionsWidget) {
                         this.directions = new DirectionsWidget({
                             map: this.map,
@@ -2229,21 +2228,23 @@ define([
                     "followTheMapMode"
                 );
 
-                const popupInfo = new PopupInfo(
-                    {
-                        map: this.map,
-                        toolbar: toolbar,
-                        superNavigator: this.superNav,
-                        search: this.search,
-                        maxSearchResults: this.config.maxSearchResults,
-                        showSearchScore: this.config.showSearchScore,
-                        searchMarker: this.config.searchMarker,
-                        geolocatorLabelColor: this.config.geolocatorLabelColor,
-                        iconsColor: this.config.icons,
-                    },
-                    infoPanelDiv
-                );
-                popupInfo.startup();
+                this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
+                    const popupInfo = new PopupInfo(
+                        {
+                            map: this.map,
+                            toolbar: toolbar,
+                            superNavigator: this.superNav,
+                            search: this.search,
+                            maxSearchResults: this.config.maxSearchResults,
+                            showSearchScore: this.config.showSearchScore,
+                            searchMarker: this.config.searchMarker,
+                            geolocatorLabelColor: this.config.geolocatorLabelColor,
+                            iconsColor: this.config.icons,
+                        },
+                        infoPanelDiv
+                    );
+                    popupInfo.startup();
+                }));
 
                 deferred.resolve(true);
             } else {
@@ -2257,23 +2258,27 @@ define([
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
             const deferred = new Deferred();
             if (has("geoCoding")) {
-                const geoCodingDiv = toolbar.createTool(tool, "");
 
-                const geoCoding = new GeoCoding(
-                    {
-                        map: this.map,
-                        toolbar: toolbar,
-                        superNavigator: this.superNav,
-                        themeColor: this.config.theme,
-                        iconColor: this.config.icons,
-                        search: this.search,
-                        maxSearchResults: this.config.maxSearchResults,
-                        searchMarker: this.config.geoCodingMarker,
-                        geolocatorLabelColor: this.config.geolocatorLabelColor
-                    },
-                    geoCodingDiv
-                );
-                geoCoding.startup();
+                this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
+                    require(["application/GeoCoding/GeoCoding"], lang.hitch(this, function(GeoCoding) {
+                        const geoCodingDiv = toolbar.createTool(tool, "");
+                        const geoCoding = new GeoCoding(
+                            {
+                                map: this.map,
+                                toolbar: toolbar,
+                                superNavigator: this.superNav,
+                                themeColor: this.config.theme,
+                                iconColor: this.config.icons,
+                                search: this.search,
+                                maxSearchResults: this.config.maxSearchResults,
+                                searchMarker: this.config.geoCodingMarker,
+                                geolocatorLabelColor: this.config.geolocatorLabelColor
+                            },
+                            geoCodingDiv
+                        );
+                        geoCoding.startup();
+                    }));
+                }));
 
                 deferred.resolve(true);
             } else {
