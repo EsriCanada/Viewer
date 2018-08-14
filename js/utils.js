@@ -74,6 +74,12 @@ if (!('format' in String.prototype)) {
     };
 }
 
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(search, pos) {
+        return this.substr(!pos || pos < 0 ? 0 : +pos, search.length) === search;
+    };
+}
+
 // Add ECMA262-5 string trim if not supported natively
 //
 if (!('trim' in String.prototype)) {
