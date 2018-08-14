@@ -69,7 +69,7 @@ define([
     "esri/layers/FeatureLayer",
     "esri/geometry/ScreenPoint",
 
-    "application/LayerManager/LayerManager",
+    // "application/LayerManager/LayerManager",
     "application/NavToolBar/NavToolBar",
     "application/SuperNavigator/SuperNavigator",
     "application/PopupInfo/PopupInfo",
@@ -135,7 +135,7 @@ define([
     Extent,
     FeatureLayer,
     ScreenPoint,
-    LayerManager,
+    // LayerManager,
     NavToolBar,
     SuperNavigator,
     PopupInfo,
@@ -1972,7 +1972,7 @@ define([
                     // var layersDivDesc = domConstruct.create("div", {class:'margin'}, layersDiv);
 
                     require(["application/TableOfContents/TableOfContents"], lang.hitch(this, function(TableOfContents) {
-                        var toc = new TableOfContents(
+                        const toc = new TableOfContents(
                             {
                                 map: this.map,
                                 layers: layers,
@@ -2011,21 +2011,23 @@ define([
                         "Table"
                     );
 
-                    var toc = new LayerManager(
-                        {
-                            map: this.map,
-                            layers: layers,
-                            dataItems: this.config.response.itemInfo.itemData,
-                            hasLegend: has("legend"),
-                            hasFeatureTable: has("featureTable"),
-                            hasBasemapGallery: has("basemap"),
-                            mapNode: dojo.byId("mapPlace"),
-                            toolbar: toolbar,
-                            OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
-                        },
-                        domConstruct.create("div", {}, layersDivDesc)
-                    );
-                    toc.startup();
+                    require(["application/LayerManager/LayerManager"], lang.hitch(this, function(LayerManager) {
+                        const toc = new LayerManager(
+                            {
+                                map: this.map,
+                                layers: layers,
+                                dataItems: this.config.response.itemInfo.itemData,
+                                hasLegend: has("legend"),
+                                hasFeatureTable: has("featureTable"),
+                                hasBasemapGallery: has("basemap"),
+                                mapNode: dojo.byId("mapPlace"),
+                                toolbar: toolbar,
+                                OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
+                            },
+                            domConstruct.create("div", {}, layersDivDesc)
+                        );
+                        toc.startup();
+                    }));
 
                     deferred.resolve(true);
                 } else {
