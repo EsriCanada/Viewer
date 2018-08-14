@@ -159,7 +159,8 @@ self.addEventListener('install', function(event) {
     './images/genericThumbMap.png',
     './images/error.png',
     './images/Flag/Azure.48.png',
-    
+    './images/Flag/Pink.48.png',
+
 
     './images/icons_white/infoPanel.png',
     './images/icons_white/directions.png',
@@ -249,6 +250,15 @@ self.addEventListener('install', function(event) {
     './images/icons_black/ByPolygon.36.png',
     './images/icons_black/ByView.36.png',
     './images/icons_black/Columns.32.png',
+
+    './images/grayCircle.png',
+    './images/grayCircleDrag.png',
+    './images/greenPoint.png',
+    './images/greenPointDrag.png',
+    './images/bluePoint.png',
+    './images/bluePointDrag.png',
+    './images/redPoint.png',
+    './images/redPointDrag.png',
 
     './images//share-link.png',
     './images//share-facebook.png',
