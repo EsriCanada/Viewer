@@ -125,18 +125,19 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     if(e.results) {
                         for(var i = 0; i< this.search.sources.length; i++) {
                             if(e.results.hasOwnProperty(i)) {
-                                var dataFeatures = e.results[i].map(function(r){ return r.feature;});
-                                var infoTemplate = null;
-                                var layer = null;
-                                var isFeatureLayer = this.search.sources[i].hasOwnProperty('featureLayer');
+                                const dataFeatures = e.results[i].map(function(r){ return r.feature;});
+                                let infoTemplate = null;
+                                let layer = null;
+                                const isFeatureLayer = this.search.sources[i].hasOwnProperty('featureLayer');
                                 if(isFeatureLayer) {
                                     infoTemplate = this.search.sources[i].featureLayer.infoTemplate;
                                     layer = this.search.sources[i].featureLayer;
                                 }
-                                for(var j = 0; j< dataFeatures.length; j++) {
+                                for(let j = 0; j< dataFeatures.length; j++) {
                                     if(isFeatureLayer) {
                                         dataFeatures[j].infoTemplate = infoTemplate;
                                         dataFeatures[j]._layer = layer;
+                                        // console.log('infoTemplate', infoTemplate);
                                     } else {
                                         // this.Score=e.results[i][j].feature.attributes.Score;
                                         dataFeatures[j].infoTemplate = new InfoTemplate(
@@ -144,6 +145,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                             this.makeSearchResultTemplate(e.results[i][j].feature.attributes)
                                             // +this.makeSerchResultFooter(this.showSearchScore, dataFeatures.length > 1)
                                         );
+                                        // console.log('infoTemplate', j, dataFeatures[j].infoTemplate);
                                     }
                                 }
                                 features = features.concat(dataFeatures);
@@ -394,21 +396,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 this.toolbar.OpenTool('infoPanel');
                 if (feature) {
                     this.contentPanel.set("content", feature.getContent()).then(lang.hitch(this, function() {
-                        var mainSection = query('.esriViewPopup .mainSection', dojo.byId('popupInfoContent'));
+                        const mainSection = query('.esriViewPopup .mainSection', dojo.byId('popupInfoContent'));
                         if(mainSection && mainSection.length > 0) {
                             // var header = query('.header', mainSection[0]);
                             // if(header && header.length > 0) {
                             //     domAttr.set(header[0], 'tabindex', 0);
                             // }
 
-                            var attrTables = query('.attrTable', mainSection[0]);
+                            const attrTables = query('.attrTable', mainSection[0]);
                             if(attrTables && attrTables.length > 0) {
                                 // domAttr.set(attrTables[0], 'role', 'presentation');
-                                for(var i = 0; i<attrTables.length; i++) {
-                                    var attrTable = attrTables[i];
-                                    var attrNames = query('td.attrName', attrTable);
+                                for(let i = 0; i<attrTables.length; i++) {
+                                    const attrTable = attrTables[i];
+                                    const attrNames = query('td.attrName', attrTable);
                                     if(attrNames && attrNames.length > 0) {
-                                        for(var j = 0; j<attrNames.length; j++) {
+                                        for(let j = 0; j<attrNames.length; j++) {
                                             attrNames[j].outerHTML = attrNames[j].outerHTML.replace(/^<td/, '<th').replace(/td>$/, 'th>');
                                         }
                                     }
@@ -426,17 +428,20 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                             // }
 
-                            var editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
+                            const editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
                             if(editSummarySection) {
-                                var editSummary =  query('.editSummary', editSummarySection[0]);
+                                const editSummary =  query('.editSummary', editSummarySection[0]);
                                 if(editSummary) {
                                     editSummary.forEach(function(edit) { domAttr.set(edit, 'tabindex', 0);});
                                 }
                             }
-                            var images = query('.esriViewPopup img', dojo.byId('popupInfoContent'));
+                            const images = query('.esriViewPopup img', dojo.byId('popupInfoContent'));
                             if(images) {
                                 images.forEach(function(img) {
-                                    var alt = domAttr.get(img, 'alt');
+                                    if(img.src.startsWith('http:')) {
+                                        img.src = img.src.replace('http:', 'https:');
+                                    }
+                                    const alt = domAttr.get(img, 'alt');
                                     if(!alt) {
                                         domAttr.set(img,'alt','');
                                     } else {
