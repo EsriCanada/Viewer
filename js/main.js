@@ -77,7 +77,7 @@ define([
     "application/ImageToggleButton/ImageToggleButton",
     "application/FeatureList/FeatureList",
     "application/Filters/Filters",
-    "application/TableOfContents/TableOfContents",
+    // "application/TableOfContents/TableOfContents",
     "application/DirectionsWidget/DirectionsWidget",
 
     "application/LanguageSelect/LanguageSelect",
@@ -143,7 +143,7 @@ define([
     ImageToggleButton,
     FeatureList,
     Filters,
-    TableOfContents,
+    // TableOfContents,
     DirectionsWidget,
     LanguageSelect,
     LanguageSelectDDB,
@@ -1971,16 +1971,18 @@ define([
                     );
                     // var layersDivDesc = domConstruct.create("div", {class:'margin'}, layersDiv);
 
-                    var toc = new TableOfContents(
-                        {
-                            map: this.map,
-                            layers: layers,
-                            OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
-                        },
-                        domConstruct.create("div", {}, layersDivDesc)
-                    );
-                    toc.startup();
-                    domAttr.set(toc.domNode, 'tabindex', '0');
+                    require(["application/TableOfContents/TableOfContents"], lang.hitch(this, function(TableOfContents) {
+                        var toc = new TableOfContents(
+                            {
+                                map: this.map,
+                                layers: layers,
+                                OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
+                            },
+                            domConstruct.create("div", {}, layersDivDesc)
+                        );
+                        toc.startup();
+                        domAttr.set(toc.domNode, 'tabindex', '0');
+                    }));
 
                     deferred.resolve(true);
                 } else {
