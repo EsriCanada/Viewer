@@ -60,7 +60,9 @@ self.addEventListener('install', function(event) {
     './js/ContactUs/Templates/ContactUs.html',
     './js/PopupInfo/Templates/PopupInfoHeader.html',
     './js/DirectionsWidget/Templates/DirectionsHeader.html',
-
+    './js/dijit/templates/ShareDialog.html',
+    './js/dijit/templates/instructions.html',
+    './js/dijit/templates/instructions.french.html',
 
     './js/main.js',
     './js/template.js',
@@ -91,12 +93,23 @@ self.addEventListener('install', function(event) {
     './js/ShowFeatureTable/ShowFeatureTable.js',
     './js/ShowBasemapGallery/ShowBasemapGallery.js',
     './js/PopupInfo/PopupInfoHeader.js',
-    '.js/GeoCoding/GeoCodingHeader.js',
+    './js/GeoCoding/GeoCodingHeader.js',
 
-
-    './config/defaults.js/',
+    './config/defaults.js',
     './config/templateConfig.js',
 
+    './js/nls/resources.js',
+    './js/nls/BaseMapLabels.js',
+    './js/nls/LayerManager.js',
+    './js/nls/NavToolBar.js',
+    './js/nls/PopupInfo.js',
+    './js/nls/FeatureList.js',
+    './js/nls/ShareDialog.js',
+    './js/nls/TableOfContents.js',
+    './js/nls/DirectionsWidget.js',
+    './js/nls/ShowFeatureTable.js',
+    './js/nls/FilterDialog.js',
+    './js/nls/LanguageSelect.js',
 
     './css/styles.css',
     './css/styles1.css',
@@ -128,8 +141,55 @@ self.addEventListener('install', function(event) {
     './images/area_measure.png',
     './images/dist_measure.png',
     './images/dist_point.png',
+    './images/upDown.18.png',
 
     './images/icons_white/infoPanel.png',
+    './images/icons_white/directions.png',
+    './images/icons_white/overview.png',
+    './images/icons_white/details.png',
+    './images/icons_white/left.png',
+    './images/icons_white/plus.png',
+    './images/icons_white/minus.png',
+    './images/icons_white/home.png',
+    './images/icons_white/down.png',
+    './images/icons_white/up.png',
+    './images/icons_black/right.png',
+    './images/icons_white/prev.png',
+    './images/icons_white/locate.png',
+    './images/icons_white/next.png',
+    './images/icons_white/ZoomPlus.png',
+    './images/icons_white/ZoomMinus.png',
+    './images/icons_white/layerManager.png',
+    './images/icons_white/Reverse.png',
+    './images/icons_white/Barriere.png',
+    './images/icons_white/AddStop.png',
+    './images/icons_white/optimize1.png',
+    './images/icons_white/print.png',
+    './images/icons_white/searchClear.png',
+    './images/icons_white/downArrow.png',
+    './images/icons_white/ToMap.png',
+    './images/icons_white/geoCoding.png',
+    './images/icons_white/geoCoding.png',
+    './images/icons_white/TooltipBtn1.png',
+    './images/icons_white/filter.png',
+    './images/icons_white/measure.png',
+    './images/icons_white/features.png',
+    './images/icons_white/share.png',
+    './images/icons_white/bookmarks.png',
+
+    './images/icons_black/Table.png',
+    './images/icons_black/TableClose.Red.png',
+    './images/icons_black/up.png',
+    './images/icons_black/down.png',
+    './images/icons_black/searchClear.png',
+    './images/icons_black/carret-down.32.png',
+    './images/icons_black/downArrow.png',
+
+    './images//share-link.png',
+    './images//share-facebook.png',
+    './images//share-twitter.png',
+    './images//share-gplus.png',
+    './images//share-email.png',
 
   ];
 
@@ -220,12 +280,14 @@ self.addEventListener('fetch', function(event) {
         return response;
       }
 
-      console.log('No response found in cache. About to fetch from network...');
+      // console.log('No response found in cache. About to fetch from network...');
 
       // event.request will always have the proper mode set ('cors, 'no-cors', etc.) so we don't
       // have to hardcode 'no-cors' like we do when fetch()ing in the install handler.
       return fetch(event.request).then(function(response) {
-        console.log('Response from network is:', response);
+        if(response.type!=='opaque' && response.type!=='cors') {
+            console.log('Response from network is:', response.type, response);
+        }
 
         return response;
       }).catch(function(error) {
