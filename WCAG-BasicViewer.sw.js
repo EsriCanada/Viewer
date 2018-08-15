@@ -369,10 +369,7 @@ self.addEventListener('fetch', function(event) {
             // event.request will always have the proper mode set ('cors, 'no-cors', etc.) so we don't
             // have to hardcode 'no-cors' like we do when fetch()ing in the install handler.
             const newRequest = new Request(event.request.url.startsWith('http:') ? event.request.url.replace(/http:/, 'https:') : event.request);
-            // if(event.request.url.startsWith('http:')) {
-            //     newRequest.url = event.request.url.replace(/http:/, 'https:');
-                console.log('newRequest', newRequest.url)
-            // }
+            //    console.log('newRequest', newRequest.url)
             return fetch(newRequest).then(function(response) {
                 if (response.type !== 'opaque' && response.type !== 'cors') {
                     console.log('Response from network is:', response.type, response);
