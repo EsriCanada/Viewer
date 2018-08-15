@@ -54,10 +54,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this._restore = this.defaults._restore; // ?
         },
 
-        featureExpand: function(event) { //checkBox, restore) {
-            console.log('featureExpand', event);
-            
-            if(this.featureList._prevSelected && !this._restore) {
+        featureExpand: function(event) {
+            this._featureExpand(event.target);
+        },
+
+        _featureExpand: function(checkBox, restore) {
+            if(this.featureList._prevSelected && !restore) {
                 dojo.query('.featureItem_'+this.featureList._prevSelected).forEach(function(e) {
                     // dojo.removeClass(e, 'showAttr');
                     dojo.addClass(e, 'hideAttr');
@@ -70,7 +72,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 });
             }
 
-            const checkBox = event.target;
             const values = checkBox.value.split(',');
             const r = this.featureList.tasks[values[0]];
             const objectIdFieldName = r.layer.objectIdField;
