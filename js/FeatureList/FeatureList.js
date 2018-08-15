@@ -185,7 +185,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                     preselected = resultFeature;
                                 }
 
-                                 const li = domConstruct.create("li", {}, list);
+                                const li = domConstruct.create("li", {}, list);
                                 const featureListItem = this._getFeatureListItem(i, resultFeature, result.objectIdFieldName, layer, li, listTemplate);
                                //  if(featureListItem)
                                //  {
@@ -288,7 +288,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         _getFeatureListItem: function(result, resultFeature, objectIdFieldName, layer, li, listTemplate) {
-            return new FeatureListItem({result:result, feature:resultFeature, objectIdFieldName:objectIdFieldName, layer:layer}, li);
+            return new FeatureListItem({
+                result:result, 
+                feature:resultFeature, 
+                objectIdFieldName:objectIdFieldName, 
+                layer:layer,
+                featureList:this,
+                _restore:false,
+            }, li);
 
             try {
                 const attributes = {
@@ -337,7 +344,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     
         _prevSelected: null,
         featureExpandAndZoom: function(event) {//, checkbox) {
-            console.log('featureExpandAndZoom', event);
+            // console.log('featureExpandAndZoom', event);
             if(event.charCode === 43 || event.charCode === 45 || event.charCode === 46) { // +,- or .
                 checkbox.checked = !checkbox.checked;
                 this.featureExpand(checkbox, false);
@@ -349,7 +356,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         featureExpand: function(event) { //checkBox, restore) {
-            console.log('featureExpand', event);
+            // console.log('featureExpand', event);
             return;
             if(_prevSelected && !restore) {
                 dojo.query('.featureItem_'+_prevSelected).forEach(function(e) {
