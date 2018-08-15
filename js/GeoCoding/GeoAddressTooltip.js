@@ -6,8 +6,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/text!application/GeoCoding/Templates/GeoAddressTooltip.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct",
     "esri/geometry/Point",
-    "dojo/i18n!application/nls/PopupInfo",
-    // "dojo/parser", "dojo/ready"
+    "dojo/i18n!application/nls/PopupInfo"
 ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin,
@@ -17,14 +16,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         GeoAddressTooltip,
         dom, domClass, domAttr, domStyle, domConstruct,
         Point,
-        i18n,
-        // parser, ready,
+        i18n
     ) {
-
-    // ready(function(){
-    //     // Call the parser manually so it runs after our widget is defined, and page has finished loading
-    //     parser.parse();
-    // });
 
     var Widget = declare("esri.dijit.GeoAddressTooltip", [_WidgetBase, _TemplatedMixin, Evented], {
         // defaults

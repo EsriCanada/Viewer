@@ -438,12 +438,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             const images = query('.esriViewPopup img', dojo.byId('popupInfoContent'));
                             if(images) {
                                 images.forEach(function(img) {
-                                    // if(img.src.startsWith('http:')) {
-                                    //     img.src = img.src.replace('http:', 'https:');
-                                    // }
+                                    if(img.src.startsWith('http:') && location.protocol==='https:') {
+                                        img.src = img.src.replace('http:', 'https:');
+                                    }
                                     const alt = domAttr.get(img, 'alt');
                                     if(!alt) {
-                                        domAttr.set(img,'alt','');
+                                        domAttr.set(img,'alt','Attached image');
                                     } else {
                                         domAttr.set(img,'tabindex',0);
                                         if(!domAttr.get(img, 'title'))

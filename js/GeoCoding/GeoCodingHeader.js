@@ -144,7 +144,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     addressTooltipButton: this.addressTooltipButton,
                     iconColor: this.iconColor,
                     themeColor: this.themeColor,
-                    locator: this.locator,
+                    locator: this.locator
                 }, domConstruct.create('Div', {}, this.headerNode));
                 this.geoAddressTooltip.startup();
 
