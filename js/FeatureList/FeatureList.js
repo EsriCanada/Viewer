@@ -7,6 +7,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/text!application/FeatureList/Templates/FeatureListTemplate.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
     "dojo/string",
+    "application/FeatureList/FeatureListItem",
     "dojo/i18n!application/nls/FeatureList",
     "dojo/i18n!application/nls/resources",
     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/PictureMarkerSymbol",
@@ -24,6 +25,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         FeatureList, listTemplate, 
         dom, domClass, domAttr, domStyle, domConstruct, event,
         string,
+        FeatureListItem,
         i18n, Ri18n,
         SimpleMarkerSymbol, PictureMarkerSymbol,
         CartographicLineSymbol,
@@ -147,7 +149,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             lang.hitch(this, this.showBadge(false));
 
-            var list = dom.byId('featuresList');
+            const list = dom.byId('featuresList');
             this._clearMarker();
             this.tasks.filter(function(t) {
                 return t.layer.visible && t.layer.visibleAtMapScale;// && t.layer.infoTemplate;
@@ -173,24 +175,25 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 {
                     const layer = this.tasks[i].layer;
                     if(layer.visible && layer.visibleAtMapScale && layer.infoTemplate) {
-                        const r = results[i];
+                        const result = results[i];
 
-                        if(r) {
-                            count += r.features.length;
-                            for(let j = 0; j<r.features.length; j++) {
-                                const f = r.features[j];
-                                if(this._prevSelected && this._prevSelected.split('_')[1] == f.attributes[r.objectIdFieldName]) {
-                                    preselected = f;
+                        if(result) {
+                            count += result.features.length;
+                            for(let j = 0; j<result.features.length; j++) {
+                                const resultFeature = result.features[j];
+                                if(this._prevSelected && this._prevSelected.split('_')[1] == resultFeature.attributes[result.objectIdFieldName]) {
+                                    preselected = resultFeature;
                                 }
 
-                                const featureListItem = this._getFeatureListItem(i, f, r.objectIdFieldName, layer, listTemplate);
-                                if(featureListItem)
-                                {
-                                    const li = domConstruct.create("li", {
-                                        // tabindex : 0,
-                                        innerHTML : featureListItem
-                                    }, list);
-                               }
+                                 const li = domConstruct.create("li", {}, list);
+                                const featureListItem = this._getFeatureListItem(i, resultFeature, result.objectIdFieldName, layer, li, listTemplate);
+                               //  if(featureListItem)
+                               //  {
+                               //      const li = domConstruct.create("li", {
+                               //          // tabindex : 0,
+                               //          innerHTML : featureListItem
+                               //      }, list);
+                               // }
                             }
                         }
                     }
@@ -253,16 +256,16 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }
 
             this.featurePanZoom = function(el, panOnly) {
-                var r = this.tasks[el.dataset.layerid];
+                var result = this.tasks[el.dataset.layerid];
                 var fid = el.dataset.featureid;
-                var layer = r.layer;
-                var objectIdFieldName = r.layer.objectIdField;
+                var layer = result.layer;
+                var objectIdFieldName = result.layer.objectIdField;
 
                 q = new Query();
                 q.where = objectIdFieldName+"="+fid;
                 q.outFields = [objectIdFieldName];
                 q.returnGeometry = true;
-                r.task.execute(q).then(function(ev) {
+                result.task.execute(q).then(function(ev) {
                     var geometry = ev.features[0].geometry;
                     if(panOnly) {
                         if (geometry.type !== "point") {
@@ -284,12 +287,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         },
 
-        _getFeatureListItem: function(r, f, objectIdFieldName, layer, listTemplate) {
+        _getFeatureListItem: function(result, resultFeature, objectIdFieldName, layer, li, listTemplate) {
+            return new FeatureListItem({result:result, feature:resultFeature, objectIdFieldName:objectIdFieldName, layer:layer}, li);
+
             try {
                 const attributes = {
-                    _featureId: f.attributes[objectIdFieldName],
-                    _layerId: r,
-                    _title: layer.infoTemplate.title(f),
+                    _featureId: resultFeature.attributes[objectIdFieldName],
+                    _layerId: result,
+                    _title: layer.infoTemplate.title(resultFeature),
                     _panTo: i18n.widgets.featureList.panTo,
                     _zoomTo: i18n.widgets.featureList.zoomTo,
                     // featureExpand: 'this.featureExpand',
@@ -325,11 +330,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 return _substitute(listTemplate, attributes);
             } catch (e) {
-                console.log("Error on feature ("+featureId+")\n\t "+layer.infoTemplate.title(f)+"\n\t",e);
+                console.log("Error on feature ("+featureId+")\n\t "+layer.infoTemplate.title(resultFeature)+"\n\t",e);
                 return null;
             }
         },
     
+        _prevSelected: null,
         featureExpandAndZoom: function(event) {//, checkbox) {
             console.log('featureExpandAndZoom', event);
             if(event.charCode === 43 || event.charCode === 45 || event.charCode === 46) { // +,- or .
@@ -342,8 +348,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }
         },
 
-        _prevSelected: null,
-        featureExpand: lang.hitch(this, function(event) { //checkBox, restore) {
+        featureExpand: function(event) { //checkBox, restore) {
             console.log('featureExpand', event);
             return;
             if(_prevSelected && !restore) {
@@ -359,10 +364,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 });
             }
             var values = checkBox.value.split(',');
-            var r = this.tasks[values[0]];
-            var objectIdFieldName = r.layer.objectIdField;
+            var result = this.tasks[values[0]];
+            var objectIdFieldName = result.layer.objectIdField;
             var fid = values[1];
-            var layer = r.layer;
+            var layer = result.layer;
 
             layer._map.graphics.graphics.forEach(lang.hitch(layer._map.graphics, function(gr) {
                 if(gr.name && gr.name === 'featureMarker') {
@@ -387,7 +392,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 q.where = objectIdFieldName+"="+fid;
                 q.outFields = layer.fields.map(function(fld) {return fld.name;});//objectIdFieldName];
                 q.returnGeometry = true;
-                r.task.execute(q).then(function(ev) {
+                result.task.execute(q).then(function(ev) {
                     var feature = ev.features[0];
                     if(!featureContentPane.attributes.hasOwnProperty('widgetid')) {
                         var contentPane = new ContentPane({ }, featureContentPane);
@@ -482,7 +487,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 });
                 this._prevSelected = null;
             }
-        }),
+        },
 
 
     });

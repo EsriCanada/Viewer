@@ -3,8 +3,8 @@
 		<tr>
 			<th valign="top" rowspan="3">
 				<input id="featureButton_${_layerId}_${_featureId}" class="checkbox" type="checkbox" name="featureItem" value="${_layerId},${_featureId}" 
-				onchange="featureExpand(event)" 
-				onkeypress="featureExpandAndZoom(event)"/>
+				data-dojo-attach-event="onchange: featureExpand" 
+				data-dojo-attach-event="onkeypress: featureExpandAndZoom"/>
 			</th>
 			<th valign="top" align="left" width=100%>
 				<label for="featureButton_${_layerId}_${_featureId}" class="checkbox">${_title}</label>
