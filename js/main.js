@@ -69,7 +69,7 @@ define([
     "esri/layers/FeatureLayer",
     "esri/geometry/ScreenPoint",
 
-    "application/NavToolBar/NavToolBar",
+    // "application/NavToolBar/NavToolBar",
     // "application/SuperNavigator/SuperNavigator",
     // "application/PopupInfo/PopupInfo",
     // "application/GeoCoding/GeoCoding",
@@ -133,7 +133,7 @@ define([
     FeatureLayer,
     ScreenPoint,
     // LayerManager,
-    NavToolBar,
+    // NavToolBar,
     // SuperNavigator,
     // PopupInfo,
     // GeoCoding,
@@ -1336,24 +1336,21 @@ define([
         navDeferred: null,
 
         _addNavigation: function(tool, oldNaviagationToolBar, deferred) {
-            const navToolBar = domConstruct.create("div", {
-                id: "newNaviagationToolBar"
-            });
+            require(["application/NavToolBar/NavToolBar"], lang.hitch(this, function(NavToolBar) {
+                const nav = new NavToolBar(
+                    {
+                        map: this.map,
+                        navToolBar: oldNaviagationToolBar,
+                        iconColor: this.config.icons,
+                        newIcons: this.config.new_icons ? ".new" : "",
+                        zoomColor: this.focusColor, 
+                        deferred: deferred
+                    },
+                    domConstruct.create("div", {id: "newNaviagationToolBar"})
+                );
+                nav.startup();
+            }));
 
-            const nav = new NavToolBar(
-                {
-                    map: this.map,
-                    navToolBar: oldNaviagationToolBar,
-                    iconColor: this.config.icons,
-                    newIcons: this.config.new_icons ? ".new" : "",
-                    zoomColor: this.focusColor, 
-                    deffered: deferred
-                },
-                navToolBar
-            );
-            nav.startup();
-
-            deferred.resolve(true);
             return deferred.promise;
         },
 
