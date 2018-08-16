@@ -2339,6 +2339,7 @@ define([
                     );
 
                     measure.startup();
+                    domAttr.set(measure.domNode, 'tabindex', 0);
 
                     const dijitButtonNodes = measureDiv.querySelectorAll(
                         ".dijitButtonNode"
