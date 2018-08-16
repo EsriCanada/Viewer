@@ -202,17 +202,43 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }
         },
 
-        featureExpandAndZoom: function(event) {//, checkbox) {
-            console.log('featureExpandAndZoom', event);
-            if(event.charCode === 43 || event.charCode === 45 || event.charCode === 46) { // +,- or .
-                checkbox.checked = !checkbox.checked;
-                this.featureExpand(checkbox, false);
-                if(checkbox.checked) {
-                    var btn = document.querySelector(((event.charCode === 43) ? '#zoomBtn_' : '#panBtn_')+checkbox.value.replace(',','_'));
-                    btn.click();
-                }
-            }
+        featurePan: function(event) {
+            console.log('pan');
+            this.featurePanZoom(event.target, true);
         },
+
+        featureZoom: function(event) {
+            console.log('zoom');
+            this.featurePanZoom(event.target, false);
+        },
+
+        featurePanZoom: function(el, panOnly) {
+            var result = this.featureList.tasks[el.dataset.layerid];
+            var fid = el.dataset.featureid;
+            var layer = result.layer;
+            var objectIdFieldName = result.layer.objectIdField;
+
+            q = new Query();
+            q.where = objectIdFieldName+"="+fid;
+            q.outFields = [objectIdFieldName];
+            q.returnGeometry = true;
+            result.task.execute(q).then(function(ev) {
+                var geometry = ev.features[0].geometry;
+                if(panOnly) {
+                    if (geometry.type !== "point") {
+                        geometry = geometry.getExtent().getCenter();
+                    }
+                    layer._map.centerAt(geometry);
+                } else {
+                    if(geometry.type === "point") {
+                        layer._map.centerAndZoom(geometry, 13);
+                    } else {
+                        var extent = geometry.getExtent().expand(1.5);
+                        layer._map.setExtent(extent);
+                    }
+                }
+            });
+        }
 
     });
     if (has("extend-esri")) {

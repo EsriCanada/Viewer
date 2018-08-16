@@ -204,7 +204,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     var checkbox = query("#featureButton_"+this._prevSelected)[0];
                     if(checkbox) {
                         checkbox.checked = true;
-                        this.featureExpand(checkbox, true);
+                        const featureItem = query(checkbox).closest('.featureItem')[0];
+                        const w = dijit.byId(featureItem.id);
+                        w._featureExpand(checkbox, true);
                         checkbox.focus();
                     }
                 }
@@ -255,33 +257,33 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 });
             }
 
-            this.featurePanZoom = function(el, panOnly) {
-                var result = this.tasks[el.dataset.layerid];
-                var fid = el.dataset.featureid;
-                var layer = result.layer;
-                var objectIdFieldName = result.layer.objectIdField;
+            // this.featurePanZoom = function(el, panOnly) {
+            //     var result = this.tasks[el.dataset.layerid];
+            //     var fid = el.dataset.featureid;
+            //     var layer = result.layer;
+            //     var objectIdFieldName = result.layer.objectIdField;
 
-                q = new Query();
-                q.where = objectIdFieldName+"="+fid;
-                q.outFields = [objectIdFieldName];
-                q.returnGeometry = true;
-                result.task.execute(q).then(function(ev) {
-                    var geometry = ev.features[0].geometry;
-                    if(panOnly) {
-                        if (geometry.type !== "point") {
-                            geometry = geometry.getExtent().getCenter();
-                        }
-                        layer._map.centerAt(geometry);
-                    } else {
-                        if(geometry.type === "point") {
-                            layer._map.centerAndZoom(geometry, 13);
-                        } else {
-                            var extent = geometry.getExtent().expand(1.5);
-                            layer._map.setExtent(extent);
-                        }
-                    }
-                });
-            };
+            //     q = new Query();
+            //     q.where = objectIdFieldName+"="+fid;
+            //     q.outFields = [objectIdFieldName];
+            //     q.returnGeometry = true;
+            //     result.task.execute(q).then(function(ev) {
+            //         var geometry = ev.features[0].geometry;
+            //         if(panOnly) {
+            //             if (geometry.type !== "point") {
+            //                 geometry = geometry.getExtent().getCenter();
+            //             }
+            //             layer._map.centerAt(geometry);
+            //         } else {
+            //             if(geometry.type === "point") {
+            //                 layer._map.centerAndZoom(geometry, 13);
+            //             } else {
+            //                 var extent = geometry.getExtent().expand(1.5);
+            //                 layer._map.setExtent(extent);
+            //             }
+            //         }
+            //     });
+            // };
 
             on(this.map, "extent-change", lang.hitch(this, this._reloadList));
 
@@ -299,17 +301,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
     
         _prevSelected: null,
-        featureExpandAndZoom: function(event) {//, checkbox) {
-            // console.log('featureExpandAndZoom', event);
-            if(event.charCode === 43 || event.charCode === 45 || event.charCode === 46) { // +,- or .
-                checkbox.checked = !checkbox.checked;
-                this.featureExpand(checkbox, false);
-                if(checkbox.checked) {
-                    var btn = document.querySelector(((event.charCode === 43) ? '#zoomBtn_' : '#panBtn_')+checkbox.value.replace(',','_'));
-                    btn.click();
-                }
-            }
-        },
 
     });
     if (has("extend-esri")) {
