@@ -43,6 +43,7 @@ self.addEventListener('install', function(event) {
         './js/NavToolBar/Templates/NavToolBar.html',
         './js/PopupInfo/Templates/PopupInfo.html',
         './js/FeatureList/Templates/FeatureList.html',
+        './js/FeatureList/FeatureListItem.js',
         './js/ImageToggleButton/Templates/ImageToggleButton.html',
         './js/FeatureList/Templates/FeatureListTemplate.html',
         './js/GeoCoding/Templates/GeoCodingHeader.html',
