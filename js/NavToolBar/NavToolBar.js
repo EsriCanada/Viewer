@@ -1,7 +1,8 @@
 define([
     "dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/kernel",
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
-    "dojo/query", "esri/toolbars/navigation", "dijit/registry",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on", "dojo/Deferred",
+    "dojo/query", "dijit/registry",
+    "esri/toolbars/navigation", 
     "esri/dijit/HomeButton", "esri/dijit/LocateButton",
     "esri/symbols/SimpleLineSymbol", "esri/Color",
     "dojo/text!application/NavToolBar/Templates/NavToolBar.html",
@@ -12,8 +13,9 @@ define([
 
     ], function (
         Evented, declare, lang, has, dom, esriNS,
-        _WidgetBase, _TemplatedMixin, on,
-        query, Navigation, registry,
+        _WidgetBase, _TemplatedMixin, on, Deferred,
+        query, registry,
+        Navigation, 
         HomeButton, LocateButton,
         SimpleLineSymbol, Color,
         NavToolBarTemplate, i18n,
@@ -25,10 +27,11 @@ define([
 
         options: {
             map: null,
-            navToolBar:null,
-            iconColor:"white",
-            newIcons:'',
-            zoomColor:'red',
+            navToolBar: null,
+            iconColor: "white",
+            newIcons: '',
+            zoomColor: 'red',
+            deferred: null
         },
 
         constructor: function (options, srcRefNode) {
@@ -42,6 +45,7 @@ define([
             this.set("iconColor", defaults.iconColor);
             this.set("newIcons", defaults.newIcons);
             this.set("zoomColor", defaults.zoomColor);
+            this.dfr = defaults.deferred ? defaults.deferred : new Deferred();
         },
 
         startup: function () {
@@ -52,6 +56,7 @@ define([
                     this._init();
                 }));
             }
+            return this.dfr.promise;
         },
 
         __init:false,
@@ -179,6 +184,7 @@ define([
             }));
 
             this.__init = true;
+            this.dfr.resolve(true);
         },
 
         tryDisableBtn:function(id, disable) {

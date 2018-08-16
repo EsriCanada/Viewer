@@ -1346,7 +1346,8 @@ define([
                     navToolBar: oldNaviagationToolBar,
                     iconColor: this.config.icons,
                     newIcons: this.config.new_icons ? ".new" : "",
-                    zoomColor: this.focusColor
+                    zoomColor: this.focusColor, 
+                    deffered: deferred
                 },
                 navToolBar
             );
