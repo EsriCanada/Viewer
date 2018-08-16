@@ -203,12 +203,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         featurePan: function(event) {
-            console.log('pan');
+            // console.log('pan');
             this.featurePanZoom(event.target, true);
         },
 
         featureZoom: function(event) {
-            console.log('zoom');
+            // console.log('zoom');
             this.featurePanZoom(event.target, false);
         },
 
