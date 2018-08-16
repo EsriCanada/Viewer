@@ -75,7 +75,7 @@ define([
     // "application/GeoCoding/GeoCoding",
     "application/ImageToggleButton/ImageToggleButton",
     "application/FeatureList/FeatureList",
-    "application/Filters/Filters",
+    // "application/Filters/Filters",
     // "application/DirectionsWidget/DirectionsWidget",
 
     "application/LanguageSelect/LanguageSelect",
@@ -139,7 +139,7 @@ define([
     // GeoCoding,
     ImageToggleButton,
     FeatureList,
-    Filters,
+    // Filters,
     // DirectionsWidget,
     LanguageSelect,
     ContactUs,
@@ -1424,15 +1424,17 @@ define([
                 var layers = this.config.response.itemInfo.itemData
                     .operationalLayers;
 
-                const filter = new Filters(
-                    {
-                        map: this.map,
-                        layers: layers,
-                        toolbar: toolbar
-                    },
-                    filterDiv
-                );
-                filter.startup();
+                require(["application/Filters/Filters"], lang.hitch(this, function(Filters) {
+                    const filter = new Filters(
+                        {
+                            map: this.map,
+                            layers: layers,
+                            toolbar: toolbar
+                        },
+                        filterDiv
+                    );
+                    filter.startup();
+                }));
 
                 // on(toolbar, 'updateTool_filter', lang.hitch(this, function(name) {
                 //     dom.byId('pageBody_filter').focus();

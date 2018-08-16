@@ -17,6 +17,9 @@ define([
         templateString: FilterTabTemplate,
 
         options: {
+            map: null,
+            filter: null, 
+            checked: false
         },        
 
         constructor: function(options, srcRefTabsZone, srcRefTabsContent){
@@ -24,6 +27,7 @@ define([
             this._i18n = i18n;
 
             //this.domNode = srcRefNode;
+            this.set("map", defaults.map);
             this.set("filter", defaults.filter);
 
             this.set("filter_name", this.filter.layer.resourceInfo.name);
@@ -98,11 +102,11 @@ define([
         },
 
         filterApply: function(btn) {
-            var layer = this.filter.layer;
-            var exps = [];
+            const layer = this.filter.layer;
+            const exps = [];
             this.FilterItems.filter(function(f) { return f.Active.checked;}).forEach(function(f) {
                 try {
-                    var exp = f.filterField.getFilterExpresion();
+                    const exp = f.filterField.getFilterExpresion();
                     if(exp) {
                         exps.push(exp);
                     }
@@ -112,10 +116,10 @@ define([
             });
             if(exps.length === 1) {
                 this.showBadge(true);
-                this.getDefinitionExtensionExtent(layer,exps[0]);
+                this.getDefinitionExtensionExtent(layer, exps[0]);
             } else if (exps.length >= 1) {
-                var op ='';
-                var inList=exps.reduce(function(previousValue, currentValue) {
+                let op ='';
+                const inList = exps.reduce(function(previousValue, currentValue) {
                     if(previousValue && previousValue!=='') 
                         op = ' AND ';
                     return previousValue+")"+op+"("+currentValue;
@@ -130,23 +134,23 @@ define([
 
         getDefinitionExtensionExtent: function(layer, expression) {
             layer.layerObject.setDefinitionExpression(expression);
-            var task = new QueryTask(layer.url);
-            var q = new Query();
+            const task = new QueryTask(layer.url);
+            const q = new Query();
             q.where = expression ? expression : '1=1';
             q.outFields = [];
             q.returnGeometry = true;
-            task.execute(q).then(function(ev) {
+            task.execute(q).then(lang.hitch(this, function(ev) {
                 if(ev.features && ev.features.length > 0) {
                     var myExtent = graphicsUtils.graphicsExtent(ev.features);
                     if(myExtent.xmin===myExtent.xmax && myExtent.ymin===myExtent.ymax) {
-                        filter.map.centerAndZoom(myExtent.getCenter(), 13);
+                        this.map.centerAndZoom(myExtent.getCenter(), 13);
                     }
                     else {
                         var ext = myExtent.expand(1.5);
-                        filter.map.setExtent(ext);
+                        this.map.setExtent(ext);
                     }
                 }
-            });
+            }));
         },
 
         filterIgnore: function(btn) {

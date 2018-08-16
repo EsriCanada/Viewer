@@ -68,14 +68,18 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/ke
         },
 
         _init: function () {
-            var ck='checked';
+            let ck='checked';
             window.filters.forEach(lang.hitch(this, function(filter){
-                var filterTab = new FilterTab({filter:filter, checked:ck});
+                const filterTab = new FilterTab({
+                    map: this.map,
+                    filter: filter, 
+                    checked: ck
+                });
                 dojo.place(filterTab.domNode, this.filterTabs);
                 filterTab.startup();
 
-                var tab = document.querySelector('#'+filterTab.domNode.id+' .tab');
-                var content = document.querySelector('#'+filterTab.domNode.id+' .tabContent');
+                const tab = document.querySelector('#'+filterTab.domNode.id+' .tab');
+                const content = document.querySelector('#'+filterTab.domNode.id+' .tabContent');
 
                 dojo.place(tab, this.filterTabsZone);
                 dojo.place(content, this.filterTabsContent);
