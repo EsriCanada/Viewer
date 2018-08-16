@@ -953,7 +953,7 @@ input[type=checkbox]:checked.share-dialog-checkbox + .share-dialog-checkbox:befo
 }
 
 .esriMeasurement {
-  width: 93%;
+  width: calc(100% - 20px);
   height: auto;
   position: relative;
   padding: 10px;
