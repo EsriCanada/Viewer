@@ -80,7 +80,7 @@ define([
 
     "application/LanguageSelect/LanguageSelect",
     "application/ContactUs/ContactUs",
-    "application/ShareDialog",
+    // "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol",
     "esri/symbols/PictureMarkerSymbol",
     "esri/graphic",
@@ -143,7 +143,7 @@ define([
     // DirectionsWidget,
     LanguageSelect,
     ContactUs,
-    ShareDialog,
+    // ShareDialog,
     SimpleMarkerSymbol,
     PictureMarkerSymbol,
     Graphic,
@@ -1306,7 +1306,7 @@ define([
                     .operationalLayers;
 
                 require(["application/FeatureList/FeatureList"], lang.hitch(this, function(FeatureList) {
-                    const  featureList = new FeatureList(
+                    const featureList = new FeatureList(
                         {
                             map: this.map,
                             layers: layers,
@@ -2956,25 +2956,27 @@ define([
                     toolbar.createTool(tool)
                 ); //);
 
-                var shareDialog = new ShareDialog(
-                    {
-                        bitlyLogin: this.config.bitlyLogin,
-                        bitlyKey: this.config.bitlyKey,
-                        map: this.map,
-                        image:
-                            this.config.sharinghost +
-                            "/sharing/rest/content/items/" +
-                            this.config.response.itemInfo.item.id +
-                            "/info/" +
-                            this.config.response.itemInfo.thumbnail,
-                        title: this.config.title,
-                        summary:
-                            this.config.response.itemInfo.item.snippet || ""
-                    },
-                    shareDiv
-                );
-                // domClass.add(shareDialog.domNode, "margin");
-                shareDialog.startup();
+                require(["application/ShareDialog"], lang.hitch(this, function(ShareDialog) {
+                    const shareDialog = new ShareDialog(
+                        {
+                            bitlyLogin: this.config.bitlyLogin,
+                            bitlyKey: this.config.bitlyKey,
+                            map: this.map,
+                            image:
+                                this.config.sharinghost +
+                                "/sharing/rest/content/items/" +
+                                this.config.response.itemInfo.item.id +
+                                "/info/" +
+                                this.config.response.itemInfo.thumbnail,
+                            title: this.config.title,
+                            summary:
+                                this.config.response.itemInfo.item.snippet || ""
+                        },
+                        shareDiv
+                    );
+                    // domClass.add(shareDialog.domNode, "margin");
+                    shareDialog.startup();
+                }));
 
                 //domClass.add(dom.byId('_dialogNode'),'margin')
                 deferred.resolve(true);
