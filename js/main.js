@@ -2352,10 +2352,10 @@ define([
                         );
                     });
 
-                    var esriMeasurementResultTable = measureDiv.querySelector(
+                    const esriMeasurementResultTable = measureDiv.querySelector(
                         ".esriMeasurementResultTable"
                     );
-                    var esriMeasurementTableHeaders = esriMeasurementResultTable.querySelectorAll(
+                    const esriMeasurementTableHeaders = esriMeasurementResultTable.querySelectorAll(
                         ".esriMeasurementTableHeader"
                     );
                     for (let i = 0; i < esriMeasurementTableHeaders.length; i++) {

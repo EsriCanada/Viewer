@@ -510,7 +510,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             id: 'thumb',
                             class: 'thumbFeature',
                             'title':title,
-                            'aria-label':title,
+                            // 'aria-label':title,
                             // tabindex:0
                         }, mainSectionHeader);
                         var source = selectedFeature._shape.rawNode.attributes['xlink:href'];
@@ -521,7 +521,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                     src : source.value,
                                     alt:title,
                                     'title':title,
-                                    'aria-label':title,
+                                    // 'aria-label':title,
                                     // tabindex:0
                                 }, thumb);
                         }
