@@ -2940,7 +2940,6 @@ define([
 
         _addShare: function(tool, toolbar) {
             //Add share links for facebook, twitter and direct linking.
-            //Add the measure widget to the toolbar.
             var deferred = new Deferred();
 
             if (has("share")) {
