@@ -71,7 +71,7 @@ define([
 
     "application/NavToolBar/NavToolBar",
     // "application/SuperNavigator/SuperNavigator",
-    "application/PopupInfo/PopupInfo",
+    // "application/PopupInfo/PopupInfo",
     // "application/GeoCoding/GeoCoding",
     "application/ImageToggleButton/ImageToggleButton",
     "application/FeatureList/FeatureList",
@@ -135,7 +135,7 @@ define([
     // LayerManager,
     NavToolBar,
     // SuperNavigator,
-    PopupInfo,
+    // PopupInfo,
     // GeoCoding,
     ImageToggleButton,
     FeatureList,
@@ -2231,21 +2231,23 @@ define([
                 );
 
                 this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
-                    const popupInfo = new PopupInfo(
-                        {
-                            map: this.map,
-                            toolbar: toolbar,
-                            superNavigator: this.superNav,
-                            search: this.search,
-                            maxSearchResults: this.config.maxSearchResults,
-                            showSearchScore: this.config.showSearchScore,
-                            searchMarker: this.config.searchMarker,
-                            geolocatorLabelColor: this.config.geolocatorLabelColor,
-                            iconsColor: this.config.icons,
-                        },
-                        infoPanelDiv
-                    );
-                    popupInfo.startup();
+                    require(["application/PopupInfo/PopupInfo"], lang.hitch(this, function(PopupInfo) {
+                        const popupInfo = new PopupInfo(
+                            {
+                                map: this.map,
+                                toolbar: toolbar,
+                                superNavigator: this.superNav,
+                                search: this.search,
+                                maxSearchResults: this.config.maxSearchResults,
+                                showSearchScore: this.config.showSearchScore,
+                                searchMarker: this.config.searchMarker,
+                                geolocatorLabelColor: this.config.geolocatorLabelColor,
+                                iconsColor: this.config.icons,
+                            },
+                            infoPanelDiv
+                        );
+                        popupInfo.startup();
+                    }));
                 }));
 
                 deferred.resolve(true);
