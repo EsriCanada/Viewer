@@ -443,7 +443,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                     }
                                     const alt = domAttr.get(img, 'alt');
                                     if(!alt) {
-                                        domAttr.set(img,'alt','Attached image');
+                                        domAttr.set(img,'alt','Attached Image');
                                     } else {
                                         domAttr.set(img,'tabindex',0);
                                         if(!domAttr.get(img, 'title'))
