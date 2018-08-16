@@ -282,10 +282,10 @@ self.addEventListener('install', function(event) {
 
     event.waitUntil(
         caches.open(CURRENT_CACHES.prefetch).then(function(cache) {
-            var cachePromises = urlsToPrefetch.map(function(urlToPrefetch) {
+            const cachePromises = urlsToPrefetch.map(function(urlToPrefetch) {
                 // This constructs a new URL object using the service worker's script location as the base
                 // for relative URLs.
-                var url = new URL(urlToPrefetch, location.href);
+                const url = new URL(urlToPrefetch, location.href);
                 // Append a cache-bust=TIMESTAMP URL parameter to each URL's query string.
                 // This is particularly important when precaching resources that are later used in the
                 // fetch handler as responses directly, without consulting the network (i.e. cache-first).
@@ -330,10 +330,11 @@ self.addEventListener('install', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
+    // console.log('activate');
     // Delete all caches that aren't named in CURRENT_CACHES.
     // While there is only one cache in this example, the same logic will handle the case where
     // there are multiple versioned caches.
-    var expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
+    const expectedCacheNames = Object.keys(CURRENT_CACHES).map(function(key) {
         return CURRENT_CACHES[key];
     });
 

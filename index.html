@@ -11,23 +11,29 @@
 	<script>
 		if('serviceWorker' in navigator) {
 	    	window.addEventListener('load', function() {
-	        	navigator.serviceWorker.register('./WCAG-BasicViewer.sw.js').then(function(registration) {
-		            	console.log('ServiceWorker registration successful with scope: ', registration.scope);
-		            	const url = new URL(location);
-		            	const params = url.searchParams;
-		            	// console.log('searchParams', params, params.has('update'));
-		            	if(params.has('update')) {
-		            		registration.update();
-		            		console.log('ServiceWorker updated');
-		            	}
-		            	if(params.has('unregister')) {
-		            		registration.unregister();
-		            		console.log('ServiceWorker unregistered');
-		            	}
-			        }, function(err) {
-			            console.log('ServiceWorker registration failed: ', err);
-			        }
-			    );
+            	const url = new URL(location);
+            	const params = url.searchParams;
+			    // console.log('searchParams', params, params.has('nocache'));
+            	if(!params.has('nocache')) {
+		        	navigator.serviceWorker.register('./WCAG-BasicViewer.sw.js').then(function(registration) {
+			            	console.log('ServiceWorker registration successful with scope: ', registration.scope);
+			            	if(params.has('update')) {
+			            		registration.update();
+			            		console.log('ServiceWorker updated');
+			            	}
+			            	if(params.has('unregister')) {
+			            		registration.unregister();
+			            		console.log('ServiceWorker unregistered');
+			            	}
+
+				        }, function(err) {
+				            console.log('ServiceWorker registration failed: ', err);
+				        }
+				    );
+		        }
+		        else {
+		        	console.log('No ServiceWorker requested');
+		        }
 		    });
 		} else {
 			console.log('This browser does not support serviceWorkers');
