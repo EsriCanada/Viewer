@@ -74,7 +74,7 @@ define([
     // "application/PopupInfo/PopupInfo",
     // "application/GeoCoding/GeoCoding",
     "application/ImageToggleButton/ImageToggleButton",
-    "application/FeatureList/FeatureList",
+    // "application/FeatureList/FeatureList",
     // "application/Filters/Filters",
     // "application/DirectionsWidget/DirectionsWidget",
 
@@ -138,7 +138,7 @@ define([
     // PopupInfo,
     // GeoCoding,
     ImageToggleButton,
-    FeatureList,
+    // FeatureList,
     // Filters,
     // DirectionsWidget,
     LanguageSelect,
@@ -1305,22 +1305,24 @@ define([
                 var layers = this.config.response.itemInfo.itemData
                     .operationalLayers;
 
-                const featureList = new FeatureList(
-                    {
-                        map: this.map,
-                        layers: layers,
-                        toolbar: toolbar,
-                        animatedMarker: this.config.animated_marker,
-                        markerImage: this.config.marker,
-                        markerSize: this.config.marker_size
-                    },
-                    featuresDiv
-                );
-                featureList.startup();
+                require(["application/FeatureList/FeatureList"], lang.hitch(this, function(FeatureList) {
+                    const  featureList = new FeatureList(
+                        {
+                            map: this.map,
+                            layers: layers,
+                            toolbar: toolbar,
+                            animatedMarker: this.config.animated_marker,
+                            markerImage: this.config.marker,
+                            markerSize: this.config.marker_size
+                        },
+                        featuresDiv
+                    );
+                    featureList.startup();
 
-                // on(toolbar, 'updateTool_features', lang.hitch(this, function(name) {
-                //     dom.byId('pageBody_features').focus();
-                // }));
+                    // on(toolbar, 'updateTool_features', lang.hitch(this, function(name) {
+                    //     dom.byId('pageBody_features').focus();
+                    // }));
+                }));
 
                 deferred.resolve(true);
             } else {
