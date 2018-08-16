@@ -7,7 +7,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     "dojo/text!application/PopupInfo/Templates/PopupInfo.html",
     // "dojo/text!application/PopupInfo/Templates/PopupInfoHeader.html",
     "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
-    "dojo/parser", "dojo/ready",
+    // "dojo/parser", "dojo/ready",
     "dijit/layout/BorderContainer",
     "dojox/layout/ContentPane",
     "esri/InfoTemplate",
@@ -26,7 +26,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         Deferred, query,
         PopupInfoTemplate, // PopupInfoHeaderTemplate,
         dom, domClass, domAttr, domStyle, domConstruct, event,
-        parser, ready,
+        // parser, ready,
         BorderContainer,
         ContentPane,
         InfoTemplate,
@@ -37,10 +37,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         Popup, PopupInfoHeader
     ) {
 
-    ready(function(){
-        // Call the parser manually so it runs after our widget is defined, and page has finished loading
-        parser.parse();
-    });
+    // ready(function(){
+    //     // Call the parser manually so it runs after our widget is defined, and page has finished loading
+    //     parser.parse();
+    // });
 
     var Widget = declare("esri.dijit.PopupInfo", [_WidgetBase, _TemplatedMixin, Evented], {
         // defaults
