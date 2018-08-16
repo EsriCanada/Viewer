@@ -63,7 +63,7 @@ define([
     "esri/dijit/Basemap",
     "dojo/i18n!application/nls/resources",
     "dojo/i18n!application/nls/BaseMapLabels",
-    "esri/dijit/Measurement",
+    // "esri/dijit/Measurement",
     "esri/dijit/OverviewMap",
     "esri/geometry/Extent",
     "esri/layers/FeatureLayer",
@@ -127,7 +127,7 @@ define([
     Basemap,
     i18n,
     i18n_BaseMapLabels,
-    Measurement,
+    // Measurement,
     OverviewMap,
     Extent,
     FeatureLayer,
@@ -2322,80 +2322,82 @@ define([
             //Add the measure widget to the toolbar.
             var deferred = new Deferred();
             if (has("measure")) {
-                var measureDiv = toolbar.createTool(tool);
-                var areaUnit =
+                const measureDiv = toolbar.createTool(tool);
+                let areaUnit =
                     this.config.units === "metric" ? "esriSquareKilometers" : "esriSquareMiles";
-                var lengthUnit =
+                let lengthUnit =
                     this.config.units === "metric" ? "esriKilometers" : "esriMiles";
 
-                var measure = new Measurement(
-                    {
-                        map: this.map,
-                        defaultAreaUnit: areaUnit,
-                        defaultLengthUnit: lengthUnit
-                    },
-                    domConstruct.create("div", {}, measureDiv)
-                );
-
-                measure.startup();
-
-                const dijitButtonNodes = measureDiv.querySelectorAll(
-                    ".dijitButtonNode"
-                );
-                array.forEach(dijitButtonNodes, function(node) {
-                    domAttr.set(node, "tabindex", 0);
-                    domAttr.set(
-                        node.querySelector(".dijitButtonContents"),
-                        "tabindex",
-                        ""
+                require(["esri/dijit/Measurement"], lang.hitch(this, function(Measurement) {
+                    const measure = new Measurement(
+                        {
+                            map: this.map,
+                            defaultAreaUnit: areaUnit,
+                            defaultLengthUnit: lengthUnit
+                        },
+                        domConstruct.create("div", {}, measureDiv)
                     );
-                });
 
-                var esriMeasurementResultTable = measureDiv.querySelector(
-                    ".esriMeasurementResultTable"
-                );
-                var esriMeasurementTableHeaders = esriMeasurementResultTable.querySelectorAll(
-                    ".esriMeasurementTableHeader"
-                );
-                for (let i = 0; i < esriMeasurementTableHeaders.length; i++) {
-                    const esriMeasurementTableHeader = esriMeasurementTableHeaders[i];
-                    //alert(esriMeasurementTableHeader.innerHTML);
-                    const newHeader = document.createElement("th");
-                    newHeader.innerHTML = esriMeasurementTableHeader.innerHTML;
-                    const colspan = esriMeasurementTableHeader.getAttribute(
-                        "colspan"
+                    measure.startup();
+
+                    const dijitButtonNodes = measureDiv.querySelectorAll(
+                        ".dijitButtonNode"
                     );
-                    if (colspan) {
-                        newHeader.setAttribute("colspan", colspan);
+                    array.forEach(dijitButtonNodes, function(node) {
+                        domAttr.set(node, "tabindex", 0);
+                        domAttr.set(
+                            node.querySelector(".dijitButtonContents"),
+                            "tabindex",
+                            ""
+                        );
+                    });
+
+                    var esriMeasurementResultTable = measureDiv.querySelector(
+                        ".esriMeasurementResultTable"
+                    );
+                    var esriMeasurementTableHeaders = esriMeasurementResultTable.querySelectorAll(
+                        ".esriMeasurementTableHeader"
+                    );
+                    for (let i = 0; i < esriMeasurementTableHeaders.length; i++) {
+                        const esriMeasurementTableHeader = esriMeasurementTableHeaders[i];
+                        //alert(esriMeasurementTableHeader.innerHTML);
+                        const newHeader = document.createElement("th");
+                        newHeader.innerHTML = esriMeasurementTableHeader.innerHTML;
+                        const colspan = esriMeasurementTableHeader.getAttribute(
+                            "colspan"
+                        );
+                        if (colspan) {
+                            newHeader.setAttribute("colspan", colspan);
+                        }
+                        newHeader.className = esriMeasurementTableHeader.className;
+                        esriMeasurementTableHeader.parentNode.replaceChild(
+                            newHeader,
+                            esriMeasurementTableHeader
+                        );
                     }
-                    newHeader.className = esriMeasurementTableHeader.className;
-                    esriMeasurementTableHeader.parentNode.replaceChild(
-                        newHeader,
-                        esriMeasurementTableHeader
+
+                    var AccessAuditMarkers = esriMeasurementResultTable.querySelectorAll(
+                        "img"
                     );
-                }
+                    for (let i = 0; i < AccessAuditMarkers.length; i++) {
+                        AccessAuditMarkers[i].setAttribute("Alt", "");
+                    }
 
-                var AccessAuditMarkers = esriMeasurementResultTable.querySelectorAll(
-                    "img"
-                );
-                for (let i = 0; i < AccessAuditMarkers.length; i++) {
-                    AccessAuditMarkers[i].setAttribute("Alt", "");
-                }
+                    const areaIconNode = measureDiv.querySelector(".areaIcon");
+                    domClass.remove(areaIconNode, "areaIcon");
+                    areaIconNode.innerHTML =
+                        '<img src="images/area_measure.png" alt="Area Button"/>';
 
-                const areaIconNode = measureDiv.querySelector(".areaIcon");
-                domClass.remove(areaIconNode, "areaIcon");
-                areaIconNode.innerHTML =
-                    '<img src="images/area_measure.png" alt="Area Button"/>';
+                    const distanceIconNode = measureDiv.querySelector(".distanceIcon");
+                    domClass.remove(distanceIconNode, "distanceIcon");
+                    distanceIconNode.innerHTML =
+                        '<img src="images/dist_measure.png" alt="Distance Button"/>';
 
-                const distanceIconNode = measureDiv.querySelector(".distanceIcon");
-                domClass.remove(distanceIconNode, "distanceIcon");
-                distanceIconNode.innerHTML =
-                    '<img src="images/dist_measure.png" alt="Distance Button"/>';
-
-                const locationIconNode = measureDiv.querySelector(".locationIcon");
-                domClass.remove(locationIconNode, "locationIcon");
-                locationIconNode.innerHTML =
-                    '<img src="images/dist_point.png" alt="Location Button"/>';
+                    const locationIconNode = measureDiv.querySelector(".locationIcon");
+                    domClass.remove(locationIconNode, "locationIcon");
+                    locationIconNode.innerHTML =
+                        '<img src="images/dist_point.png" alt="Location Button"/>';
+                }));
 
                 deferred.resolve(true);
             } else {
