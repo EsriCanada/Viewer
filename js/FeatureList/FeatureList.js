@@ -1,36 +1,24 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
-    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
+    "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on", 
     "dojo/Deferred", "dojo/promise/all", "dojo/query",
     "esri/tasks/query", "esri/tasks/QueryTask",
-    "dojox/layout/ContentPane",
     "dojo/text!application/FeatureList/Templates/FeatureList.html",
-    "dojo/text!application/FeatureList/Templates/FeatureListTemplate.html",
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
-    "dojo/string",
+    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", 
     "application/FeatureList/FeatureListItem",
     "dojo/i18n!application/nls/FeatureList",
     "dojo/i18n!application/nls/resources",
-    "esri/symbols/SimpleMarkerSymbol", "esri/symbols/PictureMarkerSymbol",
-    "esri/symbols/CartographicLineSymbol",
-    "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol",
-    "esri/graphic", "esri/Color",
-    "dojo/NodeList-dom", "dojo/NodeList-traverse"
+    "esri/symbols/SimpleMarkerSymbol", "esri/symbols/PictureMarkerSymbol"
 
     ], function (
         Evented, declare, lang, has, esriNS,
-        _WidgetBase, _TemplatedMixin, on,
+        _WidgetBase, _TemplatedMixin, on, 
         Deferred, all, query,
         Query, QueryTask,
-        ContentPane,
-        FeatureList, listTemplate, 
-        dom, domClass, domAttr, domStyle, domConstruct, event,
-        string,
+        FeatureList, 
+        dom, domClass, domAttr, domStyle, domConstruct, 
         FeatureListItem,
         i18n, Ri18n,
-        SimpleMarkerSymbol, PictureMarkerSymbol,
-        CartographicLineSymbol,
-        SimpleFillSymbol, SimpleLineSymbol,
-        Graphic, Color
+        SimpleMarkerSymbol, PictureMarkerSymbol
     ) {
     var Widget = declare("esri.dijit.FeatureList", [_WidgetBase, _TemplatedMixin, Evented], {
         // defaults
@@ -186,7 +174,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 }
 
                                 const li = domConstruct.create("li", {}, list);
-                                const featureListItem = this._getFeatureListItem(i, resultFeature, result.objectIdFieldName, layer, li, listTemplate);
+                                const featureListItem = this._getFeatureListItem(i, resultFeature, result.objectIdFieldName, layer, li);
                                //  if(featureListItem)
                                //  {
                                //      const li = domConstruct.create("li", {
@@ -289,7 +277,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         },
 
-        _getFeatureListItem: function(result, resultFeature, objectIdFieldName, layer, li, listTemplate) {
+        _getFeatureListItem: function(result, resultFeature, objectIdFieldName, layer, li) {
             return new FeatureListItem({
                 result:result, 
                 feature:resultFeature, 
