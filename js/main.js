@@ -63,32 +63,19 @@ define([
     "esri/dijit/Basemap",
     "dojo/i18n!application/nls/resources",
     "dojo/i18n!application/nls/BaseMapLabels",
-    // "esri/dijit/Measurement",
     "esri/dijit/OverviewMap",
     "esri/geometry/Extent",
     "esri/layers/FeatureLayer",
     "esri/geometry/ScreenPoint",
 
-    // "application/NavToolBar/NavToolBar",
-    // "application/SuperNavigator/SuperNavigator",
-    // "application/PopupInfo/PopupInfo",
-    // "application/GeoCoding/GeoCoding",
     "application/ImageToggleButton/ImageToggleButton",
-    // "application/FeatureList/FeatureList",
-    // "application/Filters/Filters",
-    // "application/DirectionsWidget/DirectionsWidget",
 
     "application/LanguageSelect/LanguageSelect",
     "application/ContactUs/ContactUs",
-    // "application/ShareDialog",
     "esri/symbols/SimpleMarkerSymbol",
     "esri/symbols/PictureMarkerSymbol",
     "esri/graphic",
-    "esri/dijit/InfoWindow",
-    // "esri/urlUtils", "esri/dijit/Directions",
-
-    "dojo/NodeList-dom",
-    "dojo/NodeList-traverse"
+    "esri/dijit/InfoWindow"
 ], function(
     ready,
     aspect,
@@ -127,28 +114,17 @@ define([
     Basemap,
     i18n,
     i18n_BaseMapLabels,
-    // Measurement,
     OverviewMap,
     Extent,
     FeatureLayer,
     ScreenPoint,
-    // LayerManager,
-    // NavToolBar,
-    // SuperNavigator,
-    // PopupInfo,
-    // GeoCoding,
     ImageToggleButton,
-    // FeatureList,
-    // Filters,
-    // DirectionsWidget,
     LanguageSelect,
     ContactUs,
-    // ShareDialog,
     SimpleMarkerSymbol,
     PictureMarkerSymbol,
     Graphic,
     InfoWindow
-    // urlUtils, Directions
 ) {
     return declare(null, {
         config: {},
