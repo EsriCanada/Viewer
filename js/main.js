@@ -1426,12 +1426,12 @@ define([
         },
 
         _addBasemapGallery: function(tool, toolbar) {
-            var deferred = new Deferred();
+            const deferred = new Deferred();
             if (has("layerManager")) {
                 deferred.resolve(true);
             } else if (has("basemap")) {
-                var basemapDiv = toolbar.createTool(tool);
-                var basemap = new BasemapGallery(
+                const basemapDiv = toolbar.createTool(tool);
+                const basemap = new BasemapGallery(
                     {
                         id: "basemapGallery",
                         map: this.map,
@@ -1443,10 +1443,10 @@ define([
                 );
 
                 on(basemap, 'load', lang.hitch(this, function() {
-                    var dataItems = this.config.response.itemInfo.itemData;
-                    var bm = dataItems.baseMap;
+                    const dataItems = this.config.response.itemInfo.itemData;
+                    const bm = dataItems.baseMap;
 
-                    var bmIndex=-1;
+                    let bmIndex=-1;
                     try {
                         if(isIE11) {
                             basemap.basemaps.some(function(b, i) {
@@ -1463,7 +1463,7 @@ define([
                         }
                         if(bmIndex<0)
                         {
-                            var basemap1 = new Basemap({
+                            const basemap1 = new Basemap({
                                 layers: bm.baseMapLayers,
                                 title: bm.title,
                                 thumbnailUrl: (bm.title.indexOf('Canada') >= 0) ? "images/genericCanadaThumbMap.png":"images/genericThumbMap.png"

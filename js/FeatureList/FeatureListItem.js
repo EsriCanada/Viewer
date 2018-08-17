@@ -1,14 +1,11 @@
 define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "esri/kernel",
     "dijit/_WidgetBase", "dijit/_TemplatedMixin", "dojo/on",
-    "dojo/Deferred", "dojo/promise/all", "dojo/query",
-    "esri/tasks/query", "esri/tasks/QueryTask",
+    "dojo/query",
+    "esri/tasks/query", 
     "dojox/layout/ContentPane",
     "dojo/text!application/FeatureList/Templates/FeatureListTemplate.html",
-    "dojo/dom", "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
-    "dojo/string",
+    "dojo/dom-class", "dojo/dom-attr", "dojo/dom-construct", 
     "dojo/i18n!application/nls/FeatureList",
-    "dojo/i18n!application/nls/resources",
-    "esri/symbols/SimpleMarkerSymbol", "esri/symbols/PictureMarkerSymbol",
     "esri/symbols/CartographicLineSymbol",
     "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol",
     "esri/graphic", "esri/Color"
@@ -16,14 +13,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
     ], function (
         Evented, declare, lang, has, esriNS,
         _WidgetBase, _TemplatedMixin, on,
-        Deferred, all, query,
-        Query, QueryTask,
+        query,
+        Query, 
         ContentPane,
         FeaturelistItemTemplate, 
-        dom, domClass, domAttr, domStyle, domConstruct, event,
-        string,
-        i18n, Ri18n,
-        SimpleMarkerSymbol, PictureMarkerSymbol,
+        domClass, domAttr, domConstruct, 
+        i18n, 
         CartographicLineSymbol,
         SimpleFillSymbol, SimpleLineSymbol,
         Graphic, Color
@@ -86,7 +81,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             lang.hitch(this, this.featureList.showBadge(checkBox.checked));
 
-            const li = this.domNode;//query(checkBox).closest('li');
+            const li = this.domNode;
             // li.addClass('borderLi');
             domClass.add(li, 'borderLi');
             if(checkBox.checked)
@@ -168,7 +163,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             break;
                         case "extent":
                             markerGeometry = feature.getCenter();
-                            // marker = new SimpleMarkerSymbol
                             break;
                         case "polyline" :
                             markerGeometry = feature.geometry;
