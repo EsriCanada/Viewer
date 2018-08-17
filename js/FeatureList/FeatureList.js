@@ -285,7 +285,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 layer:layer,
                 featureList:this,
                 _restore:false,
-            }, li);
+            }, domConstruct.create('div',{},li));
         },
     
         _prevSelected: null,

@@ -81,8 +81,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             lang.hitch(this, this.featureList.showBadge(checkBox.checked));
 
-            const li = this.domNode;
-            // li.addClass('borderLi');
+            const li = this.domNode.closest('li');
             domClass.add(li, 'borderLi');
             if(checkBox.checked)
             {
