@@ -57,10 +57,11 @@ define([
 
             let appId = menuItemDataSet.appid;
             if(!appId || appId==='' || appId === "undefined" || appId === undefined) {
-                appId = /(?:[?|&]appid=)([a-z0-9]*)/gi.exec(window.location.search);
-                if(appId && appId.length===2) {
-                    appId = appId[1];
-                }
+                appId = urlParams.get('appid');
+                // appId = /(?:[?|&]appid=)([a-z0-9]*)/gi.exec(window.location.search);
+                // if(appId && appId.length===2) {
+                //     appId = appId[1];
+                // }
             }
 
             let opt = '';
