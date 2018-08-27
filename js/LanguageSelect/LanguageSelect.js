@@ -42,9 +42,9 @@ define([
 
         Click: function(e) {
             //console.log(e.target.parentElement);
-            var menuItemDataSet = query(e.target).closest('.dijitMenuItem')[0].dataset;
-            var docLocale = query('html')[0].lang;
-            var locale = menuItemDataSet.code;
+            const menuItemDataSet = query(e.target).closest('.dijitMenuItem')[0].dataset;
+            const docLocale = query('html')[0].lang;
+            let locale = menuItemDataSet.code;
             if(!locale || locale==='' || locale === "undefined" || locale === undefined)
             {
                 locale = navigator.language;
@@ -53,14 +53,28 @@ define([
 
             if(docLocale.toLowerCase() === locale) return;
 
-            var appId = menuItemDataSet.appid;
+            const urlParams = new URLSearchParams(window.location.search);
+
+            let appId = menuItemDataSet.appid;
             if(!appId || appId==='' || appId === "undefined" || appId === undefined) {
                 appId = /(?:[?|&]appid=)([a-z0-9]*)/gi.exec(window.location.search);
                 if(appId && appId.length===2) {
                     appId = appId[1];
                 }
             }
-            window.location.search=('?appid='+appId+'&locale='+locale);
+
+            let opt = '';
+            if(urlParams.has('nocache')) {
+                opt = '&nocache';
+            }
+            if(urlParams.has('reload')) {
+                opt = '&reload';
+            }
+            if(urlParams.has('unregister')) {
+                opt = '&unregister';
+            }
+
+            window.location.search=('?appid='+appId+'&locale='+locale + opt);
         },
 
         startup: function () {
