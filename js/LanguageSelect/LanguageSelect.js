@@ -66,13 +66,13 @@ define([
 
             let opt = '';
             if(urlParams.has('nocache')) {
-                opt = '&nocache';
+                opt += '&nocache';
             }
             if(urlParams.has('reload')) {
-                opt = '&reload';
+                opt += '&reload';
             }
             if(urlParams.has('unregister')) {
-                opt = '&unregister';
+                opt += '&unregister';
             }
 
             window.location.search=('?appid='+appId+'&locale='+locale + opt);
