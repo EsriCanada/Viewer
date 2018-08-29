@@ -797,13 +797,9 @@ define([
 
                     const colCells = query('.'+id+'[role="gridcell"]', this.myFeatureTable.domNode);
                     colCells.forEach(function(cell) {
-                        // domAttr.remove(cell, 'role');
                         const label = query('div', cell)[0];
-                        // domAttr.set(cell, 'aria-label', label.innerText);
                         domAttr.set(cell, 'aria-describedby', labelId);
                         domAttr.set(label, 'aria-describedby', labelId);
-                        // domAttr.set(label, 'aria-hidden', 'true');
-                        // domAttr.set(label, 'role', 'gridcell');
                     });
 
                     domAttr.set(th, 'aria-haspopup', 'true');
