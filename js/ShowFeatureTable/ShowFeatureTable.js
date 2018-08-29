@@ -790,26 +790,28 @@ define([
 
                 headersCells.forEach(lang.hitch(this, function(th) {
 
-                    // const classes = domAttr.get(th, 'class');
-                    // const id = /(dgrid-column-([0-9]+))/gm.exec(classes)[0];
-                    // const labelId = id+'-title';
+                    const classes = domAttr.get(th, 'class');
+                    const id = /(dgrid-column-([0-9]+))/gm.exec(classes)[0];
+                    const labelId = id+'-title';
+                    domAttr.set(th, 'id', labelId);
 
-                    // const headerContainer = query('div.esri-feature-table-column-header-title', th);
-                    // if(headerContainer && headerContainer.length>0) {
-                    //     domAttr.set(headerContainer[0], 'id', labelId);
-                    //     let html = headerContainer[0].outerHTML;
-                    //     headerContainer[0].outerHTML = html
-                    //         .replace(/^<div /, '<button ')
-                    //         .replace(/<\/div>$/, '</button>');
-                    // }
-                    // const colCells = query('.'+id+'[role="gridcell"], .'+id+'[role="gridcell"] div', this.myFeatureTable.domNode);
-                    // colCells.forEach(function(cell) {
-                    //     domAttr.set(cell, 'aria-describedby', labelId);
-                    // });
+                    const colCells = query('.'+id+'[role="gridcell"]', this.myFeatureTable.domNode);
+                    colCells.forEach(function(cell) {
+                        // domAttr.remove(cell, 'role');
+                        const label = query('div', cell)[0];
+                        // domAttr.set(cell, 'aria-label', label.innerText);
+                        domAttr.set(cell, 'aria-describedby', labelId);
+                        domAttr.set(label, 'aria-describedby', labelId);
+                        // domAttr.set(label, 'aria-hidden', 'true');
+                        // domAttr.set(label, 'role', 'gridcell');
+                    });
+
+                    domAttr.set(th, 'aria-haspopup', 'true');
                     on(th, 'keydown', function(ev) {
-                        console.log(th, ev);
+                        // console.log(th, ev);
                         if(ev.keyCode === 13) {
                             th.click();
+                            ev.stopPropagation();
                         }
                     })
                 }));
