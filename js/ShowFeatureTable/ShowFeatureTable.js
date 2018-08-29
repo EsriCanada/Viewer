@@ -793,19 +793,23 @@ define([
                     const classes = domAttr.get(th, 'class');
                     const id = /(dgrid-column-([0-9]+))/gm.exec(classes)[0];
                     const labelId = id+'-title';
+                    domAttr.set(th, 'id', labelId);
 
-                    const headerContainer = query('div.esri-feature-table-column-header-title', th);
-                    if(headerContainer && headerContainer.length>0) {
-                        domAttr.set(headerContainer[0], 'id', labelId);
-                        let html = headerContainer[0].outerHTML;
-                        headerContainer[0].outerHTML = html
-                            .replace(/^<div /, '<button ')
-                            .replace(/<\/div>$/, '</button>');
-                    }
-                    const colCells = query('.'+id+'[role="gridcell"], .'+id+'[role="gridcell"] div', this.myFeatureTable.domNode);
+                    const colCells = query('.'+id+'[role="gridcell"]', this.myFeatureTable.domNode);
                     colCells.forEach(function(cell) {
+                        const label = query('div', cell)[0];
                         domAttr.set(cell, 'aria-describedby', labelId);
+                        domAttr.set(label, 'aria-describedby', labelId);
                     });
+
+                    domAttr.set(th, 'aria-haspopup', 'true');
+                    on(th, 'keydown', function(ev) {
+                        // console.log(th, ev);
+                        if(ev.keyCode === 13) {
+                            th.click();
+                            ev.stopPropagation();
+                        }
+                    })
                 }));
             }));
 
