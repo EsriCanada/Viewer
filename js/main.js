@@ -340,6 +340,15 @@ define([
                 "backgroundColor",
                 this.theme.toString()
             );
+
+            // this.map.onLayerAdd = lang.hitch(this, function(ev) {
+            //     console.log('layerAdd', ev);
+            // });
+
+            // this.map.onLayerAddResult = lang.hitch(this, function(ev) {
+            //     console.log('layerAddResult', ev);
+            // });
+
             on(
                 window,
                 "orientationchange",
