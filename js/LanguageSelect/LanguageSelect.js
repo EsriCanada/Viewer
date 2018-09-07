@@ -65,15 +65,20 @@ define([
             }
 
             let opt = '';
-            if(urlParams.has('nocache')) {
-                opt += '&nocache';
+            if(urlParams.has('cache')) {
+                opt += '&cache';
+
+                const cacheVal = urlParams.get('cache');
+                if(cacheVal) {
+                    opt+= '='+cacheVal;
+                }
             }
-            if(urlParams.has('reload')) {
-                opt += '&reload';
-            }
-            if(urlParams.has('unregister')) {
-                opt += '&unregister';
-            }
+            // if(urlParams.has('reload')) {
+            //     opt += '&reload';
+            // }
+            // if(urlParams.has('unregister')) {
+            //     opt += '&unregister';
+            // }
 
             window.location.search=('?appid='+appId+'&locale='+locale + opt);
         },
