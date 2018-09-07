@@ -336,11 +336,6 @@ define([
             // domClass.remove(document.body, "app-loading");
             // domStyle.set("splashScreen", "display", "block");
 
-            query(".esriSimpleSlider").style(
-                "backgroundColor",
-                this.theme.toString()
-            );
-
             // this.map.onLayerAdd = lang.hitch(this, function(ev) {
             //     console.log('layerAdd', ev);
             // });
@@ -348,6 +343,11 @@ define([
             // this.map.onLayerAddResult = lang.hitch(this, function(ev) {
             //     console.log('layerAddResult', ev);
             // });
+
+            query(".esriSimpleSlider").style(
+                "backgroundColor",
+                this.theme.toString()
+            );
 
             on(
                 window,

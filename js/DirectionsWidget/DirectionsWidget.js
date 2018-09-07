@@ -423,7 +423,7 @@ define([
                                 domAttr.set(dojoDndHandle, 'role', 'application');
                                 domConstruct.empty(dojoDndHandle);
                                 domConstruct.create('img', {
-                                    src : '../images/upDown.18.png',
+                                    src : 'images/upDown.18.png',
                                     alt : 'up/down',
                                     class: 'upDownHandle',
                                     'aria-hidden': 'true'
