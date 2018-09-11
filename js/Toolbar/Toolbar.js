@@ -1,23 +1,29 @@
 define([
-    "dojo/Evented", "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx",
+    "dojo/Evented", "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
+    "dojo/text!application/Toolbar/Templates/Toolbar.html",
+    "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx",
     "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
     "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
     "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
-Evented, declare, win, fx, html, lang, has, dom,
+Evented, _WidgetBase, _TemplatedMixin, 
+toolbarTemplate,
+declare, win, fx, html, lang, has, dom,
 domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
-    return declare([Evented], {
+    return declare("esri.dijit.Toolbar", [_WidgetBase, _TemplatedMixin, Evented], {
         map: null,
         tools: [],
         toollist: [],
         curTool: -1,
         scrollTimer: null,
         config: {},
-        pTools: null,
         pPages: null,
 
-        constructor: function (config) {
+        templateString: toolbarTemplate,
+
+        constructor: function (config, srcRefNode) {
             this.config = config;
+            this.domNode = srcRefNode;
         },
 
         startup: function () {
@@ -30,7 +36,8 @@ on, mouse, query, Deferred) {
                 lang.hitch(this, function (error) {
                     // optional error event to listen to
                     this.emit("error", error);
-            }));
+                })
+            );
             return deferred;
         },
 
@@ -41,7 +48,7 @@ on, mouse, query, Deferred) {
             deferred = new Deferred();
             on(window, "scroll", lang.hitch(this, this._windowScrolled));
             on(window, "resize", lang.hitch(this, this._windowScrolled));
-            this.pTools = dom.byId("panelTools");
+            // this.pTools = dom.byId("panelTools");
 
             this.pPages = dom.byId("panelPages");
             //Prevent body scroll when scrolling to the end of the panel content
@@ -102,12 +109,12 @@ on, mouse, query, Deferred) {
 
         //Create a tool and return the div where you can place content
         createTool: function (tool, panelClass, loaderImg, badgeEvName) {
-            var name = tool.name;
+            const name = tool.name;
 
             // add tool
-            var refNode = this.pTools;
-            var tip = this.config.i18n.tooltips[name] || name;
-            var panelTool = domConstruct.create("div", {
+            const refNode = this.domNode;
+            const tip = this.config.i18n.tooltips[name] || name;
+            const panelTool = domConstruct.create("div", {
                 className: "panelTool",
                 id: "toolButton_" + name,
                 autofocus: true,
@@ -116,7 +123,7 @@ on, mouse, query, Deferred) {
                 "aria-label": tip,
                 'data-tip': tip,
             }, refNode);
-            var pTool = domConstruct.create("input", {
+            const pTool = domConstruct.create("input", {
                 type: "image",
                 src: "images/icons_" + this.config.icons + "/" + name + ".png",
                 // title: tip,
@@ -127,7 +134,7 @@ on, mouse, query, Deferred) {
             on(panelTool, "keypress", lang.hitch(this, this._toolKeyPress));
 
             if(badgeEvName && badgeEvName !== '') {
-                var setIndicator = domConstruct.create("img", {
+                const setIndicator = domConstruct.create("img", {
                     src:"images/"+badgeEvName+".png",
                     class:"setIndicator",
                     style:"display:none;",
@@ -142,20 +149,20 @@ on, mouse, query, Deferred) {
             this.tools.push(name);
 
             // add page
-            var page = domConstruct.create("div", {
+            const page = domConstruct.create("div", {
                 className: "page hideAttr",
                 id: "page_" + name,
                 // tabindex: 0
             }, this.pPages);
 
-            var pageContent = domConstruct.create("div", {
+            const pageContent = domConstruct.create("div", {
                 className: "pageContent",
                 id: "pageContent_" + name,
                 role: "dialog",
                 "aria-labelledby": "pagetitle_" + name,
             }, page);
 
-            var pageHeader = domConstruct.create("div", {
+            const pageHeader = domConstruct.create("div", {
                 id: "pageHeader_" + name,
                 className: "pageHeader fc bg",
                 //tabindex: 0,
@@ -185,7 +192,7 @@ on, mouse, query, Deferred) {
             //     innerHTML: "<img class='pageIcon' src ='images/icons_" + this.config.icons + "/" + name + ".png' alt=''/>"
             // }, pageHeader);
 
-            var pageBody = domConstruct.create("div", {
+            const pageBody = domConstruct.create("div", {
                 className: "pageBody",
                 tabindex: 0,
                 id: "pageBody_" + name,
@@ -322,4 +329,8 @@ on, mouse, query, Deferred) {
         //     this._updateMap();
         // }
     });
+    if (has("extend-esri")) {
+        lang.setObject("dijit.Toolbar", Widget, esriNS);
+    }
+    return Widget;
 });

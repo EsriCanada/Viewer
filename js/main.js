@@ -46,7 +46,7 @@ define([
     "dojo/query",
     "dijit/Menu",
     "dijit/CheckedMenuItem",
-    "application/toolbar",
+    "application/Toolbar/Toolbar",
     "application/has-config",
     "esri/arcgis/utils",
     "esri/lang",
@@ -491,7 +491,7 @@ define([
 
             domStyle.set("panelPages", "visibility", "hidden");
             //Add tools to the toolbar. The tools are listed in the defaults.js file
-            var toolbar = new Toolbar(this.config);
+            var toolbar = new Toolbar(this.config, dom.byId("panelTools"));
             toolbar.startup().then(
                 lang.hitch(this, function() {
                     var vSplitterTools = domConstruct.create(
