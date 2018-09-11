@@ -33,8 +33,10 @@
       "sizes": "57x57"
     }
   ],
-  "display": "fullscreen",
-  "background_color": "#ffffff",
+  "lang": "en-US",
+  "display": "standalone",
+  "orientation": "landscape-primary",
+  "background_color": "aliceblue",
   "theme_color": "#000000",
   "start_url": "index.html"
 }
