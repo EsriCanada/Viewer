@@ -27,7 +27,7 @@ on, mouse, query, Deferred) {
         },
 
         startup: function () {
-            var deferred = this._init();
+            const deferred = this._init();
             deferred.then(
                 lang.hitch(this, function (config) {
                     // optional ready event to listen to
@@ -38,14 +38,13 @@ on, mouse, query, Deferred) {
                     this.emit("error", error);
                 })
             );
+            domAttr.remove(this.domNode, 'title'); // ?!
             return deferred;
         },
 
         _init: function () {
             //Don't need deferred now setting it up just in case
-            var deferred;
-
-            deferred = new Deferred();
+            const deferred = new Deferred();
             on(window, "scroll", lang.hitch(this, this._windowScrolled));
             on(window, "resize", lang.hitch(this, this._windowScrolled));
             // this.pTools = dom.byId("panelTools");

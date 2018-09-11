@@ -2951,7 +2951,6 @@ define([
                                 this.config.response.itemInfo.item.id +
                                 "/info/" +
                                 this.config.response.itemInfo.thumbnail,
-                            title: this.config.title,
                             summary:
                                 this.config.response.itemInfo.item.snippet || ""
                         },
@@ -3642,17 +3641,17 @@ define([
                             })
                         );
 
-                        var title;
+                        let appTitle;
                         if (
                             this.config.title === null ||
                             this.config.title === ""
                         ) {
-                            title =
+                            appTitle =
                                 response.itemInfo.item.title +
                                 " - " +
                                 this.config.i18n.wcagViewer;
                         } else {
-                            title =
+                            appTitle =
                                 this.config.title +
                                 ": " +
                                 response.itemInfo.item.title +
@@ -3706,18 +3705,18 @@ define([
                         //var title = (this.config.title === null) ? response.itemInfo.item.title : this.config.title;
 
                         //if title is short make title area smaller
-                        if (title && title.length && title.length === 0) {
+                        if (appTitle && appTitle.length && appTitle.length === 0) {
                             domClass.add("panelTop", "smallerTitle");
                         } else if (
-                            title &&
-                            title.length &&
-                            title.length <= 20 &&
+                            appTitle &&
+                            appTitle.length &&
+                            appTitle.length <= 20 &&
                             !this.config.logo
                         ) {
                             domClass.add("panelTop", "smallerTitle");
                         }
 
-                        document.title = title;
+                        document.title = appTitle;
                         if (
                             this.config.title === null ||
                             this.config.title === ""
@@ -3728,7 +3727,7 @@ define([
                             dom.byId("panelText").innerHTML = this.config.title;
                         }
 
-                        this.config.title = title;
+                        this.config.title = appTitle;
                         if (!response.itemInfo.itemData)
                             response.itemInfo.itemData = {};
                         if (!response.itemInfo.itemData.applicationProperties)
