@@ -15,7 +15,7 @@ on, mouse, query, Deferred) {
         curTool: -1,
         scrollTimer: null,
         config: {},
-        pPages: null,
+        pPages: dom.byId("panelPages"),
 
         templateString: toolTemplate,
 

@@ -1995,7 +1995,7 @@ define([
                 if (has("layerManager")) {
                     let panelClass = "";
 
-                    var layersDivDesc = toolbar.createTool(
+                    toolbar.createTool(
                         tool,
                         "",
                         "reload1.gif",
@@ -2613,237 +2613,238 @@ define([
                     legendLayers: []
                 };
 
-                var printDiv = domConstruct.create(
-                    "div",
-                    {
-                        class: "PrintDialog",
-                        id: "printDialog"
-                    },
-                    toolbar.createTool(tool, "", "reload1.gif")
-                );
+                // var printDiv = domConstruct.create(
+                //     "div",
+                //     {
+                //         class: "PrintDialog",
+                //         id: "printDialog"
+                //     },
+                //     toolbar.createTool(tool, "", "reload1.gif")
+                // );
 
-                var printError = domConstruct.create(
-                    "div",
-                    {
-                        id: "printError",
-                        class: "printError"
-                    },
-                    printDiv
-                );
+                toolbar.createTool(tool, "", "reload1.gif").then(lang.hitch(this, function(printDiv) {
+                    const printError = domConstruct.create(
+                        "div",
+                        {
+                            id: "printError",
+                            class: "printError"
+                        },
+                        printDiv
+                    );
 
-                //get format
-                this.format = "PDF"; //default if nothing is specified
-                for (var i = 0; i < this.config.tools.length; i++) {
-                    if (this.config.tools[i].name === "print") {
-                        var f = this.config.tools[i].format;
-                        this.format = f.toLowerCase();
-                        break;
+                    //get format
+                    this.format = "PDF"; //default if nothing is specified
+                    for (let i = 0; i < this.config.tools.length; i++) {
+                        if (this.config.tools[i].name === "print") {
+                            let f = this.config.tools[i].format;
+                            this.format = f.toLowerCase();
+                            break;
+                        }
                     }
-                }
 
-                if (this.config.hasOwnProperty("tool_print_format")) {
-                    this.format = this.config.tool_print_format.toLowerCase();
-                }
+                    if (this.config.hasOwnProperty("tool_print_format")) {
+                        this.format = this.config.tool_print_format.toLowerCase();
+                    }
 
-                if (has("print-legend")) {
-                    legendNode = domConstruct.create(
-                        "input",
-                        {
-                            id: "legend_ck",
-                            className: "checkbox",
-                            type: "checkbox",
-                            checked: false
-                        },
-                        domConstruct.create("div", {
-                            class: "checkbox"
-                        })
-                    );
-                    var labelNode = domConstruct.create(
-                        "label",
-                        {
-                            for: "legend_ck",
-                            className: "checkbox",
-                            innerHTML: this.config.i18n.tools.print.legend
-                        },
-                        domConstruct.create("div")
-                    );
-                    domConstruct.place(legendNode, printDiv);
-                    domConstruct.place(labelNode, printDiv);
-
-                    on(
-                        legendNode,
-                        "change",
-                        lang.hitch(this, function(arg) {
-                            if (legendNode.checked) {
-                                var layers = arcgisUtils.getLegendLayers(
-                                    this.config.response
-                                );
-                                var legendLayers = array.map(layers, function(
-                                    layer
-                                ) {
-                                    return {
-                                        layerId: layer.layer.id
-                                    };
-                                });
-                                if (legendLayers.length > 0) {
-                                    layoutOptions.legendLayers = legendLayers;
-                                }
-                                array.forEach(print.templates, function(
-                                    template
-                                ) {
-                                    template.layoutOptions = layoutOptions;
-                                });
-                            } else {
-                                array.forEach(print.templates, function(
-                                    template
-                                ) {
-                                    if (
-                                        template.layoutOptions &&
-                                        template.layoutOptions.legendLayers
-                                    ) {
-                                        template.layoutOptions.legendLayers = [];
-                                    }
-                                });
-                            }
-                        })
-                    );
-                }
-
-                require([
-                    "application/has-config!print-layouts?esri/request",
-                    "application/has-config!print-layouts?esri/tasks/PrintTemplate"
-                ], lang.hitch(this, function(esriRequest, PrintTemplate) {
-                    if (!esriRequest && !PrintTemplate) {
-                        //Use the default print templates
-                        const templates = [
+                    if (has("print-legend")) {
+                        legendNode = domConstruct.create(
+                            "input",
                             {
-                                layout: "Letter ANSI A Landscape",
-                                layoutOptions: layoutOptions,
-                                label:
-                                    this.config.i18n.tools.print.layouts
-                                        .label1 +
-                                    " ( " +
-                                    this.format +
-                                    " )",
-                                format: this.format
+                                id: "legend_ck",
+                                className: "checkbox",
+                                type: "checkbox",
+                                checked: false
                             },
+                            domConstruct.create("div", {
+                                class: "checkbox"
+                            })
+                        );
+                        var labelNode = domConstruct.create(
+                            "label",
                             {
-                                layout: "Letter ANSI A Portrait",
-                                layoutOptions: layoutOptions,
-                                label:
-                                    this.config.i18n.tools.print.layouts
-                                        .label2 +
-                                    " ( " +
-                                    this.format +
-                                    " )",
-                                format: this.format
-                            },
-                            {
-                                layout: "Letter ANSI A Landscape",
-                                layoutOptions: layoutOptions,
-                                label:
-                                    this.config.i18n.tools.print.layouts
-                                        .label3 + " ( image )",
-                                format: "PNG32"
-                            },
-                            {
-                                layout: "Letter ANSI A Portrait",
-                                layoutOptions: layoutOptions,
-                                label:
-                                    this.config.i18n.tools.print.layouts
-                                        .label4 + " ( image )",
-                                format: "PNG32"
-                            }
-                        ];
-
-                        print = new Print(
-                            {
-                                map: this.map,
-                                id: "printButton",
-                                templates: templates,
-                                url: this.config.helperServices.printTask.url
+                                for: "legend_ck",
+                                className: "checkbox",
+                                innerHTML: this.config.i18n.tools.print.legend
                             },
                             domConstruct.create("div")
                         );
-                        domConstruct.place(
-                            print.printDomNode,
-                            printDiv,
-                            "first"
-                        );
-
-                        print.startup();
-
-                        this._addPrintArrowButton();
+                        domConstruct.place(legendNode, printDiv);
+                        domConstruct.place(labelNode, printDiv);
 
                         on(
-                            print,
-                            "print-start",
-                            lang.hitch(this, function(ev) {
-                                const printError = dojo.byId("printError");
-                                if (printError) printError.innerHTML = "";
-
-                                const loading_print = dojo.byId("loading_print");
-                                domClass.replace(
-                                    loading_print,
-                                    "showLoading",
-                                    "hideLoading"
-                                );
-                            })
-                        );
-
-                        on(
-                            print,
-                            "print-complete",
-                            lang.hitch(this, function(ev) {
-                                this._addPrintArrowButton();
-                                const loading_print = dojo.byId("loading_print");
-                                domClass.replace(
-                                    loading_print,
-                                    "hideLoading",
-                                    "showLoading"
-                                );
-                            })
-                        );
-
-                        on(
-                            print,
-                            "error",
-                            lang.hitch(this, function(ev) {
-                                // console.log(ev);
-                                // alert(ev);
-                                var printError = dojo.byId("printError");
-                                if (printError) {
-                                    printError.innerHTML =
-                                        "<span>" + ev + "</span><br/>";
-                                    var a = domConstruct.create(
-                                        "a",
-                                        {
-                                            href: "#",
-                                            innerHTML: this.config.i18n.tools
-                                                .print.clearGraphicLayer
-                                        },
-                                        printError
+                            legendNode,
+                            "change",
+                            lang.hitch(this, function(arg) {
+                                if (legendNode.checked) {
+                                    var layers = arcgisUtils.getLegendLayers(
+                                        this.config.response
                                     );
-                                    on(
-                                        a,
-                                        "click",
-                                        lang.hitch(this, function() {
-                                            this.map.graphics.clear();
-                                        })
-                                    );
+                                    var legendLayers = array.map(layers, function(
+                                        layer
+                                    ) {
+                                        return {
+                                            layerId: layer.layer.id
+                                        };
+                                    });
+                                    if (legendLayers.length > 0) {
+                                        layoutOptions.legendLayers = legendLayers;
+                                    }
+                                    array.forEach(print.templates, function(
+                                        template
+                                    ) {
+                                        template.layoutOptions = layoutOptions;
+                                    });
+                                } else {
+                                    array.forEach(print.templates, function(
+                                        template
+                                    ) {
+                                        if (
+                                            template.layoutOptions &&
+                                            template.layoutOptions.legendLayers
+                                        ) {
+                                            template.layoutOptions.legendLayers = [];
+                                        }
+                                    });
                                 }
-
-                                var loading_print = dojo.byId("loading_print");
-                                domClass.replace(
-                                    loading_print,
-                                    "hideLoading",
-                                    "showLoading"
-                                );
-                                this._addPrintArrowButton();
                             })
                         );
+                    }
 
-                        deferred.resolve(true);
+                    require([
+                        "application/has-config!print-layouts?esri/request",
+                        "application/has-config!print-layouts?esri/tasks/PrintTemplate"
+                    ], lang.hitch(this, function(esriRequest, PrintTemplate) {
+                        if (!esriRequest && !PrintTemplate) {
+                            //Use the default print templates
+                            const templates = [
+                                {
+                                    layout: "Letter ANSI A Landscape",
+                                    layoutOptions: layoutOptions,
+                                    label:
+                                        this.config.i18n.tools.print.layouts
+                                            .label1 +
+                                        " ( " +
+                                        this.format +
+                                        " )",
+                                    format: this.format
+                                },
+                                {
+                                    layout: "Letter ANSI A Portrait",
+                                    layoutOptions: layoutOptions,
+                                    label:
+                                        this.config.i18n.tools.print.layouts
+                                            .label2 +
+                                        " ( " +
+                                        this.format +
+                                        " )",
+                                    format: this.format
+                                },
+                                {
+                                    layout: "Letter ANSI A Landscape",
+                                    layoutOptions: layoutOptions,
+                                    label:
+                                        this.config.i18n.tools.print.layouts
+                                            .label3 + " ( image )",
+                                    format: "PNG32"
+                                },
+                                {
+                                    layout: "Letter ANSI A Portrait",
+                                    layoutOptions: layoutOptions,
+                                    label:
+                                        this.config.i18n.tools.print.layouts
+                                            .label4 + " ( image )",
+                                    format: "PNG32"
+                                }
+                            ];
+
+                            print = new Print(
+                                {
+                                    map: this.map,
+                                    id: "printButton",
+                                    templates: templates,
+                                    url: this.config.helperServices.printTask.url
+                                },
+                                domConstruct.create("div")
+                            );
+                            domConstruct.place(
+                                print.printDomNode,
+                                printDiv,
+                                "first"
+                            );
+
+                            print.startup();
+
+                            this._addPrintArrowButton();
+
+                            on(
+                                print,
+                                "print-start",
+                                lang.hitch(this, function(ev) {
+                                    const printError = dojo.byId("printError");
+                                    if (printError) printError.innerHTML = "";
+
+                                    const loading_print = dojo.byId("loading_print");
+                                    domClass.replace(
+                                        loading_print,
+                                        "showLoading",
+                                        "hideLoading"
+                                    );
+                                })
+                            );
+
+                            on(
+                                print,
+                                "print-complete",
+                                lang.hitch(this, function(ev) {
+                                    this._addPrintArrowButton();
+                                    const loading_print = dojo.byId("loading_print");
+                                    domClass.replace(
+                                        loading_print,
+                                        "hideLoading",
+                                        "showLoading"
+                                    );
+                                })
+                            );
+
+                            on(
+                                print,
+                                "error",
+                                lang.hitch(this, function(ev) {
+                                    // console.log(ev);
+                                    // alert(ev);
+                                    var printError = dojo.byId("printError");
+                                    if (printError) {
+                                        printError.innerHTML =
+                                            "<span>" + ev + "</span><br/>";
+                                        var a = domConstruct.create(
+                                            "a",
+                                            {
+                                                href: "#",
+                                                innerHTML: this.config.i18n.tools
+                                                    .print.clearGraphicLayer
+                                            },
+                                            printError
+                                        );
+                                        on(
+                                            a,
+                                            "click",
+                                            lang.hitch(this, function() {
+                                                this.map.graphics.clear();
+                                            })
+                                        );
+                                    }
+
+                                    var loading_print = dojo.byId("loading_print");
+                                    domClass.replace(
+                                        loading_print,
+                                        "hideLoading",
+                                        "showLoading"
+                                    );
+                                    this._addPrintArrowButton();
+                                })
+                            );
+
+                            deferred.resolve(true);
                         return;
                     }
 
@@ -2919,6 +2920,7 @@ define([
                             deferred.resolve(true);
                         })
                     );
+                }))
                 }));
             }));
 
@@ -2943,36 +2945,38 @@ define([
             var deferred = new Deferred();
 
             if (has("share")) {
-                var shareDiv = domConstruct.create(
-                    "div",
-                    { class: "pageBody" },
-                    toolbar.createTool(tool)
-                ); //);
+                // var shareDiv = domConstruct.create(
+                //     "div",
+                //     { class: "pageBody" },
+                //     toolbar.createTool(tool)
+                // ); //);
 
-                require(["application/ShareDialog"], lang.hitch(this, function(ShareDialog) {
-                    const shareDialog = new ShareDialog(
-                        {
-                            bitlyLogin: this.config.bitlyLogin,
-                            bitlyKey: this.config.bitlyKey,
-                            map: this.map,
-                            image:
-                                this.config.sharinghost +
-                                "/sharing/rest/content/items/" +
-                                this.config.response.itemInfo.item.id +
-                                "/info/" +
-                                this.config.response.itemInfo.thumbnail,
-                            summary:
-                                this.config.response.itemInfo.item.snippet || ""
-                        },
-                        shareDiv
-                    );
-                    // domClass.add(shareDialog.domNode, "margin");
-                    shareDialog.startup();
-                }));
+                toolbar.createTool(tool).then(lang.hitch(this, function(shareDiv) {
+                    require(["application/ShareDialog"], lang.hitch(this, function(ShareDialog) {
+                        const shareDialog = new ShareDialog(
+                            {
+                                bitlyLogin: this.config.bitlyLogin,
+                                bitlyKey: this.config.bitlyKey,
+                                map: this.map,
+                                image:
+                                    this.config.sharinghost +
+                                    "/sharing/rest/content/items/" +
+                                    this.config.response.itemInfo.item.id +
+                                    "/info/" +
+                                    this.config.response.itemInfo.thumbnail,
+                                summary:
+                                    this.config.response.itemInfo.item.snippet || ""
+                            },
+                            shareDiv
+                        );
+                        // domClass.add(shareDialog.domNode, "margin");
+                        shareDialog.startup();
+                    }));
 
-                //domClass.add(dom.byId('_dialogNode'),'margin')
-                deferred.resolve(true);
-            } else {
+                    //domClass.add(dom.byId('_dialogNode'),'margin')
+                    deferred.resolve(true);                
+                }))
+                } else {
                 deferred.resolve(false);
             }
 
