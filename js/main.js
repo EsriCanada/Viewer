@@ -1691,7 +1691,7 @@ define([
         _addDetails: function(tool, toolbar, deferred) {
             //Add the default map description panel
             if (has("details")) {
-                var description =
+                const description =
                     this.config.description ||
                     this.config.response.itemInfo.item.description ||
                     this.config.response.itemInfo.item.snippet ||
@@ -1703,7 +1703,7 @@ define([
 
                         detailDiv.innerHTML =
                             "<div id='detailDiv' tabindex=0>" + description + "</div>";
-                        // detailDiv = dom.byId("detailDiv");
+                        detailDiv = dom.byId("detailDiv");
                         if (!has("instructions")) {
                             domClass.add(detailDiv, "detailFull");
                         }

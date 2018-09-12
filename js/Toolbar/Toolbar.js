@@ -15,8 +15,6 @@ on, mouse, query, Deferred) {
         map: null,
         tools: [],
         toollist: [],
-        curTool: -1,
-        scrollTimer: null,
         config: {},
         pPages: null,
 

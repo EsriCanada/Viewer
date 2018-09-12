@@ -11,9 +11,6 @@ declare, win, fx, html, lang, has, dom,
 domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
     return declare("esri.dijit.Tool", [_WidgetBase, _TemplatedMixin, Evented], {
-        map: null,
-        curTool: -1,
-        scrollTimer: null,
         config: {},
         pPages: dom.byId("panelPages"),
 
