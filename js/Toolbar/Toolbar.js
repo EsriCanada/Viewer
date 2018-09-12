@@ -1,12 +1,13 @@
 define([
     "dojo/Evented", "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
     "dojo/text!application/Toolbar/Templates/Toolbar.html",
+    "application/Toolbar/Tool",
     "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx",
     "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
     "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
     "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
 Evented, _WidgetBase, _TemplatedMixin, 
-toolbarTemplate,
+toolbarTemplate, Tool,
 declare, win, fx, html, lang, has, dom,
 domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
@@ -108,6 +109,18 @@ on, mouse, query, Deferred) {
 
         //Create a tool and return the div where you can place content
         createTool: function (tool, panelClass, loaderImg, badgeEvName) {
+            const _tool = new Tool({
+                name: tool.name,
+                icon: "images/icons_" + this.config.icons + "/" + tool.name + ".png",
+                panelClass: panelClass, 
+                loaderImg: loaderImg, 
+                badgeEvName: badgeEvName,
+                i18n: this.config.i18n,
+            }, domConstruct.create("div", {}, dom.byId("panelTools")));
+
+            _tool.startup();
+            return _tool.pageBody;
+
             const name = tool.name;
 
             // add tool
