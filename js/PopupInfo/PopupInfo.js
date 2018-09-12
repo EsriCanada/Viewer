@@ -605,13 +605,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         showBadge : function(show) {
-            var indicator = dom.byId('badge_followTheMapMode');
+            const badge = dom.byId('badge_followTheMapMode');
             if (show) {
-                domStyle.set(indicator,'display','');
-                domAttr.set(indicator, "title", i18n.widgets.popupInfo.followTheMap);
-                domAttr.set(indicator, "alt", i18n.widgets.popupInfo.followTheMap);
+                domStyle.set(badge,'display','');
+                domAttr.set(badge, "title", i18n.widgets.popupInfo.followTheMap);
+                domAttr.set(badge, "alt", i18n.widgets.popupInfo.followTheMap);
             } else {
-                domStyle.set(indicator,'display','none');
+                domStyle.set(badge,'display','none');
             }
         },
 

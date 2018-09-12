@@ -108,7 +108,7 @@ on, mouse, query, Deferred) {
         },
 
         //Create a tool and return the div where you can place content
-        createTool: function (tool, panelClass, loaderImg, badgeEvName) {
+        createTool: lang.hitch(this, function (tool, panelClass, loaderImg, badgeEvName) {
             const _tool = new Tool({
                 name: tool.name,
                 icon: "images/icons_" + this.config.icons + "/" + tool.name + ".png",
@@ -120,110 +120,7 @@ on, mouse, query, Deferred) {
             }, domConstruct.create("div", {}, dom.byId("panelTools")));
 
             return _tool.startup();
-            // return _tool.pageBody;
-
-            const name = tool.name;
-
-            // add tool
-            const refNode = this.domNode;
-            const tip = this.config.i18n.tooltips[name] || name;
-            const panelTool = domConstruct.create("div", {
-                className: "panelTool",
-                id: "toolButton_" + name,
-                autofocus: true,
-                // tabindex: -1,
-                tabindex: 0,
-                "aria-label": tip,
-                'data-tip': tip,
-            }, refNode);
-            const pTool = domConstruct.create("input", {
-                type: "image",
-                src: "images/icons_" + this.config.icons + "/" + name + ".png",
-                // title: tip,
-                tabindex:-1,
-                alt: tip
-            }, panelTool);
-
-            on(panelTool, "keypress", lang.hitch(this, this._toolKeyPress));
-
-            if(badgeEvName && badgeEvName !== '') {
-                const setIndicator = domConstruct.create("img", {
-                    src:"images/"+badgeEvName+".png",
-                    class:"setIndicator",
-                    style:"display:none;",
-                    tabindex:0,
-                    id: 'badge_'+badgeEvName,
-                    alt:""
-                });
-                domConstruct.place(setIndicator, panelTool);
-            }
-
-            on(pTool, "click", lang.hitch(this, this._toolClick, name));
-            this.tools.push(name);
-
-            // add page
-            const page = domConstruct.create("div", {
-                className: "page hideAttr",
-                id: "page_" + name,
-                // tabindex: 0
-            }, this.pPages);
-
-            const pageContent = domConstruct.create("div", {
-                className: "pageContent",
-                id: "pageContent_" + name,
-                role: "dialog",
-                "aria-labelledby": "pagetitle_" + name,
-            }, page);
-
-            const pageHeader = domConstruct.create("div", {
-                id: "pageHeader_" + name,
-                className: "pageHeader fc bg",
-                //tabindex: 0,
-            },
-            pageContent);
-
-            domConstruct.create("h2", {
-                className: "pageTitle fc",
-                innerHTML: this.config.i18n.tooltips[name] || name,
-                //style: 'display:inline',
-                id: "pagetitle_" + name
-            }, pageHeader);
-
-            if(loaderImg && loaderImg !=="") {
-                domConstruct.create('img',{
-                    src: 'images/'+loaderImg,//reload1.gif',
-                    alt: 'Reloading',
-                    title: 'Reloading'
-                }, domConstruct.create("div", {
-                    id: "loading_" + name,
-                    class: 'hideLoading small-loading'
-                }, pageHeader));
-            }
-
-            // domConstruct.create("div", {
-            //     className: "pageHeaderImg",
-            //     innerHTML: "<img class='pageIcon' src ='images/icons_" + this.config.icons + "/" + name + ".png' alt=''/>"
-            // }, pageHeader);
-
-            const pageBody = domConstruct.create("div", {
-                className: "pageBody",
-                tabindex: 0,
-                id: "pageBody_" + name,
-            },
-            pageContent);
-            domClass.add(pageBody, panelClass);
-
-            on(this, "updateTool_" + name, lang.hitch(name, function() {
-                var page = dom.byId('pageBody_'+this);
-                if(page) page.focus();
-                var focusables = dojo.query('#pageBody_'+this+' [tabindex=0]');
-                if(focusables && focusables.length>0){
-                    focusables[0].focus();
-                }
-            }));
-
-            return pageBody;
-        },
+        }),
 
         OpenTool: function(name) {
             var page = dom.byId("page_"+name);

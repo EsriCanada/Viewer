@@ -30,17 +30,17 @@ on, mouse, query, Deferred) {
             this.tip = config.i18n.tooltips[this.name] || this.name;
             // this.tools = config.tools;
 
-            if(config.badgeEvName && config.badgeEvName !== '') {
-                const setIndicator = domConstruct.create("img", {
-                    src:"images/"+config.badgeEvName+".png",
-                    class:"setIndicator",
-                    style:"display:none;",
-                    tabindex:0,
-                    id: 'badge_'+config.badgeEvName,
-                    alt:""
-                });
-                // domConstruct.place(setIndicator, this.panelTool);
-            }
+            // if(this.config.badgeEvName && this.config.badgeEvName !== '') {
+            //     const setIndicator = domConstruct.create("img", {
+            //         src:"images/"+config.badgeEvName+".png",
+            //         class:"setIndicator",
+            //         style:"display:none;",
+            //         tabindex:0,
+            //         id: 'badge_'+config.badgeEvName,
+            //         alt:""
+            //     });
+            //     domConstruct.place(setIndicator, this.panelTool);
+            // }
 
             // this.tools.push(this.name);
 
@@ -109,6 +109,20 @@ on, mouse, query, Deferred) {
             // return pageBody;
         },
 
+        postCreate : function() {
+            if(this.config.badgeEvName && this.config.badgeEvName !== '') {
+                domConstruct.create("img", {
+                    src:"images/"+this.config.badgeEvName+".png",
+                    class:"setIndicator",
+                    style:"display:none;",
+                    tabindex:0,
+                    id: 'badge_'+this.config.badgeEvName,
+                    alt:"badge"
+                }, this.panelTool);
+            }
+
+        },
+
         startup: function () {
             return this.deferrer.promise;
         },
@@ -131,7 +145,7 @@ on, mouse, query, Deferred) {
             }
         }),
 
-        execute: lang.hitch(this, function (ev) {
+        execute: function (ev) {
             console.log(ev);
 
             const defaultBtns = dojo.query(".panelToolDefault");
@@ -143,7 +157,7 @@ on, mouse, query, Deferred) {
             // this._updateMap(); // ! out of place
             let active = false;
             const page = dom.byId("page_"+this.name);
-            //// const hidden = page.classList.contains("hideAttr");
+            const hidden = page.classList.contains("hideAttr");
             const pages = query(".page");
             pages.forEach(function(p){
                 if(hidden && p === page) {
@@ -176,7 +190,7 @@ on, mouse, query, Deferred) {
             if(!active && defaultBtns !== undefined) {
                 //// this._activateDefautTool();
             }
-        }),
+        },
 
         // _atachEnterKey: function(onButton, clickButton) {
         //     on(onButton, 'keydown', lang.hitch(clickButton, function(event){
