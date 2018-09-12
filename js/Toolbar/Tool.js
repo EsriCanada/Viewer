@@ -12,8 +12,6 @@ domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
     return declare("esri.dijit.Tool", [_WidgetBase, _TemplatedMixin, Evented], {
         map: null,
-        tools: [],
-        toollist: [],
         curTool: -1,
         scrollTimer: null,
         config: {},
@@ -22,6 +20,7 @@ on, mouse, query, Deferred) {
         templateString: toolTemplate,
 
         constructor: function (config, srcRefNode) {
+            this.deferrer = new Deferred();
             this.config = config;
 
             //(tool, panelClass, loaderImg, badgeEvName) {
@@ -29,6 +28,7 @@ on, mouse, query, Deferred) {
             this.id = "toolButton_" + this.name;
             this.icon = config.icon;
             this.tip = config.i18n.tooltips[this.name] || this.name;
+            // this.tools = config.tools;
 
             if(config.badgeEvName && config.badgeEvName !== '') {
                 const setIndicator = domConstruct.create("img", {
@@ -42,7 +42,7 @@ on, mouse, query, Deferred) {
                 // domConstruct.place(setIndicator, this.panelTool);
             }
 
-            this.tools.push(this.name);
+            // this.tools.push(this.name);
 
             // add page
             const page = domConstruct.create("div", {
@@ -105,10 +105,12 @@ on, mouse, query, Deferred) {
                 }
             }));
 
+            this.deferrer.resolve(this.pageBody);
             // return pageBody;
         },
 
         startup: function () {
+            return this.deferrer.promise;
         },
 
         IsToolSelected: function(name) {
@@ -161,8 +163,8 @@ on, mouse, query, Deferred) {
                 }
             }));
             const tool = dom.byId("toolButton_"+this.name);
-            const tools = query(".panelTool");
-            tools.forEach(lang.hitch(this, function(t){
+            const ptools = query(".panelTool");
+            ptools.forEach(lang.hitch(this, function(t){
                 if(active && t === tool) {
                     domClass.add(t, "panelToolActive");
                     // this.emit("updateTool_"+this.name);

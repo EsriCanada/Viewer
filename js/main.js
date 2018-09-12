@@ -1280,36 +1280,37 @@ define([
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
             var deferred = new Deferred();
             if (has("features")) {
-                var featuresDiv = toolbar.createTool(
+                toolbar.createTool(
                     tool,
                     "",
                     "reload1.gif",
                     "featureSelected"
-                );
+                ).then(lang.hitch(this, function(featuresDiv) {
+                    const layers = this.config.response.itemInfo.itemData
+                        .operationalLayers;
 
-                var layers = this.config.response.itemInfo.itemData
-                    .operationalLayers;
+                    require(["application/FeatureList/FeatureList"], lang.hitch(this, function(FeatureList) {
+                        const featureList = new FeatureList(
+                            {
+                                map: this.map,
+                                layers: layers,
+                                toolbar: toolbar,
+                                animatedMarker: this.config.animated_marker,
+                                markerImage: this.config.marker,
+                                markerSize: this.config.marker_size
+                            },
+                            featuresDiv
+                        );
+                        featureList.startup();
 
-                require(["application/FeatureList/FeatureList"], lang.hitch(this, function(FeatureList) {
-                    const featureList = new FeatureList(
-                        {
-                            map: this.map,
-                            layers: layers,
-                            toolbar: toolbar,
-                            animatedMarker: this.config.animated_marker,
-                            markerImage: this.config.marker,
-                            markerSize: this.config.marker_size
-                        },
-                        featuresDiv
-                    );
-                    featureList.startup();
+                        // on(toolbar, 'updateTool_features', lang.hitch(this, function(name) {
+                        //     dom.byId('pageBody_features').focus();
+                        // }));
+                    }));
 
-                    // on(toolbar, 'updateTool_features', lang.hitch(this, function(name) {
-                    //     dom.byId('pageBody_features').focus();
-                    // }));
+                    deferred.resolve(true);
                 }));
 
-                deferred.resolve(true);
             } else {
                 // window._prevSelected = null;
                 deferred.resolve(false);
@@ -1364,36 +1365,35 @@ define([
         _addDirections: function(tool, toolbar) {
             var deferred = new Deferred();
             if (has("directions")) {
-                var directionsDiv = toolbar.createTool(tool);
-
-                this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
-                    require(["application/DirectionsWidget/DirectionsWidget"], lang.hitch(this, function(DirectionsWidget) {
-                        this.directions = new DirectionsWidget({
-                            map: this.map,
-                            deferred: deferred,
-                            toolbar: toolbar,
-                            iconsColor: this.config.icons,
-                            directionsProxy: this.config.directionsProxy,
-                            options: {
-                                locator: this.config.directions_locator,
-                                stops: this.config.directions_stops,
-                                barriers: this.config.directions_barriers,
-                                optimize: this.config.directions_optimize,
-                                print: this.config.directions_print,
-                                enhancedSymbols: this.config.directions_symbols,
-                                allowDragging: this.config.directions_dragging,
-                                changeStopOrder: this.config.directions_stopOrder,
-                                segmentPopup: this.config.directions_popup,
-                                imagesURL: this.config.directions_imagesURL,
-                                printPage: this.config.directions_printPageURL
-                            },
-                            superNavigator: this.superNav,
-                        }, directionsDiv);
-                        this.directions.startup();
+                toolbar.createTool(tool).then(lang.hitch(this, function(directionsDiv) {
+                    this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
+                        require(["application/DirectionsWidget/DirectionsWidget"], lang.hitch(this, function(DirectionsWidget) {
+                            this.directions = new DirectionsWidget({
+                                map: this.map,
+                                deferred: deferred,
+                                toolbar: toolbar,
+                                iconsColor: this.config.icons,
+                                directionsProxy: this.config.directionsProxy,
+                                options: {
+                                    locator: this.config.directions_locator,
+                                    stops: this.config.directions_stops,
+                                    barriers: this.config.directions_barriers,
+                                    optimize: this.config.directions_optimize,
+                                    print: this.config.directions_print,
+                                    enhancedSymbols: this.config.directions_symbols,
+                                    allowDragging: this.config.directions_dragging,
+                                    changeStopOrder: this.config.directions_stopOrder,
+                                    segmentPopup: this.config.directions_popup,
+                                    imagesURL: this.config.directions_imagesURL,
+                                    printPage: this.config.directions_printPageURL
+                                },
+                                superNavigator: this.superNav,
+                            }, directionsDiv);
+                            this.directions.startup();
+                        }));
+                        deferred.resolve(true);
                     }));
-                    deferred.resolve(true);
                 }));
-
             } else {
                 deferred.resolve(false);
             }
@@ -1404,28 +1404,28 @@ define([
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
             var deferred = new Deferred();
             if (has("filter")) {
-                var filterDiv = toolbar.createTool(tool, "", "", "someFilters");
+                toolbar.createTool(tool, "", "", "someFilters").then(lang.hitch(this, function(filterDiv) {
+                    const layers = this.config.response.itemInfo.itemData
+                        .operationalLayers;
 
-                var layers = this.config.response.itemInfo.itemData
-                    .operationalLayers;
+                    require(["application/Filters/Filters"], lang.hitch(this, function(Filters) {
+                        const filter = new Filters(
+                            {
+                                map: this.map,
+                                layers: layers,
+                                toolbar: toolbar
+                            },
+                            filterDiv
+                        );
+                        filter.startup();
+                    }));
 
-                require(["application/Filters/Filters"], lang.hitch(this, function(Filters) {
-                    const filter = new Filters(
-                        {
-                            map: this.map,
-                            layers: layers,
-                            toolbar: toolbar
-                        },
-                        filterDiv
-                    );
-                    filter.startup();
+                    // on(toolbar, 'updateTool_filter', lang.hitch(this, function(name) {
+                    //     dom.byId('pageBody_filter').focus();
+                    // }));
+
+                    deferred.resolve(true);
                 }));
-
-                // on(toolbar, 'updateTool_filter', lang.hitch(this, function(name) {
-                //     dom.byId('pageBody_filter').focus();
-                // }));
-
-                deferred.resolve(true);
             } else {
                 // window._prevSelected = null;
                 deferred.resolve(false);
@@ -1439,183 +1439,184 @@ define([
             if (has("layerManager")) {
                 deferred.resolve(true);
             } else if (has("basemap")) {
-                const basemapDiv = toolbar.createTool(tool);
-                const basemap = new BasemapGallery(
-                    {
-                        id: "basemapGallery",
-                        map: this.map,
-                        showArcGISBasemaps: true,
-                        portalUrl: this.config.sharinghost,
-                        basemapsGroup: this._getBasemapGroup()
-                    },
-                    domConstruct.create("div", {}, basemapDiv)
-                );
-
-                on(basemap, 'load', lang.hitch(this, function() {
-                    const dataItems = this.config.response.itemInfo.itemData;
-                    const bm = dataItems.baseMap;
-
-                    let bmIndex=-1;
-                    try {
-                        if(isIE11) {
-                            basemap.basemaps.some(function(b, i) {
-                                if (b.title === bm.title) {
-                                    bmIndex = i;
-                                    return true;
-                                }
-                            });
-                        }
-                        else {
-                            bmIndex = basemap.basemaps.findIndex(function(b) {
-                                return b.title === bm.title;
-                            });
-                        }
-                        if(bmIndex<0)
+                toolbar.createTool(tool).then(lang.hitch(this, function(basemapDiv) {
+                    const basemap = new BasemapGallery(
                         {
-                            const basemap1 = new Basemap({
-                                layers: bm.baseMapLayers,
-                                title: bm.title,
-                                thumbnailUrl: (bm.title.indexOf('Canada') >= 0) ? "images/genericCanadaThumbMap.png":"images/genericThumbMap.png"
-                            });
-                            basemap.add(basemap1);
+                            id: "basemapGallery",
+                            map: this.map,
+                            showArcGISBasemaps: true,
+                            portalUrl: this.config.sharinghost,
+                            basemapsGroup: this._getBasemapGroup()
+                        },
+                        domConstruct.create("div", {}, basemapDiv)
+                    );
 
-                            basemap.select(basemap1.id);
-                        }
-                        else {
-                            basemap.select(basemap.basemaps[bmIndex].id);
-                        }
-                    } catch (ex) {
-                        console.log('IE11 Error', ex);
-                    }
+                    on(basemap, 'load', lang.hitch(this, function() {
+                        const dataItems = this.config.response.itemInfo.itemData;
+                        const bm = dataItems.baseMap;
 
-                }));
-                basemap.startup();
-
-                on(
-                    basemap,
-                    "load",
-                    lang.hitch(basemap, function() {
-                        var list = this.domNode.querySelector("div");
-                        domAttr.set(list, "role", "list");
-
-                        var galleryNodeObserver = new MutationObserver(function(
-                            mutations
-                        ) {
-                            mutations.forEach(function(mutation) {
-                                //console.log(mutation);
-                                var node = mutation.target;
-                                var aSpan = node.querySelector("a span");
-                                var l = aSpan.innerText;
-                                if (
-                                    dojo.hasClass(
-                                        node,
-                                        "esriBasemapGallerySelectedNode"
-                                    )
-                                ) {
-                                    l +=
-                                        " " +
-                                        this.config.i18n.tools.basemapGallery
-                                            .selected;
-                                }
-                                l += ".";
-                                //node.querySelector('a').focus();
-                                domAttr.set(aSpan, "aria-label", l);
-                                //aSpan.focus();
-                            });
-                        });
-
-                        var observerCfg = {
-                            attributes: true,
-                            childList: false,
-                            characterData: false
-                        };
-
-                        var nodes = this.domNode.querySelectorAll(
-                            ".esriBasemapGalleryNode"
-                        );
-                        array.forEach(nodes, function(node) {
-                            domAttr.set(node, "role", "listitem");
-                            //domAttr.set(node, "aria-hidden", "true");
-
-                            galleryNodeObserver.observe(node, observerCfg);
-
-                            var img = node.querySelector("img");
-                            img.alt = "";
-                            domAttr.set(img, "aria-hidden", true);
-                            domAttr.remove(img, "title");
-                            domAttr.remove(img, "tabindex");
-
-                            var aNode = node.querySelector("a");
-                            domAttr.set(aNode, "tabindex", -1);
-                            var labelNode = node.querySelector(
-                                ".esriBasemapGalleryLabelContainer"
-                            );
-                            domAttr.remove(labelNode.firstChild, "alt");
-                            domAttr.remove(labelNode.firstChild, "title");
-                            dojo.place(labelNode, aNode, "last");
-
-                            var aSpan = node.querySelector("a span");
-                            var aSpanLabel = aSpan.innerHTML
-                                .toLowerCase()
-                                .replace(/\s/g, "_");
-                            try {
-                                var localizedLabel =
-                                    i18n_BaseMapLabels.baseMapLabels[
-                                        aSpanLabel
-                                    ];
-                                if (
-                                    localizedLabel &&
-                                    localizedLabel !== undefined
-                                )
-                                    aSpan.innerText = localizedLabel;
-                                var l = aSpan.innerText;
-                                if (
-                                    dojo.hasClass(
-                                        node,
-                                        "esriBasemapGallerySelectedNode"
-                                    )
-                                ) {
-                                    l +=
-                                        " " +
-                                        this.config.i18n.tools.basemapGallery
-                                            .selected;
-                                }
-                                l += ".";
-                                domAttr.set(aSpan, "aria-label", l);
-                                //img.alt=aSpan.innerText;
-                            } catch (e) {}
-
-                            domAttr.set(labelNode, "tabindex", 0);
-                            on(img, "click", function() {
-                                node.focus();
-                            });
-                            on(node, "keydown", function(ev) {
-                                if (
-                                    ev.key === "Enter" ||
-                                    ev.key === " " ||
-                                    ev.char === " "
-                                ) {
-                                    aNode.click();
-                                } else if (ev.key === "Tab" && !ev.shiftKey) {
-                                    if (
-                                        node.nextElementSibling.nodeName !== "BR"
-                                    ) {
-                                        node.nextElementSibling.focus();
-                                    } else {
-                                        document
-                                            .querySelector(
-                                                "#dijit_layout_ContentPane_0_splitter"
-                                            )
-                                            .focus();
+                        let bmIndex=-1;
+                        try {
+                            if(isIE11) {
+                                basemap.basemaps.some(function(b, i) {
+                                    if (b.title === bm.title) {
+                                        bmIndex = i;
+                                        return true;
                                     }
-                                } else if (ev.key === "Tab" && ev.shiftKey) {
-                                    node.focus();
-                                }
+                                });
+                            }
+                            else {
+                                bmIndex = basemap.basemaps.findIndex(function(b) {
+                                    return b.title === bm.title;
+                                });
+                            }
+                            if(bmIndex<0)
+                            {
+                                const basemap1 = new Basemap({
+                                    layers: bm.baseMapLayers,
+                                    title: bm.title,
+                                    thumbnailUrl: (bm.title.indexOf('Canada') >= 0) ? "images/genericCanadaThumbMap.png":"images/genericThumbMap.png"
+                                });
+                                basemap.add(basemap1);
+
+                                basemap.select(basemap1.id);
+                            }
+                            else {
+                                basemap.select(basemap.basemaps[bmIndex].id);
+                            }
+                        } catch (ex) {
+                            console.log('IE11 Error', ex);
+                        }
+
+                    }));
+                    basemap.startup();
+
+                    on(
+                        basemap,
+                        "load",
+                        lang.hitch(basemap, function() {
+                            var list = this.domNode.querySelector("div");
+                            domAttr.set(list, "role", "list");
+
+                            var galleryNodeObserver = new MutationObserver(function(
+                                mutations
+                            ) {
+                                mutations.forEach(function(mutation) {
+                                    //console.log(mutation);
+                                    var node = mutation.target;
+                                    var aSpan = node.querySelector("a span");
+                                    var l = aSpan.innerText;
+                                    if (
+                                        dojo.hasClass(
+                                            node,
+                                            "esriBasemapGallerySelectedNode"
+                                        )
+                                    ) {
+                                        l +=
+                                            " " +
+                                            this.config.i18n.tools.basemapGallery
+                                                .selected;
+                                    }
+                                    l += ".";
+                                    //node.querySelector('a').focus();
+                                    domAttr.set(aSpan, "aria-label", l);
+                                    //aSpan.focus();
+                                });
                             });
-                        });
-                    })
-                );
-                deferred.resolve(true);
+
+                            var observerCfg = {
+                                attributes: true,
+                                childList: false,
+                                characterData: false
+                            };
+
+                            var nodes = this.domNode.querySelectorAll(
+                                ".esriBasemapGalleryNode"
+                            );
+                            array.forEach(nodes, function(node) {
+                                domAttr.set(node, "role", "listitem");
+                                //domAttr.set(node, "aria-hidden", "true");
+
+                                galleryNodeObserver.observe(node, observerCfg);
+
+                                var img = node.querySelector("img");
+                                img.alt = "";
+                                domAttr.set(img, "aria-hidden", true);
+                                domAttr.remove(img, "title");
+                                domAttr.remove(img, "tabindex");
+
+                                var aNode = node.querySelector("a");
+                                domAttr.set(aNode, "tabindex", -1);
+                                var labelNode = node.querySelector(
+                                    ".esriBasemapGalleryLabelContainer"
+                                );
+                                domAttr.remove(labelNode.firstChild, "alt");
+                                domAttr.remove(labelNode.firstChild, "title");
+                                dojo.place(labelNode, aNode, "last");
+
+                                var aSpan = node.querySelector("a span");
+                                var aSpanLabel = aSpan.innerHTML
+                                    .toLowerCase()
+                                    .replace(/\s/g, "_");
+                                try {
+                                    var localizedLabel =
+                                        i18n_BaseMapLabels.baseMapLabels[
+                                            aSpanLabel
+                                        ];
+                                    if (
+                                        localizedLabel &&
+                                        localizedLabel !== undefined
+                                    )
+                                        aSpan.innerText = localizedLabel;
+                                    var l = aSpan.innerText;
+                                    if (
+                                        dojo.hasClass(
+                                            node,
+                                            "esriBasemapGallerySelectedNode"
+                                        )
+                                    ) {
+                                        l +=
+                                            " " +
+                                            this.config.i18n.tools.basemapGallery
+                                                .selected;
+                                    }
+                                    l += ".";
+                                    domAttr.set(aSpan, "aria-label", l);
+                                    //img.alt=aSpan.innerText;
+                                } catch (e) {}
+
+                                domAttr.set(labelNode, "tabindex", 0);
+                                on(img, "click", function() {
+                                    node.focus();
+                                });
+                                on(node, "keydown", function(ev) {
+                                    if (
+                                        ev.key === "Enter" ||
+                                        ev.key === " " ||
+                                        ev.char === " "
+                                    ) {
+                                        aNode.click();
+                                    } else if (ev.key === "Tab" && !ev.shiftKey) {
+                                        if (
+                                            node.nextElementSibling.nodeName !== "BR"
+                                        ) {
+                                            node.nextElementSibling.focus();
+                                        } else {
+                                            document
+                                                .querySelector(
+                                                    "#dijit_layout_ContentPane_0_splitter"
+                                                )
+                                                .focus();
+                                        }
+                                    } else if (ev.key === "Tab" && ev.shiftKey) {
+                                        node.focus();
+                                    }
+                                });
+                            });
+                        })
+                    );
+                    deferred.resolve(true);
+                }));
             } else {
                 deferred.resolve(false);
             }
@@ -1633,51 +1634,52 @@ define([
                         deferred.resolve(false);
                         return;
                     }
-                    var bookmarkDiv = toolbar.createTool(tool);
-                    // var bookmarkDiv = domConstruct.create("div",{ class: "margin"}, bDiv);
-                    var bookmarks = new Bookmarks(
-                        {
-                            map: this.map,
-                            bookmarks: this.config.response.itemInfo.itemData
-                                .bookmarks
-                        },
-                        domConstruct.create("div", {}, bookmarkDiv)
-                    );
-
-                    const items = bookmarks.bookmarkDomNode.querySelectorAll(
-                        ".esriBookmarkItem"
-                    );
-                    if (items && items.length > 0) {
-                        const itemsTable =
-                            items[0].parentNode.parentNode.parentNode
-                                .parentNode;
-                        var header = document.createElement("tr");
-                        header.innerHTML =
-                            "<th style='display:none;'>Bookmarks</th>";
-                        itemsTable.insertBefore(
-                            header,
-                            items[0].parentNode.parentNode.parentNode
+                    toolbar.createTool(tool).then(lang.hitch(this, function(bookmarkDiv) {
+                        // var bookmarkDiv = domConstruct.create("div",{ class: "margin"}, bDiv);
+                        var bookmarks = new Bookmarks(
+                            {
+                                map: this.map,
+                                bookmarks: this.config.response.itemInfo.itemData
+                                    .bookmarks
+                            },
+                            domConstruct.create("div", {}, bookmarkDiv)
                         );
-                        domAttr.set(itemsTable, "role", "list");
 
-                        for (let i = 0; i < items.length; i++) {
-                            const item = items[i];
-                            // domAttr.set(item, 'tabindex', 0);
-                            const label = item.querySelector(
-                                ".esriBookmarkLabel"
+                        const items = bookmarks.bookmarkDomNode.querySelectorAll(
+                            ".esriBookmarkItem"
+                        );
+                        if (items && items.length > 0) {
+                            const itemsTable =
+                                items[0].parentNode.parentNode.parentNode
+                                    .parentNode;
+                            var header = document.createElement("tr");
+                            header.innerHTML =
+                                "<th style='display:none;'>Bookmarks</th>";
+                            itemsTable.insertBefore(
+                                header,
+                                items[0].parentNode.parentNode.parentNode
                             );
-                            // domAttr.remove(label, 'tabindex');
-                            this._atachEnterKey(item, label);
-                            domStyle.set(label, "width", "");
+                            domAttr.set(itemsTable, "role", "list");
 
-                            domAttr.set(
-                                item.parentNode.parentNode,
-                                "role",
-                                "listitem"
-                            );
+                            for (let i = 0; i < items.length; i++) {
+                                const item = items[i];
+                                // domAttr.set(item, 'tabindex', 0);
+                                const label = item.querySelector(
+                                    ".esriBookmarkLabel"
+                                );
+                                // domAttr.remove(label, 'tabindex');
+                                this._atachEnterKey(item, label);
+                                domStyle.set(label, "width", "");
+
+                                domAttr.set(
+                                    item.parentNode.parentNode,
+                                    "role",
+                                    "listitem"
+                                );
+                            }
                         }
-                    }
-                    deferred.resolve(true);
+                        deferred.resolve(true);
+                    }));
                 }));
             } else {
                 deferred.resolve(false);
@@ -1696,20 +1698,22 @@ define([
                     " ";
 
                 if (description) {
-                    var detailDiv = toolbar.createTool(tool);
+                    // var detailDiv = 
+                    toolbar.createTool(tool).then(function(detailDiv) {
 
-                    detailDiv.innerHTML =
-                        "<div id='detailDiv' tabindex=0>" + description + "</div>";
-                    detailDiv = dom.byId("detailDiv");
-                    if (!has("instructions")) {
-                        domClass.add(detailDiv, "detailFull");
-                    }
-                    else {
-                        domClass.add(detailDiv, "detailHalf");
-                    }
+                        detailDiv.innerHTML =
+                            "<div id='detailDiv' tabindex=0>" + description + "</div>";
+                        // detailDiv = dom.byId("detailDiv");
+                        if (!has("instructions")) {
+                            domClass.add(detailDiv, "detailFull");
+                        }
+                        else {
+                            domClass.add(detailDiv, "detailHalf");
+                        }
 
-                    var detailBtn = dojo.query("#toolButton_details")[0];
-                    domClass.add(detailBtn, "panelToolDefault");
+                        var detailBtn = dojo.query("#toolButton_details")[0];
+                        domClass.add(detailBtn, "panelToolDefault");
+                    });
                 }
                 deferred.resolve(true);
             } else {
@@ -1730,16 +1734,17 @@ define([
                             this.config.i18n.instructions +
                             ".html"
                     ], function(instructionsText) {
-                        var instructionsDiv = toolbar.createTool(tool);
-                        domConstruct.create(
-                            "div",
-                            {
-                                id: "instructionsDiv",
-                                innerHTML: instructionsText,
-                                tabindex: 0
-                            },
-                            domConstruct.create("div", {}, instructionsDiv)
-                        );
+                        toolbar.createTool(tool).then(function(instructionsDiv){
+                            domConstruct.create(
+                                "div",
+                                {
+                                    id: "instructionsDiv",
+                                    innerHTML: instructionsText,
+                                    tabindex: 0
+                                },
+                                domConstruct.create("div", {}, instructionsDiv)
+                            );
+                        });
                     });
 
                     const instructionsBtn = dom.byId("toolButton_instructions");
@@ -1809,7 +1814,7 @@ define([
             );
             if (has("edit") && this.editableLayers.length > 0) {
                 if (this.editableLayers.length > 0) {
-                    this.editorDiv = toolbar.createTool(tool);
+                    toolbar.createTool(tool).tool(lang.hitch(this,function(editorDiv) {this.editorDiv = editorDiv}));
                     return this._createEditor();
                 } else {
                     console.error("No Editable Layers");
@@ -1949,28 +1954,28 @@ define([
                 if (has("layers")) {
                     let panelClass = "";
 
-                    const layersDivDesc = toolbar.createTool(
+                    toolbar.createTool(
                         tool,
                         "",
                         "reload1.gif",
                         "Table"
-                    );
-                    // var layersDivDesc = domConstruct.create("div", {class:'margin'}, layersDiv);
+                    ).then(lang.hitch(this, function(layersDivDesc) {
+                        require(["application/TableOfContents/TableOfContents"], lang.hitch(this, function(TableOfContents) {
+                            const toc = new TableOfContents(
+                                {
+                                    map: this.map,
+                                    layers: layers,
+                                    OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
+                                },
+                                domConstruct.create("div", {}, layersDivDesc)
+                            );
+                            toc.startup();
+                            domAttr.set(toc.domNode, 'tabindex', '0');
+                        }));
 
-                    require(["application/TableOfContents/TableOfContents"], lang.hitch(this, function(TableOfContents) {
-                        const toc = new TableOfContents(
-                            {
-                                map: this.map,
-                                layers: layers,
-                                OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
-                            },
-                            domConstruct.create("div", {}, layersDivDesc)
-                        );
-                        toc.startup();
-                        domAttr.set(toc.domNode, 'tabindex', '0');
+                        deferred.resolve(true);
                     }));
 
-                    deferred.resolve(true);
                 } else {
                     deferred.resolve(false);
                 }
@@ -1995,27 +2000,27 @@ define([
                         "",
                         "reload1.gif",
                         "Table"
-                    );
+                    ).then(lang.hitch(this, function(layersDivDesc) {
+                        require(["application/LayerManager/LayerManager"], lang.hitch(this, function(LayerManager) {
+                            const toc = new LayerManager(
+                                {
+                                    map: this.map,
+                                    layers: layers,
+                                    dataItems: this.config.response.itemInfo.itemData,
+                                    hasLegend: has("legend"),
+                                    hasFeatureTable: has("featureTable"),
+                                    hasBasemapGallery: has("basemap"),
+                                    mapNode: dojo.byId("mapPlace"),
+                                    toolbar: toolbar,
+                                    OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
+                                },
+                                domConstruct.create("div", {}, layersDivDesc)
+                            );
+                            toc.startup();
+                        }));
 
-                    require(["application/LayerManager/LayerManager"], lang.hitch(this, function(LayerManager) {
-                        const toc = new LayerManager(
-                            {
-                                map: this.map,
-                                layers: layers,
-                                dataItems: this.config.response.itemInfo.itemData,
-                                hasLegend: has("legend"),
-                                hasFeatureTable: has("featureTable"),
-                                hasBasemapGallery: has("basemap"),
-                                mapNode: dojo.byId("mapPlace"),
-                                toolbar: toolbar,
-                                OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
-                            },
-                            domConstruct.create("div", {}, layersDivDesc)
-                        );
-                        toc.startup();
+                        deferred.resolve(true);
                     }));
-
-                    deferred.resolve(true);
                 } else {
                     deferred.resolve(false);
                 }
@@ -2025,32 +2030,33 @@ define([
 
         _addLegend: function(tool, toolbar) {
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
-            var deferred = new Deferred();
-            var layers = arcgisUtils.getLegendLayers(this.config.response);
+            const deferred = new Deferred();
+            const layers = arcgisUtils.getLegendLayers(this.config.response);
 
             if (layers.length === 0 || has("layerManager")) {
                 deferred.resolve(false);
             } else {
                 if (has("legend")) {
-                    var legendDiv = toolbar.createTool(tool, "");
-                    var legend = new Legend(
-                        {
-                            map: this.map,
-                            layerInfos: layers
-                        },
-                        domConstruct.create(
-                            "div",
+                    toolbar.createTool(tool, "").then(lang.hitch(this, function(legendDiv) {
+                        const legend = new Legend(
                             {
-                                // role: "application"
+                                map: this.map,
+                                layerInfos: layers
                             },
-                            legendDiv
-                        )
-                    );
-                    domClass.add(legend.domNode, "legend");
-                    legend.startup();
-                    domAttr.set(legend.domNode, 'tabindex', 0);
+                            domConstruct.create(
+                                "div",
+                                {
+                                    // role: "application"
+                                },
+                                legendDiv
+                            )
+                        );
+                        legend.startup();
+                        domClass.add(legend.domNode, "legend");
+                        domAttr.set(legend.domNode, 'tabindex', 0);
+                    }));
 
-                    var fixLegend = function(node) {
+                    const fixLegend = function(node) {
                         if(typeof node.querySelectorAll !== 'function')
                             return;
                         var tables = node.querySelectorAll("table");
@@ -2208,34 +2214,35 @@ define([
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
             var deferred = new Deferred();
             if (has("infoPanel")) {
-                var infoPanelDiv = toolbar.createTool(
+                toolbar.createTool(
                     tool,
                     "",
                     "reload1.gif",
                     "followTheMapMode"
-                );
-
-                this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
-                    require(["application/PopupInfo/PopupInfo"], lang.hitch(this, function(PopupInfo) {
-                        const popupInfo = new PopupInfo(
-                            {
-                                map: this.map,
-                                toolbar: toolbar,
-                                superNavigator: this.superNav,
-                                search: this.search,
-                                maxSearchResults: this.config.maxSearchResults,
-                                showSearchScore: this.config.showSearchScore,
-                                searchMarker: this.config.searchMarker,
-                                geolocatorLabelColor: this.config.geolocatorLabelColor,
-                                iconsColor: this.config.icons,
-                            },
-                            infoPanelDiv
-                        );
-                        popupInfo.startup();
+                ).then(lang.hitch(this, function(infoPanelDiv) {
+                    this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
+                        require(["application/PopupInfo/PopupInfo"], lang.hitch(this, function(PopupInfo) {
+                            const popupInfo = new PopupInfo(
+                                {
+                                    map: this.map,
+                                    toolbar: toolbar,
+                                    superNavigator: this.superNav,
+                                    search: this.search,
+                                    maxSearchResults: this.config.maxSearchResults,
+                                    showSearchScore: this.config.showSearchScore,
+                                    searchMarker: this.config.searchMarker,
+                                    geolocatorLabelColor: this.config.geolocatorLabelColor,
+                                    iconsColor: this.config.icons,
+                                },
+                                infoPanelDiv
+                            );
+                            popupInfo.startup();
+                        }));
                     }));
+
+                    deferred.resolve(true);
                 }));
 
-                deferred.resolve(true);
             } else {
                 this._fixFocusOnNativeInfoWindows();
                 deferred.resolve(false);
@@ -2250,22 +2257,23 @@ define([
 
                 this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                     require(["application/GeoCoding/GeoCoding"], lang.hitch(this, function(GeoCoding) {
-                        const geoCodingDiv = toolbar.createTool(tool, "");
-                        const geoCoding = new GeoCoding(
-                            {
-                                map: this.map,
-                                toolbar: toolbar,
-                                superNavigator: this.superNav,
-                                themeColor: this.config.theme,
-                                iconColor: this.config.icons,
-                                search: this.search,
-                                maxSearchResults: this.config.maxSearchResults,
-                                searchMarker: this.config.geoCodingMarker,
-                                geolocatorLabelColor: this.config.geolocatorLabelColor
-                            },
-                            geoCodingDiv
-                        );
-                        geoCoding.startup();
+                        toolbar.createTool(tool, "").then(function(geoCodingDiv) {
+                            const geoCoding = new GeoCoding(
+                                {
+                                    map: this.map,
+                                    toolbar: toolbar,
+                                    superNavigator: this.superNav,
+                                    themeColor: this.config.theme,
+                                    iconColor: this.config.icons,
+                                    search: this.search,
+                                    maxSearchResults: this.config.maxSearchResults,
+                                    searchMarker: this.config.geoCodingMarker,
+                                    geolocatorLabelColor: this.config.geolocatorLabelColor
+                                },
+                                geoCodingDiv
+                            );
+                            geoCoding.startup();
+                        });
                     }));
                 }));
 
@@ -2309,85 +2317,86 @@ define([
             //Add the measure widget to the toolbar.
             var deferred = new Deferred();
             if (has("measure")) {
-                const measureDiv = toolbar.createTool(tool);
-                let areaUnit =
-                    this.config.units === "metric" ? "esriSquareKilometers" : "esriSquareMiles";
-                let lengthUnit =
-                    this.config.units === "metric" ? "esriKilometers" : "esriMiles";
+                toolbar.createTool(tool).then(function(measureDiv) {
+                    let areaUnit =
+                        this.config.units === "metric" ? "esriSquareKilometers" : "esriSquareMiles";
+                    let lengthUnit =
+                        this.config.units === "metric" ? "esriKilometers" : "esriMiles";
 
-                require(["esri/dijit/Measurement"], lang.hitch(this, function(Measurement) {
-                    const measure = new Measurement(
-                        {
-                            map: this.map,
-                            defaultAreaUnit: areaUnit,
-                            defaultLengthUnit: lengthUnit
-                        },
-                        domConstruct.create("div", {}, measureDiv)
-                    );
-
-                    measure.startup();
-                    domAttr.set(measure.domNode, 'tabindex', 0);
-
-                    const dijitButtonNodes = measureDiv.querySelectorAll(
-                        ".dijitButtonNode"
-                    );
-                    array.forEach(dijitButtonNodes, function(node) {
-                        domAttr.set(node, "tabindex", 0);
-                        domAttr.set(
-                            node.querySelector(".dijitButtonContents"),
-                            "tabindex",
-                            ""
+                    require(["esri/dijit/Measurement"], lang.hitch(this, function(Measurement) {
+                        const measure = new Measurement(
+                            {
+                                map: this.map,
+                                defaultAreaUnit: areaUnit,
+                                defaultLengthUnit: lengthUnit
+                            },
+                            domConstruct.create("div", {}, measureDiv)
                         );
-                    });
 
-                    const esriMeasurementResultTable = measureDiv.querySelector(
-                        ".esriMeasurementResultTable"
-                    );
-                    const esriMeasurementTableHeaders = esriMeasurementResultTable.querySelectorAll(
-                        ".esriMeasurementTableHeader"
-                    );
-                    for (let i = 0; i < esriMeasurementTableHeaders.length; i++) {
-                        const esriMeasurementTableHeader = esriMeasurementTableHeaders[i];
-                        //alert(esriMeasurementTableHeader.innerHTML);
-                        const newHeader = document.createElement("th");
-                        newHeader.innerHTML = esriMeasurementTableHeader.innerHTML;
-                        const colspan = esriMeasurementTableHeader.getAttribute(
-                            "colspan"
+                        measure.startup();
+                        domAttr.set(measure.domNode, 'tabindex', 0);
+
+                        const dijitButtonNodes = measureDiv.querySelectorAll(
+                            ".dijitButtonNode"
                         );
-                        if (colspan) {
-                            newHeader.setAttribute("colspan", colspan);
+                        array.forEach(dijitButtonNodes, function(node) {
+                            domAttr.set(node, "tabindex", 0);
+                            domAttr.set(
+                                node.querySelector(".dijitButtonContents"),
+                                "tabindex",
+                                ""
+                            );
+                        });
+
+                        const esriMeasurementResultTable = measureDiv.querySelector(
+                            ".esriMeasurementResultTable"
+                        );
+                        const esriMeasurementTableHeaders = esriMeasurementResultTable.querySelectorAll(
+                            ".esriMeasurementTableHeader"
+                        );
+                        for (let i = 0; i < esriMeasurementTableHeaders.length; i++) {
+                            const esriMeasurementTableHeader = esriMeasurementTableHeaders[i];
+                            //alert(esriMeasurementTableHeader.innerHTML);
+                            const newHeader = document.createElement("th");
+                            newHeader.innerHTML = esriMeasurementTableHeader.innerHTML;
+                            const colspan = esriMeasurementTableHeader.getAttribute(
+                                "colspan"
+                            );
+                            if (colspan) {
+                                newHeader.setAttribute("colspan", colspan);
+                            }
+                            newHeader.className = esriMeasurementTableHeader.className;
+                            esriMeasurementTableHeader.parentNode.replaceChild(
+                                newHeader,
+                                esriMeasurementTableHeader
+                            );
                         }
-                        newHeader.className = esriMeasurementTableHeader.className;
-                        esriMeasurementTableHeader.parentNode.replaceChild(
-                            newHeader,
-                            esriMeasurementTableHeader
+
+                        var AccessAuditMarkers = esriMeasurementResultTable.querySelectorAll(
+                            "img"
                         );
-                    }
+                        for (let i = 0; i < AccessAuditMarkers.length; i++) {
+                            AccessAuditMarkers[i].setAttribute("Alt", "");
+                        }
 
-                    var AccessAuditMarkers = esriMeasurementResultTable.querySelectorAll(
-                        "img"
-                    );
-                    for (let i = 0; i < AccessAuditMarkers.length; i++) {
-                        AccessAuditMarkers[i].setAttribute("Alt", "");
-                    }
+                        const areaIconNode = measureDiv.querySelector(".areaIcon");
+                        domClass.remove(areaIconNode, "areaIcon");
+                        areaIconNode.innerHTML =
+                            '<img src="images/area_measure.png" alt="Area Button"/>';
 
-                    const areaIconNode = measureDiv.querySelector(".areaIcon");
-                    domClass.remove(areaIconNode, "areaIcon");
-                    areaIconNode.innerHTML =
-                        '<img src="images/area_measure.png" alt="Area Button"/>';
+                        const distanceIconNode = measureDiv.querySelector(".distanceIcon");
+                        domClass.remove(distanceIconNode, "distanceIcon");
+                        distanceIconNode.innerHTML =
+                            '<img src="images/dist_measure.png" alt="Distance Button"/>';
 
-                    const distanceIconNode = measureDiv.querySelector(".distanceIcon");
-                    domClass.remove(distanceIconNode, "distanceIcon");
-                    distanceIconNode.innerHTML =
-                        '<img src="images/dist_measure.png" alt="Distance Button"/>';
+                        const locationIconNode = measureDiv.querySelector(".locationIcon");
+                        domClass.remove(locationIconNode, "locationIcon");
+                        locationIconNode.innerHTML =
+                            '<img src="images/dist_point.png" alt="Location Button"/>';
+                    }));
 
-                    const locationIconNode = measureDiv.querySelector(".locationIcon");
-                    domClass.remove(locationIconNode, "locationIcon");
-                    locationIconNode.innerHTML =
-                        '<img src="images/dist_point.png" alt="Location Button"/>';
-                }));
-
-                deferred.resolve(true);
+                    deferred.resolve(true);
+                });
             } else {
                 deferred.resolve(false);
             }
@@ -2396,32 +2405,33 @@ define([
 
         _addOverviewMap: function(tool, toolbar) {
             //Add the overview map to the toolbar
-            var deferred = new Deferred();
+            const deferred = new Deferred();
 
             if (has("overview")) {
-                var ovMapDiv = toolbar.createTool(tool);
+                toolbar.createTool(tool).then(lang.hitch(this, function(ovMapDiv) {
+                    const panelHeight = this.map.height;
 
-                var panelHeight = this.map.height;
+                    this.createOverviewMap(ovMapDiv, panelHeight);
 
-                this.createOverviewMap(ovMapDiv, panelHeight);
+                    on(
+                        this.map,
+                        "layer-add",
+                        lang.hitch(this, function(args) {
+                            //delete and re-create the overview map if the basemap gallery changes
+                            if (
+                                args.layer.hasOwnProperty(
+                                    "_basemapGalleryLayerType"
+                                ) &&
+                                args.layer._basemapGalleryLayerType === "basemap"
+                            ) {
+                                registry.byId("overviewMap").destroy();
+                                this.createOverviewMap(ovMapDiv, panelHeight);
+                            }
+                        })
+                    );
+                    deferred.resolve(true);                
+                }));
 
-                on(
-                    this.map,
-                    "layer-add",
-                    lang.hitch(this, function(args) {
-                        //delete and re-create the overview map if the basemap gallery changes
-                        if (
-                            args.layer.hasOwnProperty(
-                                "_basemapGalleryLayerType"
-                            ) &&
-                            args.layer._basemapGalleryLayerType === "basemap"
-                        ) {
-                            registry.byId("overviewMap").destroy();
-                            this.createOverviewMap(ovMapDiv, panelHeight);
-                        }
-                    })
-                );
-                deferred.resolve(true);
             } else {
                 deferred.resolve(false);
             }

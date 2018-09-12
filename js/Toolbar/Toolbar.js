@@ -116,10 +116,11 @@ on, mouse, query, Deferred) {
                 loaderImg: loaderImg, 
                 badgeEvName: badgeEvName,
                 i18n: this.config.i18n,
+                tools: this.tools,
             }, domConstruct.create("div", {}, dom.byId("panelTools")));
 
-            _tool.startup();
-            return _tool.pageBody;
+            return _tool.startup();
+            // return _tool.pageBody;
 
             const name = tool.name;
 
