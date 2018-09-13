@@ -1,0 +1,29 @@
+<div class="page hideAttr">
+	<div 
+		class="pageContent"
+		id="pageContent_${name}"
+        role="dialog"
+        "aria-labelledby"="pagetitle_${name}">
+        <div
+        	id="pageHeader_${name}"
+            class="pageHeader fc bg"
+            data-dojo-attach-point="pageHeader">
+            <h2
+            	class="pageTitle fc"
+                id="pagetitle_${name}">${pageTitle}</h2>
+            <div
+            	id="loading_${name}"
+                class="hideLoading small-loading"
+                data-dojo-attach-point="LoadingIndicator">
+            </div>
+        </div>
+
+        <div 
+        	class="pageBody${panelClass}"
+            tabindex=0
+            id="pageBody_${name}"
+            data-dojo-attach-point="pageBody">
+
+        </div>
+    </div>
+</div>

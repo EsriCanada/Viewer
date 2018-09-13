@@ -1,111 +1,33 @@
 define([
     "dojo/Evented", "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
     "dojo/text!application/Toolbar/Templates/Tool.html",
-    "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx",
-    "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
-    "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
-    "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
+    "application/Toolbar/ToolPage",
+    "dojo/_base/declare", 
+    "dojo/_base/lang", "dojo/has", "dojo/dom",
+    "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", 
+    "dojo/on", "dojo/query", "dojo/Deferred"], function (
 Evented, _WidgetBase, _TemplatedMixin, 
-toolTemplate,
-declare, win, fx, html, lang, has, dom,
-domClass, domStyle, domAttr, domConstruct, domGeometry,
-on, mouse, query, Deferred) {
+toolTemplate, ToolPage,
+declare, lang, has, dom,
+domClass, domStyle, domAttr, domConstruct, 
+on, query, Deferred) {
     return declare("esri.dijit.Tool", [_WidgetBase, _TemplatedMixin, Evented], {
         options: {
             toolbar: null,
         },
-        pPages: dom.byId("panelPages"),
-
         templateString: toolTemplate,
 
         constructor: function (options, srcRefNode) {
             this.deferrer = new Deferred();
             this.config = lang.mixin({}, this.options, options);
+            this.toolbar = this.config.toolbar;
 
             //(tool, panelClass, loaderImg, badgeEvName) {
             this.name = this.config.name;
             this.id = "toolButton_" + this.name;
             this.icon = this.config.icon;
             this.tip = this.config.i18n.tooltips[this.name] || this.name;
-            // this.tools = config.tools;
-
-            // if(this.config.badgeEvName && this.config.badgeEvName !== '') {
-            //     const setIndicator = domConstruct.create("img", {
-            //         src:"images/"+config.badgeEvName+".png",
-            //         class:"setIndicator",
-            //         style:"display:none;",
-            //         tabindex:0,
-            //         id: 'badge_'+config.badgeEvName,
-            //         alt:""
-            //     });
-            //     domConstruct.place(setIndicator, this.panelTool);
-            // }
-
-            // this.tools.push(this.name);
-
-            // add page
-            const page = domConstruct.create("div", {
-                className: "page hideAttr",
-                id: "page_" + this.name,
-                // tabindex: 0
-            }, this.pPages);
-
-            const pageContent = domConstruct.create("div", {
-                className: "pageContent",
-                id: "pageContent_" + this.name,
-                role: "dialog",
-                "aria-labelledby": "pagetitle_" + this.name,
-            }, page);
-
-            const pageHeader = domConstruct.create("div", {
-                id: "pageHeader_" + this.name,
-                className: "pageHeader fc bg",
-                //tabindex: 0,
-            },
-            pageContent);
-
-            domConstruct.create("h2", {
-                className: "pageTitle fc",
-                innerHTML: this.config.i18n.tooltips[this.name] || this.name,
-                //style: 'display:inline',
-                id: "pagetitle_" + this.name
-            }, pageHeader);
-
-            if(this.config.loaderImg && this.config.loaderImg !=="") {
-                domConstruct.create('img',{
-                    src: 'images/'+this.config.loaderImg,//reload1.gif',
-                    alt: 'Reloading',
-                    title: 'Reloading'
-                }, domConstruct.create("div", {
-                    id: "loading_" + this.name,
-                    class: 'hideLoading small-loading'
-                }, pageHeader));
-            }
-
-            // domConstruct.create("div", {
-            //     className: "pageHeaderImg",
-            //     innerHTML: "<img class='pageIcon' src ='images/icons_" + this.config.icons + "/" + name + ".png' alt=''/>"
-            // }, pageHeader);
-
-            this.pageBody = domConstruct.create("div", {
-                className: "pageBody",
-                tabindex: 0,
-                id: "pageBody_" + this.name,
-            },
-            pageContent);
-            domClass.add(this.pageBody, this.config.panelClass);
-
-            on(this, "updateTool_" + this.name, lang.hitch(this.name, function() {
-                var page = dom.byId('pageBody_'+this);
-                if(page) page.focus();
-                var focusables = dojo.query('#pageBody_'+this+' [tabindex=0]');
-                if(focusables && focusables.length>0){
-                    focusables[0].focus();
-                }
-            }));
-
-            this.deferrer.resolve(this.pageBody);
-            // return pageBody;
+ 
         },
 
         postCreate : function() {
@@ -120,6 +42,11 @@ on, mouse, query, Deferred) {
                 }, this.panelTool);
             }
 
+            new ToolPage({
+                name: this.name,
+                deferrer: this.deferrer,
+                pageTitle: this.config.i18n.tooltips[this.name] || this.name
+            }, domConstruct.create("div", {}, dom.byId("panelPages"))).startup();
         },
 
         startup: function () {
@@ -187,20 +114,11 @@ on, mouse, query, Deferred) {
             }));
 
             if(!active && defaultBtns !== undefined) {
-                //// this._activateDefautTool();
+                this.toolbar._activateDefautTool();
             }
         },
-
-        // _atachEnterKey: function(onButton, clickButton) {
-        //     on(onButton, 'keydown', lang.hitch(clickButton, function(event){
-        //     if(event.keyCode==='13')
-        //         this.click();
-        //     }));
-        // },
-
-
-
     });
+
     if (has("extend-esri")) {
         lang.setObject("dijit.Tool", Widget, esriNS);
     }
