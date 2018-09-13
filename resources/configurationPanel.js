@@ -452,25 +452,6 @@
          ]
       },
       {
-         "category": "Editor Settings",
-         "fields": [
-            {
-               "type": "paragraph",
-               "value": "Display the Editor tool and optionally display the Editor toolbar that provides additional editing options."
-            },
-            {
-               "type": "boolean",
-               "fieldName": "tool_edit",
-               "label": "Editor"
-            },
-            {
-               "type": "boolean",
-               "fieldName": "tool_edit_toolbar",
-               "label": "Display Editor Toolbar"
-            }
-         ]
-      },
-      {
          "category": "Print Settings",
          "fields": [
             {
@@ -714,11 +695,11 @@
       "lang1shortName": "EN",
       "lang1name": "English",
       "lang1code": "EN-US",
-      "lang1imageSrc": "images/flag.uk.22.png",
+      "lang1imageSrc": "",
       "lang2shortName": "FR",
       "lang2name": "French",
       "lang2code": "FR-CA",
-      "lang2imageSrc": "images/flag.fr.22.png",
+      "lang2imageSrc": "",
       "lang3shortName": "",
       "lang3name": "",
       "lang3code": "",
