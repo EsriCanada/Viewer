@@ -14,7 +14,8 @@ on, query, Deferred) {
         options: {
             name: 'toolname',
             deferrer: null,
-            pageTitle: 'ToolName'
+            pageTitle: 'ToolName',
+            loaderImg: ''
         },
         templateString: toolPageTemplate,
 

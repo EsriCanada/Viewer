@@ -172,7 +172,7 @@
          "category": "Tools",
          "fields": [
             {
-               "label": "Details",
+               "label": "<b>Details</b>",
                "type": "boolean",
                "fieldName": "tool_details"
             },
@@ -182,98 +182,113 @@
                "fieldName": "tool_instructions"
             },
             {
-               "label": "Overview Map",
+               "label": "<b>Overview Map</b>",
                "type": "boolean",
                "fieldName": "tool_overview"
             },
             {
-               "label": "Basemap Gallery",
+               "label": "<b>Basemap Gallery</b>",
                "type": "boolean",
                "fieldName": "tool_basemap"
             },
             {
-               "label": "Bookmarks",
+               "label": "<b>Bookmarks</b>",
                "type": "boolean",
                "fieldName": "tool_bookmarks"
             },
             {
-               "label": "Find Location",
+               "label": "<b>Find Location</b>",
                "type": "boolean",
                "fieldName": "tool_locate"
             },
             {
-               "label": "Home Button",
+               "label": "<b>Home Button</b>",
                "type": "boolean",
                "tooltip": "(Default Extent)",
                "fieldName": "tool_home"
             },
             {
-               "label": "Legend",
+               "label": "<b>Legend</b>",
                "type": "boolean",
                "fieldName": "tool_legend"
             },
             {
-               "label": "Layer Manager",
+               "label": "<b>Layer Manager</b>",
                "type": "boolean",
                "fieldName": "tool_layerManager"
             },
             {
-               "label": "Layers",
+               "label": "<b>Layers</b>",
                "type": "boolean",
                "fieldName": "tool_layers"
             },
             {
-               "label": "Feature List",
+               "label": "<b>Feature List</b>",
                "type": "boolean",
                "fieldName": "tool_features"
             },
             {
-               "label": "Feature Table",
+               "label": "<b>Feature Table</b>",
                "type": "boolean",
                "fieldName": "tool_featureTable"
             },
             {
-               "label": "Info Panel",
+               "label": "Show 'List Features from Highlighted Rectangle' tool",
+               "type": "boolean",
+               "fieldName": "featureTable_highlightedRectangle"
+            },
+            {
+               "label": "Show 'List Features from Highlighted Feature' tool",
+               "type": "boolean",
+               "fieldName": "featureTable_highlightedFeature"
+            },
+            {
+               "label": "Show 'List Features from Current View' tool",
+               "type": "boolean",
+               "fieldName": "featureTable_currentView"
+            },
+            {
+               "label": "<b>Info Panel</b>",
                "type": "boolean",
                "fieldName": "tool_infoPanel"
             },
             {
-               "label": "Reverse Geocode",
+               "label": "<b>Reverse Geocode</b>",
                "type": "boolean",
                "fieldName": "tool_GeoCoding"
             },
             {
-               "label": "Map Keyboard Navigation",
+               "label": "<b>Map Keyboard Navigation</b>",
                "type": "boolean",
                "fieldName": "tool_mapKeyboardNavigation"
             },
             {
-               "label": "Filters",
+               "label": "<b>Filters</b>",
                "type": "boolean",
                "fieldName": "tool_filter"
             },
             {
-               "label": "Measure Tool",
+               "label": "<b>Measure Tool</b>",
                "type": "boolean",
                "fieldName": "tool_measure"
             },
             {
-               "label": "Share Tools",
+               "label": "<b>Share Tools</b>",
                "type": "boolean",
                "fieldName": "tool_share"
             },
             {
-               "label": "Print Button",
+               "label": "<b>Print Button</b>",
                "type": "boolean",
                "fieldName": "tool_print"
             },
             {
-               "label": "Scalebar",
+               "label": "<b>Scalebar</b>",
                "type": "boolean",
                "fieldName": "scalebar"
             },
             {
-               "label": "Extended Navigation Tool Bar",
+               "label": "<b>Extended Navigation Tool Bar</b>",
                "type": "boolean",
                "fieldName": "navigation"
             }
@@ -462,6 +477,16 @@
                "type": "boolean",
                "fieldName": "tool_print",
                "label": "Print Tool"
+            },
+            {
+               "label": "Print Service:",
+               "fieldName": "printService",
+               "type": "string",
+               "tooltip": "Leave it blank for default from 'helperServices.printTask.url'"
+            },
+            {
+               "type": "paragraph",
+               "value": "Default print Service:<br/>https://utility.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task"
             },
             {
                "type": "boolean",
@@ -675,7 +700,7 @@
       "tool_directions": false,
       "directionsProxy": "",
       "tool_GeoCoding": false,
-      "tool_mapKeyboardNavigation": false,
+      "tool_mapKeyboardNavigation": true,
       "tool_home": true,
       "tool_locate": true,
       "tool_edit": false,
@@ -717,6 +742,10 @@
       "directions_stopOrder": true,
       "directions_popup": false,
       "directions_imagesURL": "",
-      "directions_printPageURL": "../js/DirectionsPrintPage/index.html"
+      "directions_printPageURL": "js/DirectionsPrintPage/index.html",
+      "featureTable_highlightedRectangle" : false,
+      "featureTable_highlightedFeature": false,
+      "featureTable_currentView": true,
+      "printService": ""
    }
 }

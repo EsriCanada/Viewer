@@ -2757,12 +2757,13 @@ define([
                                 }
                             ];
 
+                            const printUrl = this.config.helperServices.printTask.url;
                             print = new Print(
                                 {
                                     map: this.map,
                                     id: "printButton",
                                     templates: templates,
-                                    url: this.config.helperServices.printTask.url
+                                    url: printUrl
                                 },
                                 domConstruct.create("div")
                             );

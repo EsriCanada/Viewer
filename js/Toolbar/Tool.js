@@ -14,6 +14,7 @@ on, query, Deferred) {
     return declare("esri.dijit.Tool", [_WidgetBase, _TemplatedMixin, Evented], {
         options: {
             toolbar: null,
+            loaderImg: ''
         },
         templateString: toolTemplate,
 
@@ -45,7 +46,8 @@ on, query, Deferred) {
             new ToolPage({
                 name: this.name,
                 deferrer: this.deferrer,
-                pageTitle: this.config.i18n.tooltips[this.name] || this.name
+                pageTitle: this.config.i18n.tooltips[this.name] || this.name,
+                loaderImg: this.config.loaderImg
             }, domConstruct.create("div", {}, dom.byId("panelPages"))).startup();
         },
 
