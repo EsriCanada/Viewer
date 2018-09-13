@@ -289,7 +289,7 @@
             },
             {
                "type": "paragraph",
-               "value": "The Directions widget uses the World Network Analysis as the default service used to calculate driving directions.<br/>This is a subscription based service available through ArcGIS Online.<br/>You may use a Proxy to avoid the login dialog."
+               "value": "The Directions widget uses the Routing and Directions Service to calculate driving directions.<br/>This is a subscription based service available through ArcGIS Online.<br/>You may use a Proxy to avoid the login dialog.‎"
             },
             {
                "label": "Directions Proxy:",
