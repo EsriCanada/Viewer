@@ -743,48 +743,48 @@ define([
             on(this.myFeatureTable, "refresh", lang.hitch(this, function(evt){
                 this._removeAllGraphics(['ftMarker']);
 
-                const header = query('.dgrid-grid', this.myFeatureTable.domNode);
-                if(header && header.length>0) {
-                    const linkContent = query('.dgrid-header-link-content', this.myFeatureTable.domNode);
-                    if(!linkContent || linkContent.length === 0) {
+                // const header = query('.dgrid-grid', this.myFeatureTable.domNode);
+                // if(header && header.length>0) {
+                    // const linkContent = query('.dgrid-header-link-content', this.myFeatureTable.domNode);
+                    // if(!linkContent || linkContent.length === 0) {
 
-                        const a = domConstruct.create('a', {
-                            class: 'dgrid-header-link-content',
-                            innerHTML: i18n.widgets.showFeatureTable.SkipToContent,
-                            tabindex: 0,
-                            role: 'navigation',
-                            href: '#',
-                            // 'aria-hidden': 'true'
-                        }, header[0], 'before');
-                        on(a, 'click', lang.hitch(this, function() {
-                            let dgridCells = query('.dgrid-content .dgrid-cell[tabindex="0"]', this.myFeatureTable.domNode);
-                            if(dgridCells && dgridCells.length>0 && window.getComputedStyle(dgridCells[0], null).getPropertyValue("display") !== "none") {
-                                dgridCells[0].focus();
-                            }
-                            else {
-                                dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
-                                if(dgridCells && dgridCells.length>0) {
-                                    for(let i = 0; i < dgridCells.length; i++) {
-                                        const cell = dgridCells[i];
-                                        if(window.getComputedStyle(cell, null).getPropertyValue("display") !== "none") {
-                                            domAttr.set(cell, 'tabindex', 0);
-                                            cell.focus();
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }));
-                        on(a, 'focus', function() {
-                            domAttr.remove(a, 'aria-hidden');
-                            domStyle.set(a, 'z-index', 1);
-                        });
-                        on(a, 'blur', function() {
-                            domAttr.set(a, 'aria-hidden', 'true');
-                            domStyle.set(a, 'z-index');
-                        });                        
-                    }
-                }
+                    //     const a = domConstruct.create('a', {
+                    //         class: 'dgrid-header-link-content',
+                    //         innerHTML: i18n.widgets.showFeatureTable.SkipToContent,
+                    //         tabindex: 0,
+                    //         role: 'navigation',
+                    //         href: '#',
+                    //         // 'aria-hidden': 'true'
+                    //     }, header[0], 'before');
+                    //     on(a, 'click', lang.hitch(this, function() {
+                    //         let dgridCells = query('.dgrid-content .dgrid-cell[tabindex="0"]', this.myFeatureTable.domNode);
+                    //         if(dgridCells && dgridCells.length>0 && window.getComputedStyle(dgridCells[0], null).getPropertyValue("display") !== "none") {
+                    //             dgridCells[0].focus();
+                    //         }
+                    //         else {
+                    //             dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
+                    //             if(dgridCells && dgridCells.length>0) {
+                    //                 for(let i = 0; i < dgridCells.length; i++) {
+                    //                     const cell = dgridCells[i];
+                    //                     if(window.getComputedStyle(cell, null).getPropertyValue("display") !== "none") {
+                    //                         domAttr.set(cell, 'tabindex', 0);
+                    //                         cell.focus();
+                    //                         break;
+                    //                     }
+                    //                 }
+                    //             }
+                    //         }
+                    //     }));
+                    //     on(a, 'focus', function() {
+                    //         domAttr.remove(a, 'aria-hidden');
+                    //         domStyle.set(a, 'z-index', 1);
+                    //     });
+                    //     on(a, 'blur', function() {
+                    //         domAttr.set(a, 'aria-hidden', 'true');
+                    //         domStyle.set(a, 'z-index');
+                    //     });                        
+                    // }
+                // }
                 const headersCells = query('th.dgrid-sortable', this.myFeatureTable.domNode);
                 // console.log("refresh", headersCells);
 
