@@ -11,20 +11,22 @@ declare, win, fx, html, lang, has, dom,
 domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
     return declare("esri.dijit.Tool", [_WidgetBase, _TemplatedMixin, Evented], {
-        config: {},
+        options: {
+            toolbar: null,
+        },
         pPages: dom.byId("panelPages"),
 
         templateString: toolTemplate,
 
-        constructor: function (config, srcRefNode) {
+        constructor: function (options, srcRefNode) {
             this.deferrer = new Deferred();
-            this.config = config;
+            this.config = lang.mixin({}, this.options, options);
 
             //(tool, panelClass, loaderImg, badgeEvName) {
-            this.name = config.name;
+            this.name = this.config.name;
             this.id = "toolButton_" + this.name;
-            this.icon = config.icon;
-            this.tip = config.i18n.tooltips[this.name] || this.name;
+            this.icon = this.config.icon;
+            this.tip = this.config.i18n.tooltips[this.name] || this.name;
             // this.tools = config.tools;
 
             // if(this.config.badgeEvName && this.config.badgeEvName !== '') {
@@ -69,9 +71,9 @@ on, mouse, query, Deferred) {
                 id: "pagetitle_" + this.name
             }, pageHeader);
 
-            if(config.loaderImg && config.loaderImg !=="") {
+            if(this.config.loaderImg && this.config.loaderImg !=="") {
                 domConstruct.create('img',{
-                    src: 'images/'+config.loaderImg,//reload1.gif',
+                    src: 'images/'+this.config.loaderImg,//reload1.gif',
                     alt: 'Reloading',
                     title: 'Reloading'
                 }, domConstruct.create("div", {
@@ -91,7 +93,7 @@ on, mouse, query, Deferred) {
                 id: "pageBody_" + this.name,
             },
             pageContent);
-            domClass.add(this.pageBody, config.panelClass);
+            domClass.add(this.pageBody, this.config.panelClass);
 
             on(this, "updateTool_" + this.name, lang.hitch(this.name, function() {
                 var page = dom.byId('pageBody_'+this);
@@ -143,7 +145,7 @@ on, mouse, query, Deferred) {
         }),
 
         execute: function (ev) {
-            console.log(ev);
+            // console.log(ev);
 
             const defaultBtns = dojo.query(".panelToolDefault");
             let defaultBtn;
@@ -167,8 +169,8 @@ on, mouse, query, Deferred) {
             pages.forEach(lang.hitch(this, function(p){
                 if(hidden && p === page) {
                     domClass.replace(p, "showAttr","hideAttr");
-                    this.emit("updateTool", this.name);
-                    this.emit("updateTool_"+this.name);
+                    this.config.toolbar.emit("updateTool", this.name);
+                    this.config.toolbar.emit("updateTool_"+this.name);
                 } else {
                     domClass.replace(p,"hideAttr","showAttr");
                 }

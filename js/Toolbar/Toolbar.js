@@ -12,17 +12,18 @@ declare, win, fx, html, lang, has, dom,
 domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
     return declare("esri.dijit.Toolbar", [_WidgetBase, _TemplatedMixin, Evented], {
-        map: null,
-        tools: [],
-        toollist: [],
-        config: {},
-        pPages: null,
+
+        options : {
+            map: null,
+        },
 
         templateString: toolbarTemplate,
 
-        constructor: function (config, srcRefNode) {
-            this.config = config;
+        constructor: function (options, srcRefNode) {
+            this.config = lang.mixin({}, this.options, options);
+            this.map = this.config.map;
             this.domNode = srcRefNode;
+            this.toolbar = this;
         },
 
         startup: function () {
@@ -106,7 +107,7 @@ on, mouse, query, Deferred) {
         },
 
         //Create a tool and return the div where you can place content
-        createTool: lang.hitch(this, function (tool, panelClass, loaderImg, badgeEvName) {
+        createTool: function (toolbar, tool, panelClass, loaderImg, badgeEvName) {
             const _tool = new Tool({
                 name: tool.name,
                 icon: "images/icons_" + this.config.icons + "/" + tool.name + ".png",
@@ -114,11 +115,11 @@ on, mouse, query, Deferred) {
                 loaderImg: loaderImg, 
                 badgeEvName: badgeEvName,
                 i18n: this.config.i18n,
-                tools: this.tools,
+                toolbar: toolbar,
             }, domConstruct.create("div", {}, dom.byId("panelTools")));
 
             return _tool.startup();
-        }),
+        },
 
         OpenTool: function(name) {
             var page = dom.byId("page_"+name);
