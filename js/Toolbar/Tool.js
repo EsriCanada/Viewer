@@ -20,6 +20,7 @@ on, query, Deferred) {
         constructor: function (options, srcRefNode) {
             this.deferrer = new Deferred();
             this.config = lang.mixin({}, this.options, options);
+            this.toolbar = this.config.toolbar;
 
             //(tool, panelClass, loaderImg, badgeEvName) {
             this.name = this.config.name;
@@ -113,7 +114,7 @@ on, query, Deferred) {
             }));
 
             if(!active && defaultBtns !== undefined) {
-                // this._activateDefautTool();
+                this.toolbar._activateDefautTool();
             }
         },
     });
