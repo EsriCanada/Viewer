@@ -2757,8 +2757,8 @@ define([
                                 }
                             ];
 
-                            const printUrl = this.config.helperServices.printTask.url;
-                            print = new Print(
+                            const printUrl = (this.config.printService && this.config.printService !== "") ? this.config.printService : this.config.helperServices.printTask.url;
+                            const print = new Print(
                                 {
                                     map: this.map,
                                     id: "printButton",
