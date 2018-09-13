@@ -25,8 +25,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             map: null,
             layers: null,
             visible: true,
+            showRectangle: false,
+            showPolygon: false,
+            showView: true,
             OnDisplay: function(show) {console.log('Layers featureTable',show);}
-        },
+       },
 
         // lifecycle: 1
         constructor: function (options, srcRefNode) {
@@ -499,9 +502,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         layers: this.layers,
                         OnDisplay: this.defaults.OnDisplay,
                         filterTools: {
-                            rectangle: true,
-                            polygon: true,
-                            view: true
+                            rectangle: this.defaults.showRectangle,
+                            polygon: this.defaults.showPolygon,
+                            view: this.defaults.showView
                         }, 
                         manager: this
                       }, dojo.byId('mapPlace'));

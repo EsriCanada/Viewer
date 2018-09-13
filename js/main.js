@@ -1965,6 +1965,9 @@ define([
                                 {
                                     map: this.map,
                                     layers: layers,
+                                    showRectangle: this.config.featureTable_highlightedRectangle,
+                                    showPolygon: this.config.featureTable_highlightedFeature,
+                                    showView: this.config.featureTable_currentView,
                                     OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
                                 },
                                 domConstruct.create("div", {}, layersDivDesc)
@@ -2012,6 +2015,10 @@ define([
                                     hasBasemapGallery: has("basemap"),
                                     mapNode: dojo.byId("mapPlace"),
                                     toolbar: toolbar,
+                                    showRectangle: this.config.featureTable_highlightedRectangle,
+                                    showPolygon: this.config.featureTable_highlightedFeature,
+                                    showView: this.config.featureTable_currentView,
+
                                     OnDisplay: lang.hitch(this, this._OnFeatureTableDisplay)
                                 },
                                 domConstruct.create("div", {}, layersDivDesc)

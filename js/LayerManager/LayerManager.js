@@ -34,6 +34,10 @@ define(["dojo/Evented", "dojo/_base/declare",
             visible: true,
             hasLegend:true,
             hasFeatureTable:false,
+            showRectangle: false,
+            showPolygon: false,
+            showView: true,
+
             hasBasemapGallery:true,
             mapNode: dojo.byId('mapPlace'),
             toolbar: null,
@@ -911,9 +915,9 @@ define(["dojo/Evented", "dojo/_base/declare",
                         layers: this.layers,
                         OnDisplay: this.defaults.OnDisplay,
                         filterTools: {
-                            rectangle: true,
-                            polygon: true,
-                            view: true
+                            rectangle: this.defaults.showRectangle,
+                            polygon: this.defaults.showPolygon,
+                            view: this.defaults.showView
                         }, 
                         manager: this
                     }, this.defaults.mapNode);
