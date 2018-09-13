@@ -320,7 +320,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     let layer = layers[i];
 
                     // layer node
-                    let layerDiv = domConstruct.create("div", {
+                    const layerDiv = domConstruct.create("div", {
                         className: "toc-layer",
                         role: "listitem",
                         'data-layerid': layer.id,
@@ -328,7 +328,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                     domConstruct.place(layerDiv, this._layersNode, "first");
 
                     // title of layer
-                    let titleDiv = domConstruct.create("div", {
+                    const titleDiv = domConstruct.create("div", {
                         className: 'toc-title',
                         id: 'tocTitle_'+i,
                         draggable: true,
@@ -490,7 +490,7 @@ define(["dojo/Evented", "dojo/_base/declare",
                             'aria-label': legendTitle,
                         }, layerExpandArea));
 
-                        domStyle.set(dojo.byId('legendBtn_'+i), 'display', layer.visibility?'table':'none');
+                        domStyle.set(dojo.query('#legendBtn_'+i, this._layersNode)[0], 'display', layer.visibility?'table':'none');
 
                         new MutationObserver(function(mutations) {
                             mutations.forEach(function(mutation) {
