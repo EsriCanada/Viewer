@@ -1,21 +1,19 @@
 define([
     "dojo/Evented", "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
     "dojo/text!application/Toolbar/Templates/Tool.html",
-    "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx",
-    "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
-    "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
-    "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
+    "dojo/_base/declare", 
+    "dojo/_base/lang", "dojo/has", "dojo/dom",
+    "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", 
+    "dojo/on", "dojo/query", "dojo/Deferred"], function (
 Evented, _WidgetBase, _TemplatedMixin, 
 toolTemplate,
-declare, win, fx, html, lang, has, dom,
-domClass, domStyle, domAttr, domConstruct, domGeometry,
-on, mouse, query, Deferred) {
+declare, lang, has, dom,
+domClass, domStyle, domAttr, domConstruct, 
+on, query, Deferred) {
     return declare("esri.dijit.Tool", [_WidgetBase, _TemplatedMixin, Evented], {
         options: {
             toolbar: null,
         },
-        pPages: dom.byId("panelPages"),
-
         templateString: toolTemplate,
 
         constructor: function (options, srcRefNode) {
@@ -27,28 +25,13 @@ on, mouse, query, Deferred) {
             this.id = "toolButton_" + this.name;
             this.icon = this.config.icon;
             this.tip = this.config.i18n.tooltips[this.name] || this.name;
-            // this.tools = config.tools;
-
-            // if(this.config.badgeEvName && this.config.badgeEvName !== '') {
-            //     const setIndicator = domConstruct.create("img", {
-            //         src:"images/"+config.badgeEvName+".png",
-            //         class:"setIndicator",
-            //         style:"display:none;",
-            //         tabindex:0,
-            //         id: 'badge_'+config.badgeEvName,
-            //         alt:""
-            //     });
-            //     domConstruct.place(setIndicator, this.panelTool);
-            // }
-
-            // this.tools.push(this.name);
-
+ 
             // add page
             const page = domConstruct.create("div", {
                 className: "page hideAttr",
                 id: "page_" + this.name,
                 // tabindex: 0
-            }, this.pPages);
+            }, dom.byId("panelPages"));
 
             const pageContent = domConstruct.create("div", {
                 className: "pageContent",

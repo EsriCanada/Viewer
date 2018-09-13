@@ -2,13 +2,13 @@ define([
     "dojo/Evented", "dijit/_WidgetBase", "dijit/_TemplatedMixin", 
     "dojo/text!application/Toolbar/Templates/Toolbar.html",
     "application/Toolbar/Tool",
-    "dojo/_base/declare", "dojo/_base/window", "dojo/_base/fx",
+    "dojo/_base/declare", "dojo/_base/window",
     "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
     "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
     "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
 Evented, _WidgetBase, _TemplatedMixin, 
 toolbarTemplate, Tool,
-declare, win, fx, html, lang, has, dom,
+declare, win, html, lang, has, dom,
 domClass, domStyle, domAttr, domConstruct, domGeometry,
 on, mouse, query, Deferred) {
     return declare("esri.dijit.Toolbar", [_WidgetBase, _TemplatedMixin, Evented], {
