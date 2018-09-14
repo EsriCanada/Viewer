@@ -311,16 +311,18 @@ define([
         },
 
         _addPrintArrowButton: function() {
-            var arrowButton = dojo.query('.dijitArrowButtonInner', this.printDiv)[0];
-            domConstruct.create(
-                "img",
-                {
-                    src: "images/icons_black/carret-down.32.png",
-                    alt: "down",
-                    'aria-hidden': 'true'
-                },
-                arrowButton
-            );
+            const arrowButtons = dojo.query('.dijitArrowButtonInner', this.printDiv);
+            if(arrowButtons && arrowButtons.length>0) {
+                domConstruct.create(
+                    "img",
+                    {
+                        src: "images/icons_black/carret-down.32.png",
+                        alt: "down",
+                        'aria-hidden': 'true'
+                    },
+                    arrowButtons[0]
+                );
+            }
         },
 
     });
