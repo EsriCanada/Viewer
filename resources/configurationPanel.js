@@ -177,7 +177,7 @@
                "fieldName": "tool_details"
             },
             {
-               "label": "Instructions",
+               "label": "<i>Instructions</i>",
                "type": "boolean",
                "fieldName": "tool_instructions"
             },
@@ -233,17 +233,17 @@
                "fieldName": "tool_featureTable"
             },
             {
-               "label": "Show 'List Features from Highlighted Rectangle' tool",
+               "label": "<i>Show 'List Features from Highlighted Rectangle' tool</i>",
                "type": "boolean",
                "fieldName": "featureTable_highlightedRectangle"
             },
             {
-               "label": "Show 'List Features from Highlighted Feature' tool",
+               "label": "<i>Show 'List Features from Highlighted Feature' tool</i>",
                "type": "boolean",
                "fieldName": "featureTable_highlightedFeature"
             },
             {
-               "label": "Show 'List Features from Current View' tool",
+               "label": "<i>Show 'List Features from Current View' tool</i>",
                "type": "boolean",
                "fieldName": "featureTable_currentView"
             },
