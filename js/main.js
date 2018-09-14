@@ -2621,6 +2621,7 @@ define([
                                 i18n: this.config.i18n,
                                 printUrl: (this.config.printService && this.config.printService !== "") ? this.config.printService : this.config.helperServices.printTask.url,
                                 tool_print_format: this.config.tool_print_format.toLowerCase(),
+                                response: this.config.response,
                             }, dom.byId('pageBody_print')).startup();
                         }
                     ));

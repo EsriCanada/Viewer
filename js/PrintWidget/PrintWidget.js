@@ -3,13 +3,13 @@ define([
     "dojo/text!application/PrintWidget/Templates/PrintTemplate.html",
     "dojo/_base/declare", "dojo/_base/window",
     "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
-    "esri/arcgis/utils",
+    "esri/arcgis/utils", "dojo/_base/array",
     "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
     "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
     Evented, _WidgetBase, _TemplatedMixin, 
     printTemplate,
     declare, win, html, lang, has, dom,
-    arcgisUtils,
+    arcgisUtils, array,
     domClass, domStyle, domAttr, domConstruct, domGeometry,
     on, mouse, query, Deferred) {
     return declare("esri.dijit.PrintWidget", [_WidgetBase, _TemplatedMixin, Evented], {
@@ -46,8 +46,6 @@ define([
 
         postCreate: function() {
             // let legendNode = null;
-            let print = null;
-
             const layoutOptions = {
                 titleText: this.config.title,
                 scalebarUnit: this.config.units,
@@ -115,7 +113,7 @@ define([
                             }
                         ];
 
-                        const print = new this.Print(
+                        this.print = new this.Print(
                             {
                                 map: this.map,
                                 id: "printButton",
@@ -125,17 +123,17 @@ define([
                             domConstruct.create("div")
                         );
                         domConstruct.place(
-                            print.printDomNode,
+                            this.print.printDomNode,
                             this.printDiv,
                             "first"
                         );
 
-                        print.startup();
+                        this.print.startup();
 
                         this._addPrintArrowButton();
 
                         on(
-                            print,
+                            this.print,
                             "print-start",
                             lang.hitch(this, function(ev) {
                                 // const printError = dojo.byId("printError");
@@ -151,7 +149,7 @@ define([
                         );
 
                         on(
-                            print,
+                            this.print,
                             "print-complete",
                             lang.hitch(this, function(ev) {
                                 this._addPrintArrowButton();
@@ -165,7 +163,7 @@ define([
                         );
 
                         on(
-                            print,
+                            this.print,
                             "error",
                             lang.hitch(this, function(ev) {
                                 // console.log(ev);
@@ -259,7 +257,7 @@ define([
                             })
                         );
 
-                        print = new Print(
+                        this.print = new Print(
                             {
                                 map: this.map,
                                 templates: templates,
@@ -269,12 +267,12 @@ define([
                             domConstruct.create("div")
                         );
                         domConstruct.place(
-                            print.printDomNode,
+                            this.print.printDomNode,
                             this.printDiv,
                             "first"
                         );
 
-                        print.startup();
+                        this.print.startup();
                         deferred.resolve(true);
                     })
                 );
@@ -285,22 +283,20 @@ define([
         },
 
         _legendChange :function(arg) {
-            if (this.legend.checked) {
-                var layers = arcgisUtils.getLegendLayers(
+            if (arg.target.checked) {
+                const layers = arcgisUtils.getLegendLayers(
                     this.config.response
                 );
-                var legendLayers = array.map(layers, function(
-                    layer
-                ) {
+                const legendLayers = array.map(layers, function(layer) {
                     return {
                         layerId: layer.layer.id
                     };
                 });
-                if (legendLayers.length > 0) {
-                    layoutOptions.legendLayers = legendLayers;
-                }
-                array.forEach(print.templates, function(template) {
-                    template.layoutOptions = layoutOptions;
+                // if (legendLayers.length > 0) {
+                //     layoutOptions.legendLayers = legendLayers;
+                // }
+                array.forEach(this.print.templates, function(template) {
+                    template.layoutOptions.legendLayers = legendLayers;
                 });
             } else {
                 array.forEach(this.print.templates, function(template) {
