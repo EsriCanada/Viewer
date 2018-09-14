@@ -2616,7 +2616,7 @@ define([
                             new PrintWidget({
                                 deferred: deferred,
                                 Print: Print,
-                                map: this.Map,
+                                map: this.map,
                                 tools: this.config.tools,
                                 i18n: this.config.i18n,
                                 printUrl: (this.config.printService && this.config.printService !== "") ? this.config.printService : this.config.helperServices.printTask.url,

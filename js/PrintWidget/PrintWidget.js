@@ -55,17 +55,13 @@ define([
             };
 
                 //get format
-                this.format = "PDF"; //default if nothing is specified
+                this.format = (this.config.hasOwnProperty("tool_print_format")) ? this.config.tool_print_format : "pdf";
                 for (let i = 0; i < this.config.tools.length; i++) {
                     if (this.config.tools[i].name === "print") {
                         let f = this.config.tools[i].format;
                         this.format = f.toLowerCase();
                         break;
                     }
-                }
-
-                if (this.config.hasOwnProperty("tool_print_format")) {
-                    this.format = this.config.tool_print_format;
                 }
 
                 if (!has("print-legend")) {
