@@ -2610,21 +2610,21 @@ define([
                     deferred.resolve(false);
                     return;
                 }
-                require([
-                    "application/PrintWidget/PrintWidget"
-                    ], lang.hitch(this, function(PrintWidget) {
-                        new PrintWidget({
-                            deferred: deferred,
-                            Print: Print,
-                            map: this.Map,
-                            toolbar: toolbar,
-                            tool: tool,
-                            tools: this.config.tools,
-                            i18n: this.config.i18n,
-                            printUrl: (this.config.printService && this.config.printService !== "") ? this.config.printService : this.config.helperServices.printTask.url,
-                        }, dom.byId('pageBody_print')).startup();
-                    }
-                ));
+                toolbar.createTool(toolbar, tool, "", "reload1.gif").then(lang.hitch(this, function(printDiv) {
+                    require(["application/PrintWidget/PrintWidget"], 
+                        lang.hitch(this, function(PrintWidget) {
+                            new PrintWidget({
+                                deferred: deferred,
+                                Print: Print,
+                                map: this.Map,
+                                tools: this.config.tools,
+                                i18n: this.config.i18n,
+                                printUrl: (this.config.printService && this.config.printService !== "") ? this.config.printService : this.config.helperServices.printTask.url,
+                                tool_print_format: this.config.tool_print_format.toLowerCase(),
+                            }, dom.byId('pageBody_print')).startup();
+                        }
+                    ));
+                }));
             }));
 
             return deferred.promise;

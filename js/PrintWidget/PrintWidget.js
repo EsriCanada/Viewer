@@ -3,13 +3,15 @@ define([
     "dojo/text!application/PrintWidget/Templates/PrintTemplate.html",
     "dojo/_base/declare", "dojo/_base/window",
     "dojo/_base/html", "dojo/_base/lang", "dojo/has", "dojo/dom",
+    "esri/arcgis/utils",
     "dojo/dom-class", "dojo/dom-style", "dojo/dom-attr", "dojo/dom-construct", "dojo/dom-geometry",
     "dojo/on", "dojo/mouse", "dojo/query", "dojo/Deferred"], function (
-Evented, _WidgetBase, _TemplatedMixin, 
-printTemplate,
-declare, win, html, lang, has, dom,
-domClass, domStyle, domAttr, domConstruct, domGeometry,
-on, mouse, query, Deferred) {
+    Evented, _WidgetBase, _TemplatedMixin, 
+    printTemplate,
+    declare, win, html, lang, has, dom,
+    arcgisUtils,
+    domClass, domStyle, domAttr, domConstruct, domGeometry,
+    on, mouse, query, Deferred) {
     return declare("esri.dijit.PrintWidget", [_WidgetBase, _TemplatedMixin, Evented], {
 
         options : {
@@ -28,6 +30,13 @@ on, mouse, query, Deferred) {
             this.Print = this.config.Print;
             this.toolbar = this.config.toolbar;
             this.tool = this.config.tool;
+
+            dojo.create("link", {
+                href : "js/PrintWidget/Templates/Print.css",
+                type : "text/css",
+                rel : "stylesheet",
+            }, document.head);
+
         },
 
         startup: function() {
@@ -36,7 +45,7 @@ on, mouse, query, Deferred) {
         },
 
         postCreate: function() {
-            let legendNode = null;
+            // let legendNode = null;
             let print = null;
 
             const layoutOptions = {
@@ -44,27 +53,6 @@ on, mouse, query, Deferred) {
                 scalebarUnit: this.config.units,
                 legendLayers: []
             };
-
-            // var printDiv = domConstruct.create(
-            //     "div",
-            //     {
-            //         class: "PrintDialog",
-            //         id: "printDialog"
-            //     },
-            //     toolbar.createTool(tool, "", "reload1.gif")
-            // );
-
-            this.toolbar.createTool(this.toolbar, this.tool, "", "reload1.gif").then(lang.hitch(this, function(printDiv) {
-                // const printError = domConstruct.create(
-                //     "div",
-                //     {
-                //         id: "printError",
-                //         class: "printError"
-                //     },
-                //     this.printDiv
-                // ).then(lang.hitch(this, function() {
-
-                // }));
 
                 //get format
                 this.format = "PDF"; //default if nothing is specified
@@ -77,71 +65,11 @@ on, mouse, query, Deferred) {
                 }
 
                 if (this.config.hasOwnProperty("tool_print_format")) {
-                    this.format = this.config.tool_print_format.toLowerCase();
+                    this.format = this.config.tool_print_format;
                 }
 
-                if (has("print-legend")) {
-                    legendNode = domConstruct.create(
-                        "input",
-                        {
-                            id: "legend_ck",
-                            className: "checkbox",
-                            type: "checkbox",
-                            checked: false
-                        },
-                        domConstruct.create("div", {
-                            class: "checkbox"
-                        })
-                    );
-                    var labelNode = domConstruct.create(
-                        "label",
-                        {
-                            for: "legend_ck",
-                            className: "checkbox",
-                            innerHTML: this.config.i18n.tools.print.legend
-                        },
-                        domConstruct.create("div")
-                    );
-                    domConstruct.place(legendNode, printDiv);
-                    domConstruct.place(labelNode, printDiv);
-
-                    on(
-                        legendNode,
-                        "change",
-                        lang.hitch(this, function(arg) {
-                            if (legendNode.checked) {
-                                var layers = arcgisUtils.getLegendLayers(
-                                    this.config.response
-                                );
-                                var legendLayers = array.map(layers, function(
-                                    layer
-                                ) {
-                                    return {
-                                        layerId: layer.layer.id
-                                    };
-                                });
-                                if (legendLayers.length > 0) {
-                                    layoutOptions.legendLayers = legendLayers;
-                                }
-                                array.forEach(print.templates, function(
-                                    template
-                                ) {
-                                    template.layoutOptions = layoutOptions;
-                                });
-                            } else {
-                                array.forEach(print.templates, function(
-                                    template
-                                ) {
-                                    if (
-                                        template.layoutOptions &&
-                                        template.layoutOptions.legendLayers
-                                    ) {
-                                        template.layoutOptions.legendLayers = [];
-                                    }
-                                });
-                            }
-                        })
-                    );
+                if (!has("print-legend")) {
+                    domStyle.set(this.legend, "display", "none");
                 }
 
                 require([
@@ -202,7 +130,7 @@ on, mouse, query, Deferred) {
                         );
                         domConstruct.place(
                             print.printDomNode,
-                            printDiv,
+                            this.printDiv,
                             "first"
                         );
 
@@ -346,7 +274,7 @@ on, mouse, query, Deferred) {
                         );
                         domConstruct.place(
                             print.printDomNode,
-                            printDiv,
+                            this.printDiv,
                             "first"
                         );
 
@@ -355,10 +283,39 @@ on, mouse, query, Deferred) {
                     })
                 );
             }))
-            }));
             
 
             this.deferred.resolve();
+        },
+
+        _legendChange :function(arg) {
+            if (this.legend.checked) {
+                var layers = arcgisUtils.getLegendLayers(
+                    this.config.response
+                );
+                var legendLayers = array.map(layers, function(
+                    layer
+                ) {
+                    return {
+                        layerId: layer.layer.id
+                    };
+                });
+                if (legendLayers.length > 0) {
+                    layoutOptions.legendLayers = legendLayers;
+                }
+                array.forEach(print.templates, function(template) {
+                    template.layoutOptions = layoutOptions;
+                });
+            } else {
+                array.forEach(this.print.templates, function(template) {
+                    if (
+                        template.layoutOptions &&
+                        template.layoutOptions.legendLayers
+                    ) {
+                        template.layoutOptions.legendLayers = [];
+                    }
+                });
+            }
         },
 
         _addPrintArrowButton: function() {
