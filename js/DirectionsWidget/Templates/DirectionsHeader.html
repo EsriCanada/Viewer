@@ -1,11 +1,11 @@
 <div class="directionsHeader" id="${directionsHeaderId}">
 	<div id="directionsControls" aria-label="${_i18n.widgets.directionsWidget.headerNavigation}">
 
+		<input type="image" src="images/icons_${iconsColor}/AddStop.png" alt="Stops" data-dojo-attach-point="addStopsButton" aria-label="${_i18n.widgets.directionsWidget.addStops}" title="${_i18n.widgets.directionsWidget.addStops}"  class="directionsButton stop" data-dojo-attach-event="click: addStopsDirections"/>
+
 		<div data-dojo-attach-point="locateDivButton" class="locateButton directionsButton" data-dojo-attach-event="click: locateStarts"></div>
 
 		<input type="image" src="images/icons_${iconsColor}/Reverse.png" alt="Reverse" aria-label="${_i18n.widgets.directionsWidget.reverse}" title="${_i18n.widgets.directionsWidget.reverse}" class="directionsButton reverse" data-dojo-attach-event="click: reverseDirections"/>
-
-		<input type="image" src="images/icons_${iconsColor}/AddStop.png" alt="Stops" data-dojo-attach-point="addStopsButton" aria-label="${_i18n.widgets.directionsWidget.addStops}" title="${_i18n.widgets.directionsWidget.addStops}"  class="directionsButton stop" data-dojo-attach-event="click: addStopsDirections"/>
 
 		<input type="image" src="images/icons_${iconsColor}/Barriere.png" data-dojo-attach-point="barriers" alt="Barriers" aria-label="${_i18n.widgets.directionsWidget.barriere}" title="${_i18n.widgets.directionsWidget.barriere}" class="directionsButton barriere" data-dojo-attach-event="click: barriersDirections"/>
 

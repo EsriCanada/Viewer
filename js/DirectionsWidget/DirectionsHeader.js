@@ -52,7 +52,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             
             this.locateCallBack = defaults.locateCallBack;
 
-            this.mapClickActiveStatus = false;
+            this.mapClickActiveStatus = true;
             this.barriersToolActiveStatus = false;
         },
 
@@ -158,10 +158,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.toolbar.on('updateTool', lang.hitch(this, function(name) {
                 // console.log('updateTool', name);
                 if(name==='directions') {
-                    this.directions.set("mapClickActive", this.mapClickActiveStatus);
                     if(this.barriersToolActiveStatus) {
                         this.barriersDirections();
                     }
+                    this.directions.set("mapClickActive", this.mapClickActiveStatus);
                     this.directions.map.setInfoWindowOnClick(false);
                 } else {
                     if(this.directions.mapClickActive) {
