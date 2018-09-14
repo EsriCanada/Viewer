@@ -1,0 +1,18 @@
+<div
+	class="PrintDialog"
+    data-dojo-attach-point="printDiv">
+    <label data-dojo-attach-point="legend" class="checkbox" style="padding: 5px;">
+    	<input
+    		id="legend_ck"
+    		class="checkbox"
+			type="checkbox"
+            checked=false
+            data-dojo-attach-event="change:_legendChange">
+        ${config.i18n.tools.print.legend}
+    </label>
+	<div
+        class="printError"
+        data-dojo-attach-point="printError"
+        aria-live="polite" aria-atomic="true")>
+    </div>
+</div>

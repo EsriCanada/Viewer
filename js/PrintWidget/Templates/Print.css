@@ -1,0 +1,10 @@
+.printError {
+    bottom: 0;
+    position: absolute;
+    padding: 10px;
+}
+
+.printError span {
+    color: #b60000;
+}
+

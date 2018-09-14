@@ -1949,15 +1949,6 @@ myKey img {
     font-family : "Roboto Condensed";
 }
 
-#printError {
-    bottom: 10px;
-    position: absolute;
-}
-
-#printError span {
-    color: #b60000;
-}
-
 .esriBookmarks .dojoDndItem {
     padding: 0px;
     /*border-top: none; */
