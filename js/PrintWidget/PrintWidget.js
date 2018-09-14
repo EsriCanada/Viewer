@@ -311,7 +311,7 @@ define([
         },
 
         _addPrintArrowButton: function() {
-            var arrowButton = dojo.query('.PrintDialog .dijitArrowButtonInner')[0];
+            var arrowButton = dojo.query('.dijitArrowButtonInner', this.printDiv)[0];
             domConstruct.create(
                 "img",
                 {
