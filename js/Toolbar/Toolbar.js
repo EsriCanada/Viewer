@@ -23,7 +23,6 @@ on, mouse, query, Deferred) {
             this.config = lang.mixin({}, this.options, options);
             this.map = this.config.map;
             this.domNode = srcRefNode;
-            this.toolbar = this;
         },
 
         startup: function () {
