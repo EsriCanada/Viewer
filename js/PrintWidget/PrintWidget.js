@@ -30,6 +30,8 @@ define([
             this.Print = this.config.Print;
             this.toolbar = this.config.toolbar;
             this.tool = this.config.tool;
+            
+            this.errorMessage = '';
 
             dojo.create("link", {
                 href : "js/PrintWidget/Templates/Print.css",
@@ -116,7 +118,6 @@ define([
                         this.print = new this.Print(
                             {
                                 map: this.map,
-                                id: "printButton",
                                 templates: templates,
                                 url: this.config.printUrl
                             },
@@ -130,73 +131,32 @@ define([
 
                         this.print.startup();
 
-                        this._addPrintArrowButton();
-
-                        on(
-                            this.print,
-                            "print-start",
+                        on(this.print, "print-start",
                             lang.hitch(this, function(ev) {
                                 // const printError = dojo.byId("printError");
-                                if (this.printError) this.printError.innerHTML = "";
+                                this.errorMessage = '';
+                                domStyle.set(this.printError, "display", "none");
 
-                                const loading_print = dojo.byId("loading_print");
-                                domClass.replace(
-                                    loading_print,
-                                    "showLoading",
-                                    "hideLoading"
-                                );
+                                this._showLoadingIndicator(true);
+
                             })
                         );
 
-                        on(
-                            this.print,
-                            "print-complete",
+                        on(this.print, "print-complete",
                             lang.hitch(this, function(ev) {
-                                this._addPrintArrowButton();
-                                const loading_print = dojo.byId("loading_print");
-                                domClass.replace(
-                                    loading_print,
-                                    "hideLoading",
-                                    "showLoading"
-                                );
+                                this.errorMessage = '';
+                                // domStyle.set(this.printError, "display", ""); //
+
+                                this._showLoadingIndicator(false);
                             })
                         );
 
-                        on(
-                            this.print,
-                            "error",
-                            lang.hitch(this, function(ev) {
-                                // console.log(ev);
-                                // alert(ev);
-                                // var printError = dojo.byId("printError");
-                                if (this.printError) {
-                                    this.printError.innerHTML =
-                                        "<span>" + ev + "</span><br/>";
-                                    var a = domConstruct.create(
-                                        "a",
-                                        {
-                                            href: "#",
-                                            innerHTML: this.config.i18n.tools
-                                                .print.clearGraphicLayer
-                                        },
-                                        this.printError
-                                    );
-                                    on(
-                                        a,
-                                        "click",
-                                        lang.hitch(this, function() {
-                                            this.map.graphics.clear();
-                                        })
-                                    );
-                                }
+                        on(this.print, "error",
+                            lang.hitch(this, function(errorMessage) {
+                                this.errorMessage = errorMessage;
+                                domStyle.set(this.printError, "display", "");
 
-                                var loading_print = dojo.byId("loading_print");
-                                domClass.replace(
-                                    loading_print,
-                                    "hideLoading",
-                                    "showLoading"
-                                );
-                                this._addPrintArrowButton();
+                                this._showLoadingIndicator(false);
                             })
                         );
 
@@ -277,12 +237,20 @@ define([
                     })
                 );
             }))
-            
 
             this.deferred.resolve();
         },
 
-        _legendChange :function(arg) {
+        _clearGraphicLayer: function() {
+            this.map.graphics.clear();
+        },
+
+        _showLoadingIndicator: function(show) {
+            const loading_print = dojo.byId("loading_print");
+            domClass.replace(loading_print, show ? "showLoading" : "hideLoading", show ? "hideLoading" : "showLoading");
+        },
+
+        _legendChange: function(arg) {
             if (arg.target.checked) {
                 const layers = arcgisUtils.getLegendLayers(
                     this.config.response
@@ -307,21 +275,6 @@ define([
                         template.layoutOptions.legendLayers = [];
                     }
                 });
-            }
-        },
-
-        _addPrintArrowButton: function() {
-            const arrowButtons = dojo.query('.dijitArrowButtonInner', this.printDiv);
-            if(arrowButtons && arrowButtons.length>0) {
-                domConstruct.create(
-                    "img",
-                    {
-                        src: "images/icons_black/carret-down.32.png",
-                        alt: "down",
-                        'aria-hidden': 'true'
-                    },
-                    arrowButtons[0]
-                );
             }
         },
 
