@@ -8,3 +8,14 @@
     color: #b60000;
 }
 
+.printError input {
+    margin-top: 10px;
+}
+
+.headerButton span {
+    color: black;
+}
+
+.esriPrint .dijitArrowButtonChar {
+    display: block !important;
+}
