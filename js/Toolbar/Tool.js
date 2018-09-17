@@ -47,7 +47,8 @@ on, query, Deferred) {
                 name: this.name,
                 deferrer: this.deferrer,
                 pageTitle: this.config.i18n.tooltips[this.name] || this.name,
-                loaderImg: this.config.loaderImg
+                loaderImg: this.config.loaderImg,
+                toolbar: this.toolbar
             }, domConstruct.create("div", {}, dom.byId("panelPages"))).startup();
         },
 

@@ -25,6 +25,7 @@ on, query, Deferred) {
             this.panelClass = this.config.panelClass ? (' '+this.config.panelClass) : '';
             this.pageTitle = this.config.pageTitle;
             this.deferrer = this.config.deferrer;
+            this.toolbar = this.config.toolbar;
 
             this.name = this.config.name;
             this.id = "page_" + this.name;
@@ -39,10 +40,10 @@ on, query, Deferred) {
                 }, this.LoadingIndicator);
             }
 
-            on(this, "updateTool_" + this.name, lang.hitch(this.name, function() {
-                var page = dom.byId('pageBody_'+this);
+            on(this.toolbar, "updateTool_" + this.name, lang.hitch(this, function() {
+                var page = dom.byId('pageBody_'+this.name);
                 if(page) page.focus();
-                var focusables = dojo.query('#pageBody_'+this+' [tabindex=0]');
+                var focusables = dojo.query('#pageBody_'+this.name+' [tabindex=0]');
                 if(focusables && focusables.length>0){
                     focusables[0].focus();
                 }
