@@ -769,14 +769,6 @@ define([
                                     )
                                 );
                                 break;
-                            case "edit":
-                                toolList.push(
-                                    this._addEditor(
-                                        this.config.tools[i],
-                                        toolbar
-                                    )
-                                );
-                                break;
                             case "share":
                                 toolList.push(
                                     this._addShare(
@@ -823,15 +815,9 @@ define([
                                 "updateTool",
                                 lang.hitch(this, function(name) {
                                     if (name === "measure") {
-                                        this._destroyEditor();
                                         this.map.setInfoWindowOnClick(false);
-                                    } else if (name === "edit") {
-                                        this._destroyEditor();
-                                        this.map.setInfoWindowOnClick(false);
-                                        this._createEditor();
                                     } else {
                                         //activate the popup and destroy editor if necessary
-                                        this._destroyEditor();
                                         this.map.setInfoWindowOnClick(true); // ? With InfoPopup!
                                     }
 
@@ -1806,100 +1792,6 @@ define([
             }
         }),
 
-        _addEditor: function(tool, toolbar) {
-            //Add the editor widget to the toolbar if the web map contains editable layers
-            var deferred = new Deferred();
-            this.editableLayers = this._getEditableLayers(
-                this.config.response.itemInfo.itemData.operationalLayers
-            );
-            if (has("edit") && this.editableLayers.length > 0) {
-                if (this.editableLayers.length > 0) {
-                    toolbar.createTool(toolbar, tool).tool(lang.hitch(this,function(editorDiv) {this.editorDiv = editorDiv}));
-                    return this._createEditor();
-                } else {
-                    console.error("No Editable Layers");
-                    deferred.resolve(false);
-                }
-            } else {
-                deferred.resolve(false);
-            }
-
-            return deferred.promise;
-        },
-
-        _createEditor: function() {
-            var deferred = new Deferred();
-            //Dynamically load since many apps won't have editable layers
-            require([
-                "application/has-config!edit?esri/dijit/editing/Editor"
-            ], lang.hitch(this, function(Editor) {
-                if (!Editor) {
-                    deferred.resolve(false);
-                    return;
-                }
-
-                //add field infos if necessary. Field infos will contain hints if defined in the popup and hide fields where visible is set
-                //to false. The popup logic takes care of this for the info window but not the edit window.
-                array.forEach(
-                    this.editableLayers,
-                    lang.hitch(this, function(layer) {
-                        if (
-                            layer.featureLayer &&
-                            layer.featureLayer.infoTemplate &&
-                            layer.featureLayer.infoTemplate.info &&
-                            layer.featureLayer.infoTemplate.info.fieldInfos
-                        ) {
-                            //only display visible fields
-                            var fields =
-                                layer.featureLayer.infoTemplate.info.fieldInfos;
-                            var fieldInfos = [];
-                            array.forEach(
-                                fields,
-                                lang.hitch(this, function(field) {
-                                    //added support for editing date and time
-                                    if (
-                                        field.format &&
-                                        field.format.dateFormat &&
-                                        array.indexOf(
-                                            this.timeFormats,
-                                            field.format.dateFormat
-                                        ) > -1
-                                    ) {
-                                        field.format = {
-                                            time: true
-                                        };
-                                    }
-
-                                    if (field.visible) {
-                                        fieldInfos.push(field);
-                                    }
-                                })
-                            );
-
-                            layer.fieldInfos = fieldInfos;
-                        }
-                    })
-                );
-
-                var settings = {
-                    map: this.map,
-                    layerInfos: this.editableLayers,
-                    toolbarVisible: has("edit-toolbar")
-                };
-                this.editor = new Editor(
-                    {
-                        settings: settings
-                    },
-                    domConstruct.create("div", {}, this.editorDiv)
-                );
-
-                this.editor.startup();
-                deferred.resolve(true);
-            }));
-
-            return deferred.promise;
-        },
-
         _getEditableLayers: function(layers) {
             var layerInfos = [];
             array.forEach(
@@ -1919,13 +1811,6 @@ define([
                 })
             );
             return layerInfos;
-        },
-
-        _destroyEditor: function() {
-            if (this.editor) {
-                this.editor.destroy();
-                this.editor = null;
-            }
         },
 
         _OnFeatureTableDisplay: function(show) {
