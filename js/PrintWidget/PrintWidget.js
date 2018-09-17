@@ -165,7 +165,7 @@ define([
                 }
 
                 esriRequest({
-                    url: this.config.helperServices.printTask.url,
+                    url: this.config.printUrl,
                     content: {
                         f: "json"
                     },
