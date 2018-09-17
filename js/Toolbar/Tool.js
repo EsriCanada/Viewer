@@ -45,7 +45,8 @@ on, query, Deferred) {
             new ToolPage({
                 name: this.name,
                 deferrer: this.deferrer,
-                pageTitle: this.config.i18n.tooltips[this.name] || this.name
+                pageTitle: this.config.i18n.tooltips[this.name] || this.name, 
+                toolbar: this.toolbar
             }, domConstruct.create("div", {}, dom.byId("panelPages"))).startup();
         },
 
@@ -60,7 +61,7 @@ on, query, Deferred) {
             return !hidden;
         },
 
-        executeByKbd: lang.hitch(this, function(ev) {
+        executeByKbd: function(ev) {
             if(ev.keyCode === 13) {
                 const input = dojo.query("input", ev.target);
                 if(input) {
@@ -69,7 +70,7 @@ on, query, Deferred) {
                     ev.stopPropagation();
                 }
             }
-        }),
+        },
 
         execute: function (ev) {
             // console.log(ev);
@@ -107,7 +108,7 @@ on, query, Deferred) {
             ptools.forEach(lang.hitch(this, function(t){
                 if(active && t === tool) {
                     domClass.add(t, "panelToolActive");
-                    // this.emit("updateTool_"+this.name);
+                    this.config.toolbar.emit("updateTool_"+this.name);
                 } else {
                     domClass.remove(t,"panelToolActive");
                 }
