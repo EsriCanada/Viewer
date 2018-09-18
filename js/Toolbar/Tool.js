@@ -56,12 +56,12 @@ on, query, Deferred) {
             return this.deferrer.promise;
         },
 
-        IsToolSelected: function(name) {
-            const page = dom.byId("page_"+this.name);
-            if(!page) return false;
-            const hidden = page.classList.contains("hideAttr");
-            return !hidden;
-        },
+        // IsToolSelected: function(name) {
+        //     const page = dom.byId("page_"+this.name);
+        //     if(!page) return false;
+        //     const hidden = page.classList.contains("hideAttr");
+        //     return !hidden;
+        // },
 
         executeByKbd: lang.hitch(this, function(ev) {
             if(ev.keyCode === 13) {

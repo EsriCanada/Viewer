@@ -121,24 +121,24 @@ on, mouse, query, Deferred) {
         },
 
         OpenTool: function(name) {
-            var page = dom.byId("page_"+name);
-            var hidden = page.classList.contains("hideAttr");
+            const page = dom.byId("page_"+name);
+            const hidden = page.classList.contains("hideAttr");
             if(!hidden) return;
-            var btn = dom.byId('toolButton_'+name);
+            const btn = dom.byId('toolButton_'+name);
             this._toolClick(name);
         },
 
         IsToolSelected: function(name) {
-            var page = dom.byId("page_"+name);
+            const page = dom.byId("page_"+name);
             if(!page) return false;
-            var hidden = page.classList.contains("hideAttr");
+            const hidden = page.classList.contains("hideAttr");
             return !hidden;
         },
 
         _toolKeyPress: function(ev) {
-            var target = ev.target;
+            const target = ev.target;
             if(ev.keyCode===13) {
-                var input = dojo.query("input", target);
+                const input = dojo.query("input", target);
                 if(input) {
                     input[0].click();
                 }
