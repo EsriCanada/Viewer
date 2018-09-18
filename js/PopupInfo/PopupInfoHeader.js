@@ -223,9 +223,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.total = count;
 
-            var msgNode = dojo.byId("popupMessage");
-            var ctrlNode = dojo.byId("popupControls");
-            var pagerNode = dojo.byId("popupPager");
+            const msgNode = dojo.byId("popupMessage");
+            const ctrlNode = dojo.byId("popupControls");
+            const pagerNode = dojo.byId("popupPager");
 
             domStyle.set(msgNode, 'display', (this.total <= 0 ? 'inline' : 'none'));
             domStyle.set(ctrlNode, 'display', (this.total > 0 ? 'inline' : 'none'));
@@ -239,6 +239,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // }
 
             if(this.total > 0) {
+                this.setIndexOfTotal(this.map.infoWindow.selectedIndex, this.total);
                 query('#popupPager .popupInfoButton.next')[0].focus();
             }
         },
@@ -279,9 +280,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         panZoom: function(panOnly) {
-            var popup = this.map.infoWindow;
+            const popup = this.map.infoWindow;
             if(popup.selectedIndex<0) return;
-            var geometry = popup.features[popup.selectedIndex].geometry;
+            const geometry = popup.features[popup.selectedIndex].geometry;
             if(panOnly) {
                 if (geometry.type !== "point") {
                     geometry = geometry.getExtent().getCenter();
