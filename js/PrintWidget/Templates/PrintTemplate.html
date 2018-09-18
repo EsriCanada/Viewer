@@ -12,7 +12,7 @@
 	<div
         class="printError" style="display:none;"
         data-dojo-attach-point="printError">
-        <div><span aria-live="polite" aria-atomic="true">${errorMessage}</span></div>
+        <div><span aria-live="polite" aria-atomic="true" data-dojo-attach-point="errorMessage"></span></div>
         <input type="button" value="${config.i18n.tools.print.clearGraphicLayer}" data-dojo-attach-event="click:_clearGraphicLayer">
     </div>
 </div>

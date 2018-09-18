@@ -31,7 +31,7 @@ define([
             this.toolbar = this.config.toolbar;
             this.tool = this.config.tool;
             
-            this.errorMessage = '';
+            // this.errorMessage.innerHTML = 'Error';
 
             dojo.create("link", {
                 href : "js/PrintWidget/Templates/Print.css",
@@ -134,7 +134,7 @@ define([
                         on(this.print, "print-start",
                             lang.hitch(this, function(ev) {
                                 // const printError = dojo.byId("printError");
-                                this.errorMessage = '';
+                                this.errorMessage.innerHTML = 'Printing';
                                 domStyle.set(this.printError, "display", "none");
 
                                 this._showLoadingIndicator(true);
@@ -144,7 +144,7 @@ define([
 
                         on(this.print, "print-complete",
                             lang.hitch(this, function(ev) {
-                                this.errorMessage = '';
+                                this.errorMessage.innerHTML = '';
                                 // domStyle.set(this.printError, "display", ""); //
 
                                 this._showLoadingIndicator(false);
@@ -152,8 +152,8 @@ define([
                         );
 
                         on(this.print, "error",
-                            lang.hitch(this, function(errorMessage) {
-                                this.errorMessage = errorMessage;
+                            lang.hitch(this, function(error) {
+                                this.errorMessage.innerHTML = error.message;
                                 domStyle.set(this.printError, "display", "");
 
                                 this._showLoadingIndicator(false);
