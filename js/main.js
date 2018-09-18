@@ -3275,9 +3275,9 @@ define([
 
                         //Add a logo if provided
                         if (this.config.logo) {
-                            var altText = this.config.logoAltText;
+                            const altText = (this.config.logoAltText && this.config.logoAltText !=='') ? this.config.logoAltText : 'Logo';
                             if (!altText || altText === "") altText = title;
-                            var panelLogo = domConstruct.create(
+                            const panelLogo = domConstruct.create(
                                 "div",
                                 {
                                     id: "panelLogo",
