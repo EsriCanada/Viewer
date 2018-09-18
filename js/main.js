@@ -2498,6 +2498,7 @@ define([
                 toolbar.createTool(toolbar, tool, "", "reload1.gif").then(lang.hitch(this, function(printDiv) {
                     require(["application/PrintWidget/PrintWidget"], 
                         lang.hitch(this, function(PrintWidget) {
+                            const format = this.config.tool_print_format ? this.config.tool_print_format.toLowerCase() : '';
                             new PrintWidget({
                                 deferred: deferred,
                                 Print: Print,
@@ -2505,7 +2506,7 @@ define([
                                 tools: this.config.tools,
                                 i18n: this.config.i18n,
                                 printUrl: (this.config.printService && this.config.printService !== "") ? this.config.printService : this.config.helperServices.printTask.url,
-                                tool_print_format: this.config.tool_print_format.toLowerCase(),
+                                tool_print_format: format,
                                 response: this.config.response,
                             }, dom.byId('pageBody_print')).startup();
                         }
