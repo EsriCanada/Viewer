@@ -1063,6 +1063,14 @@ h3 {
   position: absolute;
 }
 
+#overviewMap-map_root {
+  background: #b4e3fe;
+}
+
+.esriOverviewMap .ovwContainer #overviewMap-map {
+  border-radius: 50%;
+}
+
 #panelTool_instructions,
 #panelTool_details {
   float: right;
