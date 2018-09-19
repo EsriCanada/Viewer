@@ -1270,6 +1270,7 @@ define([
                     toolbar: toolbar,
                     loaderImg: "reload1.gif", 
                     badgeEvName: "featureSelected",
+                    badgeTip: this.config.i18n.tools.badgesTips.featureSelected, 
                 }).then(lang.hitch(this, function(featuresDiv) {
                     const layers = this.config.response.itemInfo.itemData
                         .operationalLayers;

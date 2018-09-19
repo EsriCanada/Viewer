@@ -52,8 +52,8 @@ define(
             },
             badgesTips:{
                 "reverseLocation": "Afficher l'adresse du lieu",
-                "directions": "Montrer l'itinéraire"
-            }
+                "directions": "Montrer l'itinéraire",
+                featureSelected: "Caractéristique sélectionnée",            }
         },
         "tooltips":{
         	"home": "Etendue par Défaut",

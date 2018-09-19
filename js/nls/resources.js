@@ -53,6 +53,7 @@ define({
             badgesTips:{
                 "reverseLocation": "Showing Location",
                 "directions": "Showing Itinerary",
+                "featureSelected": "Feature Selected",
             }
         },
         "tooltips":{

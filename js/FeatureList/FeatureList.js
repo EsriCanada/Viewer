@@ -135,7 +135,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         __reloadList : function(ext) {
             var deferred = new Deferred();
 
-            lang.hitch(this, this.showBadge(false));
+            this.toolbar.hideBadge('featureSelected');
 
             const list = dom.byId('featuresList');
             this._clearMarker();
@@ -218,14 +218,10 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         showBadge : function(show) {
-            const badge = dom.byId('badge_featureSelected');
-            if(!badge) return;
             if (show) {
-                domStyle.set(badge,'display','');
-                domAttr.set(badge, "title", i18n.widgets.featureList.featureSelected);
-                domAttr.set(badge, "alt", i18n.widgets.featureList.featureSelected);
+                this.toolbar.showBadge('featureSelected');
             } else {
-                domStyle.set(badge,'display','none');
+                this.toolbar.hideBadge('featureSelected');
             }
         },
 
@@ -246,36 +242,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 });
             }
 
-            // this.featurePanZoom = function(el, panOnly) {
-            //     var result = this.tasks[el.dataset.layerid];
-            //     var fid = el.dataset.featureid;
-            //     var layer = result.layer;
-            //     var objectIdFieldName = result.layer.objectIdField;
-
-            //     q = new Query();
-            //     q.where = objectIdFieldName+"="+fid;
-            //     q.outFields = [objectIdFieldName];
-            //     q.returnGeometry = true;
-            //     result.task.execute(q).then(function(ev) {
-            //         var geometry = ev.features[0].geometry;
-            //         if(panOnly) {
-            //             if (geometry.type !== "point") {
-            //                 geometry = geometry.getExtent().getCenter();
-            //             }
-            //             layer._map.centerAt(geometry);
-            //         } else {
-            //             if(geometry.type === "point") {
-            //                 layer._map.centerAndZoom(geometry, 13);
-            //             } else {
-            //                 var extent = geometry.getExtent().expand(1.5);
-            //                 layer._map.setExtent(extent);
-            //             }
-            //         }
-            //     });
-            // };
-
             on(this.map, "extent-change", lang.hitch(this, this._reloadList));
-
         },
 
         _getFeatureListItem: function(result, resultFeature, objectIdFieldName, layer, li) {
