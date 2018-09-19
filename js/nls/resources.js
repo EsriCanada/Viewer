@@ -51,7 +51,8 @@ define({
                 selected: "Base map selected"
             },
             badgesTips:{
-                "reverseLocation": "Showing Location"
+                "reverseLocation": "Showing Location",
+                "directions": "Showing Itinerary",
             }
         },
         "tooltips":{

@@ -51,7 +51,8 @@ define(
                 selected: "Carte de base sélectionnée"
             },
             badgesTips:{
-                "reverseLocation": "Afficher l'adresse du lieu"
+                "reverseLocation": "Afficher l'adresse du lieu",
+                "directions": "Montrer l'itinéraire"
             }
         },
         "tooltips":{

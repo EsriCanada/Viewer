@@ -1268,10 +1268,8 @@ define([
             if (has("features")) {
                 toolbar.createTool(tool, {
                     toolbar: toolbar,
-                    panelClass:"",
                     loaderImg: "reload1.gif", 
                     badgeEvName: "featureSelected",
-                    badgeImg: "",
                 }).then(lang.hitch(this, function(featuresDiv) {
                     const layers = this.config.response.itemInfo.itemData
                         .operationalLayers;
@@ -1352,7 +1350,13 @@ define([
         _addDirections: function(tool, toolbar) {
             var deferred = new Deferred();
             if (has("directions")) {
-                toolbar.createTool(tool, {toolbar:toolbar}).then(lang.hitch(this, function(directionsDiv) {
+                toolbar.createTool(tool, {
+                    toolbar:toolbar,
+                    loaderImg: "reload1.gif",
+                    badgeEvName: "route",
+                    badgeImg: "./images/Route.png",
+                    badgeTip: this.config.i18n.tools.badgesTips.directions, 
+                }).then(lang.hitch(this, function(directionsDiv) {
                     this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                         require(["application/DirectionsWidget/DirectionsWidget"], lang.hitch(this, function(DirectionsWidget) {
                             this.directions = new DirectionsWidget({
@@ -1393,10 +1397,7 @@ define([
             if (has("filter")) {
                 toolbar.createTool(tool, {
                     toolbar: toolbar,
-                    panelClass:"",
-                    loaderImg: "", 
                     badgeEvName: "someFilters",
-                    badgeImg: "",
                 }).then(lang.hitch(this, function(filterDiv) {
                     const layers = this.config.response.itemInfo.itemData
                         .operationalLayers;
@@ -1848,10 +1849,8 @@ define([
 
                     toolbar.createTool(tool, {
                         toolbar: toolbar,
-                        panelClass:"",
                         loaderImg: "reload1.gif", 
                         badgeEvName: "Table",
-                        badgeImg: "",
                     }).then(lang.hitch(this, function(layersDivDesc) {
                         require(["application/TableOfContents/TableOfContents"], lang.hitch(this, function(TableOfContents) {
                             const toc = new TableOfContents(
@@ -1893,10 +1892,8 @@ define([
 
                     toolbar.createTool(tool, {
                         toolbar: toolbar,
-                        panelClass:"",
                         loaderImg: "reload1.gif", 
                         badgeEvName: "Table",
-                        badgeImg: "",
                     }).then(lang.hitch(this, function(layersDivDesc) {
                         require(["application/LayerManager/LayerManager"], lang.hitch(this, function(LayerManager) {
                             const toc = new LayerManager(
@@ -2117,10 +2114,8 @@ define([
             if (has("infoPanel")) {
                 toolbar.createTool(tool, {
                         toolbar: toolbar,
-                        panelClass:"",
                         loaderImg: "reload1.gif", 
                         badgeEvName: "followTheMapMode",
-                        badgeImg: "",
                     }).then(lang.hitch(this, function(infoPanelDiv) {
                     this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                         require(["application/PopupInfo/PopupInfo"], lang.hitch(this, function(PopupInfo) {
@@ -2161,8 +2156,6 @@ define([
                     require(["application/GeoCoding/GeoCoding"], lang.hitch(this, function(GeoCoding) {
                         toolbar.createTool(tool, {
                             toolbar: toolbar,
-                            panelClass:"",
-                            loaderImg: "", 
                             badgeEvName: "geoCoding",
                             badgeImg: this.config.geoCodingMarker,
                             badgeTip: this.config.i18n.tools.badgesTips.reverseLocation,
@@ -2514,10 +2507,7 @@ define([
                 }
                 toolbar.createTool(tool, {
                         toolbar: toolbar,
-                        panelClass:"",
                         loaderImg: "reload1.gif", 
-                        badgeEvName: "",
-                        badgeImg: "",
                     }).then(lang.hitch(this, function(printDiv) {
                     require(["application/PrintWidget/PrintWidget"], 
                         lang.hitch(this, function(PrintWidget) {
