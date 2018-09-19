@@ -106,16 +106,22 @@ on, mouse, query, Deferred) {
         },
 
         //Create a tool and return the div where you can place content
-        createTool: function (toolbar, tool, panelClass, loaderImg, badgeEvName, badgeImg) {
+        createTool: function (tool,  config) {
+            config = lang.mixin({}, {
+                panelClass: "", 
+                loaderImg: "", 
+                badgeEvName: "",
+                badgeImg: "",
+            }, config);
             const _tool = new Tool({
                 name: tool.name,
                 icon: "images/icons_" + this.config.icons + "/" + tool.name + ".png",
-                panelClass: panelClass, 
-                loaderImg: loaderImg, 
-                badgeEvName: badgeEvName,
-                badgeImg: badgeImg,
+                panelClass: config.panelClass, 
+                loaderImg: config.loaderImg, 
+                badgeEvName: config.badgeEvName,
+                badgeImg: config.badgeImg,
                 i18n: this.config.i18n,
-                toolbar: toolbar,
+                toolbar: config.toolbar,
             }, domConstruct.create("div", {}, dom.byId("panelTools")));
 
             return _tool.startup();

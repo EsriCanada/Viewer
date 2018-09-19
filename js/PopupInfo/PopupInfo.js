@@ -606,6 +606,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         showBadge : function(show) {
             const badge = dom.byId('badge_followTheMapMode');
+            if(!badge) return;
             if (show) {
                 domStyle.set(badge,'display','');
                 domAttr.set(badge, "title", i18n.widgets.popupInfo.followTheMap);

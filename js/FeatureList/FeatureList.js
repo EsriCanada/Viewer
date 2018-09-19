@@ -218,13 +218,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         showBadge : function(show) {
-            const indicator = dom.byId('badge_featureSelected');
+            const badge = dom.byId('badge_featureSelected');
+            if(!badge) return;
             if (show) {
-                domStyle.set(indicator,'display','');
-                domAttr.set(indicator, "title", i18n.widgets.featureList.featureSelected);
-                domAttr.set(indicator, "alt", i18n.widgets.featureList.featureSelected);
+                domStyle.set(badge,'display','');
+                domAttr.set(badge, "title", i18n.widgets.featureList.featureSelected);
+                domAttr.set(badge, "alt", i18n.widgets.featureList.featureSelected);
             } else {
-                domStyle.set(indicator,'display','none');
+                domStyle.set(badge,'display','none');
             }
         },
 
