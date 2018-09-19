@@ -218,7 +218,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         showBadge : function(show) {
-            var indicator = dom.byId('badge_featureSelected');
+            const indicator = dom.byId('badge_featureSelected');
             if (show) {
                 domStyle.set(indicator,'display','');
                 domAttr.set(indicator, "title", i18n.widgets.featureList.featureSelected);

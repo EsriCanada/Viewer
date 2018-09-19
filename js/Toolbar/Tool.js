@@ -28,13 +28,15 @@ on, query, Deferred) {
             this.id = "toolButton_" + this.name;
             this.icon = this.config.icon;
             this.tip = this.config.i18n.tooltips[this.name] || this.name;
- 
+            this.badgeImg = this.config.badgeImg;
         },
 
         postCreate : function() {
-            if(this.config.badgeEvName && this.config.badgeEvName !== '') {
+            let badge = (this.badgeImg && this.badgeImg !== '') ? this.badgeImg : this.config.badgeEvName;
+            if(badge && badge !== '') {
+                badge = badge.includes('.') ? badge :"images/"+badge+".png";
                 domConstruct.create("img", {
-                    src:"images/"+this.config.badgeEvName+".png",
+                    src: badge,
                     class:"setIndicator",
                     style:"display:none;",
                     tabindex:0,
@@ -42,7 +44,6 @@ on, query, Deferred) {
                     alt:"badge"
                 }, this.panelTool);
             }
-
             new ToolPage({
                 name: this.name,
                 deferrer: this.deferrer,
