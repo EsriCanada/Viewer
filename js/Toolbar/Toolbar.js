@@ -106,13 +106,14 @@ on, mouse, query, Deferred) {
         },
 
         //Create a tool and return the div where you can place content
-        createTool: function (toolbar, tool, panelClass, loaderImg, badgeEvName) {
+        createTool: function (toolbar, tool, panelClass, loaderImg, badgeEvName, badgeImg) {
             const _tool = new Tool({
                 name: tool.name,
                 icon: "images/icons_" + this.config.icons + "/" + tool.name + ".png",
                 panelClass: panelClass, 
                 loaderImg: loaderImg, 
                 badgeEvName: badgeEvName,
+                badgeImg: badgeImg,
                 i18n: this.config.i18n,
                 toolbar: toolbar,
             }, domConstruct.create("div", {}, dom.byId("panelTools")));

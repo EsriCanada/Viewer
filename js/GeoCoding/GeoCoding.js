@@ -127,6 +127,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             infoTemplate
                             );
                         this.map.graphics.add(this.geoCodingMarkerGraphic);
+                        this.showBadge(true);
 
                         this.contentPanel.setContent(this.geoCodingMarkerGraphic.getContent());
 
@@ -315,22 +316,23 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 this.map.graphics.remove(this.geoCodingMarkerGraphic);
                 this.geoCodingMarkerGraphic = null;
             }
+            this.showBadge(false);
             // if(this.searchLabelGraphic) {
             //     this.map.graphics.remove(this.searchLabelGraphic);
             //     this.searchLabelGraphic = null;
             // }
         },
 
-        // showBadge : function(show) {
-        //     var indicator = dom.byId('badge_followTheMapMode');
-        //     if (show) {
-        //         domStyle.set(indicator,'display','');
-        //         domAttr.set(indicator, "title", i18n.widgets.popupInfo.followTheMap);
-        //         domAttr.set(indicator, "alt", i18n.widgets.popupInfo.followTheMap);
-        //     } else {
-        //         domStyle.set(indicator,'display','none');
-        //     }
-        // },
+        showBadge : function(show) {
+            var indicator = dom.byId('badge_geoCoding');
+            if (show) {
+                domStyle.set(indicator,'display','');
+                domAttr.set(indicator, "title", i18n.widgets.popupInfo.reverseLocation);
+                domAttr.set(indicator, "alt", i18n.widgets.popupInfo.reverseLocation);
+            } else {
+                domStyle.set(indicator,'display','none');
+            }
+        },
 
     });
     if (has("extend-esri")) {

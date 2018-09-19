@@ -692,7 +692,7 @@ define([
                             case "geoCoding":
                                 toolList.push(
                                     this._addGeoCoding(
-                                        this.config.tools[i],
+                                        this.config.tools[i], 
                                         toolbar
                                     )
                                 );
@@ -2149,7 +2149,7 @@ define([
 
                 this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                     require(["application/GeoCoding/GeoCoding"], lang.hitch(this, function(GeoCoding) {
-                        toolbar.createTool(toolbar, tool, "").then(lang.hitch(this, function(geoCodingDiv) {
+                        toolbar.createTool(toolbar, tool, "", "", "geoCoding", this.config.geoCodingMarker).then(lang.hitch(this, function(geoCodingDiv) {
                             const geoCoding = new GeoCoding(
                                 {
                                     map: this.map,
