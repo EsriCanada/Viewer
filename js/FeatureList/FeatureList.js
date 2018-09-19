@@ -210,10 +210,12 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             if(!this._isVisible()) return;
             const loading_features = this.domNode.parentNode.parentNode.querySelector('#loading_features');
 
-            domClass.replace(loading_features, "showLoading", "hideLoading");
+            // domClass.replace(loading_features, "showLoading", "hideLoading");
+            this.toolbar.hideLoading('features');
 
             lang.hitch(this, this.__reloadList(ext).then(lang.hitch(this, function(results) {
-                domClass.replace(loading_features, "hideLoading", "showLoading");
+                // domClass.replace(loading_features, "hideLoading", "showLoading");
+                this.toolbar.showLoading('features');
             })));
         },
 

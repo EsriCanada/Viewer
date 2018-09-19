@@ -229,6 +229,15 @@ on, mouse, query, Deferred) {
         hideBadge: function(toolName){
             domStyle.set(dom.byId('badge_'+toolName),'display','none');
         },
+
+        showLoading: function(toolName) {
+            domClass.replace(dom.byId('loading_'+toolName), "hideLoading", "showLoading");
+        },
+
+        hideLoading: function(toolName) {
+            domClass.replace(dom.byId('loading_'+toolName), "showLoading", "hideLoading");
+        },
+
     });
     if (has("extend-esri")) {
         lang.setObject("dijit.Toolbar", Widget, esriNS);
