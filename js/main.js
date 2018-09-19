@@ -1264,16 +1264,16 @@ define([
 
         _addFeatures: function(tool, toolbar) {
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
-            var deferred = new Deferred();
+            const deferred = new Deferred();
             if (has("features")) {
                 toolbar.createTool(tool, {
                     toolbar: toolbar,
                     loaderImg: "reload1.gif", 
                     badgeEvName: "featureSelected",
                     badgeTip: this.config.i18n.tools.badgesTips.featureSelected, 
+                    badgeImg: this.config.marker,
                 }).then(lang.hitch(this, function(featuresDiv) {
-                    const layers = this.config.response.itemInfo.itemData
-                        .operationalLayers;
+                    const layers = this.config.response.itemInfo.itemData.operationalLayers;
 
                     require(["application/FeatureList/FeatureList"], lang.hitch(this, function(FeatureList) {
                         const featureList = new FeatureList(
