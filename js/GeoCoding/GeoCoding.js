@@ -327,8 +327,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var indicator = dom.byId('badge_geoCoding');
             if (show) {
                 domStyle.set(indicator,'display','');
-                domAttr.set(indicator, "title", i18n.widgets.popupInfo.followTheMap);
-                domAttr.set(indicator, "alt", i18n.widgets.popupInfo.followTheMap);
+                domAttr.set(indicator, "title", i18n.widgets.popupInfo.reverseLocation);
+                domAttr.set(indicator, "alt", i18n.widgets.popupInfo.reverseLocation);
             } else {
                 domStyle.set(indicator,'display','none');
             }

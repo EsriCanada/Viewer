@@ -28,7 +28,8 @@ define({
             "addressToLocation": "Adresse à l'emplacement",
             symbol: "Symbole",
             "followTheMap": "Mode Suivez la carte",
-            "resultOf": '{0} de {1}'
+            "resultOf": '{0} de {1}',
+            "reverseLocation": "Afficher l'adresse du lieu"
         }),
         geoCoding : {
             "tooltips" : "Infobulles",
