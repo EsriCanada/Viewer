@@ -49,6 +49,9 @@ define({
 			},
             "basemapGallery": {
                 selected: "Base map selected"
+            },
+            badgesTips:{
+                "reverseLocation": "Showing Location"
             }
         },
         "tooltips":{

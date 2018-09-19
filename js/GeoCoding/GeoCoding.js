@@ -127,7 +127,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             infoTemplate
                             );
                         this.map.graphics.add(this.geoCodingMarkerGraphic);
-                        this.showBadge(true);
+                        this.toolbar.showBadge('geoCoding');
 
                         this.contentPanel.setContent(this.geoCodingMarkerGraphic.getContent());
 
@@ -316,22 +316,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 this.map.graphics.remove(this.geoCodingMarkerGraphic);
                 this.geoCodingMarkerGraphic = null;
             }
-            this.showBadge(false);
-            // if(this.searchLabelGraphic) {
-            //     this.map.graphics.remove(this.searchLabelGraphic);
-            //     this.searchLabelGraphic = null;
-            // }
-        },
-
-        showBadge : function(show) {
-            var indicator = dom.byId('badge_geoCoding');
-            if (show) {
-                domStyle.set(indicator,'display','');
-                domAttr.set(indicator, "title", i18n.widgets.popupInfo.reverseLocation);
-                domAttr.set(indicator, "alt", i18n.widgets.popupInfo.reverseLocation);
-            } else {
-                domStyle.set(indicator,'display','none');
-            }
+            this.toolbar.hideBadge('geoCoding')
         },
 
     });

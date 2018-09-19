@@ -49,6 +49,9 @@ define(
 			},
             "basemapGallery": {
                 selected: "Carte de base sélectionnée"
+            },
+            badgesTips:{
+                "reverseLocation": "Afficher l'adresse du lieu"
             }
         },
         "tooltips":{

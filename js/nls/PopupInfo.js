@@ -29,8 +29,7 @@ define({
                 "addressToLocation": "Address To Location",
                 symbol: "Symbol",
                 "followTheMap": "Follow The Map Mode",
-                "resultOf": 'Result {0} of {1}',
-                "reverseLocation": "Showing Location"
+                "resultOf": 'Result {0} of {1}'
             },
             "geoCoding" : {
                 "tooltips" : "ToolTips",

@@ -2165,6 +2165,7 @@ define([
                             loaderImg: "", 
                             badgeEvName: "geoCoding",
                             badgeImg: this.config.geoCodingMarker,
+                            badgeTip: this.config.i18n.tools.badgesTips.reverseLocation,
                         }).then(lang.hitch(this, function(geoCodingDiv) {
                             const geoCoding = new GeoCoding(
                                 {
