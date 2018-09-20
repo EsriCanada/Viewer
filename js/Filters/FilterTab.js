@@ -13,32 +13,30 @@ define([
     FilterTabTemplate,
     i18n
     ){
-    var Widget = declare("FilterTab", [_WidgetBase, _TemplatedMixin, Evented], {
+    const Widget = declare("FilterTab", [_WidgetBase, _TemplatedMixin, Evented], {
         templateString: FilterTabTemplate,
 
         options: {
             map: null,
             filter: null, 
-            checked: false
+            checked: false,
+            badgeTip: '',
         },        
 
         constructor: function(options, srcRefTabsZone, srcRefTabsContent){
-            var defaults = lang.mixin({}, this.options, options);
+            const defaults = lang.mixin({}, this.options, options);
             this._i18n = i18n;
+            this.badgeTip = defaults.badgeTip;
 
             //this.domNode = srcRefNode;
             this.set("map", defaults.map);
+            this.set("toolbar", defaults.toolbar);
             this.set("filter", defaults.filter);
+            this.set("filters", defaults.filters);
 
             this.set("filter_name", this.filter.layer.resourceInfo.name);
             // this.set("checked", defaults.checked);
             this.set("FilterItems", []);
-            //this.set("filtersOn", []);
-
-
-            if(window.filtersOn === undefined) {
-                window.filtersOn = [];
-            }
         },
         
         FilterItems: [],
@@ -92,6 +90,9 @@ define([
             this.FilterItems.push(filterItem); 
             filterItem.on("removeFilterItem", lang.hitch(this, function (id) {
                 this.FilterItems.splice(this.FilterItems.indexOf(filterItem), 1);
+                if(this.FilterItems.length === 0) {
+                    this.filterIgnore();
+                }
             }));
             filterItem.domNode.focus();
         },
@@ -154,37 +155,34 @@ define([
         },
 
         filterIgnore: function(btn) {
-            var layer = this.filter.layer;
+            const layer = this.filter.layer;
             this.getDefinitionExtensionExtent(layer, null);
             this.showBadge(false);
         },
 
         showBadge: function(show) {
-            var tabIndex = window.filtersOn.indexOf(this.id);
-            var tabIndicator = query('#'+this.id+"_img")[0];
+            const tabIndex = this.filters.filtersOn.indexOf(this.id);
+            const tabIndicator = query('#'+this.id+"_img")[0];
             if(show) {
                 domStyle.set(tabIndicator,'display','');
                 if(tabIndex<0)
                 {
-                    window.filtersOn.push(this.id);   
+                    this.filters.filtersOn.push(this.id);   
                 }
             } else {
                 domStyle.set(tabIndicator,'display','none');
                 if(tabIndex>=0)
                 {
-                    window.filtersOn.splice(tabIndex, 1);  
+                    this.filters.filtersOn.splice(tabIndex, 1);  
                 }                          
             }
             
-            var badgeindicator = query('#badge_someFilters')[0];
-                if (window.filtersOn.length>0) {
-                    domStyle.set(badgeindicator,'display','');
-                    domAttr.set(badgeindicator, "title", i18n.widgets.FilterTab.someFilters);
-                    domAttr.set(badgeindicator, "alt", i18n.widgets.FilterTab.someFilters);
-                } else {
-                    domStyle.set(badgeindicator,'display','none');
-                }
-
+            if (this.filters.filtersOn.length>0) {
+                this.toolbar.showBadge('someFilters');
+            }
+            else {
+                this.toolbar.hideBadge('someFilters');
+            }
         },
     });
 

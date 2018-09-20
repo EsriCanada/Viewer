@@ -14,6 +14,7 @@ define({
                 "map": "Skip to Map",
                 "clear": "Clear Selection",
                 "noFeatures": "Nothing to show",
+                "noPreselectedFeature": "No feature pre-selected",
                 "instructions" :
                     "Click the map to select features <br/>or <br/>"+
                     "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Skip to Map</a> and:<br/>"+
@@ -28,9 +29,7 @@ define({
                     "Selecting the extent, starts the Follow-the-Map mode.",
                 "addressToLocation": "Address To Location",
                 symbol: "Symbol",
-                "followTheMap": "Follow The Map Mode",
-                "resultOf": 'Result {0} of {1}',
-                "reverseLocation": "Showing Location"
+                "resultOf": 'Result {0} of {1}'
             },
             "geoCoding" : {
                 "tooltips" : "ToolTips",

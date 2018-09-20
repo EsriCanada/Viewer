@@ -106,17 +106,18 @@ on, mouse, query, Deferred) {
         },
 
         //Create a tool and return the div where you can place content
-        createTool: function (toolbar, tool, panelClass, loaderImg, badgeEvName, badgeImg) {
-            const _tool = new Tool({
+        createTool: function (tool,  config) {
+            const _tool = new Tool(lang.mixin({}, {
+                panelClass: "", 
+                loaderImg: "", 
+                badgeEvName: "",
+                badgeImg: "",
+                badgeTip: "",
                 name: tool.name,
                 icon: "images/icons_" + this.config.icons + "/" + tool.name + ".png",
-                panelClass: panelClass, 
-                loaderImg: loaderImg, 
-                badgeEvName: badgeEvName,
-                badgeImg: badgeImg,
+                toolbar: config.toolbar,
                 i18n: this.config.i18n,
-                toolbar: toolbar,
-            }, domConstruct.create("div", {}, dom.byId("panelTools")));
+            }, config), domConstruct.create("div", {}, dom.byId("panelTools")));
 
             return _tool.startup();
         },
@@ -215,28 +216,28 @@ on, mouse, query, Deferred) {
             if(defaultBtn !== undefined) {
                 this._toolClick(defaultBtn);
             }
-            // else if (this.config.activeTool !== "" && has(this.config.activeTool)) {
-            //     toolbar.activateTool(this.config.activeTool);
-            // }
-            // else {
-            //     toolbar._closePage();
-            // }
         },
 
         closePage: function() {
 
         },
 
-        // // menu click
-        // _menuClick: function () {
-        //     if (query("#panelTools").style("display") == "block") {
-        //         query("#panelTools").style("display", "none");
-        //         this._closePage();
-        //     } else {
-        //         query("#panelTools").style("display", "block");
-        //     }
-        //     this._updateMap();
-        // }
+        showBadge: function(toolName){
+            domStyle.set(dom.byId('badge_'+toolName),'display','');
+        },
+
+        hideBadge: function(toolName){
+            domStyle.set(dom.byId('badge_'+toolName),'display','none');
+        },
+
+        showLoading: function(toolName) {
+            domClass.replace(dom.byId('loading_'+toolName), "hideLoading", "showLoading");
+        },
+
+        hideLoading: function(toolName) {
+            domClass.replace(dom.byId('loading_'+toolName), "showLoading", "hideLoading");
+        },
+
     });
     if (has("extend-esri")) {
         lang.setObject("dijit.Toolbar", Widget, esriNS);

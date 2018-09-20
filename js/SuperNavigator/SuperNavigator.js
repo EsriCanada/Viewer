@@ -9,6 +9,7 @@ define([
     "esri/geometry/Extent",
     "esri/layers/FeatureLayer", "esri/tasks/query", 
     "dojox/gfx", 
+    "dojo/i18n!application/nls/PopupInfo",
     "dojo/Deferred", "dojo/promise/all",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", 
     "dojo/dom-construct", "dojo/_base/event", 
@@ -23,7 +24,7 @@ define([
         Graphic, Point, ScreenPoint,
         Circle, Extent,
         FeatureLayer, Query, 
-        gfx, 
+        gfx, i18n,
         Deferred, all,
         domClass, domAttr, domStyle, 
         domConstruct, event
@@ -45,7 +46,7 @@ define([
         },
 
         constructor: function (options, srcRefNode) {
-            var defaults = lang.mixin({}, this.options, options);
+            const defaults = lang.mixin({}, this.options, options);
             if(!defaults.selectionSymbol) {
                 
                 if(defaults.selectionColor && defaults.selectionColor !== undefined) {
@@ -55,7 +56,7 @@ define([
                         defaults.selectionColor;
                 }
 
-                var selectionColor = new Color().setColor(defaults.map.infoWindow.markerSymbol.outline.color);
+                const selectionColor = new Color().setColor(defaults.map.infoWindow.markerSymbol.outline.color);
                 selectionColor.a = 0.225;
                 
                 defaults.selectionSymbol = new SimpleFillSymbol(
@@ -92,8 +93,8 @@ define([
         cursorPos: null,
     
         _init: function () {
-            var m = this.cursorToCenter();
-            var mapSuperCursor = domConstruct.create('div', {
+            const m = this.cursorToCenter();
+            const mapSuperCursor = domConstruct.create('div', {
                 id: 'mapSuperCursor',
                 style:'position:absolute; pointer-events:none; display:none;',
             }, 'mapDiv_layers');
@@ -102,14 +103,14 @@ define([
             
             this.cursorNav = gfx.createSurface("mapSuperCursor", 40, 40);
             this.cursor = this.cursorNav.createGroup();
-            var circle = this.cursor.createCircle({cx:20, cy:20, r:7}).setFill("transparent").setStroke(this.cursorFocusColor);
-            var path = this.cursor.createPath("M20 0 L20 19 M20 21 L20 40 M0 20 L19 20 M21 20 L40 20").setStroke({color:"black", width:2});
+            const circle = this.cursor.createCircle({cx:20, cy:20, r:7}).setFill("transparent").setStroke(this.cursorFocusColor);
+            const path = this.cursor.createPath("M20 0 L20 19 M20 21 L20 40 M0 20 L19 20 M21 20 L40 20").setStroke({color:"black", width:2});
 
             domStyle.set('mapSuperCursor', 'left', (this.cursorPos.x-20)+'px');
             domStyle.set('mapSuperCursor', 'top', (this.cursorPos.y-20)+'px');
 
             this.map.onResize = lang.hitch(this, function(ev) {
-                var m = this.map.container.getBoundingClientRect();
+                const m = this.map.container.getBoundingClientRect();
                 this.cursorPos = {x: ((m.right-m.left)/2), y: ((m.bottom-m.top)/2)};
                 domStyle.set('mapSuperCursor', 'left', (this.cursorPos.x-20)+'px');
                 domStyle.set('mapSuperCursor', 'top', (this.cursorPos.y-20)+'px');
@@ -136,9 +137,9 @@ define([
                 this.clearZone();
             }));
 
-            var mapDiv = this.map.container;
+            const mapDiv = this.map.container;
             on(mapDiv, 'keydown', lang.hitch(this, function(evn){
-                var focusElement = document.querySelector(':focus');
+                const focusElement = document.querySelector(':focus');
                 if(!focusElement || focusElement !== mapDiv) return; 
                 switch(evn.keyCode)  {
                     case 13: //Enter
@@ -154,7 +155,7 @@ define([
         },
 
         cursorToCenter:function() {
-            var m = this.map.container.getBoundingClientRect();
+            const m = this.map.container.getBoundingClientRect();
             this.cursorPos = new ScreenPoint(((m.right-m.left)/2), ((m.bottom-m.top)/2));
             return this.cursorPos;
         },
@@ -219,16 +220,16 @@ define([
 
         getFeaturesAtPoint: function(mapPoint, mode, layers) {
             this.loading(true);
-            var deferred = new Deferred();
+            const deferred = new Deferred();
 
             this.features = [];
             if(!layers || layers.length === 0)
                 deferred.resolve(this.features);
             else {
 
-                var shape = this.map.extent;
+                let shape = this.map.extent;
                 // if(!mapPoint) mapPoint = shape.getCenter();
-                var w = shape.getWidth()/75;
+                const w = shape.getWidth()/75;
                 // var selectedFeature = this.map.infoWindow.getSelectedFeature();
                 
                 switch(mode) {
@@ -250,7 +251,7 @@ define([
                         shape = this.map.extent;
                         break;
                     case 'selection':
-                        var feature = this.map.infoWindow.getSelectedFeature();
+                        const feature = this.map.infoWindow.getSelectedFeature();
                         if(feature) {
                             shape = feature.geometry;
                             if(shape.type==='point') {
@@ -261,9 +262,13 @@ define([
                                 });
                             }
                             else {
-                                var extent = shape.getExtent().expand(1.5);
+                                const extent = shape.getExtent().expand(1.5);
                                 this.map.setExtent(extent);
                             }
+                        }
+                        else {
+                            deferred.reject(i18n.widgets.popupInfo.noPreselectedFeature);
+                            return deferred.promise;
                         }
                         break;
                 }
@@ -272,7 +277,7 @@ define([
                 this.queryZone = new Graphic(shape, this.selectionSymbol);
                 this.map.graphics.add(this.queryZone);
 
-                var deferrs = [];
+                const deferrs = [];
                 layers
                 .map(function(layer) {
                     return layer.layerObject;
@@ -281,7 +286,7 @@ define([
                     return layer && layer.selectFeatures && layer.selectFeatures !== undefined;
                 })
                 .forEach(lang.hitch(this, function(layer) {
-                    var q = new Query();
+                    const q = new Query();
                     q.outFields = ["*"];                    
                     q.where = "1=1";
                     q.geometry = shape;
@@ -289,7 +294,7 @@ define([
                     q.spatialRelationship = "esriSpatialRelIntersects";
                     q.returnGeometry = true;
 
-                    var def = layer.selectFeatures(
+                    const def = layer.selectFeatures(
                         q, FeatureLayer.SELECTION_NEW, 
                         lang.hitch(this, function(results) {
                             this.features = this.features.concat(results);
@@ -307,7 +312,7 @@ define([
         },
 
         loading: function (show){
-            var loading_infoPanel = dojo.byId('loading_infoPanel');
+            const loading_infoPanel = dojo.byId('loading_infoPanel');
             if(!loading_infoPanel) return;
 
             if(show)
@@ -325,12 +330,14 @@ define([
         layers: null,
 
         showPopup: function(evn, layers, mode) {
-            var deferred = new Deferred();
+            this.showError('');
 
-            var center = this.map.toMap(this.cursorPos);
-            var features = [];
+            const deferred = new Deferred();
+
+            const center = this.map.toMap(this.cursorPos);
+            const features = [];
             this.layers = layers;
-            var visibleLayers = layers.filter(function (l) { 
+            const visibleLayers = layers.filter(function (l) { 
                 return l.hasOwnProperty("url") &&  l.layerObject && l.layerObject.visible && l.layerObject.visibleAtMapScale;
             });
 
@@ -370,8 +377,18 @@ define([
                     this.map.infoWindow.show(center);
 
                 deferred.resolve();
+            }),
+            lang.hitch(this, function(error) {
+                console.error(error);
+                this.showError(error);
             }));
             return deferred.promise;
+        },
+
+        showError: function(error) {
+            const errorDiv = dom.byId('popupInfoError');
+            errorDiv.innerHTML = error;
+            domStyle.set(errorDiv, 'display', error.isNonEmpty() ? '' : 'none');
         },
 
         badge:null,

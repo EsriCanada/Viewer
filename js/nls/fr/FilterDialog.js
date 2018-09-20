@@ -5,7 +5,6 @@ define({
             add: "Ajouter",
             apply: "Accepter",
             ignore: "Ignorer",
-            someFilters: "Appliqué quelques filtres"
         },
         FilterItem: {
             remove: "Supprimer",

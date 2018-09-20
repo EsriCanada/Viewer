@@ -1264,16 +1264,16 @@ define([
 
         _addFeatures: function(tool, toolbar) {
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
-            var deferred = new Deferred();
+            const deferred = new Deferred();
             if (has("features")) {
-                toolbar.createTool(toolbar,
-                    tool,
-                    "",
-                    "reload1.gif",
-                    "featureSelected"
-                ).then(lang.hitch(this, function(featuresDiv) {
-                    const layers = this.config.response.itemInfo.itemData
-                        .operationalLayers;
+                toolbar.createTool(tool, {
+                    toolbar: toolbar,
+                    loaderImg: "reload1.gif", 
+                    badgeEvName: "featureSelected",
+                    badgeTip: this.config.i18n.tools.badgesTips.featureSelected, 
+                    badgeImg: this.config.marker.isNonEmpty() ? this.config.marker : 'images/ripple-dot1.gif',
+                }).then(lang.hitch(this, function(featuresDiv) {
+                    const layers = this.config.response.itemInfo.itemData.operationalLayers;
 
                     require(["application/FeatureList/FeatureList"], lang.hitch(this, function(FeatureList) {
                         const featureList = new FeatureList(
@@ -1282,7 +1282,7 @@ define([
                                 layers: layers,
                                 toolbar: toolbar,
                                 animatedMarker: this.config.animated_marker,
-                                markerImage: this.config.marker,
+                                markerImage: this.config.marker.isNonEmpty() ? this.config.marker : 'images/ripple-dot1.gif',
                                 markerSize: this.config.marker_size
                             },
                             featuresDiv
@@ -1351,7 +1351,13 @@ define([
         _addDirections: function(tool, toolbar) {
             var deferred = new Deferred();
             if (has("directions")) {
-                toolbar.createTool(toolbar, tool).then(lang.hitch(this, function(directionsDiv) {
+                toolbar.createTool(tool, {
+                    toolbar:toolbar,
+                    loaderImg: "reload1.gif",
+                    badgeEvName: "route",
+                    badgeImg: "./images/Route.png",
+                    badgeTip: this.config.i18n.tools.badgesTips.directions, 
+                }).then(lang.hitch(this, function(directionsDiv) {
                     this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                         require(["application/DirectionsWidget/DirectionsWidget"], lang.hitch(this, function(DirectionsWidget) {
                             this.directions = new DirectionsWidget({
@@ -1390,7 +1396,11 @@ define([
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
             var deferred = new Deferred();
             if (has("filter")) {
-                toolbar.createTool(toolbar, tool, "", "", "someFilters").then(lang.hitch(this, function(filterDiv) {
+                toolbar.createTool(tool, {
+                    toolbar: toolbar,
+                    badgeEvName: "someFilters",
+                    badgeTip: this.config.i18n.tools.badgesTips.someFilters,
+                }).then(lang.hitch(this, function(filterDiv) {
                     const layers = this.config.response.itemInfo.itemData
                         .operationalLayers;
 
@@ -1399,7 +1409,8 @@ define([
                             {
                                 map: this.map,
                                 layers: layers,
-                                toolbar: toolbar
+                                toolbar: toolbar,
+                                badgeTip: this.config.i18n.tools.badgesTips.someFilters,
                             },
                             filterDiv
                         );
@@ -1425,7 +1436,7 @@ define([
             if (has("layerManager")) {
                 deferred.resolve(true);
             } else if (has("basemap")) {
-                toolbar.createTool(toolbar, tool).then(lang.hitch(this, function(basemapDiv) {
+                toolbar.createTool(tool, {toolbar:toolbar}).then(lang.hitch(this, function(basemapDiv) {
                     const basemap = new BasemapGallery(
                         {
                             id: "basemapGallery",
@@ -1620,7 +1631,7 @@ define([
                         deferred.resolve(false);
                         return;
                     }
-                    toolbar.createTool(toolbar, tool).then(lang.hitch(this, function(bookmarkDiv) {
+                    toolbar.createTool(tool, {toolbar: toolbar}).then(lang.hitch(this, function(bookmarkDiv) {
                         // var bookmarkDiv = domConstruct.create("div",{ class: "margin"}, bDiv);
                         var bookmarks = new Bookmarks(
                             {
@@ -1685,7 +1696,7 @@ define([
 
                 if (description) {
                     // var detailDiv = 
-                    toolbar.createTool(toolbar, tool).then(function(detailDiv) {
+                    toolbar.createTool(tool, {toolbar: toolbar}).then(function(detailDiv) {
 
                         detailDiv.innerHTML =
                             "<div id='detailDiv' tabindex=0>" + description + "</div>";
@@ -1720,7 +1731,7 @@ define([
                             this.config.i18n.instructions +
                             ".html"
                     ], function(instructionsText) {
-                        toolbar.createTool(toolbar, tool).then(function(instructionsDiv){
+                        toolbar.createTool(tool, {toolbar: toolbar}).then(function(instructionsDiv){
                             domConstruct.create(
                                 "div",
                                 {
@@ -1839,12 +1850,11 @@ define([
                 if (has("layers")) {
                     let panelClass = "";
 
-                    toolbar.createTool(toolbar,
-                        tool,
-                        "",
-                        "reload1.gif",
-                        "Table"
-                    ).then(lang.hitch(this, function(layersDivDesc) {
+                    toolbar.createTool(tool, {
+                        toolbar: toolbar,
+                        loaderImg: "reload1.gif", 
+                        badgeEvName: "Table",
+                    }).then(lang.hitch(this, function(layersDivDesc) {
                         require(["application/TableOfContents/TableOfContents"], lang.hitch(this, function(TableOfContents) {
                             const toc = new TableOfContents(
                                 {
@@ -1883,12 +1893,11 @@ define([
                 if (has("layerManager")) {
                     let panelClass = "";
 
-                    toolbar.createTool(toolbar,
-                        tool,
-                        "",
-                        "reload1.gif",
-                        "Table"
-                    ).then(lang.hitch(this, function(layersDivDesc) {
+                    toolbar.createTool(tool, {
+                        toolbar: toolbar,
+                        loaderImg: "reload1.gif", 
+                        badgeEvName: "Table",
+                    }).then(lang.hitch(this, function(layersDivDesc) {
                         require(["application/LayerManager/LayerManager"], lang.hitch(this, function(LayerManager) {
                             const toc = new LayerManager(
                                 {
@@ -1929,7 +1938,7 @@ define([
                 deferred.resolve(false);
             } else {
                 if (has("legend")) {
-                    toolbar.createTool(toolbar, tool, "").then(lang.hitch(this, function(legendDiv) {
+                    toolbar.createTool(tool, {toolbar: toolbar}).then(lang.hitch(this, function(legendDiv) {
                         const legend = new Legend(
                             {
                                 map: this.map,
@@ -2106,12 +2115,14 @@ define([
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
             var deferred = new Deferred();
             if (has("infoPanel")) {
-                toolbar.createTool(toolbar,
-                    tool,
-                    "",
-                    "reload1.gif",
-                    "followTheMapMode"
-                ).then(lang.hitch(this, function(infoPanelDiv) {
+                toolbar.createTool(tool, {
+                        toolbar: toolbar,
+                        loaderImg: "reload1.gif", 
+                        badgeEvName: "followTheMapMode",
+                        badgeTip: this.config.i18n.tools.badgesTips.followTheMap,
+                        // badgeImg: this.config.searchMarker.isNonEmpty() ? this.config.searchMarker : './images/SearchPin.png',
+                        // badgeTip: this.config.i18n.tools.badgesTips.searchResultInfo,
+                    }).then(lang.hitch(this, function(infoPanelDiv) {
                     this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                         require(["application/PopupInfo/PopupInfo"], lang.hitch(this, function(PopupInfo) {
                             const popupInfo = new PopupInfo(
@@ -2125,6 +2136,7 @@ define([
                                     searchMarker: this.config.searchMarker,
                                     geolocatorLabelColor: this.config.geolocatorLabelColor,
                                     iconsColor: this.config.icons,
+                                    toolbar: toolbar,
                                 },
                                 infoPanelDiv
                             );
@@ -2149,7 +2161,12 @@ define([
 
                 this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                     require(["application/GeoCoding/GeoCoding"], lang.hitch(this, function(GeoCoding) {
-                        toolbar.createTool(toolbar, tool, "", "", "geoCoding", this.config.geoCodingMarker).then(lang.hitch(this, function(geoCodingDiv) {
+                        toolbar.createTool(tool, {
+                            toolbar: toolbar,
+                            badgeEvName: "geoCoding",
+                            badgeImg: this.config.geoCodingMarker,
+                            badgeTip: this.config.i18n.tools.badgesTips.reverseLocation,
+                        }).then(lang.hitch(this, function(geoCodingDiv) {
                             const geoCoding = new GeoCoding(
                                 {
                                     map: this.map,
@@ -2209,7 +2226,7 @@ define([
             //Add the measure widget to the toolbar.
             var deferred = new Deferred();
             if (has("measure")) {
-                toolbar.createTool(toolbar, tool).then(lang.hitch(this, function(measureDiv) {
+                toolbar.createTool(tool, {toolbar: toolbar}).then(lang.hitch(this, function(measureDiv) {
                     let areaUnit =
                         this.config.units === "metric" ? "esriSquareKilometers" : "esriSquareMiles";
                     let lengthUnit =
@@ -2300,7 +2317,7 @@ define([
             const deferred = new Deferred();
 
             if (has("overview")) {
-                toolbar.createTool(toolbar, tool).then(lang.hitch(this, function(ovMapDiv) {
+                toolbar.createTool(tool, {toolbar: toolbar}).then(lang.hitch(this, function(ovMapDiv) {
                     const panelHeight = this.map.height;
 
                     this.createOverviewMap(ovMapDiv, panelHeight);
@@ -2495,7 +2512,10 @@ define([
                     deferred.resolve(false);
                     return;
                 }
-                toolbar.createTool(toolbar, tool, "", "reload1.gif").then(lang.hitch(this, function(printDiv) {
+                toolbar.createTool(tool, {
+                        toolbar: toolbar,
+                        loaderImg: "reload1.gif", 
+                    }).then(lang.hitch(this, function(printDiv) {
                     require(["application/PrintWidget/PrintWidget"], 
                         lang.hitch(this, function(PrintWidget) {
                             const format = this.config.tool_print_format ? this.config.tool_print_format.toLowerCase() : '';
@@ -2541,7 +2561,7 @@ define([
                 //     toolbar.createTool(tool)
                 // ); //);
 
-                toolbar.createTool(toolbar, tool).then(lang.hitch(this, function(shareDiv) {
+                toolbar.createTool(tool, {toolbar: toolbar}).then(lang.hitch(this, function(shareDiv) {
                     require(["application/ShareDialog"], lang.hitch(this, function(ShareDialog) {
                         const shareDialog = new ShareDialog(
                             {

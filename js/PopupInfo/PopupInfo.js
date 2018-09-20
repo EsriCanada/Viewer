@@ -78,6 +78,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             this.superNavigator = defaults.superNavigator;
             this.emptyMessage = defaults.emptyMessage;
             this.iconsColor = defaults.iconsColor;
+            this.toolbar = defaults.toolbar;
 
             dojo.create("link", {
                 href : "js/PopupInfo/Templates/popupInfo.css",
@@ -108,7 +109,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
         postCreate : function() {
             if(this.superNavigator)
-                this.superNavigator.badge = this.showBadge;
+                this.superNavigator.badge = lang.hitch(this, this.showBadge);
 
             if(this.search) {
                 this.search.enableLabel = true;
@@ -207,8 +208,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         copyAddress: function() {
-            var infoWindow = this.map.infoWindow;
-            var feature = infoWindow.features[infoWindow.selectedIndex];
+            const infoWindow = this.map.infoWindow;
+            const feature = infoWindow.features[infoWindow.selectedIndex];
             if(feature.attributes.hasOwnProperty('LongLabel')) {
                 feature.attributes.LongLabel.copyToClipboard();
             }
@@ -219,18 +220,18 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             // console.log('Info Address:', address);
 
             if(address.Addr_type.isNonEmpty()) {
-                var prop = address.Addr_type.replace(' ', '');
+                const prop = address.Addr_type.replace(' ', '');
                 address.AddrTypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop)) ?
                 i18n.widgets.addrType[prop] : address.Addr_type;
             }
             // address.Type.isNonEmpty()
             if(address.Loc_name.isNonEmpty()) {
-                var prop1 = address.Loc_name.replace(' ', '');
-                address.TypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop1)) ?
-                i18n.widgets.addrType[prop1] : address.Loc_name;
+                const prop = address.Loc_name.replace(' ', '');
+                address.TypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop)) ?
+                i18n.widgets.addrType[prop] : address.Loc_name;
             }
 
-            var result = "";
+            let result = "";
 
             if(address.StAddr.isNonEmpty()) {
                 result += "<tr><th>"+i18n.widgets.geoCoding.Address+"</th><td>${StAddr}";
@@ -321,7 +322,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                             )
                             : '')+
                     "</h3>"+
-                    "<div id='thumb' class='thumbFeature'><img src='"+this.searchMarker.url+"' alt='"+i18n.widgets.popupInfo.symbol+"''/></div>"+
+                    "<div id='thumb' class='thumbFeature'><img src='"+this.searchMarker+"' alt='"+i18n.widgets.popupInfo.symbol+"''/></div>"+
                     "<div class='hzLine'></div>"+
 
                     "<table class='address-tooltip__address-info'>"+result+"</table>"+
@@ -334,11 +335,11 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             this.loaded = true;
 
-            var popup = this.map.infoWindow;
+            const popup = this.map.infoWindow;
 
-            var textProbe = dojo.byId('searchTextProbe');
-            var cs = domStyle.getComputedStyle(textProbe);
-            var fontSize = cs.fontSize.slice(0,-2);
+            const textProbe = dojo.byId('searchTextProbe');
+            const cs = domStyle.getComputedStyle(textProbe);
+            const fontSize = cs.fontSize.slice(0,-2);
             this.searchLabel = new TextSymbol({
                 yoffset : -fontSize,//-14,
                 haloColor: [25,25,25,155],
@@ -354,7 +355,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             domConstruct.destroy(textProbe);
 
-            this.searchMarker = new esri.symbol.PictureMarkerSymbol({
+            this.searchMarkerSymbol = new esri.symbol.PictureMarkerSymbol({
                 "angle": 0,
                 "xoffset": 0,
                 "yoffset": 15,
@@ -376,6 +377,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }, dom.byId("feature_content"));
             this.contentPanel.startup();
             this.contentPanel.set("content", i18n.widgets.popupInfo.instructions);
+
+            this.contentError = dojo.create("div", {
+                className:"printError",
+                id:"popupInfoError",
+                style:"display:none; color:#b60000;",
+                "aria-live":"polite",
+                "aria-atomic":true,
+            }, dom.byId("popupInfoContentWrapper"));
 
             this.popupInfoHeader = new PopupInfoHeader({
                 map: this.map,
@@ -416,17 +425,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                     }
                                 }
                             }
-                            // else {
-                            //     var description = query('[dojoattachpoint=_description]', mainSection[0]);
-                            //     if(description && description.length > 0) {
-                            //         domAttr.set(description[0], 'tabindex', 0);
-                            //     }
-                            // }
-
-                            // var popupTitle =  query('[dojoattachpoint=_title]', mainSection[0]);
-                            // if(popupTitle) {
-
-                            // }
 
                             const editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
                             if(editSummarySection) {
@@ -480,20 +478,20 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             popup.on("SelectionChange", lang.hitch(this, function() {
                 if(this.toolbar.IsToolSelected('geoCoding')) return;
 
-                var selectedFeature = popup.getSelectedFeature();
+                const selectedFeature = popup.getSelectedFeature();
                 // selectedFeature._shape.rawNode.outerHTML
                 if(selectedFeature && selectedFeature !== undefined) {
                     this.displayPopupContent(selectedFeature);
                     this.clearSearchGraphics();
                     if(selectedFeature.infoTemplate) {
-                        var geometry = selectedFeature.geometry;
+                        const geometry = selectedFeature.geometry;
                         if(geometry.type !== "point") {
-                            var extent = geometry.getExtent().expand(1.5);
+                            const extent = geometry.getExtent().expand(1.5);
                             this.map.setExtent(extent);
                         } else {
                             this.map.centerAt(geometry);
                             if(!selectedFeature._layer) {
-                                this.searchMarkerGrafic = new Graphic(geometry, this.searchMarker);
+                                this.searchMarkerGrafic = new Graphic(geometry, this.searchMarkerSymbol);
                                 this.map.graphics.add(this.searchMarkerGrafic);
 
                                 this.searchLabel.setText(selectedFeature.attributes.ShortLabel);
@@ -503,27 +501,24 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         }
                     }
                     else {
-                        var mainSectionHeader = query('.esriViewPopup .mainSection .header', dojo.byId('popupInfoContent'))[0];
-                        var title = (selectedFeature._layer && selectedFeature._layer.arcgisProps && selectedFeature._layer.arcgisProps.title) ?
-                            selectedFeature._layer.arcgisProps.title.replace('_',' ') : '';
-                        var thumb =dojo.create('div', {
-                            id: 'thumb',
-                            class: 'thumbFeature',
-                            'title':title,
-                            // 'aria-label':title,
-                            // tabindex:0
-                        }, mainSectionHeader);
-                        var source = selectedFeature._shape.rawNode.attributes['xlink:href'];
+                        const mainSectionHeader = query('.esriViewPopup .mainSection .header', dojo.byId('popupInfoContent'))[0];
+                        const source = selectedFeature._shape.rawNode.attributes['xlink:href'];
                         if(source && source.value) {
-                            dojo.create(
-                                'img',
-                                {
-                                    src : source.value,
-                                    alt:title,
-                                    'title':title,
-                                    // 'aria-label':title,
-                                    // tabindex:0
-                                }, thumb);
+                            const title = (selectedFeature._layer && selectedFeature._layer.arcgisProps && selectedFeature._layer.arcgisProps.title) ?
+                                selectedFeature._layer.arcgisProps.title.replace('_',' ') : '';
+                            dojo.create('img', {
+                                src: source.value,
+                                alt: title,
+                                title: title,
+                                // 'aria-label':title,
+                                // tabindex:0
+                            }, dojo.create('div', {
+                                id: 'thumb',
+                                class: 'thumbFeature',
+                                'title':title,
+                                // 'aria-label':title,
+                                // tabindex:0
+                            }, mainSectionHeader));
                         }
                         mainSectionHeader.outerHTML = mainSectionHeader.outerHTML.replace(/^<div/, '<h3').replace(/div>$/, 'h3>');
                     }
@@ -605,14 +600,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         showBadge : function(show) {
-            const badge = dom.byId('badge_followTheMapMode');
-            if (show) {
-                domStyle.set(badge,'display','');
-                domAttr.set(badge, "title", i18n.widgets.popupInfo.followTheMap);
-                domAttr.set(badge, "alt", i18n.widgets.popupInfo.followTheMap);
-            } else {
-                domStyle.set(badge,'display','none');
+            if(show) {
+                this.toolbar.showBadge('followTheMapMode');
             }
+            else {
+                this.toolbar.hideBadge('followTheMapMode');
+            }
+            // const badge = dom.byId('badge_followTheMapMode');
+            // if(!badge) return;
+            // if (show) {
+            //     domStyle.set(badge,'display','');
+            //     // domAttr.set(badge, "title", i18n.widgets.popupInfo.followTheMap);
+            //     // domAttr.set(badge, "alt", i18n.widgets.popupInfo.followTheMap);
+            // } else {
+            //     domStyle.set(badge,'display','none');
+            // }
         },
 
     });

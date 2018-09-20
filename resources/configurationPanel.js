@@ -68,19 +68,16 @@
                "tooltip": "Contact Us URL link to external application"
             },
             {
-               "label": "<strong>Animated Marker</strong>",
-               "type": "boolean",
-               "fieldName": "animated_marker"
-            },
-            {
-               "label": "<strong>Animated Marker File:</strong>",
+               "label": "<strong>Feature Marker File:</strong>",
                "fieldName": "marker",
+               "placeHolder": "images/ripple-dot1.gif",
                "type": "string",
                "tooltip": "Defaults to blue-animated"
             },
             {
-               "label": "<strong>Marker size:</strong>",
+               "label": "<strong>Feature Marker size:</strong>",
                "fieldName": "marker_size",
+               "placeHolder": "35",
                "type": "int",
                "tooltip": "Size of the Marker"
             },
@@ -664,8 +661,7 @@
    "values": {
       "icons": "white",
       "new_icons": false,
-      "animated_marker": true,
-      "marker": "images/ripple-dot1.gif",
+      "marker": "",
       "searchMarker": "./images/SearchPin.png",
       "geoCodingMarker": "./images/SearchPin.png",
       "marker_size": "35",

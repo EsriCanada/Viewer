@@ -7,7 +7,6 @@ define({
                 remove: "Remove",
                 apply: "Apply",
                 ignore: "Ignore",
-                someFilters: "Some Filters Apply"
             },
             FilterItem: {
                 remove: "Remove",

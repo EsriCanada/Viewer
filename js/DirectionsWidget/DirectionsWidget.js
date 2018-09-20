@@ -319,6 +319,12 @@ define([
             }
         },
 
+        postCreate: function(){
+            // this.toolbar.showBadge('route');
+            this.directions.on("directions-finish", lang.hitch(this, function() {this.toolbar.showBadge('route');}));
+            this.directions.on("directions-clear", lang.hitch(this, function() {this.toolbar.hideBadge('route');}));
+        },
+
         _usedSearchIds : [],
 
         _fixStops :function(ev) {

@@ -29,21 +29,14 @@ on, query, Deferred) {
             this.icon = this.config.icon;
             this.tip = this.config.i18n.tooltips[this.name] || this.name;
             this.badgeImg = this.config.badgeImg;
-        },
-
-        postCreate : function() {
             let badge = (this.badgeImg && this.badgeImg !== '') ? this.badgeImg : this.config.badgeEvName;
             if(badge && badge !== '') {
                 badge = badge.includes('.') ? badge :"images/"+badge+".png";
-                domConstruct.create("img", {
-                    src: badge,
-                    class:"setIndicator",
-                    style:"display:none;",
-                    tabindex:0,
-                    id: 'badge_'+this.config.badgeEvName,
-                    alt:"badge"
-                }, this.panelTool);
             }
+            this.badge = badge;
+        },
+
+        postCreate : function() {
             new ToolPage({
                 name: this.name,
                 deferrer: this.deferrer,
