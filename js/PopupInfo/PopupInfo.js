@@ -404,55 +404,60 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
                 this.toolbar.OpenTool('infoPanel');
                 if (feature) {
-                    this.contentPanel.set("content", feature.getContent()).then(lang.hitch(this, function() {
-                        const mainSection = query('.esriViewPopup .mainSection', dojo.byId('popupInfoContent'));
-                        if(mainSection && mainSection.length > 0) {
-                            // var header = query('.header', mainSection[0]);
-                            // if(header && header.length > 0) {
-                            //     domAttr.set(header[0], 'tabindex', 0);
-                            // }
+                    const feaureContent = feature.getContent();
+                    if(feaureContent) {
+                        this.contentPanel.set("content", feaureContent).then(lang.hitch(this, function() {
+                            const mainSection = query('.esriViewPopup .mainSection', dojo.byId('popupInfoContent'));
+                            if(mainSection && mainSection.length > 0) {
+                                // var header = query('.header', mainSection[0]);
+                                // if(header && header.length > 0) {
+                                //     domAttr.set(header[0], 'tabindex', 0);
+                                // }
 
-                            const attrTables = query('.attrTable', mainSection[0]);
-                            if(attrTables && attrTables.length > 0) {
-                                // domAttr.set(attrTables[0], 'role', 'presentation');
-                                for(let i = 0; i<attrTables.length; i++) {
-                                    const attrTable = attrTables[i];
-                                    const attrNames = query('td.attrName', attrTable);
-                                    if(attrNames && attrNames.length > 0) {
-                                        for(let j = 0; j<attrNames.length; j++) {
-                                            attrNames[j].outerHTML = attrNames[j].outerHTML.replace(/^<td/, '<th').replace(/td>$/, 'th>');
+                                const attrTables = query('.attrTable', mainSection[0]);
+                                if(attrTables && attrTables.length > 0) {
+                                    // domAttr.set(attrTables[0], 'role', 'presentation');
+                                    for(let i = 0; i<attrTables.length; i++) {
+                                        const attrTable = attrTables[i];
+                                        const attrNames = query('td.attrName', attrTable);
+                                        if(attrNames && attrNames.length > 0) {
+                                            for(let j = 0; j<attrNames.length; j++) {
+                                                attrNames[j].outerHTML = attrNames[j].outerHTML.replace(/^<td/, '<th').replace(/td>$/, 'th>');
+                                            }
                                         }
                                     }
                                 }
-                            }
 
-                            const editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
-                            if(editSummarySection) {
-                                const editSummary =  query('.editSummary', editSummarySection[0]);
-                                if(editSummary) {
-                                    editSummary.forEach(function(edit) { domAttr.set(edit, 'tabindex', 0);});
+                                const editSummarySection = query('.esriViewPopup .editSummarySection', dojo.byId('popupInfoContent'));
+                                if(editSummarySection) {
+                                    const editSummary =  query('.editSummary', editSummarySection[0]);
+                                    if(editSummary) {
+                                        editSummary.forEach(function(edit) { domAttr.set(edit, 'tabindex', 0);});
+                                    }
+                                }
+                                const images = query('.esriViewPopup img', dojo.byId('popupInfoContent'));
+                                if(images) {
+                                    images.forEach(function(img) {
+                                        if(img.src.startsWith('http:') && location.protocol==='https:') {
+                                            img.src = img.src.replace('http:', 'https:');
+                                        }
+                                        const alt = domAttr.get(img, 'alt');
+                                        if(!alt) {
+                                            domAttr.set(img,'alt','Attached Image');
+                                        } else {
+                                            domAttr.set(img,'tabindex',0);
+                                            if(!domAttr.get(img, 'title'))
+                                            {
+                                                domAttr.set(img,'title', alt);
+                                            }
+                                        }
+                                    });
                                 }
                             }
-                            const images = query('.esriViewPopup img', dojo.byId('popupInfoContent'));
-                            if(images) {
-                                images.forEach(function(img) {
-                                    if(img.src.startsWith('http:') && location.protocol==='https:') {
-                                        img.src = img.src.replace('http:', 'https:');
-                                    }
-                                    const alt = domAttr.get(img, 'alt');
-                                    if(!alt) {
-                                        domAttr.set(img,'alt','Attached Image');
-                                    } else {
-                                        domAttr.set(img,'tabindex',0);
-                                        if(!domAttr.get(img, 'title'))
-                                        {
-                                            domAttr.set(img,'title', alt);
-                                        }
-                                    }
-                                });
-                            }
-                        }
-                    }));
+                        }));
+                    } else {
+                        this.showError('Unknow Error');
+                    }
                 }
             });
 
@@ -504,25 +509,29 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     }
                     else {
                         const mainSectionHeader = query('.esriViewPopup .mainSection .header', dojo.byId('popupInfoContent'))[0];
-                        const source = selectedFeature._shape.rawNode.attributes['xlink:href'];
-                        if(source && source.value) {
-                            const title = (selectedFeature._layer && selectedFeature._layer.arcgisProps && selectedFeature._layer.arcgisProps.title) ?
-                                selectedFeature._layer.arcgisProps.title.replace('_',' ') : '';
-                            dojo.create('img', {
-                                src: source.value,
-                                alt: title,
-                                title: title,
-                                // 'aria-label':title,
-                                // tabindex:0
-                            }, dojo.create('div', {
-                                id: 'thumb',
-                                class: 'thumbFeature',
-                                'title':title,
-                                // 'aria-label':title,
-                                // tabindex:0
-                            }, mainSectionHeader));
+                        
+                        if(mainSectionHeader) {
+                            const source = selectedFeature._shape.rawNode.attributes['xlink:href'];
+                            if(source && source.value) {
+                                const title = (selectedFeature._layer && selectedFeature._layer.arcgisProps && selectedFeature._layer.arcgisProps.title) ?
+                                    selectedFeature._layer.arcgisProps.title.replace('_',' ') : '';
+                                dojo.create('img', {
+                                    src: source.value,
+                                    alt: title,
+                                    title: title,
+                                    // 'aria-label':title,
+                                    // tabindex:0
+                                }, dojo.create('div', {
+                                    id: 'thumb',
+                                    class: 'thumbFeature',
+                                    'title':title,
+                                    // 'aria-label':title,
+                                    // tabindex:0
+                                }, mainSectionHeader));
+                            }
+
+                            mainSectionHeader.outerHTML = mainSectionHeader.outerHTML.replace(/^<div/, '<h3').replace(/div>$/, 'h3>');
                         }
-                        mainSectionHeader.outerHTML = mainSectionHeader.outerHTML.replace(/^<div/, '<h3').replace(/div>$/, 'h3>');
                     }
                 }
             }));
@@ -610,6 +619,13 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             else {
                 this.toolbar.hideBadge('followTheMapMode');
             }
+        },
+
+        showError: function(error) {
+            const errorDiv = dom.byId('popupInfoError');
+            errorDiv.innerHTML = error;
+            domStyle.set(errorDiv, 'display', error.isNonEmpty() ? '' : 'none');
+            domStyle.set(dom.byId('popupInfoFooter'), 'display', error.isNonEmpty() ? 'none' : '');
         },
 
     });

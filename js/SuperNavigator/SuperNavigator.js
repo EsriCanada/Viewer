@@ -396,6 +396,7 @@ define([
             const errorDiv = dom.byId('popupInfoError');
             errorDiv.innerHTML = error;
             domStyle.set(errorDiv, 'display', error.isNonEmpty() ? '' : 'none');
+            domStyle.set(dom.byId('popupInfoFooter'), 'display', error.isNonEmpty() ? 'none' : '');
         },
 
         badge:null,
