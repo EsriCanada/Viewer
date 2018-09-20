@@ -90,6 +90,9 @@ define([
             this.FilterItems.push(filterItem); 
             filterItem.on("removeFilterItem", lang.hitch(this, function (id) {
                 this.FilterItems.splice(this.FilterItems.indexOf(filterItem), 1);
+                if(this.FilterItems.length === 0) {
+                    this.filterIgnore();
+                }
             }));
             filterItem.domNode.focus();
         },
