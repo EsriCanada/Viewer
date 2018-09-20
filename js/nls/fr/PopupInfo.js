@@ -13,6 +13,8 @@ define({
             "map": "Aller à la carte",
             "clear": "Effacer la sélection",
             "noFeatures": "Rien à montrer",
+            "noPreselectedFeature": "Aucune caractéristiques présélectionnée",
+
             "instructions" :
                 "Cliquez sur la carte pour sélectionner des caractéristiques, <br/>ou <br/>"+
                 "<a href='#' onclick='dojo.byId(\"mapDiv\").focus();'>Aller à la carte</a> et:"+
@@ -27,7 +29,6 @@ define({
                 "En sélectionnant l'étendue, commence le mode 'Suivre la Carte'.",
             "addressToLocation": "Adresse à l'emplacement",
             symbol: "Symbole",
-            "followTheMap": "Mode Suivez la carte",
             "resultOf": '{0} de {1}'
         }),
         geoCoding : {

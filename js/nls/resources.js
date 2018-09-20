@@ -55,6 +55,8 @@ define({
                 "directions": "Showing Itinerary",
                 "featureSelected": "Feature Selected",
                 "someFilters": "Some Filters Apply",
+                "searchResultInfo": "Shows Search Result Info",
+                "followTheMap": "Follow The Map Mode",
             }
         },
         "tooltips":{

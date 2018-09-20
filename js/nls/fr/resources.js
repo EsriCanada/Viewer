@@ -54,7 +54,10 @@ define(
                 "reverseLocation": "Afficher l'adresse du lieu",
                 "directions": "Montrer l'itinéraire",
                 featureSelected: "Caractéristique sélectionnée", 
-                someFilters: "Appliqué quelques filtres",           }
+                someFilters: "Appliqué quelques filtres",  
+                "searchResultInfo": "Montre Recherche Résultat",
+                "followTheMap": "Mode Suivez la carte",
+            }
         },
         "tooltips":{
         	"home": "Etendue par Défaut",

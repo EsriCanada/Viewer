@@ -2119,6 +2119,9 @@ define([
                         toolbar: toolbar,
                         loaderImg: "reload1.gif", 
                         badgeEvName: "followTheMapMode",
+                        badgeTip: this.config.i18n.tools.badgesTips.followTheMap,
+                        // badgeImg: this.config.searchMarker.isNonEmpty() ? this.config.searchMarker : './images/SearchPin.png',
+                        // badgeTip: this.config.i18n.tools.badgesTips.searchResultInfo,
                     }).then(lang.hitch(this, function(infoPanelDiv) {
                     this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                         require(["application/PopupInfo/PopupInfo"], lang.hitch(this, function(PopupInfo) {
@@ -2133,6 +2136,7 @@ define([
                                     searchMarker: this.config.searchMarker,
                                     geolocatorLabelColor: this.config.geolocatorLabelColor,
                                     iconsColor: this.config.icons,
+                                    toolbar: toolbar,
                                 },
                                 infoPanelDiv
                             );
