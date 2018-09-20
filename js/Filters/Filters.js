@@ -31,11 +31,14 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/ke
             this.set("map", defaults.map);
             this.set("toolbar", defaults.toolbar);
             this.set("badgeTip", defaults.badgeTip);
+
+            this.filters = [];
+            this.filtersOn = [];
+
             const Layers = this._getLayers(defaults.layers);
-            window.filters = [];
             Layers.forEach(lang.hitch(this,function(layer){
                 if(layer.popupInfo) {
-                    window.filters.push({
+                    this.filters.push({
                         id: layer.id,
                         layer: layer,
                         fields:layer.popupInfo.fieldInfos.filter(function(l){return l.visible;})
@@ -69,13 +72,14 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/ke
 
         _init: function () {
             let ck='checked';
-            window.filters.forEach(lang.hitch(this, function(filter){
+            this.filters.forEach(lang.hitch(this, function(filter){
                 const filterTab = new FilterTab({
                     map: this.map,
                     toolbar: this.toolbar,
                     filter: filter, 
                     checked: ck,
                     badgeTip: this.badgeTip, 
+                    filters:this,
                 });
                 dojo.place(filterTab.domNode, this.filterTabs);
                 filterTab.startup();
