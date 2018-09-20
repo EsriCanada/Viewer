@@ -45,7 +45,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             var Layers = this._getLayers(defaults.layers);
             this.set("Layers", Layers);
 
-            if(options.animatedMarker) {
+            // if(options.animatedMarker) {
                 this.markerSymbol = new esri.symbol.PictureMarkerSymbol({
                     "angle": 0,
                     "xoffset": 0,
@@ -56,22 +56,22 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     "width": options.markerSize,
                     "height": options.markerSize
                 });
-            } else {
-                this.markerSymbol = new SimpleMarkerSymbol({
-                      "color": [3,126,175,20],
-                      "size": options.markerSize,
-                      "xoffset": 0,
-                      "yoffset": 0,
-                      "type": "esriSMS",
-                      "style": "esriSMSCircle",
-                      "outline": {
-                        "color": [3,26,255,220],
-                        "width": 2,
-                        "type": "esriSLS",
-                        "style": "esriSLSSolid"
-                      }
-                    });
-            }
+            // } else {
+            //     this.markerSymbol = new SimpleMarkerSymbol({
+            //           "color": [3,126,175,20],
+            //           "size": options.markerSize,
+            //           "xoffset": 0,
+            //           "yoffset": 0,
+            //           "type": "esriSMS",
+            //           "style": "esriSMSCircle",
+            //           "outline": {
+            //             "color": [3,26,255,220],
+            //             "width": 2,
+            //             "type": "esriSLS",
+            //             "style": "esriSLSSolid"
+            //           }
+            //         });
+            // }
             // this.css = {
             // };
             var featureListHeader = dom.byId('pageHeader_features');
@@ -210,11 +210,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             if(!this._isVisible()) return;
             const loading_features = this.domNode.parentNode.parentNode.querySelector('#loading_features');
 
-            // domClass.replace(loading_features, "showLoading", "hideLoading");
             this.toolbar.hideLoading('features');
 
             lang.hitch(this, this.__reloadList(ext).then(lang.hitch(this, function(results) {
-                // domClass.replace(loading_features, "hideLoading", "showLoading");
                 this.toolbar.showLoading('features');
             })));
         },

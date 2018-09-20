@@ -1271,7 +1271,7 @@ define([
                     loaderImg: "reload1.gif", 
                     badgeEvName: "featureSelected",
                     badgeTip: this.config.i18n.tools.badgesTips.featureSelected, 
-                    badgeImg: this.config.marker,
+                    badgeImg: this.config.marker.isNonEmpty() ? this.config.marker : 'images/ripple-dot1.gif',
                 }).then(lang.hitch(this, function(featuresDiv) {
                     const layers = this.config.response.itemInfo.itemData.operationalLayers;
 
@@ -1282,7 +1282,7 @@ define([
                                 layers: layers,
                                 toolbar: toolbar,
                                 animatedMarker: this.config.animated_marker,
-                                markerImage: this.config.marker,
+                                markerImage: this.config.marker.isNonEmpty() ? this.config.marker : 'images/ripple-dot1.gif',
                                 markerSize: this.config.marker_size
                             },
                             featuresDiv
