@@ -1399,6 +1399,7 @@ define([
                 toolbar.createTool(tool, {
                     toolbar: toolbar,
                     badgeEvName: "someFilters",
+                    badgeTip: this.config.i18n.tools.badgesTips.someFilters,
                 }).then(lang.hitch(this, function(filterDiv) {
                     const layers = this.config.response.itemInfo.itemData
                         .operationalLayers;
@@ -1408,7 +1409,8 @@ define([
                             {
                                 map: this.map,
                                 layers: layers,
-                                toolbar: toolbar
+                                toolbar: toolbar,
+                                badgeTip: this.config.i18n.tools.badgesTips.someFilters,
                             },
                             filterDiv
                         );

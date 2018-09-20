@@ -68,14 +68,14 @@
                "tooltip": "Contact Us URL link to external application"
             },
             {
-               "label": "<strong>Animated Marker File:</strong>",
+               "label": "<strong>Feature Marker File:</strong>",
                "fieldName": "marker",
                "placeHolder": "images/ripple-dot1.gif",
                "type": "string",
                "tooltip": "Defaults to blue-animated"
             },
             {
-               "label": "<strong>Marker size:</strong>",
+               "label": "<strong>Feature Marker size:</strong>",
                "fieldName": "marker_size",
                "placeHolder": "35",
                "type": "int",

@@ -54,6 +54,7 @@ define({
                 "reverseLocation": "Showing Location",
                 "directions": "Showing Itinerary",
                 "featureSelected": "Feature Selected",
+                "someFilters": "Some Filters Apply",
             }
         },
         "tooltips":{

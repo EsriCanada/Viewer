@@ -4,9 +4,7 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/ke
     "dojo/query",
     "dojo/text!application/Filters/Templates/Filters.html",
     "dojo/dom-class", "dojo/dom-attr", "dojo/dom-style", "dojo/dom-construct", "dojo/_base/event",
-    "application/Filters/FilterTab","application/Filters/FilterItem",
-    "dojo/NodeList-dom", "dojo/NodeList-traverse"
-
+    "application/Filters/FilterTab","application/Filters/FilterItem",   
     ], function (
         declare, lang, has, dom, esriNS,
         _WidgetBase, _TemplatedMixin, on, DateTextBox,
@@ -14,24 +12,26 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/ke
         query,
         Filters,
         domClass, domAttr, domStyle, domConstruct, event,
-        FilterTab, FilterItem
+        FilterTab, FilterItem,
     ) {
-    var Widget = declare("esri.dijit.Filters", [_WidgetBase, _TemplatedMixin], {
+    const Widget = declare("esri.dijit.Filters", [_WidgetBase, _TemplatedMixin], {
         templateString: Filters,
 
         options: {
             map: null,
             layers: null,
-            visible: true
+            visible: true,
         },
 
         constructor: function (options, srcRefNode) {
-            var defaults = lang.mixin({}, this.options, options);
+            const defaults = lang.mixin({}, this.options, options);
 
             this.domNode = srcRefNode;
             // properties
             this.set("map", defaults.map);
-            var Layers = this._getLayers(defaults.layers);
+            this.set("toolbar", defaults.toolbar);
+            this.set("badgeTip", defaults.badgeTip);
+            const Layers = this._getLayers(defaults.layers);
             window.filters = [];
             Layers.forEach(lang.hitch(this,function(layer){
                 if(layer.popupInfo) {
@@ -72,8 +72,10 @@ define(["dojo/_base/declare", "dojo/_base/lang", "dojo/has", "dojo/dom","esri/ke
             window.filters.forEach(lang.hitch(this, function(filter){
                 const filterTab = new FilterTab({
                     map: this.map,
+                    toolbar: this.toolbar,
                     filter: filter, 
-                    checked: ck
+                    checked: ck,
+                    badgeTip: this.badgeTip, 
                 });
                 dojo.place(filterTab.domNode, this.filterTabs);
                 filterTab.startup();

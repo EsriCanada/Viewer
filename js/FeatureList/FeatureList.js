@@ -42,39 +42,21 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             // properties
             this.set("map", defaults.map);
-            var Layers = this._getLayers(defaults.layers);
+            const Layers = this._getLayers(defaults.layers);
             this.set("Layers", Layers);
 
-            // if(options.animatedMarker) {
-                this.markerSymbol = new esri.symbol.PictureMarkerSymbol({
-                    "angle": 0,
-                    "xoffset": 0,
-                    "yoffset": 0,
-                    "type": "esriPMS",
-                    "url": require.toUrl("./"+options.markerImage),
-                    "contentType": "image/gif",
-                    "width": options.markerSize,
-                    "height": options.markerSize
-                });
-            // } else {
-            //     this.markerSymbol = new SimpleMarkerSymbol({
-            //           "color": [3,126,175,20],
-            //           "size": options.markerSize,
-            //           "xoffset": 0,
-            //           "yoffset": 0,
-            //           "type": "esriSMS",
-            //           "style": "esriSMSCircle",
-            //           "outline": {
-            //             "color": [3,26,255,220],
-            //             "width": 2,
-            //             "type": "esriSLS",
-            //             "style": "esriSLSSolid"
-            //           }
-            //         });
-            // }
-            // this.css = {
-            // };
-            var featureListHeader = dom.byId('pageHeader_features');
+            this.markerSymbol = new esri.symbol.PictureMarkerSymbol({
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": require.toUrl("./"+options.markerImage),
+                "contentType": "image/gif",
+                "width": options.markerSize,
+                "height": options.markerSize
+            });
+
+            const featureListHeader = dom.byId('pageHeader_features');
             dojo.create('div', {
                 id: 'featureListCount',
                 class:'fc bg',
@@ -86,8 +68,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         _getLayers : function(layers) {
-            var l1 = layers.filter(function (l) { return l.hasOwnProperty("url");});
-            var l2 = layers.filter(function (l) { return !l.hasOwnProperty("url");});
+            const l1 = layers.filter(function (l) { return l.hasOwnProperty("url");});
+            const l2 = layers.filter(function (l) { return !l.hasOwnProperty("url");});
             if(l2.length>0) {
                 console.info("Feature List - These Layers are not services: ", l2);
             }

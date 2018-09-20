@@ -53,7 +53,8 @@ define(
             badgesTips:{
                 "reverseLocation": "Afficher l'adresse du lieu",
                 "directions": "Montrer l'itinéraire",
-                featureSelected: "Caractéristique sélectionnée",            }
+                featureSelected: "Caractéristique sélectionnée", 
+                someFilters: "Appliqué quelques filtres",           }
         },
         "tooltips":{
         	"home": "Etendue par Défaut",
