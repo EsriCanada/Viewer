@@ -113,6 +113,7 @@ on, mouse, query, Deferred) {
                 badgeEvName: "",
                 badgeImg: "",
                 badgeTip: "",
+                aditionalBadges: null,
                 name: tool.name,
                 icon: "images/icons_" + this.config.icons + "/" + tool.name + ".png",
                 toolbar: config.toolbar,

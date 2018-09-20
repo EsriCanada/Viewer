@@ -122,9 +122,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 this.search.on('search-results', lang.hitch(this, function(e) {
                     // console.log('search-results', e);
 
-                    var features = [];
+                    let features = [];
                     if(e.results) {
-                        for(var i = 0; i< this.search.sources.length; i++) {
+                        for(let i = 0; i< this.search.sources.length; i++) {
                             if(e.results.hasOwnProperty(i)) {
                                 const dataFeatures = e.results[i].map(function(r){ return r.feature;});
                                 let infoTemplate = null;
@@ -169,18 +169,18 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         contentPanel : null,
 
         setUpFooter: function() {
-            var index = this.map.infoWindow.selectedIndex;
-            var count = this.map.infoWindow.count;
-            var feature =  (this.map.infoWindow.features && this.map.infoWindow.features.length>0) ? this.map.infoWindow.features[index] : null;
+            const index = this.map.infoWindow.selectedIndex;
+            const count = this.map.infoWindow.count;
+            const feature =  (this.map.infoWindow.features && this.map.infoWindow.features.length>0) ? this.map.infoWindow.features[index] : null;
 
-            var popupInfoContentWrapper = dom.byId('popupInfoContentWrapper');
-            var popupInfoFooter = dom.byId('popupInfoFooter');
+            const popupInfoContentWrapper = dom.byId('popupInfoContentWrapper');
+            const popupInfoFooter = dom.byId('popupInfoFooter');
             if(feature) {
                 domStyle.set(popupInfoFooter, 'display', '');
                 domStyle.set(popupInfoContentWrapper, 'height', '');
-                var locatorScore = dom.byId('locatorScore');
-                var locatorCopy = dom.byId('locatorCopy');
-                var isSearchResult = feature.attributes.hasOwnProperty('Score');
+                const locatorScore = dom.byId('locatorScore');
+                const locatorCopy = dom.byId('locatorCopy');
+                const isSearchResult = feature.attributes.hasOwnProperty('Score');
                 if(isSearchResult) {
                     domStyle.set(locatorScore, 'display', this.showSearchScore ? '' : 'none');
                     domStyle.set(locatorCopy, 'display', '');
@@ -191,7 +191,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                     domStyle.set(locatorCopy, 'display', 'none');
                 }
 
-                var infoPanelFooterNavigation = dom.byId('infoPanelFooterNavigation');
+                const infoPanelFooterNavigation = dom.byId('infoPanelFooterNavigation');
                 if(infoPanelFooterNavigation) {
                     domStyle.set(infoPanelFooterNavigation, 'display', count>1 ? '' : 'none');
                     if(!isSearchResult && count<=1) {
@@ -310,7 +310,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 result += "<tr><th>"+i18n.widgets.geoCoding.Phone+"</th><td>${Phone}</td></tr>";
 
             if(result !=='') {
-                var title=i18n.widgets.popupInfo.addressToLocation;
+                const title=i18n.widgets.popupInfo.addressToLocation;
                 result =
                 "<div class='esriViewPopup'>"+
                     "<h3 class='header'>"+
@@ -497,6 +497,8 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                                 this.searchLabel.setText(selectedFeature.attributes.ShortLabel);
                                 this.searchLabelGraphic = new Graphic(geometry, this.searchLabel);
                                 this.map.graphics.add(this.searchLabelGraphic);
+
+                                this.toolbar.showBadge('searchResult');
                             }
                         }
                     }
@@ -586,12 +588,14 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         clear: function() {
             this.map.infoWindow.clearFeatures();
             this.map.container.focus();
+            this.clearSearchGraphics();
         },
 
         clearSearchGraphics: function(){
             if(this.searchMarkerGrafic) {
                 this.map.graphics.remove(this.searchMarkerGrafic);
                 this.searchMarkerGrafic = null;
+                this.toolbar.hideBadge('searchResult');
             }
             if(this.searchLabelGraphic) {
                 this.map.graphics.remove(this.searchLabelGraphic);
@@ -606,15 +610,6 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             else {
                 this.toolbar.hideBadge('followTheMapMode');
             }
-            // const badge = dom.byId('badge_followTheMapMode');
-            // if(!badge) return;
-            // if (show) {
-            //     domStyle.set(badge,'display','');
-            //     // domAttr.set(badge, "title", i18n.widgets.popupInfo.followTheMap);
-            //     // domAttr.set(badge, "alt", i18n.widgets.popupInfo.followTheMap);
-            // } else {
-            //     domStyle.set(badge,'display','none');
-            // }
         },
 
     });

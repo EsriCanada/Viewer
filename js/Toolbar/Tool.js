@@ -37,6 +37,19 @@ on, query, Deferred) {
         },
 
         postCreate : function() {
+            if(this.config.aditionalBadges) {
+                this.config.aditionalBadges.forEach(lang.hitch(this, function(badge) {
+                    domConstruct.create("img", {
+                        src: badge.badgeImg,
+                        className: "setIndicator",
+                        style: "display:none;",
+                        tabindex: 0,
+                        id: "badge_"+badge.badgeEvName,
+                        alt: badge.badgeTip,
+                        title: badge.badgeTip,
+                }, this.panelTool)
+            }))}; 
+
             new ToolPage({
                 name: this.name,
                 deferrer: this.deferrer,

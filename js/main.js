@@ -2120,6 +2120,13 @@ define([
                         loaderImg: "reload1.gif", 
                         badgeEvName: "followTheMapMode",
                         badgeTip: this.config.i18n.tools.badgesTips.followTheMap,
+                        aditionalBadges: [
+                            {
+                                badgeEvName: "searchResult",
+                                badgeImg: this.config.searchMarker.isNonEmpty() ? this.config.searchMarker : './images/SearchPin.png',
+                                badgeTip: this.config.i18n.tools.badgesTips.searchResultInfo,
+                            }
+                        ]
                         // badgeImg: this.config.searchMarker.isNonEmpty() ? this.config.searchMarker : './images/SearchPin.png',
                         // badgeTip: this.config.i18n.tools.badgesTips.searchResultInfo,
                     }).then(lang.hitch(this, function(infoPanelDiv) {
