@@ -217,12 +217,11 @@ define([
                             })
                         );
 
-                        this.print = new Print(
+                        this.print = new this.Print(
                             {
                                 map: this.map,
                                 templates: templates,
-                                url: this.config.helperServices.printTask
-                                    .url
+                                url: this.config.printUrl
                             },
                             domConstruct.create("div")
                         );
@@ -233,7 +232,7 @@ define([
                         );
 
                         this.print.startup();
-                        deferred.resolve(true);
+                        this.deferred.resolve(true);
                     })
                 );
             }))
