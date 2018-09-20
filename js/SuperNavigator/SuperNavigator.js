@@ -387,6 +387,7 @@ define([
             lang.hitch(this, function(error) {
                 console.error(error);
                 this.showError(error);
+                this.loading(false);
             }));
             return deferred.promise;
         },
