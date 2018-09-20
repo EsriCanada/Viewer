@@ -304,8 +304,14 @@ define([
                 }));
 
                 all(deferrs).then(lang.hitch(this, function() {
-                    deferred.resolve(this.features);
                     this.loading(false);
+                    if(this.features.length===0) {
+                        deferred.reject(i18n.widgets.popupInfo.noFeatures);
+                        return deferred.promise;
+                    } 
+                    else {
+                        deferred.resolve(this.features);
+                    }
                 }));
             }
             return deferred.promise;
@@ -381,6 +387,7 @@ define([
             lang.hitch(this, function(error) {
                 console.error(error);
                 this.showError(error);
+                this.loading(false);
             }));
             return deferred.promise;
         },
