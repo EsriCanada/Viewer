@@ -385,7 +385,7 @@ define([
                 deferred.resolve();
             }),
             lang.hitch(this, function(error) {
-                console.error(error);
+                // console.error(error);
                 this.showError(error);
                 this.loading(false);
             }));
