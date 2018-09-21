@@ -17,7 +17,8 @@ define({
             selectOnRectangle: 'Utilisez le curseur sur la carte pour sélectionner un rectangle.',
             selectOnRegion: "Sélectionnez d'abord une fonction polygone.",
 
-            SkipToContent: 'Aller au contenu'
+            SkipToContent: 'Aller au contenu',
+            noFeaturesMessage: "Aucune caractéristique dans la zone sélectionnée",
         })
     })
 });

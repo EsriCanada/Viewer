@@ -15,7 +15,8 @@ define({
                 listFromPolygon: "List only features from the highlighted feature.",
                 selectOnRectangle: 'Use cursor on map to select a rectangle.',
                 selectOnRegion: "Select first a polygon feature.",
-                SkipToContent: 'Skip to content'
+                SkipToContent: 'Skip to content',
+                noFeaturesMessage: "No Features in Selected Zone",
             })
         })
     }),
