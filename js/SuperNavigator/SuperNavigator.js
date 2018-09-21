@@ -305,12 +305,15 @@ define([
 
                 all(deferrs).then(lang.hitch(this, function() {
                     this.loading(false);
-                    if(this.features.length===0) {
+                    const features = this.features.filter(function(f) {
+                        return f.getContent() != null;
+                    });
+                    if(features.length===0) {
                         deferred.reject(i18n.widgets.popupInfo.noFeatures);
                         return deferred.promise;
                     } 
                     else {
-                        deferred.resolve(this.features);
+                        deferred.resolve(features);
                     }
                 }));
             }
@@ -374,8 +377,9 @@ define([
             this.getFeaturesAtPoint(center, mode, visibleLayers)
             .then(lang.hitch(this, function(features){
 
-                if(features && features !== undefined && features.length > 0)
+                if(features && features !== undefined && features.length > 0) {
                     this.map.infoWindow.setFeatures(features);
+                }
                 else 
                     this.map.infoWindow.clearFeatures();
 
