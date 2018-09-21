@@ -45,6 +45,11 @@
     color: black;
     display: inline;
 }
+.toggleBtnMessage.reverse {
+    background-color: black;
+    color: white;
+    display: inline;
+}
 .toggleBtnMessage.warning {
     background-color: orange;
     color: black;

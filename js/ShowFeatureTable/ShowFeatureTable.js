@@ -5,7 +5,7 @@ define([
     "dijit/layout/_LayoutWidget",
     "esri/dijit/FeatureTable",
     "application/ImageToggleButton/ImageToggleButton",
-    "esri/map", "dojo/_base/array",
+    "esri/map", 
     "dojo/i18n!application/nls/ShowFeatureTable",
     "dojo/i18n!application/nls/resources",
     "dojo/on", "dojo/query",
@@ -27,7 +27,7 @@ define([
         _LayoutWidget,
         FeatureTable,
         ImageToggleButton,
-        Map, array,
+        Map, 
         i18n, Ri18n,
         on, query,
         Query, QueryTask,
@@ -96,33 +96,16 @@ define([
                 rel : "stylesheet",
             }, document.head);
 
-            //if(options.animatedMarker) {
-                this.pointMarker = new PictureMarkerSymbol({
-                    "angle": 0,
-                    "xoffset": 0,
-                    "yoffset": 0,
-                    "type": "esriPMS",
-                    "url": require.toUrl("./images/SelectPointMarker3.gif"),
-                    "contentType": "image/gif",
-                    "width": 33,
-                    "height": 33
-                });
-            // } else {
-            //     this.pointMarker = new SimpleMarkerSymbol({
-            //           "color": [3,126,175,20],
-            //           "size": options.markerSize,
-            //           "xoffset": 0,
-            //           "yoffset": 0,
-            //           "type": "esriSMS",
-            //           "style": "esriSMSCircle",
-            //           "outline": {
-            //             "color": [3,26,255,220],
-            //             "width": 2,
-            //             "type": "esriSLS",
-            //             "style": "esriSLSSolid"
-            //           }
-            //         });
-            // }
+            this.pointMarker = new PictureMarkerSymbol({
+                "angle": 0,
+                "xoffset": 0,
+                "yoffset": 0,
+                "type": "esriPMS",
+                "url": require.toUrl("./images/SelectPointMarker3.gif"),
+                "contentType": "image/gif",
+                "width": 33,
+                "height": 33
+            });
 
             this.lineMarker = new CartographicLineSymbol(
                 CartographicLineSymbol.STYLE_SOLID, new Color([0, 127, 255]), 10,
@@ -188,6 +171,13 @@ define([
                 innerHTML: '<strong>Alt&nbsp;+&nbsp;9</strong> '+Ri18n.skip.table,
                 style:'left:20%; top:50%;'
             }, dom.byId('featureTableNode1'));
+
+            this.noFeaturesMessage = domConstruct.create("div", {
+                className: "toggleBtnMessage reverse",
+                style: "display:none;",
+                tabindex: 0,
+            }, this.map.container);
+            this.noFeaturesMessage.innerHTML = i18n.widgets.showFeatureTable.noFeaturesMessage; 
         },
 
         postCreate: function() {
@@ -201,6 +191,19 @@ define([
                     this.showRegionButton();
                 }))
             }
+
+            on(this.noFeaturesMessage, 'click', lang.hitch(this, this._hideMessage));
+            on(this.noFeaturesMessage, 'focusout', lang.hitch(this, this._hideMessage));
+            on(this.noFeaturesMessage, 'keydown', lang.hitch(this, this._hideMessage));
+        },
+
+        _hideMessage : function() {
+            domStyle.set(this.noFeaturesMessage, 'display', 'none');
+        },
+
+        _showMessage: function() {
+            domStyle.set(this.noFeaturesMessage, 'display', '');
+            this.noFeaturesMessage.focus();
         },
 
         layout:function() {
@@ -492,15 +495,15 @@ define([
                 }
             }
 
-            var optionsMenu = query('.esri-feature-table-menu-item.esri-feature-table-menu-options')[0];
+            const optionsMenu = query('.esri-feature-table-menu-item.esri-feature-table-menu-options')[0];
 
-            var featureTableEndTools = domConstruct.create('div', {
+            const featureTableEndTools = domConstruct.create('div', {
                 class:'esri-feature-table-menu-item',
                 id: 'featureTableEndTools',
             }, //optionsMenu);
             tableTitle, 'after');
 
-            var closeBtn = domConstruct.create('input', {
+            const closeBtn = domConstruct.create('input', {
                 type: 'image',
                 src: 'images/icons_white/searchClear.png',
                 id: 'featureTableCloseBtn',
@@ -540,8 +543,8 @@ define([
                 on(this.SelectOnRectangle, 'change', lang.hitch(this, function(ev) {
                     if(this._rectangleGr) {
                         this.map.graphics.remove(this._rectangleGr);
-                        this.myFeatureTable.clearFilter();
                     }
+
                     if(this._selectSignal)
                         this._selectSignal.remove();
 
@@ -554,6 +557,8 @@ define([
                         this.map.hideZoomSlider();
                         this.SelectOnRectangle.ShowMessage(i18n.widgets.showFeatureTable.selectOnRectangle, 'warning');
                         this.draw.on("draw-end", _endDraw);
+                    } else {
+                        this.myFeatureTable.clearFilter();
                     }
                 }));
             }
@@ -578,8 +583,9 @@ define([
                 on(this.SelectOnRegion, 'change', lang.hitch(this, function(ev) {
                     if(this._rectangleGr) {
                         this.map.graphics.remove(this._rectangleGr);
-                        this.myFeatureTable.clearFilter();
                     }
+                    // this.myFeatureTable.clearFilter();
+
                     if(this._selectSignal)
                         this._selectSignal.remove();
 
@@ -588,7 +594,7 @@ define([
                             _endDraw();
                         }
 
-                        var feature = this.map.infoWindow.getSelectedFeature();
+                        const feature = this.map.infoWindow.getSelectedFeature();
                         if(!feature || feature.geometry.type==='point') {
                             this.SelectOnRegion.ShowMessage(i18n.widgets.showFeatureTable.selectOnRegion, 'error');
                             this.SelectOnRegion.Check(false);
@@ -599,7 +605,10 @@ define([
 
                             this._setSelectSymbol(feature.geometry);
                         }
+                    } else {
+                        this.myFeatureTable.clearFilter();
                     }
+
                 }));
             }
             // -----------------------------------------------
@@ -621,8 +630,8 @@ define([
                 on(this.SelectOnView, 'change', lang.hitch(this, function(ev) {
                     if(this._rectangleGr) {
                         this.map.graphics.remove(this._rectangleGr);
-                        this.myFeatureTable.clearFilter();
                     }
+                    // this.myFeatureTable.clearFilter();
 
                     if(this.SelectOnView.isChecked()) {
                         if(this.draw) {
@@ -633,7 +642,9 @@ define([
                             lang.hitch(this, function() {this._selectViewIds();}));
                     } else {
                         this._selectSignal.remove();
+                        this.myFeatureTable.clearFilter();
                     }
+
                 }));
             }
 
@@ -641,7 +652,6 @@ define([
 
             this.set('show', true);
             this.OnDisplay(true);
-
 
             dojo.create('img', {
                 src:'images/reload1.gif',
@@ -707,14 +717,6 @@ define([
                         gr.tag = row.id;
                         gr.name = 'ftMarker';
                         this.map.graphics.add(gr);
-
-                        // if(!this.SelectOnView.isCheckedAny()) {
-                        //     var grs = array.filter(this.map.graphics.graphics, function(gr){
-                        //         return gr.name && gr.name === 'ftMarker';
-                        //     });
-
-                        //     this._fitToMapExtent(graphicsUtils.graphicsExtent(grs));
-                        // }
                     }));
                 }));
 
@@ -730,61 +732,10 @@ define([
                         }
                     }));
                 }));
-
-                // if(!this.SelectOnView.isCheckedAny()) {
-                //     var grs = array.filter(this.map.graphics.graphics, function(gr){ return gr.name && gr.name === 'ftMarker'; });
-                //     if(grs && grs.length>=2) {
-                //         var extent = (this, graphicsUtils.graphicsExtent(grs)).expand(1.5);
-                //         this.map.setExtent(extent);
-                //     }
-                // }
             }));
 
             on(this.myFeatureTable, "refresh", lang.hitch(this, function(evt){
                 this._removeAllGraphics(['ftMarker']);
-
-                // const header = query('.dgrid-grid', this.myFeatureTable.domNode);
-                // if(header && header.length>0) {
-                    // const linkContent = query('.dgrid-header-link-content', this.myFeatureTable.domNode);
-                    // if(!linkContent || linkContent.length === 0) {
-
-                    //     const a = domConstruct.create('a', {
-                    //         class: 'dgrid-header-link-content',
-                    //         innerHTML: i18n.widgets.showFeatureTable.SkipToContent,
-                    //         tabindex: 0,
-                    //         role: 'navigation',
-                    //         href: '#',
-                    //         // 'aria-hidden': 'true'
-                    //     }, header[0], 'before');
-                    //     on(a, 'click', lang.hitch(this, function() {
-                    //         let dgridCells = query('.dgrid-content .dgrid-cell[tabindex="0"]', this.myFeatureTable.domNode);
-                    //         if(dgridCells && dgridCells.length>0 && window.getComputedStyle(dgridCells[0], null).getPropertyValue("display") !== "none") {
-                    //             dgridCells[0].focus();
-                    //         }
-                    //         else {
-                    //             dgridCells = query('.dgrid-content .dgrid-cell', this.myFeatureTable.domNode);
-                    //             if(dgridCells && dgridCells.length>0) {
-                    //                 for(let i = 0; i < dgridCells.length; i++) {
-                    //                     const cell = dgridCells[i];
-                    //                     if(window.getComputedStyle(cell, null).getPropertyValue("display") !== "none") {
-                    //                         domAttr.set(cell, 'tabindex', 0);
-                    //                         cell.focus();
-                    //                         break;
-                    //                     }
-                    //                 }
-                    //             }
-                    //         }
-                    //     }));
-                    //     on(a, 'focus', function() {
-                    //         domAttr.remove(a, 'aria-hidden');
-                    //         domStyle.set(a, 'z-index', 1);
-                    //     });
-                    //     on(a, 'blur', function() {
-                    //         domAttr.set(a, 'aria-hidden', 'true');
-                    //         domStyle.set(a, 'z-index');
-                    //     });                        
-                    // }
-                // }
                 const headersCells = query('th.dgrid-sortable', this.myFeatureTable.domNode);
                 // console.log("refresh", headersCells);
 
@@ -916,22 +867,21 @@ define([
             const q = new Query();
             q.outFields = [objectIdFieldName];
             q.geometry = geometry ? geometry : this.map.extent;
-            var exp=this.layer.layerObject.getDefinitionExpression() || null;
+            const exp = this.layer.layerObject.getDefinitionExpression() || null;
             if(exp) q.where = exp;
             q.returnGeometry = true;
             new QueryTask(this.layer.layerObject.url).execute(q).then(lang.hitch(this, function(ev) {
-                var selectedIds = ev.features.map(function(f) {
+                const selectedIds = ev.features.map(function(f) {
                     return f.attributes[objectIdFieldName];
                 });
-                this.myFeatureTable.filterRecordsByIds(selectedIds.length>0 ? selectedIds : [0]);
+                if(selectedIds.length > 0) {
+                    this.myFeatureTable.filterRecordsByIds(selectedIds);
+                    this._hideMessage();
+                } else {
+                    this._showMessage();
+                }
             }));
         },
-
-        // _delay: function(ms) {
-        //     var deferred = new dojo.Deferred();
-        //     setTimeout(function() {deferred.resolve(true);}, ms);
-        //     return deferred.promise;
-        // },
 
         showBadge : function(show) {
             var indicator = dom.byId('badge_Table');
