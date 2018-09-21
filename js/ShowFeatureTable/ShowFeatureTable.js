@@ -540,8 +540,9 @@ define([
                 on(this.SelectOnRectangle, 'change', lang.hitch(this, function(ev) {
                     if(this._rectangleGr) {
                         this.map.graphics.remove(this._rectangleGr);
-                        this.myFeatureTable.clearFilter();
                     }
+                    this.myFeatureTable.clearFilter();
+
                     if(this._selectSignal)
                         this._selectSignal.remove();
 
@@ -578,8 +579,9 @@ define([
                 on(this.SelectOnRegion, 'change', lang.hitch(this, function(ev) {
                     if(this._rectangleGr) {
                         this.map.graphics.remove(this._rectangleGr);
-                        this.myFeatureTable.clearFilter();
                     }
+                    this.myFeatureTable.clearFilter();
+
                     if(this._selectSignal)
                         this._selectSignal.remove();
 
@@ -621,8 +623,8 @@ define([
                 on(this.SelectOnView, 'change', lang.hitch(this, function(ev) {
                     if(this._rectangleGr) {
                         this.map.graphics.remove(this._rectangleGr);
-                        this.myFeatureTable.clearFilter();
                     }
+                    this.myFeatureTable.clearFilter();
 
                     if(this.SelectOnView.isChecked()) {
                         if(this.draw) {
@@ -916,14 +918,14 @@ define([
             const q = new Query();
             q.outFields = [objectIdFieldName];
             q.geometry = geometry ? geometry : this.map.extent;
-            var exp=this.layer.layerObject.getDefinitionExpression() || null;
+            const exp = this.layer.layerObject.getDefinitionExpression() || null;
             if(exp) q.where = exp;
             q.returnGeometry = true;
             new QueryTask(this.layer.layerObject.url).execute(q).then(lang.hitch(this, function(ev) {
-                var selectedIds = ev.features.map(function(f) {
+                const selectedIds = ev.features.map(function(f) {
                     return f.attributes[objectIdFieldName];
                 });
-                this.myFeatureTable.filterRecordsByIds(selectedIds.length>0 ? selectedIds : [0]);
+                this.myFeatureTable.filterRecordsByIds(selectedIds.length > 0 ? selectedIds : [0]);
             }));
         },
 
