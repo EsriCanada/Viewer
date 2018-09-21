@@ -282,7 +282,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         panZoom: function(panOnly) {
             const popup = this.map.infoWindow;
             if(popup.selectedIndex<0) return;
-            const geometry = popup.features[popup.selectedIndex].geometry;
+            let geometry = popup.features[popup.selectedIndex].geometry;
             if(panOnly) {
                 if (geometry.type !== "point") {
                     geometry = geometry.getExtent().getCenter();
