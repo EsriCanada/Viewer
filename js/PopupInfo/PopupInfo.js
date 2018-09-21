@@ -463,6 +463,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
             popup.on("SetFeatures", lang.hitch(this, function() {
                 this.setUpFooter();
+                this.showError('');
             }));
 
             popup.on("SelectionChange", lang.hitch(this, function() {

@@ -278,8 +278,7 @@ define([
                 this.map.graphics.add(this.queryZone);
 
                 const deferrs = [];
-                layers
-                .map(function(layer) {
+                layers.map(function(layer) {
                     return layer.layerObject;
                 })
                 .filter(function(layer) { 
