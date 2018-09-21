@@ -327,7 +327,7 @@
             {
                "type": "boolean",
                "fieldName": "directions_barriers",
-               "label": "Add/Delete Barriers"
+               "label": "Add/Delete Barriere"
             },
             {
                "type": "boolean",
