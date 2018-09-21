@@ -5,7 +5,7 @@ define({
                 headerNavigation: "Directions Controls",
                 reverse: "Reverse Directions",
                 addStops: "Add/Modify Stops",
-                barriere: "Add/Remove Barriere",
+                barriere: "Add/Remove Barrier",
                 print: "Print Directions",
                 clear: "Clear Directions",
                 locator: "Start from your location",
