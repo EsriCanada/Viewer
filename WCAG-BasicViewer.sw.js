@@ -68,11 +68,16 @@ self.addEventListener('install', function(event) {
         './js/template.js',
         './js/ShareDialog.js',
         './js/utils.js',
-        './js/toolbar.js',
         './js/has-config.js',
         './js/LayerManager/LayerManager.js',
         './js/SuperNavigator/SuperNavigator.js',
         './js/NavToolBar/NavToolBar.js',
+        './js/Toolbar/Toolbar.js',
+        './js/Toolbar/Templates/Toolbar.html',
+        './js/Toolbar/Tool.js',
+        './js/Toolbar/Templates/Tool.html',
+        './js/Toolbar/ToolPage.js',
+        './js/Toolbar/Templates/ToolPage.html',
         './js/PopupInfo/PopupInfo.js',
         './js/GeoCoding/GeoCoding.js',
         './js/GeoCoding/GeoAddressTooltip.js',
@@ -93,7 +98,10 @@ self.addEventListener('install', function(event) {
         './js/ShowBasemapGallery/ShowBasemapGallery.js',
         './js/PopupInfo/PopupInfoHeader.js',
         './js/GeoCoding/GeoCodingHeader.js',
-
+        './js/PrintWidget/PrintWidget.js',
+        './js/PrintWidget/Templates/PrintTemplate.html',
+        './js/PrintWidget/Templates/Print.css',
+        
         './config/defaults.js',
         './config/templateConfig.js',
 
@@ -161,6 +169,7 @@ self.addEventListener('install', function(event) {
         './images/Flag/Azure.48.png',
         './images/Flag/Pink.48.png',
         './images/ripple-dot1.gif',
+        './images/Route.png',
 
         './images/icons_white/infoPanel.png',
         './images/icons_white/directions.png',
