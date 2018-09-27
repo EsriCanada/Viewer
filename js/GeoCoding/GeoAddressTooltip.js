@@ -19,7 +19,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         i18n
     ) {
 
-    var Widget = declare("esri.dijit.GeoAddressTooltip", [_WidgetBase, _TemplatedMixin, Evented], {
+    const Widget = declare("esri.dijit.GeoAddressTooltip", [_WidgetBase, _TemplatedMixin, Evented], {
         // defaults
         templateString: GeoAddressTooltip,
 
@@ -35,7 +35,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
         },
 
         constructor: function (options, srcRefNode) {
-            var defaults = lang.mixin({}, this.options, options);
+            const defaults = lang.mixin({}, this.options, options);
             this.domNode = srcRefNode;
             this.widgetsInTemplate = true;
 
@@ -125,25 +125,25 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
 
 		showTooltip: function (evt){
             this.closeDialog();
-            var address = evt.address;
+            const address = evt.address;
 
             if(address.Addr_type.isNonEmpty()) {
-                var prop = address.Addr_type.replace(' ', '');
+                const prop = address.Addr_type.replace(' ', '');
                 address.AddrTypeLoc = (i18n.widgets.hasOwnProperty('addrType') && i18n.widgets.addrType.hasOwnProperty(prop)) ?
                 i18n.widgets.addrType[prop] : address.Addr_type;
             }
             if(address.Type.isNonEmpty()) {
-                var prop1 = address.Type.replace(' ', '');
+                const prop = address.Type.replace(' ', '');
                 address.TypeLoc = " - <i>"+((i18n.widgets.hasOwnProperty('addrType') &&
-                    i18n.widgets.addrType.hasOwnProperty(prop1)) ?
+                    i18n.widgets.addrType.hasOwnProperty(prop)) ?
                 i18n.widgets.addrType[prop1] : address.Type) + "</i>";
             }
             else {
                 address.TypeLoc = '';
             }
 
-            var location = this.map.toScreen(evt.location);
-            if(location.x <= this.mapCenter.x && location.y<=this.mapCenter.y) {
+            const location = this.map.toScreen(evt.location);
+            if(location.x <= this.mapCenter.x && location.y <= this.mapCenter.y) {
             	// console.log("NW");
             	domStyle.set(this.spikeNE, "display", "");
             	domStyle.set(this.spikeNW, "display", "block");
@@ -220,7 +220,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
             }
             else
             {
-            	var location = this.map.toScreen(ev.mapPoint);
+            	const location = this.map.toScreen(ev.mapPoint);
             	if(location.x < this.mapMin.x+12 || location.x>this.mapMax.x-18) {
 		            this.map.setMapCursor('default');
             		return;
