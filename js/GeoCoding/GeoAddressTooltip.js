@@ -138,7 +138,7 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                 const prop = address.Type.replace(' ', '');
                 address.TypeLoc = " - <i>"+((i18n.widgets.hasOwnProperty('addrType') &&
                     i18n.widgets.addrType.hasOwnProperty(prop)) ?
-                i18n.widgets.addrType[prop1] : address.Type) + "</i>";
+                i18n.widgets.addrType[prop] : address.Type) + "</i>";
             }
             else {
                 address.TypeLoc = '';
