@@ -250,7 +250,7 @@
                "fieldName": "tool_infoPanel"
             },
             {
-               "label": "<b>Reverse Geocode</b>",
+               "label": "<i>Reverse Geocode</i>",
                "type": "boolean",
                "fieldName": "tool_GeoCoding"
             },

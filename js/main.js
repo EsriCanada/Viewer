@@ -2164,7 +2164,7 @@ define([
         _addGeoCoding: function(tool, toolbar) {
             //Add the legend tool to the toolbar. Only activated if the web map has operational layers.
             const deferred = new Deferred();
-            if (has("geoCoding")) {
+            if (has("geoCoding") && has("infoPanel")) {
 
                 this.deferredKeyboardNavigation.then(lang.hitch(this, function() {
                     require(["application/GeoCoding/GeoCoding"], lang.hitch(this, function(GeoCoding) {
