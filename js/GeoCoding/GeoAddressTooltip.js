@@ -76,7 +76,9 @@ define(["dojo/Evented", "dojo/_base/declare", "dojo/_base/lang", "dojo/has", "es
                         }
         			break;
         		case true:
-                    this.locatorSignal = this.map.on('mouse-move', lang.hitch(this, this.hoverMap));
+                    if(!this.locatorSignal) {
+                        this.locatorSignal = this.map.on('mouse-move', lang.hitch(this, this.hoverMap));
+                    }
         			break;
         	}
         },
