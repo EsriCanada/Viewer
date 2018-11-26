@@ -3,7 +3,7 @@ WCAG basic-viewer-template
 *WCAG Basic Viewer*  is a configurable application template used to display a web map with a specified set of commonly used tools and options. 
 This template includes many WCAG 2.0 A, AA and AAA capabilities, which serves as a starting point for developers building fully complaint apps or is an example of WCAG apps.
 
-![Screen Shot](https://github.com/EsriCanada/WCAG-BasicViewer/blob/master/WCAGViewer.png)
+![Screen Shot](https://github.com/EsriCanada/WCAG-BasicViewer/blob/ServiceWorker/WCAGViewer.png)
 
 [View it live] (https://ccgis13.esri.local:8801/index.html?appid=b54efa235b7f455f91b14396090ad3e3)
 
