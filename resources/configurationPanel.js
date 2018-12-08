@@ -50,6 +50,26 @@
                "tooltip": "Alternate text for the splash screen when not null."
             },
             {
+               "label": "Scale units:",
+               "type": "string",
+               "fieldName": "scaleUnits",
+               "tooltip": "Scale units when Scalebar selected",
+               "options": [
+                  {
+                     "label": "Metric",
+                     "value": "metric"
+                  },
+                  {
+                     "label": "Imperial",
+                     "value": "non-metric"
+                  },
+                  {
+                     "label": "Both",
+                     "value": "dual"
+                  }
+               ]
+            },
+            {
                "label": "<strong>Logo Image:</strong>",
                "fieldName": "logo",
                "type": "string",
@@ -666,6 +686,7 @@
       "geoCodingMarker": "./images/SearchPin.png",
       "marker_size": "35",
       "alt_keys": true,
+      "scaleUnits": "metric", 
       "logo": "images/logo.png",
       "logoAltText": "",
       "contactUsURL": "",
